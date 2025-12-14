@@ -1,0 +1,476 @@
+---
+layout: default
+title: "جزوه جامع ماشین بردار پشتیبان (SVM) | ویژه شب امتحان"
+date: 2025-12-14
+categories: [Machine Learning]
+tags: [SVM, AI, Exam]
+permalink: /svm-exam-guide/
+---
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جزوه جامع ماشین بردار پشتیبان (SVM) | شب امتحان</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --highlight-bg: #fff3cd;
+            --highlight-border: #ffc107;
+            --success-bg: #d4edda;
+            --success-border: #28a745;
+            --danger-bg: #f8d7da;
+            --danger-border: #dc3545;
+            --info-bg: #d1ecf1;
+            --info-border: #17a2b8;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        /* Header Styles */
+        header {
+            text-align: center;
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        header .subtitle {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Section Styles */
+        section {
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            color: var(--accent-color);
+            border-right: 5px solid var(--accent-color);
+            padding-right: 15px;
+            font-size: 1.6rem;
+            margin-top: 0;
+            background: linear-gradient(to left, transparent, #f0f8ff);
+            padding: 10px 15px 10px 0;
+            border-radius: 4px;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            margin-top: 25px;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+
+        p {
+            text-align: justify;
+        }
+
+        /* Box Styles */
+        .box {
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-right: 5px solid;
+            position: relative;
+        }
+
+        .box-def {
+            background-color: var(--info-bg);
+            border-color: var(--info-border);
+            color: #0c5460;
+        }
+
+        .box-tip {
+            background-color: var(--highlight-bg);
+            border-color: var(--highlight-border);
+            color: #856404;
+        }
+
+        .box-success {
+            background-color: var(--success-bg);
+            border-color: var(--success-border);
+            color: #155724;
+        }
+
+        .box-danger {
+            background-color: var(--danger-bg);
+            border-color: var(--danger-border);
+            color: #721c24;
+        }
+
+        /* Lists */
+        ul.styled-list {
+            list-style: none;
+            padding-right: 10px;
+        }
+
+        ul.styled-list li {
+            position: relative;
+            padding-right: 20px;
+            margin-bottom: 10px;
+        }
+
+        ul.styled-list li::before {
+            content: "✔";
+            color: var(--accent-color);
+            position: absolute;
+            right: 0;
+            top: 2px;
+        }
+
+        /* Formula */
+        .formula {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #eee;
+            padding: 2px 8px;
+            border-radius: 4px;
+            direction: ltr;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        /* Exam Night Special Section */
+        .exam-night-section {
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 40px 0;
+        }
+
+        .exam-night-section h2 {
+            color: #f1c40f;
+            border-color: #f1c40f;
+            background: none;
+            border-right: none;
+            text-align: center;
+            border-bottom: 2px solid #f1c40f;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .exam-night-section ul li::before {
+            content: "★";
+            color: #f1c40f;
+        }
+
+        /* Questions & Answers */
+        .question-box {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        details {
+            margin-top: 10px;
+            background: #f1f1f1;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        summary {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .answer-text {
+            margin-top: 10px;
+            color: var(--success-border);
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        .tag {
+            background: var(--primary-color);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            margin-left: 5px;
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; padding: 0; }
+            .exam-night-section { background: #eee; color: black; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <header>
+            <h1>جزوه آموزشی و امتحانی SVM</h1>
+            <div class="subtitle">یادگیری ماشین | تبدیل متن به دانش | ویژه مرور شب امتحان</div>
+        </header>
+
+        <!-- بخش ۱: آموزش کامل -->
+        <section>
+            <h2>۱. آموزش کامل و مفهومی (درسنامه)</h2>
+            
+            <h3>مقدمه: SVM چیست؟</h3>
+            <p>
+                تصور کنید دو گروه داده دارید (مثلاً توپ‌های آبی و قرمز) که روی زمین ریخته شده‌اند. هدف <strong>SVM</strong> این است که یک خط (یا در ابعاد بالاتر، یک صفحه) بکشد که این دو گروه را از هم جدا کند.
+            </p>
+            <div class="box box-def">
+                <strong>نکته کلیدی:</strong> SVM هر خطی را قبول نمی‌کند؛ بلکه به دنبال <strong>بهترین خط</strong> است. بهترین خط، خطی است که <strong>بیشترین فاصله ممکن</strong> را از توپ‌های هر دو طرف داشته باشد. به این فاصله «حاشیه» یا <strong>Margin</strong> می‌گویند. انگار می‌خواهیم پهن‌ترین خیابان ممکن را بین این دو گروه بکشیم.
+            </div>
+
+            <h3>تعاریف و مفاهیم کلیدی (واژه‌نامه فنی)</h3>
+            <p>برای پاسخ به سوالات تعریفی امتحان، این موارد را دقیق به خاطر بسپارید:</p>
+            
+            <div class="box box-info">
+                <ul class="styled-list">
+                    <li>
+                        <strong>ماشین بردار پشتیبان (SVM):</strong> یک الگوریتم یادگیری نظارت‌شده (Supervised) است که برای دسته‌بندی (Classification) و رگرسیون استفاده می‌شود. هدف اصلی آن یافتن بهترین مرز برای جدا کردن داده‌هاست.
+                    </li>
+                    <li>
+                        <strong>ابرصفحه (Hyperplane):</strong> همان مرز تصمیم‌گیری است. در دو بعد، یک "خط" است؛ در سه بعد، یک "صفحه" و در ابعاد بالاتر "ابرصفحه" نامیده می‌شود. معادله آن معمولاً به صورت <span class="formula">wx + b = 0</span> است.
+                    </li>
+                    <li>
+                        <strong>بردارهای پشتیبان (Support Vectors):</strong> مهم‌ترین داده‌های شما هستند. این‌ها نقاطی هستند که دقیقاً روی لبه‌ی خیابان (مرز حاشیه) قرار دارند و به خط جداکننده نزدیک‌ترند. این نقاط موقعیت خط را تعیین می‌کنند (اگر بقیه داده‌ها را حذف کنیم و این‌ها بمانند، خط تغییری نمی‌کند).
+                    </li>
+                    <li>
+                        <strong>حاشیه (Margin):</strong> فاصله بین ابرصفحه و نزدیک‌ترین داده‌ها (بردارهای پشتیبان). SVM سعی می‌کند این فاصله را <strong>ماکزیمم</strong> کند.
+                    </li>
+                </ul>
+            </div>
+
+            <h3>انواع مدل‌های SVM</h3>
+            <p>دو رویکرد اصلی برای ترسیم مرز وجود دارد:</p>
+
+            <div class="box box-danger">
+                <strong>۱. حاشیه سخت (Hard Margin SVM):</strong>
+                <ul>
+                    <li>خیلی سخت‌گیر است.</li>
+                    <li>فرض می‌کند داده‌ها کاملاً و تمیز قابل جدا شدن هستند.</li>
+                    <li><strong>هیچ خطایی</strong> را قبول نمی‌کند.</li>
+                    <li>به نویز (داده‌های پرت) <strong>بسیار حساس</strong> است.</li>
+                </ul>
+            </div>
+
+            <div class="box box-success">
+                <strong>۲. حاشیه نرم (Soft Margin SVM):</strong>
+                <ul>
+                    <li>منعطف‌تر است.</li>
+                    <li>اجازه می‌دهد کمی خطا رخ دهد تا مدل کلی بهتری ساخته شود.</li>
+                    <li>با پارامتری به نام <span class="formula">C</span> کنترل می‌شود (این پارامتر تعادل بین خطا و پهنای حاشیه را تنظیم می‌کند).</li>
+                    <li>در برابر نویز <strong>پایدارتر</strong> است.</li>
+                </ul>
+            </div>
+            
+            <h3>مزایا و معایب (نکات امتحانی هایلایت شده)</h3>
+            <div class="box box-tip">
+                <strong>مزایا (Highlights):</strong>
+                <ul>
+                    <li><strong>عملکرد در ابعاد بالا:</strong> برای داده‌هایی که ویژگی‌های زیاد دارند عالی عمل می‌کند.</li>
+                    <li><strong>جلوگیری از بیش‌برازش (Overfitting):</strong> معمولاً مقاومت خوبی دارد.</li>
+                </ul>
+                <hr style="border-top: 1px dashed #bbb; margin: 10px 0;">
+                <strong>معایب:</strong>
+                <ul>
+                    <li><strong>حجم داده زیاد:</strong> در داده‌های بسیار بزرگ کند است (زمان آموزش بالا).</li>
+                    <li><strong>نویز و همپوشانی:</strong> اگر نویز زیاد باشد، خوب کار نمی‌کند.</li>
+                </ul>
+            </div>
+
+            <h3>نکته تکمیلی: SVR</h3>
+            <p>در SVR هدف این است که تابعی پیدا کنیم که از همه داده‌ها حداکثر به اندازه <span class="formula">ε</span> (اپسیلون) فاصله داشته باشد.</p>
+        </section>
+
+        <!-- بخش ۲: مرور شب امتحان -->
+        <section class="exam-night-section">
+            <h2>🧠 مرور سریع شب امتحان (۵ دقیقه‌ای)</h2>
+            <p style="text-align: center; margin-bottom: 20px;">این بخش خلاصه تمام چیزی است که باید سر جلسه یادتان باشد:</p>
+            <ul class="styled-list">
+                <li><strong>هدف نهایی SVM:</strong> یافتن ابرصفحه‌ای که <strong>Margin (حاشیه)</strong> را <strong>ماکزیمم</strong> کند.</li>
+                <li><strong>نقش Support Vectors:</strong> تنها نقاطی که اهمیت دارند. حذف سایر نقاط تغییری در مدل ایجاد نمی‌کند.</li>
+                <li><strong>کاربرد طلایی:</strong> وقتی ابعاد داده (تعداد ویژگی‌ها) بالاست، SVM عالی است.</li>
+                <li><strong>نقطه ضعف:</strong> دیتاست‌های خیلی بزرگ (Big Data) و دیتاست‌های خیلی نویزی.</li>
+                <li><strong>تفاوت Hard vs Soft:</strong>
+                    <ul>
+                        <li><small>Hard Margin: خطای صفر، حساس به نویز.</small></li>
+                        <li><small>Soft Margin: خطای مجاز، مقاوم به نویز (کنترل با پارامتر C).</small></li>
+                    </ul>
+                </li>
+                <li><strong>نکته انحرافی استاد:</strong> SVM فقط برای طبقه‌بندی نیست؛ مدل <strong>SVR</strong> برای رگرسیون (پیش‌بینی عدد) استفاده می‌شود.</li>
+            </ul>
+        </section>
+
+        <!-- بخش ۳: جمع‌بندی مفهومی -->
+        <section>
+            <h2>✅ جمع‌بندی مفهومی</h2>
+            <div class="box box-def">
+                <p>
+                    <strong>پیام اصلی درس:</strong> SVM یک "بهینه‌ساز هندسی" است. به جای اینکه فقط داده‌ها را جدا کند، سعی می‌کند مطمئن‌ترین جداسازی را با ایجاد پهن‌ترین مرز ممکن انجام دهد. هرجا صحبت از "دقت در ابعاد بالا" بود، یاد SVM بیفتید. هرجا صحبت از "داده‌های عظیم میلیونی" بود، یاد ضعف SVM بیفتید.
+                </p>
+            </div>
+        </section>
+
+        <!-- بخش ۴: سوالات امتحانی -->
+        <section>
+            <h2>📝 سوالات امتحانی (تالیفی از متن)</h2>
+
+            <h3>الف) سوالات تشریحی</h3>
+            <div class="question-box">
+                <strong>۱. منظور از "بردارهای پشتیبان" چیست و حذف آن‌ها چه تاثیری بر مدل دارد؟</strong>
+                <details>
+                    <summary>پاسخ را ببینید</summary>
+                    <p class="answer-text">نقاطی هستند که دقیقاً روی مرز حاشیه قرار دارند و نزدیک‌ترین نقاط به خط جداکننده هستند. این نقاط موقعیت خط را تعیین می‌کنند و حذف آن‌ها باعث تغییر مرز تصمیم‌گیری می‌شود.</p>
+                </details>
+            </div>
+
+            <div class="question-box">
+                <strong>۲. تفاوت اصلی Hard Margin و Soft Margin را توضیح دهید.</strong>
+                <details>
+                    <summary>پاسخ را ببینید</summary>
+                    <p class="answer-text">Hard Margin هیچ خطایی را نمی‌پذیرد و برای داده‌های کاملاً جداپذیر است (حساس به نویز). Soft Margin اجازه خطای کم را می‌دهد تا مدل کلی بهتری بسازد و در برابر نویز پایدارتر است.</p>
+                </details>
+            </div>
+
+            <div class="question-box">
+                <strong>۳. پارامتر C در SVM چه کاری انجام می‌دهد؟</strong>
+                <details>
+                    <summary>پاسخ را ببینید</summary>
+                    <p class="answer-text">در Soft Margin استفاده می‌شود و تعادل بین "میزان خطا" و "پهنای حاشیه" را تنظیم می‌کند.</p>
+                </details>
+            </div>
+
+            <div class="question-box">
+                <strong>۴. چرا SVM برای داده‌های بسیار حجیم (Big Data) مناسب نیست؟</strong>
+                <details>
+                    <summary>پاسخ را ببینید</summary>
+                    <p class="answer-text">چون با افزایش تعداد داده‌ها، زمان آموزش مدل به شدت بالا می‌رود و الگوریتم کند می‌شود.</p>
+                </details>
+            </div>
+
+            <div class="question-box">
+                <strong>۵. کاربرد SVR چیست و هدف آن چه تفاوتی با SVM معمولی دارد؟</strong>
+                <details>
+                    <summary>پاسخ را ببینید</summary>
+                    <p class="answer-text">SVR برای مسائل رگرسیون (پیش‌بینی عدد) استفاده می‌شود. هدف آن یافتن تابعی است که داده‌ها حداکثر به اندازه اپسیلون (ε) از آن فاصله داشته باشند.</p>
+                </details>
+            </div>
+
+            <h3>ب) سوالات تستی چهارگزینه‌ای</h3>
+            <div class="question-box">
+                <p><strong>۱. هدف اصلی SVM چیست؟</strong></p>
+                <ol type="a">
+                    <li>کاهش خطای آموزش به صفر</li>
+                    <li>یافتن نزدیک‌ترین همسایه</li>
+                    <li>ماکزیمم کردن حاشیه (Margin)</li>
+                    <li>حذف تمام داده‌های پرت</li>
+                </ol>
+                <details>
+                    <summary>مشاهده گزینه صحیح</summary>
+                    <p class="answer-text">گزینه ۳ (ماکزیمم کردن حاشیه)</p>
+                </details>
+            </div>
+
+            <div class="question-box">
+                <p><strong>۲. معادله ابرصفحه معمولاً به چه صورتی نمایش داده می‌شود؟</strong></p>
+                <ol type="a">
+                    <li>y = mx + b</li>
+                    <li>wx + b = 0</li>
+                    <li>ax^2 + bx + c = 0</li>
+                    <li>e = mc^2</li>
+                </ol>
+                <details>
+                    <summary>مشاهده گزینه صحیح</summary>
+                    <p class="answer-text">گزینه ۲ (wx + b = 0)</p>
+                </details>
+            </div>
+
+            <div class="question-box">
+                <p><strong>۳. کدام مدل نسبت به نویز "حساس‌تر" است؟</strong></p>
+                <ol type="a">
+                    <li>Soft Margin SVM</li>
+                    <li>Hard Margin SVM</li>
+                    <li>SVR</li>
+                    <li>Kernel SVM</li>
+                </ol>
+                <details>
+                    <summary>مشاهده گزینه صحیح</summary>
+                    <p class="answer-text">گزینه ۲ (Hard Margin SVM)</p>
+                </details>
+            </div>
+
+            <div class="question-box">
+                <p><strong>۴. اگر داده‌ها دارای ابعاد بسیار بالا باشند، عملکرد SVM چگونه است؟</strong></p>
+                <ol type="a">
+                    <li>بسیار ضعیف است</li>
+                    <li>کند می‌شود</li>
+                    <li>عالی عمل می‌کند</li>
+                    <li>دچار بیش‌برازش شدید می‌شود</li>
+                </ol>
+                <details>
+                    <summary>مشاهده گزینه صحیح</summary>
+                    <p class="answer-text">گزینه ۳ (عالی عمل می‌کند)</p>
+                </details>
+            </div>
+
+            <div class="question-box">
+                <p><strong>۵. اگر نقاطی که "Support Vector" نیستند را از دیتاست حذف کنیم، چه می‌شود؟</strong></p>
+                <ol type="a">
+                    <li>مرز تصمیم‌گیری تغییر می‌کند</li>
+                    <li>خطای مدل زیاد می‌شود</li>
+                    <li>هیچ تغییری در خط ایجاد نمی‌شود</li>
+                    <li>حاشیه کوچک‌تر می‌شود</li>
+                </ol>
+                <details>
+                    <summary>مشاهده گزینه صحیح</summary>
+                    <p class="answer-text">گزینه ۳ (هیچ تغییری در خط ایجاد نمی‌شود)</p>
+                </details>
+            </div>
+        </section>
+
+        <footer>
+            <p>ساخته شده توسط <strong>امیرعلی سطوتی</strong></p>
+            <p><small>موفقیت در امتحانات نزدیک است!</small></p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
