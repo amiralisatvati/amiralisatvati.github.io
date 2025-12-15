@@ -1,7 +1,8 @@
 title: "امیرعلی سطوتی"
 name: "امیرعلی سطوتی"
-description: "پورتفولیوی علوم داده و هوش مصنوعی"
+description: "پورتفولیوی علوم داده"
 url: "https://amiralisatvati.github.io"
+baseurl: ""
 repository: "amiralisatvati/amiralisatvati.github.io"
 
 locale: "fa-IR"
@@ -21,7 +22,7 @@ plugins:
 author:
   name: "امیرعلی سطوتی"
   avatar: "/assets/images/bio-photo.jpg"
-  bio: "دانشجوی علوم داده و هوش مصنوعی<br>تحلیلگر داده و آمار<br>Python | R | SQL"
+  bio: "دانشجوی علوم داده و هوش مصنوعی"
   location: "ایران، تهران"
   links:
     - label: "GitHub"
@@ -65,9 +66,3 @@ defaults:
       author_profile: true
 
 paginate: 10
-category_archive:
-  type: liquid
-  path: /categories/
-tag_archive:
-  type: liquid
-  path: /tags/
