@@ -1,53 +1,27 @@
 title: "امیرعلی سطوتی"
-subtitle: "دانشجوی علوم داده | تحلیلگر آماری"
 name: "امیرعلی سطوتی"
-description: "پورتفولیوی حرفه‌ای امیرعلی سطوتی - متخصص علوم داده، تحلیل آماری و برنامه‌نویسی پایتون و R"
+description: "پورتفولیوی علوم داده و هوش مصنوعی"
 url: "https://amiralisatvati.github.io"
-baseurl: ""
 repository: "amiralisatvati/amiralisatvati.github.io"
 
 locale: "fa-IR"
 rtl: true
-direction: "rtl"
 
 remote_theme: "mmistakes/minimal-mistakes@4.26.2"
 minimal_mistakes_skin: "dark"
 logo: "/assets/images/logo.png"
-masthead_title: "امیرعلی سطوتی"
 
 search: true
-search_full_content: true
-lunr:
-  search_within_pages: true
 
 plugins:
-  - jekyll-paginate
-  - jekyll-sitemap
-  - jekyll-gist
-  - jekyll-feed
   - jekyll-include-cache
   - jekyll-seo-tag
-
-og_image: "/assets/images/bio-photo.jpg"
-
-twitter:
-  username: "amiralisatvati"
-social:
-  type: "Person"
-  name: "امیرعلی سطوتی"
-  links:
-    - "https://github.com/amiralisatvati"
-    - "https://linkedin.com/in/amirali-satvati"
-    - "https://t.me/amiralisatvati"
+  - jekyll-sitemap
 
 author:
   name: "امیرعلی سطوتی"
   avatar: "/assets/images/bio-photo.jpg"
-  bio: |
-    👨‍💻 دانشجوی علوم داده و هوش مصنوعی<br>
-    📊 تحلیلگر داده و آمار<br>
-    🐍 Python | R | SQL<br>
-    🔬 Machine Learning Enthusiast
+  bio: "دانشجوی علوم داده و هوش مصنوعی<br>تحلیلگر داده و آمار<br>Python | R | SQL"
   location: "ایران، تهران"
   links:
     - label: "GitHub"
@@ -71,9 +45,6 @@ footer:
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
       url: "https://linkedin.com/in/amirali-satvati"
-    - label: "Telegram"
-      icon: "fab fa-fw fa-telegram"
-      url: "https://t.me/amiralisatvati"
 
 defaults:
   - scope:
@@ -83,70 +54,20 @@ defaults:
       layout: single
       author_profile: true
       read_time: true
-      show_date: true
       comments: false
       share: true
       related: true
-      toc: true
-      toc_sticky: true
-      classes: wide
   - scope:
       path: "_pages"
       type: pages
     values:
       layout: single
       author_profile: true
-      classes: wide
-
-collections:
-  portfolio:
-    output: true
-    permalink: /:collection/:path/
-  projects:
-    output: true
-    permalink: /projects/:path/
 
 paginate: 10
-paginate_path: /page:num/
-
 category_archive:
   type: liquid
   path: /categories/
 tag_archive:
   type: liquid
   path: /tags/
-
-compress_html:
-  clippings: all
-  ignore:
-    envs: development
-
-timezone: Asia/Tehran
-date_format: "%Y/%m/%d"
-words_per_minute: 200
-enable_copy_code_button: true
-
-exclude:
-  - "*.sublime-project"
-  - "*.sublime-workspace"
-  - vendor
-  - .asset-cache
-  - .bundle
-  - .jekyll-assets-cache
-  - .sass-cache
-  - assets/js/plugins
-  - assets/js/_main.js
-  - assets/js/vendor
-  - Capfile
-  - CHANGELOG
-  - config
-  - Gemfile
-  - Gruntfile.js
-  - gulpfile.js
-  - LICENSE
-  - log
-  - node_modules
-  - package.json
-  - Rakefile
-  - README
-  - tmp
