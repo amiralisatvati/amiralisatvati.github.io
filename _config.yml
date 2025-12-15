@@ -1,52 +1,33 @@
 title: "امیرعلی سطوتی"
-name: "امیرعلی سطوتی"
 description: "پورتفولیوی علوم داده"
 url: "https://amiralisatvati.github.io"
 baseurl: ""
-repository: "amiralisatvati/amiralisatvati.github.io"
 
-locale: "fa-IR"
-rtl: true
-
+# تم
 remote_theme: "mmistakes/minimal-mistakes@4.26.2"
 minimal_mistakes_skin: "dark"
-logo: "/assets/images/logo.png"
 
-search: true
-
+# پلاگین‌ها
 plugins:
   - jekyll-include-cache
-  - jekyll-seo-tag
+  - jekyll-paginate
   - jekyll-sitemap
+  - jekyll-feed
 
+# تنظیمات پایه
+locale: "fa-IR"
+search: true
+
+# نویسنده
 author:
   name: "امیرعلی سطوتی"
-  avatar: "/assets/images/bio-photo.jpg"
-  bio: "دانشجوی علوم داده و هوش مصنوعی"
-  location: "ایران، تهران"
+  bio: "دانشجوی علوم داده"
   links:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/amiralisatvati"
-    - label: "LinkedIn"
-      icon: "fab fa-fw fa-linkedin"
-      url: "https://linkedin.com/in/amirali-satvati"
-    - label: "Telegram"
-      icon: "fab fa-fw fa-telegram"
-      url: "https://t.me/amiralisatvati"
-    - label: "ایمیل"
-      icon: "fas fa-fw fa-envelope"
-      url: "mailto:amiralisatvati@gmail.com"
 
-footer:
-  links:
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/amiralisatvati"
-    - label: "LinkedIn"
-      icon: "fab fa-fw fa-linkedin"
-      url: "https://linkedin.com/in/amirali-satvati"
-
+# پیش‌فرض‌ها
 defaults:
   - scope:
       path: ""
@@ -54,15 +35,3 @@ defaults:
     values:
       layout: single
       author_profile: true
-      read_time: true
-      comments: false
-      share: true
-      related: true
-  - scope:
-      path: "_pages"
-      type: pages
-    values:
-      layout: single
-      author_profile: true
-
-paginate: 10
