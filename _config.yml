@@ -1,45 +1,97 @@
-# تنظیمات پورتفولیوی امیرعلی سطوتی
-title: "پورتفولیوی امیرعلی سطوتی"
+# === تنظیمات اصلی سایت ===
+title: "امیرعلی سطوتی"
+subtitle: "دانشجوی علوم داده | تحلیلگر آماری"
 name: "امیرعلی سطوتی"
-description: "دانشجوی علوم داده | تحلیل آماری | پایتون و R"
-
-# --- تنظیمات مهم زبان (راست‌چین) ---
-locale: "fa-IR"
-direction: "rtl"
+description: "پورتفولیوی حرفه‌ای امیرعلی سطوتی - متخصص علوم داده، تحلیل آماری و برنامه‌نویسی پایتون و R"
 url: "https://amiralisatvati.github.io"
+baseurl: ""
+repository: "amiralisatvati/amiralisatvati.github.io"
 
-# --- قالب و ظاهر ---
-minimal_mistakes_skin: "default" # پوسته‌های دیگر: air, sunrise, aqua
+# === تنظیمات زبان و جهت ===
+locale: "fa-IR"
+rtl: true
+direction: "rtl"
+
+# === تم و ظاهر ===
+remote_theme: "mmistakes/minimal-mistakes@4.26.2"
+minimal_mistakes_skin: "dark" # پوسته تاریک برای ظاهر مدرن
+logo: "/assets/images/logo.png" # لوگوی شخصی (88x88px)
+masthead_title: "امیرعلی سطوتی"
+
+# === جستجو و SEO ===
 search: true
+search_full_content: true
+lunr:
+  search_within_pages: true
 
-# --- تنظیمات فنی ---
-remote_theme: "mmistakes/minimal-mistakes"
+# === تنظیمات فنی ===
 plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-gist
   - jekyll-feed
-  - jemoji
   - jekyll-include-cache
+  - jekyll-seo-tag
 
-# --- مشخصات نویسنده (سایدبار) ---
-author:
-  name        : "امیرعلی سطوتی"
-  bio         : "👨‍💻 دانشجوی علوم داده <br> 📊 تحلیل آماری"
-  location    : "Iran"
+# === SEO ===
+og_image: "/assets/images/bio-photo.jpg"
+google_site_verification: "کد تایید گوگل"
+bing_site_verification: "کد تایید بینگ"
+
+# === شبکه‌های اجتماعی ===
+twitter:
+  username: "amiralisatvati"
+social:
+  type: "Person"
+  name: "امیرعلی سطوتی"
   links:
-    - label: "گیت‌هاب"
+    - "https://github.com/amiralisatvati"
+    - "https://linkedin.com/in/amirali-satvati"
+    - "https://t.me/amiralisatvati"
+
+# === پروفایل نویسنده ===
+author:
+  name: "امیرعلی سطوتی"
+  avatar: "/assets/images/bio-photo.jpg"
+  bio: |
+    👨‍💻 دانشجوی علوم داده و هوش مصنوعی<br>
+    📊 تحلیلگر داده و آمار<br>
+    🐍 Python | R | SQL<br>
+    🔬 Machine Learning Enthusiast
+  location: "ایران، تهران"
+  links:
+    - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/amiralisatvati"
-    - label: "لینکدین"
+    - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
       url: "https://linkedin.com/in/amirali-satvati"
-    - label: "تلگرام"
+    - label: "Telegram"
       icon: "fab fa-fw fa-telegram"
-      url: "https://t.me/amirali_satvati"
+      url: "https://t.me/amiralisatvati"
+    - label: "ایمیل"
+      icon: "fas fa-fw fa-envelope"
+      url: "mailto:your-email@example.com"
+    - label: "Kaggle"
+      icon: "fab fa-fw fa-kaggle"
+      url: "https://kaggle.com/yourusername"
 
-# --- تنظیمات پست‌ها ---
+# === فوتر ===
+footer:
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/amiralisatvati"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://linkedin.com/in/amirali-satvati"
+    - label: "Telegram"
+      icon: "fab fa-fw fa-telegram"
+      url: "https://t.me/amiralisatvati"
+
+# === پیش‌فرض‌ها ===
 defaults:
+  # _posts
   - scope:
       path: ""
       type: posts
@@ -47,6 +99,87 @@ defaults:
       layout: single
       author_profile: true
       read_time: true
+      show_date: true
       comments: false
       share: true
       related: true
+      toc: true
+      toc_sticky: true
+      classes: wide
+
+  # _pages
+  - scope:
+      path: "_pages"
+      type: pages
+    values:
+      layout: single
+      author_profile: true
+      classes: wide
+
+  # _portfolio
+  - scope:
+      path: ""
+      type: portfolio
+    values:
+      layout: single
+      author_profile: false
+      share: true
+
+# === مجموعه‌ها (Collections) ===
+collections:
+  portfolio:
+    output: true
+    permalink: /:collection/:path/
+  projects:
+    output: true
+    permalink: /projects/:path/
+
+# === صفحه‌بندی ===
+paginate: 10
+paginate_path: /page:num/
+
+# === آرشیو ===
+category_archive:
+  type: liquid
+  path: /categories/
+tag_archive:
+  type: liquid
+  path: /tags/
+
+# === فشرده‌سازی HTML ===
+compress_html:
+  clippings: all
+  ignore:
+    envs: development
+
+# === تنظیمات اضافی ===
+timezone: Asia/Tehran
+date_format: "%Y/%m/%d"
+words_per_minute: 200
+enable_copy_code_button: true
+
+# === Exclude ===
+exclude:
+  - "*.sublime-project"
+  - "*.sublime-workspace"
+  - vendor
+  - .asset-cache
+  - .bundle
+  - .jekyll-assets-cache
+  - .sass-cache
+  - assets/js/plugins
+  - assets/js/_main.js
+  - assets/js/vendor
+  - Capfile
+  - CHANGELOG
+  - config
+  - Gemfile
+  - Gruntfile.js
+  - gulpfile.js
+  - LICENSE
+  - log
+  - node_modules
+  - package.json
+  - Rakefile
+  - README
+  - tmp

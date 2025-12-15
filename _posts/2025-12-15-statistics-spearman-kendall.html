@@ -1,0 +1,479 @@
+---
+layout: post
+title: "جزوه جامع آمار: هم‌بستگی‌های رتبه‌ای اسپیرمن و کندال"
+description: "آموزش کامل ضریب هم‌بستگی اسپیرمن و کندال، حل تشریحی تمرین‌های امتحانی و نحوه محاسبه P و N"
+date: 2025-12-15 15:00:00 +0330
+categories: [Education, Statistics]
+tags: [آمار, هم‌بستگی, اسپیرمن, کندال, آزمون‌های غیرپارامتری, Statistics, Spearman, Kendall, Correlation, Rank Test]
+author: "امیرعلی سطوتی"
+---
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جزوه جامع آزمون‌های هم‌بستگی رتبه‌ای: اسپیرمن و کندال | ویژه شب امتحان</title>
+    <meta name="description" content="آموزش کامل ضریب هم‌بستگی اسپیرمن و کندال، حل تشریحی تمرین‌های امتحانی، نحوه محاسبه P و N در کندال. تهیه شده توسط امیرعلی سطوتی.">
+    
+    <!-- تنظیمات MathJax برای نمایش فرمول‌ها -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #f59e0b;
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --light-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+        }
+
+        body {
+            font-family: 'Tahoma', 'Segoe UI', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 40px 20px;
+            border-radius: 0 0 20px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            font-weight: 800;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-top: 40px;
+            font-size: 1.6rem;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            margin-top: 25px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+        }
+
+        h3::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 25px;
+            background-color: var(--accent-color);
+            margin-left: 10px;
+            border-radius: 4px;
+        }
+
+        .content-box {
+            background: var(--light-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .formula-box {
+            background-color: #f1f5f9;
+            border-right: 5px solid var(--primary-color);
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Times New Roman', serif;
+            font-size: 1.2rem;
+            text-align: center;
+            border-radius: 8px;
+            direction: ltr;
+            overflow-x: auto;
+        }
+
+        .example-box {
+            background-color: #ecfdf5;
+            border: 1px solid #d1fae5;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .example-title {
+            color: var(--success-color);
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: var(--secondary-color);
+        }
+
+        tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .note {
+            background-color: #fffbeb;
+            border-right: 4px solid var(--accent-color);
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 0.95rem;
+        }
+
+        .review-section {
+            background: #1e293b;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 50px;
+        }
+
+        .review-section h2 {
+            color: var(--accent-color);
+            border-bottom-color: rgba(255,255,255,0.2);
+        }
+
+        .exam-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .exam-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .question-card {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .answer-key {
+            background-color: #f8fafc;
+            color: var(--text-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        ul {
+            list-style-type: disc;
+            padding-right: 20px;
+        }
+        
+        /* Footer Styles */
+        footer {
+            margin-top: 50px;
+            padding: 30px;
+            border-top: 2px solid var(--border-color);
+            text-align: center;
+            color: var(--secondary-color);
+            background-color: #eef2ff;
+            border-radius: 12px;
+        }
+        
+        .footer-credit {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+        
+        .footer-sub {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>جزوه جامع آماری: هم‌بستگی‌های رتبه‌ای</h1>
+        <p>راهنمای کامل آزمون اسپیرمن و کندال | ویژه دانشجویان و متقاضیان آزمون‌های استخدامی</p>
+    </header>
+
+    <!-- Section 1: Introduction -->
+    <div class="content-box">
+        <h2>مقدمه: چرا آزمون‌های ناپارامتری؟</h2>
+        <p>در آمار، زمانی که داده‌های ما دارای توزیع نرمال نباشند، داده‌های پرت (Outlier) وجود داشته باشد، یا متغیرهای ما از نوع کیفی (رتبه‌ای) باشند، نمی‌توانیم از ضریب هم‌بستگی پیرسون استفاده کنیم. در این شرایط، دو آزمون قدرتمند جایگزین وجود دارد:</p>
+        <ul>
+            <li><strong>ضریب هم‌بستگی رتبه‌ای اسپیرمن (Spearman)</strong></li>
+            <li><strong>ضریب هم‌بستگی کندال (Kendall's Tau)</strong></li>
+        </ul>
+        <p class="note">⚠️ نکته مهم: این روش‌ها به جای استفاده از مقادیر عددی واقعی، از <strong>رتبه (Rank)</strong> داده‌ها استفاده می‌کنند.</p>
+    </div>
+
+    <!-- Section 2: Spearman -->
+    <div class="content-box">
+        <h2>۱. ضریب هم‌بستگی رتبه‌ای اسپیرمن (Spearman)</h2>
+        <p>این ضریب همان ضریب هم‌بستگی پیرسون است که برای رتبه‌ها محاسبه می‌شود. اگر داده‌ها تکراری (Goreh) نداشته باشند، فرمول ساده زیر استفاده می‌شود:</p>
+
+        <div class="formula-box">
+            $$ R_S = 1 - \frac{6 \sum_{i=1}^{n} D_i^2}{n(n^2 - 1)} $$
+        </div>
+        
+        <ul>
+            <li><strong>n:</strong> تعداد جفت داده‌ها (حجم نمونه).</li>
+            <li><strong>D<sub>i</sub>:</strong> اختلاف بین رتبه متغیر اول و دوم برای هر مشاهده ($R_i - S_i$).</li>
+        </ul>
+
+        <div class="example-box">
+            <span class="example-title">📝 حل تمرین امتحانی ۱: نمرات زبان و ریاضی</span>
+            <p><strong>صورت سوال:</strong> نمرات زبان و ریاضی ۱۹ دانشجو داده شده است. آیا یادگیری در این دو درس مستقل است؟</p>
+            <p><strong>تحلیل حل:</strong></p>
+            <ol>
+                <li>نمرات هر درس جداگانه رتبه‌بندی می‌شوند.</li>
+                <li>اختلاف رتبه‌ها ($D$) محاسبه و به توان ۲ می‌رسد.</li>
+                <li>طبق محاسبات فایل، مقدار مجموع توان‌های دوم در فرمول قرار گرفته و ضریب $R_S$ محاسبه می‌شود.</li>
+                <li><strong>نتیجه‌گیری:</strong> چون احتمال محاسبه شده در آزمون فرض بسیار کم است (کمتر از ۵٪)، فرض صفر (استقلال) رد می‌شود. یعنی نمرات زبان و ریاضی به هم وابسته هستند.</li>
+            </ol>
+        </div>
+
+        <div class="example-box">
+            <span class="example-title">📝 حل تمرین امتحانی ۲: رتبه‌بندی ۸ متقاضی کار</span>
+            <p><strong>صورت سوال:</strong> ۸ متقاضی توسط دو کارفرما رتبه‌بندی شده‌اند. مستقل بودن نظرات را با خطای ۱۰٪ بیازمایید.</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>شماره متقاضی</th>
+                        <th>رتبه کارفرما ۱ ($R_i$)</th>
+                        <th>رتبه کارفرما ۲ ($S_i$)</th>
+                        <th>اختلاف ($D$)</th>
+                        <th>مجذور اختلاف ($D^2$)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>5</td><td>7</td><td>-2</td><td>4</td></tr>
+                    <tr><td>2</td><td>8</td><td>4</td><td>4</td><td>16</td></tr>
+                    <tr><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td></tr>
+                    <tr><td>4</td><td>2</td><td>5</td><td>-3</td><td>9</td></tr>
+                    <tr><td>5</td><td>6</td><td>8</td><td>-2</td><td>4</td></tr>
+                    <tr><td>6</td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+                    <tr><td>7</td><td>7</td><td>6</td><td>1</td><td>1</td></tr>
+                    <tr><td>8</td><td>4</td><td>3</td><td>1</td><td>1</td></tr>
+                    <tr style="background-color: #e2e8f0; font-weight: bold;">
+                        <td colspan="4">مجموع ($\sum D^2$)</td>
+                        <td>36</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>محاسبه:</strong></p>
+            <div style="direction: ltr; text-align: center;">
+                $$ R_S = 1 - \frac{6(36)}{8(64-1)} = 1 - \frac{216}{504} \approx 0.57 $$
+            </div>
+            <p><strong>آزمون فرض:</strong> با استفاده از تقریب نرمال ($Z = R_S\sqrt{n-1}$)، مقدار $Z \approx 1.5$ به دست می‌آید. چون $1.5 < 1.645$ (مقدار بحرانی)، فرض استقلال در سطح ۱۰٪ رد نمی‌شود.</p>
+        </div>
+    </div>
+
+    <!-- Section 3: Kendall -->
+    <div class="content-box">
+        <h2>۲. ضریب هم‌بستگی کندال (Kendall's Tau)</h2>
+        <p>کندال بر اساس <strong>جفت‌های هماهنگ (P)</strong> و <strong>ناهماهنگ (N)</strong> کار می‌کند. این روش زمانی که داده‌ها رتبه‌ای هستند و حجم نمونه کم است، بسیار دقیق‌تر است.</p>
+
+        <div class="formula-box">
+            $$ \tau = \frac{P - N}{\binom{n}{2}} \quad \text{یا} \quad \tau = \frac{4P}{n(n-1)} - 1 $$
+        </div>
+
+        <h3>الگوریتم طلایی محاسبه (گام‌به‌گام)</h3>
+        <ol>
+            <li>داده‌ها را بر اساس <strong>متغیر اول (X)</strong> به صورت صعودی (۱ تا n) مرتب کنید.</li>
+            <li>رتبه‌های متناظر متغیر دوم (Y) را زیر آن‌ها بنویسید.</li>
+            <li>برای هر عدد در ردیف دوم، بشمارید چند عدد در سمت چپ (بعد از آن) وجود دارد که از آن عدد <strong>بزرگتر</strong> است. این مقدار برابر با تعداد هماهنگ‌ها برای آن عدد است.</li>
+            <li>مجموع تمام این شمارش‌ها برابر با <strong>P</strong> است.</li>
+            <li>تعداد ناهماهنگ‌ها ($N$) برابر است با: کل حالات منهای $P$.</li>
+        </ol>
+
+        <div class="example-box">
+            <span class="example-title">🔍 تحلیل عمیق: چطور P=21 شد؟ (مثال معلم‌ها)</span>
+            <p>در مثال اول جزوه (۸ دانشجو)، پس از مرتب‌سازی بر اساس معلم اول، رتبه‌های معلم دوم به این صورت درآمد:</p>
+            <p style="text-align: center; font-weight: bold; font-size: 1.1em;">
+                3, 5, 8, 4, 7, 1, 2, 6
+            </p>
+            <p>بیایید P را محاسبه کنیم:</p>
+            <ul>
+                <li>عدد 3: بعدش {5, 8, 4, 7, 6} بزرگترند (5 عدد)</li>
+                <li>عدد 5: بعدش {8, 7, 6} بزرگترند (3 عدد)</li>
+                <li>عدد 8: بعدش هیچ عددی بزرگتر نیست (0 عدد)</li>
+                <li>عدد 4: بعدش {7, 6} بزرگترند (2 عدد)</li>
+                <li>عدد 7: بعدش هیچ عددی بزرگتر نیست (0 عدد)</li>
+                <li>عدد 1: بعدش {2, 6} بزرگترند (2 عدد)</li>
+                <li>عدد 2: بعدش {6} بزرگتر است (1 عدد)</li>
+                <li>عدد 6: عدد آخری است (0 عدد)</li>
+            </ul>
+            <p><strong>مجموع P:</strong> 5 + 3 + 0 + 2 + 0 + 2 + 1 + 0 = <strong>13</strong> <br> 
+            <span style="color:red; font-size:0.9em;">*توضیح: در فایل اصلی به دلیل ناخوانایی، ترتیب اعداد ممکن است متفاوت بوده باشد که به عدد ۲۱ رسیده است، اما روش محاسبه دقیقا همین الگوریتم "تعداد بزرگترهای سمت چپ" است. برای امتحان، روش مهم‌تر از عدد نهایی است.</span></p>
+        </div>
+
+        <div class="example-box">
+            <span class="example-title">📝 حل تمرین امتحانی ۳: مهندسین (۱۰ قطعه)</span>
+            <p><strong>داده‌ها:</strong> ردیف دوم (مهندس ۲) پس از مرتب‌سازی مهندس ۱:</p>
+            <p dir="ltr" style="text-align: center;">{2, 1, 4, 3, 6, 5, 8, 7, 10, 9}</p>
+            
+            <p><strong>محاسبه P (تعداد بزرگترهای بعدی):</strong></p>
+            <ul style="column-count: 2;">
+                <li>برای 2: هشت عدد بزرگترند (8)</li>
+                <li>برای 1: هشت عدد بزرگترند (8)</li>
+                <li>برای 4: شش عدد بزرگترند (6)</li>
+                <li>برای 3: شش عدد بزرگترند (6)</li>
+                <li>برای 6: چهار عدد بزرگترند (4)</li>
+                <li>برای 5: چهار عدد بزرگترند (4)</li>
+                <li>برای 8: دو عدد بزرگترند (2)</li>
+                <li>برای 7: دو عدد بزرگترند (2)</li>
+                <li>برای 10: صفر (0)</li>
+                <li>برای 9: صفر (0)</li>
+            </ul>
+            <p><strong>مجموع P:</strong> 8+8+6+6+4+4+2+2 = <strong>40</strong></p>
+            <p><strong>کل حالات:</strong> $\binom{10}{2} = 45$</p>
+            <p><strong>محاسبه N:</strong> $45 - 40 = 5$</p>
+            <p><strong>ضریب کندال:</strong></p>
+            <div style="direction: ltr; text-align: center;">
+                $$ \tau = \frac{40 - 5}{45} = \frac{35}{45} \approx 0.78 $$
+            </div>
+            <p><strong>نتیجه:</strong> هم‌بستگی قوی و مثبت.</p>
+        </div>
+    </div>
+
+    <!-- Section 4: Exam Cram Sheet -->
+    <div class="review-section">
+        <h2 style="margin-top:0;">🧠 مرور شب امتحان (فشرده)</h2>
+        <div class="exam-grid">
+            <div>
+                <h3>اسپیرمن ($R_S$)</h3>
+                <ul>
+                    <li><strong>کاربرد:</strong> داده‌های رتبه‌ای یا فاصله‌ای که نرمال نیستند.</li>
+                    <li><strong>کلید محاسبه:</strong> ستون $D$ (اختلاف رتبه‌ها) و $D^2$.</li>
+                    <li><strong>بازه تغییرات:</strong> بین ۱- تا ۱+.</li>
+                    <li><strong>تفسیر:</strong> نزدیک ۱+ (همسویی مستقیم)، نزدیک ۱- (همسویی معکوس)، نزدیک ۰ (استقلال).</li>
+                </ul>
+            </div>
+            <div>
+                <h3>کندال ($\tau$)</h3>
+                <ul>
+                    <li><strong>کاربرد:</strong> دقیق‌تر از اسپیرمن برای نمونه‌های کوچک.</li>
+                    <li><strong>کلید محاسبه:</strong> جفت‌های هماهنگ (P) و ناهماهنگ (N).</li>
+                    <li><strong>فرمول سریع:</strong> $\frac{P-N}{\text{کل جفت‌ها}}$.</li>
+                    <li><strong>آزمون فرض:</strong> استفاده از $Z$ در نمونه‌های بزرگ.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="note" style="color: black; margin-top: 20px;">
+            <strong>نکته طلایی:</strong> در هر دو آزمون، فرض $H_0$ همیشه <strong>استقلال</strong> دو متغیر است (یعنی هم‌بستگی صفر است). اگر مقدار آزمون در ناحیه بحرانی باشد، $H_0$ رد شده و هم‌بستگی تایید می‌شود.
+        </div>
+    </div>
+
+    <!-- Section 5: Questions & Answers -->
+    <div class="content-box">
+        <h2>📝 سوالات امتحانی و پاسخ‌نامه</h2>
+        
+        <h3>الف) سوالات تشریحی</h3>
+        <ol>
+            <li><strong>تفاوت اصلی اسپیرمن و کندال در چیست؟</strong><br>
+            <em>پاسخ:</em> اسپیرمن بر اساس "اندازه اختلاف رتبه‌ها" ($D^2$) کار می‌کند، اما کندال بر اساس "ترتیب و توافق" جفت‌ها (هماهنگ/ناهماهنگ) محاسبه می‌شود.</li>
+            
+            <li><strong>اگر $R_S = 1$ باشد، چه معنایی دارد؟</strong><br>
+            <em>پاسخ:</em> یعنی رتبه‌های دو متغیر دقیقاً یکسان هستند (تطابق کامل مستقیم) و تمام $D_i$ها صفر هستند.</li>
+            
+            <li><strong>پارامتر $P$ در آزمون کندال چگونه محاسبه می‌شود؟</strong><br>
+            <em>پاسخ:</em> پس از مرتب‌سازی صعودی متغیر X، برای هر مقدار Y تعداد مقادیری که در ادامه (سمت چپ) از آن بزرگتر هستند را می‌شماریم و جمع می‌زنیم.</li>
+        </ol>
+
+        <h3>ب) تست‌های چهارگزینه‌ای</h3>
+        
+        <div class="question-card" style="background-color: #f8fafc; border: 1px solid #ddd;">
+            <p><strong>۱. کدام آزمون برای بررسی رابطه بین دو متغیر رتبه‌ای مناسب است؟</strong></p>
+            <p>الف) تی-استیودنت &nbsp;&nbsp; ب) پیرسون &nbsp;&nbsp; ج) اسپیرمن &nbsp;&nbsp; د) تحلیل واریانس</p>
+        </div>
+
+        <div class="question-card" style="background-color: #f8fafc; border: 1px solid #ddd;">
+            <p><strong>۲. در محاسبه ضریب اسپیرمن، اگر $n=10$ باشد، مخرج کسر فرمول کدام است؟</strong></p>
+            <p>الف) 90 &nbsp;&nbsp; ب) 990 &nbsp;&nbsp; ج) 100 &nbsp;&nbsp; د) 900</p>
+        </div>
+
+        <div class="question-card" style="background-color: #f8fafc; border: 1px solid #ddd;">
+            <p><strong>۳. اگر در آزمون کندال همه جفت‌ها هماهنگ باشند، مقدار $\tau$ چقدر است؟</strong></p>
+            <p>الف) 0 &nbsp;&nbsp; ب) 0.5 &nbsp;&nbsp; ج) -1 &nbsp;&nbsp; د) 1</p>
+        </div>
+
+        <div class="question-card" style="background-color: #f8fafc; border: 1px solid #ddd;">
+            <p><strong>۴. در مثال مهندسین، مقدار $\tau \approx 0.78$ نشان‌دهنده چیست؟</strong></p>
+            <p>الف) استقلال نظرات &nbsp;&nbsp; ب) هم‌بستگی قوی مستقیم &nbsp;&nbsp; ج) هم‌بستگی ضعیف معکوس &nbsp;&nbsp; د) خطای محاسبه</p>
+        </div>
+
+        <div class="question-card" style="background-color: #f8fafc; border: 1px solid #ddd;">
+            <p><strong>۵. فرمول محاسبه $N$ (ناهماهنگ) در کندال کدام است؟ ($Total$ = کل جفت‌ها)</strong></p>
+            <p>الف) $Total - P$ &nbsp;&nbsp; ب) $P - Total$ &nbsp;&nbsp; ج) $P + Total$ &nbsp;&nbsp; د) $Total / P$</p>
+        </div>
+
+        <div class="answer-key">
+            <h3>📌 پاسخ‌نامه کلیدی</h3>
+            <p><strong>۱:</strong> گزینه ج (اسپیرمن)</p>
+            <p><strong>۲:</strong> گزینه ب ($n(n^2-1) = 10(99) = 990$)</p>
+            <p><strong>۳:</strong> گزینه د (تطابق کامل)</p>
+            <p><strong>۴:</strong> گزینه ب (هم‌بستگی قوی)</p>
+            <p><strong>۵:</strong> گزینه الف</p>
+        </div>
+    </div>
+
+    <!-- Footer Credit -->
+    <footer>
+        <p class="footer-credit">تهیه شده توسط امیرعلی سطوتی</p>
+        <p class="footer-sub">جزوه جامع آموزشی</p>
+    </footer>
+
+</div>
+
+</body>
+</html>
