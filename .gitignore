@@ -1,4 +1,28 @@
-_site
-.sass-cache
+# Local
+.sass-cache/
+.jekyll-cache/
 .jekyll-metadata
+_site/
+.ruby-version
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# OS
+.DS_Store
+Thumbs.db
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Gemfile
 Gemfile.lock
