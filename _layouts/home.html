@@ -1,0 +1,38 @@
+---
+layout: default
+---
+
+{% include base_path %}
+
+{% if page.header.overlay_color or page.header.overlay_image or page.header.image %}
+  {% include page__hero.html %}
+{% elsif page.header.video %}
+  {% include page__video.html %}
+{% endif %}
+
+{% include feature_row %}
+
+<div id="main" role="main">
+  {% include sidebar.html %}
+
+  <div class="archive">
+    {% unless page.header.overlay_color or page.header.overlay_image %}
+      <h1 id="page-title" class="page__title">{{ page.title }}</h1>
+    {% endunless %}
+    
+    <div class="page__content glass-effect">
+      {{ content }}
+    </div>
+
+    {% if page.entries_layout == 'grid' %}
+      {% for post in paginator.posts %}
+        {% include archive-single.html type="grid" %}
+      {% endfor %}
+    {% else %}
+      {% for post in paginator.posts %}
+        {% include archive-single.html %}
+      {% endfor %}
+    {% endif %}
+    {% include paginator.html %}
+  </div>
+</div>
