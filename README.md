@@ -1,27 +1,65 @@
-# Minimal Mistakes remote theme starter
+# پورتفولیو امیرعلی سطوتی
 
-Click [**Use this template**](https://github.com/mmistakes/mm-github-pages-starter/generate) button above for the quickest method of getting started with the [Minimal Mistakes Jekyll theme](https://github.com/mmistakes/minimal-mistakes).
+## مرحبا
 
-Contains basic configuration to get you a site with:
+این یك پورتفولیو حرفه‌ای است که به عنوان صفحه بیوگرافی اینجا بر روی GitHub Pages مستقر است.
 
-- Sample posts.
-- Sample top navigation.
-- Sample author sidebar with social links.
-- Sample footer links.
-- Paginated home page.
-- Archive pages for posts grouped by year, category, and tag.
-- Sample about page.
-- Sample 404 page.
-- Site wide search.
-
-Replace sample content with your own and [configure as necessary](https://mmistakes.github.io/minimal-mistakes/docs/configuration/).
+**سار به:** https://amiralisatvati.github.io
 
 ---
 
-## Troubleshooting
+## مخزن طتیاب 
 
-If you have a question about using Jekyll, start a discussion on the [Jekyll Forum](https://talk.jekyllrb.com/) or [StackOverflow](https://stackoverflow.com/questions/tagged/jekyll). Other resources:
+```
+amiralisatvati.github.io/
+├── _config.yml              # تنظیمات اصلی Jekyll
+├── _data/                  # داده‌های سائط
+├── _pages/                 # صفحات استاتیک
+├── _posts/                 # مقالات بلاگ
+├── _sass/                  # فايل‌های SCSS
+├── assets/                 # تصاویر و CSS
+├── index.md                # صفحه اصلی
+└── README.md               # همین فايل
+```
 
-- [Ruby 101](https://jekyllrb.com/docs/ruby-101/)
-- [Setting up a Jekyll site with GitHub Pages](https://jekyllrb.com/docs/github-pages/)
-- [Configuring GitHub Metadata](https://github.com/jekyll/github-metadata/blob/master/docs/configuration.md#configuration) to work properly when developing locally and avoid `No GitHub API authentication could be found. Some fields may be missing or have incorrect data.` warnings.
+---
+
+## راه‌اندازی محلی
+
+### اه تلب لازمه
+
+- Ruby 3.0+
+- Bundler
+
+### شروع جستجو
+
+```bash
+# رطوبه‌ها را ترکیب کنید
+bundle install
+
+# سرور را اجرا کنید
+bundle exec jekyll serve
+
+# سار به بیایید:
+http://localhost:4000
+```
+
+---
+
+## فلسفه
+
+این پروژه بر پاره **Minimal Mistakes Jekyll Theme** بنا می‌یابد.
+
+---
+
+## منابع مفید
+
+- [Jekyll Documentation](https://jekyllrb.com/)
+- [Minimal Mistakes Theme](https://mmistakes.github.io/minimal-mistakes/)
+- [GitHub Pages](https://pages.github.com/)
+
+---
+
+## مباحثه
+
+جدیدترین بهروزرسانی: **۱۶ دسامبر ۲۰۲۵**
