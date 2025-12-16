@@ -1,11 +1,26 @@
 title: "امیرعلی سطوتی"
-description: "پورتفولیوی علوم داده"
+description: "تحلیل‌گر داده و مشتاق هوش مصنوعی | Data Analyst & AI Enthusiast"
 url: "https://amiralisatvati.github.io"
 baseurl: ""
 
-# تم
+# نویسنده
+author:
+  name: "امیرعلی سطوتی"
+  bio: "دانشجوی آمار دانشگاه فردوسی | R & Python Developer"
+  location: "مشهد، ایران"
+  email: "amiralisatvati5995@gmail.com"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/amiralisatvati"
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope"
+      url: "mailto:amiralisatvati5995@gmail.com"
+
+# تم و تنظیمات
 remote_theme: "mmistakes/minimal-mistakes@4.26.2"
 minimal_mistakes_skin: "dark"
+locale: "fa-IR"
 
 # پلاگین‌ها
 plugins:
@@ -13,21 +28,9 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-feed
+  - jekyll-seo-tag
 
-# تنظیمات پایه
-locale: "fa-IR"
-search: true
-
-# نویسنده
-author:
-  name: "امیرعلی سطوتی"
-  bio: "دانشجوی علوم داده"
-  links:
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/amiralisatvati"
-
-# پیش‌فرض‌ها
+# تنظیمات پیش‌فرض
 defaults:
   - scope:
       path: ""
@@ -35,3 +38,21 @@ defaults:
     values:
       layout: single
       author_profile: true
+      read_time: true
+      comments: false
+      share: true
+      related: true
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      author_profile: true
+
+# ساسsass:
+  sass_dir: _sass
+  style: compressed
+
+# تا غر اینجا
+paginate: 6
+paginate_path: "/blog/page:num/"
