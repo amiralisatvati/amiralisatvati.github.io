@@ -1,29 +1,115 @@
 ---
-layout: exam_guide
+layout: default
 title: "فصل ۳ شبیه‌سازی: روش‌های تولید اعداد تصادفی"
 description: "جزوه کامل شامل روش‌های میان‌مربع، همنهشتی خطی (LCG)، تست‌های یکنواختی و نکات کنکوری"
-date: 2025-12-15 18:00:00 +0330
+date: 2024-01-01 12:00:00 +0330
+permalink: /chapter3-simulation/
 categories: [University, Computer Science]
-tags: [شبیه‌سازی, اعداد تصادفی, مهندسی کامپیوتر, همنهشتی خطی, Simulation, Random Numbers, RNG, LCG, Computer Science]
+tags: [شبیه‌سازی, اعداد تصادفی, مهندسی کامپیوتر, همنهشتی خطی]
 author: "امیرعلی سطوتی"
-excerpt: "جزوه کامل فصل ۳ شبیه‌سازی: روش‌های تولید اعداد تصادفی - شامل روش‌های میان‌مربع، همنهشتی خطی (LCG) و تست‌های یکنواختی"
----<!-- بخش آموزش کامل -->
-<div dir="rtl" style="text-align: right; font-family: Tahoma, 'Vazir', sans-serif;">
+excerpt: "جزوه کامل فصل ۳ شبیه‌سازی: روش‌های تولید اعداد تصادفی"
+---
+
+<!-- استایل‌های اختصاصی برای هماهنگی با قالب سایت -->
+<style>
+    .rtl-container {
+        direction: rtl;
+        text-align: right;
+        font-family: 'Vazir', Tahoma, sans-serif;
+        line-height: 1.8;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    .rtl-container h2 {
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 10px;
+        margin-top: 40px;
+        color: #2c3e50;
+    }
+    .rtl-container h3 {
+        color: #34495e;
+        margin-top: 30px;
+        font-weight: bold;
+    }
+    /* استایل باکس‌ها */
+    .box {
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 8px;
+        border-right: 5px solid;
+        background-color: #f9f9f9;
+        text-align: right;
+    }
+    .box-def {
+        border-color: #3498db; /* آبی */
+        background-color: #eaf6ff;
+    }
+    .box-info {
+        border-color: #1abc9c; /* فیروزه‌ای */
+        background-color: #e8f8f5;
+    }
+    .box-danger {
+        border-color: #e74c3c; /* قرمز */
+        background-color: #fdedec;
+    }
+    .box-success {
+        border-color: #2ecc71; /* سبز */
+        background-color: #eafaf1;
+    }
+    .box-tip {
+        border-color: #f1c40f; /* زرد */
+        background-color: #fef9e7;
+    }
+    /* اصلاح لیست‌ها */
+    .rtl-container ul, .rtl-container ol {
+        padding-right: 40px;
+        padding-left: 0;
+    }
+    .rtl-container li {
+        margin-bottom: 8px;
+    }
+    /* فرمول‌ها */
+    .formula-inline {
+        direction: ltr;
+        display: inline-block;
+        font-family: 'Times New Roman', serif;
+        font-style: italic;
+        background: #eee;
+        padding: 0 5px;
+        border-radius: 4px;
+        font-size: 0.95em;
+    }
+    .question {
+        margin-bottom: 25px;
+        border-bottom: 1px dashed #ccc;
+        padding-bottom: 15px;
+    }
+    .options label {
+        display: block;
+        margin: 5px 0;
+        cursor: pointer;
+    }
+</style>
+
+<div class="rtl-container">
+
     <section id="full-tutorial">
         <h2>۱. مقدمه و مفاهیم پایه</h2>
-        <p>در شبیه‌سازی کامپیوتری، قلب سیستم «تولید اعداد تصادفی» است. هدف نهایی ما تولید دنباله‌ای از اعداد $u_i$ است که دارای دو ویژگی حیاتی باشند:</p>
+        <p>در شبیه‌سازی کامپیوتری، قلب سیستم «تولید اعداد تصادفی» است. هدف نهایی ما تولید دنباله‌ای از اعداد <span class="formula-inline">u_i</span> است که دارای دو ویژگی حیاتی باشند:</p>
         <ol>
-            <li><strong>یکنواختی (Uniformity):</strong> اعداد باید در بازه $(0, 1)$ به صورت یکنواخت پخش شده باشند.</li>
+            <li><strong>یکنواختی (Uniformity):</strong> اعداد باید در بازه <span class="formula-inline">(0, 1)</span> به صورت یکنواخت پخش شده باشند.</li>
             <li><strong>استقلال (Independence):</strong> اعداد نباید به یکدیگر وابسته باشند (یعنی دانستن مقدار قبلی نباید به سادگی مقدار بعدی را لو بدهد).</li>
         </ol>
 
-        <div class="warning-box">
+        <div class="box box-info">
             <strong>نکته مفهومی مهم:</strong> از آنجا که کامپیوترها ماشین‌هایی منطقی هستند و بر اساس الگوریتم‌های قطعی کار می‌کنند، اعدادی که تولید می‌کنند واقعاً تصادفی نیستند؛ بلکه به آن‌ها <strong>اعداد شبه‌تصادفی (Pseudo-random Numbers)</strong> می‌گویند.
         </div>
 
         <h3>روش کلی تولید اعداد</h3>
-        <p>در اکثر الگوریتم‌ها، ابتدا یک عدد صحیح مثبت $x_i$ تولید می‌شود و سپس با تقسیم آن بر عدد بزرگ $m$، آن را به بازه استاندارد $(0,1)$ می‌برند:</p>
-        <div class="formula-box">
+        <p>در اکثر الگوریتم‌ها، ابتدا یک عدد صحیح مثبت <span class="formula-inline">x_i</span> تولید می‌شود و سپس با تقسیم آن بر عدد بزرگ <span class="formula-inline">m</span>، آن را به بازه استاندارد <span class="formula-inline">(0,1)</span> می‌برند:</p>
+        
+        <div class="box box-def" style="text-align: center; direction: ltr;">
             $$ u_i = \frac{x_i}{m} $$
         </div>
 
@@ -35,33 +121,33 @@ excerpt: "جزوه کامل فصل ۳ شبیه‌سازی: روش‌های تو�
         <h3>الف) روش میان‌مربع (Middle-Square Method)</h3>
         <p>این روش توسط جان فون‌نویمان (John von Neumann) پیشنهاد شد. الگوریتم آن به شرح زیر است:</p>
         <ol>
-            <li>یک عدد $N$ رقمی به عنوان هسته اولیه ($x_0$) انتخاب کنید.</li>
-            <li>آن را به توان ۲ برسانید ($x_0^2$).</li>
-            <li>اگر تعداد ارقام حاصل کمتر از $2N$ بود، سمت چپ آن «صفر» اضافه کنید تا دقیقاً $2N$ رقمی شود.</li>
-            <li>تعداد $N$ رقمِ وسط را جدا کنید. این عدد $x_1$ خواهد بود.</li>
-            <li>برای به دست آوردن $u_1$، یک ممیز در ابتدای $x_1$ قرار دهید.</li>
+            <li>یک عدد <span class="formula-inline">N</span> رقمی به عنوان هسته اولیه (<span class="formula-inline">x_0</span>) انتخاب کنید.</li>
+            <li>آن را به توان ۲ برسانید (<span class="formula-inline">x_0^2</span>).</li>
+            <li>اگر تعداد ارقام حاصل کمتر از <span class="formula-inline">2N</span> بود، سمت چپ آن «صفر» اضافه کنید تا دقیقاً <span class="formula-inline">2N</span> رقمی شود.</li>
+            <li>تعداد <span class="formula-inline">N</span> رقمِ وسط را جدا کنید. این عدد <span class="formula-inline">x_1</span> خواهد بود.</li>
+            <li>برای به دست آوردن <span class="formula-inline">u_1</span>، یک ممیز در ابتدای <span class="formula-inline">x_1</span> قرار دهید.</li>
         </ol>
 
-        <div class="example-box">
+        <div class="box box-success">
             <strong>مثال (طبق تصویر کتاب):</strong><br>
-            فرض کنید $N=4$ و هسته اولیه $x_0 = 5497$ باشد.<br>
+            فرض کنید <span class="formula-inline">N=4</span> و هسته اولیه <span class="formula-inline">x_0 = 5497</span> باشد.<br>
             <ul>
-                <li><strong>مرحله ۱:</strong> به توان ۲ می‌رسانیم: <span dir="ltr">5497<sup>2</sup> = 30217009</span></li>
+                <li><strong>مرحله ۱:</strong> به توان ۲ می‌رسانیم: <span class="formula-inline">5497^2 = 30217009</span></li>
                 <li><strong>مرحله ۲:</strong> عدد ۸ رقمی است (نیاز به صفر ندارد). ۴ رقم وسط را جدا می‌کنیم: <strong>2170</strong></li>
-                <li><strong>نتیجه:</strong> $x_1 = 2170$ و عدد تصادفی $u_1 = 0.2170$</li>
+                <li><strong>نتیجه:</strong> <span class="formula-inline">x_1 = 2170</span> و عدد تصادفی <span class="formula-inline">u_1 = 0.2170</span></li>
             </ul>
-            <strong>تمرین:</strong> محاسبه $x_2$:<br>
+            <strong>تمرین:</strong> محاسبه <span class="formula-inline">x_2</span>:<br>
             <ul>
-                <li><span dir="ltr">2170<sup>2</sup> = 4708900</span> (۷ رقمی است)</li>
+                <li><span class="formula-inline">2170^2 = 4708900</span> (۷ رقمی است)</li>
                 <li>اضافه کردن صفر: <strong>0</strong>4708900 (۸ رقمی شد)</li>
                 <li>۴ رقم وسط: <strong>7089</strong></li>
-                <li>$x_2 = 7089 \rightarrow u_2 = 0.7089$</li>
+                <li><span class="formula-inline">x_2 = 7089 \rightarrow u_2 = 0.7089</span></li>
             </ul>
         </div>
         <p><strong>ایراد:</strong> اعداد ممکن است خیلی سریع به صفر میل کنند یا در چرخه‌های کوتاه تکراری بیفتند.</p>
 
         <h3>ب) روش ضرب ثابت (Constant Multiplier)</h3>
-        <p>مشابه روش قبل است، با این تفاوت که $x_i$ به جای توان ۲، در یک عدد ثابت $K$ ضرب می‌شود.</p>
+        <p>مشابه روش قبل است، با این تفاوت که <span class="formula-inline">x_i</span> به جای توان ۲، در یک عدد ثابت <span class="formula-inline">K</span> ضرب می‌شود.</p>
 
         <hr>
 
@@ -70,83 +156,87 @@ excerpt: "جزوه کامل فصل ۳ شبیه‌سازی: روش‌های تو�
 
         <h3>الف) روش همنهشتی خطی (LCG)</h3>
         <p>فرمول بازگشتی تولید اعداد به صورت زیر است:</p>
-        <div class="formula-box">
+        <div class="box box-def" style="text-align: center; direction: ltr;">
             $$ x_{i+1} = (a x_i + b) \pmod m $$
         </div>
         
         <p><strong>پارامترها:</strong></p>
         <ul>
-            <li>$m$: پیمانه (Modulus) - عدد صحیح بزرگ ($m > 0$)</li>
-            <li>$a$: ضریب (Multiplier) - ($0 < a < m$)</li>
-            <li>$b$: عدد افزایشی (Increment) - ($0 \le b < m$)</li>
-            <li>$x_0$: هسته (Seed) - ($0 \le x_0 < m$)</li>
+            <li><span class="formula-inline">m</span>: پیمانه (Modulus) - عدد صحیح بزرگ (<span class="formula-inline">m > 0</span>)</li>
+            <li><span class="formula-inline">a</span>: ضریب (Multiplier) - (<span class="formula-inline">0 < a < m</span>)</li>
+            <li><span class="formula-inline">b</span>: عدد افزایشی (Increment) - (<span class="formula-inline">0 \le b < m</span>)</li>
+            <li><span class="formula-inline">x_0</span>: هسته (Seed) - (<span class="formula-inline">0 \le x_0 < m</span>)</li>
         </ul>
 
         <p><strong>دسته‌بندی مهم:</strong></p>
         <ul>
-            <li>اگر $b \neq 0$: روش همنهشتی <strong>آمیخته (Mixed)</strong> نامیده می‌شود.</li>
-            <li>اگر $b = 0$: روش همنهشتی <strong>ضربی (Multiplicative)</strong> نامیده می‌شود.</li>
+            <li>اگر <span class="formula-inline">b \neq 0</span>: روش همنهشتی <strong>آمیخته (Mixed)</strong> نامیده می‌شود.</li>
+            <li>اگر <span class="formula-inline">b = 0</span>: روش همنهشتی <strong>ضربی (Multiplicative)</strong> نامیده می‌شود.</li>
         </ul>
 
-        <h3>ب) فرمول محاسبه مستقیم $x_n$</h3>
-        <p>برای محاسبه $x_n$ بدون نیاز به محاسبه تمام اعداد قبلی:</p>
-        <div class="formula-box">
+        <h3>ب) فرمول محاسبه مستقیم <span class="formula-inline">x_n</span></h3>
+        <p>برای محاسبه <span class="formula-inline">x_n</span> بدون نیاز به محاسبه تمام اعداد قبلی:</p>
+        <div class="box box-def" style="text-align: center; direction: ltr;">
             $$ x_n = \left[ a^n x_0 + \frac{b(a^n - 1)}{a - 1} \right] \pmod m $$
         </div>
 
         <hr>
 
         <h2>۴. طول دوره تناوب (Period Length)</h2>
-        <p>طول دوره تناوب ($P$) تعداد اعدادی است که قبل از تکرار شدن اولین عدد تولید می‌شوند. بهترین حالت، <strong>طول دوره کامل (Full Period)</strong> است، یعنی $P=m$.</p>
+        <p>طول دوره تناوب (<span class="formula-inline">P</span>) تعداد اعدادی است که قبل از تکرار شدن اولین عدد تولید می‌شوند. بهترین حالت، <strong>طول دوره کامل (Full Period)</strong> است، یعنی <span class="formula-inline">P=m</span>.</p>
 
-        <div class="example-box" style="border-right-color: #e74c3c;">
+        <div class="box box-danger">
             <strong>قضیه بسیار مهم (شرایط طول دوره کامل):</strong><br>
-            یک مولد همنهشتی خطی دارای طول دوره کامل $m$ است، <strong>اگر و تنها اگر</strong> هر سه شرط زیر برقرار باشند:
+            یک مولد همنهشتی خطی دارای طول دوره کامل <span class="formula-inline">m</span> است، <strong>اگر و تنها اگر</strong> هر سه شرط زیر برقرار باشند:
             <ol>
-                <li><strong>شرط اول:</strong> $b$ و $m$ نسبت به هم اول باشند ($(b, m) = 1$).</li>
-                <li><strong>شرط دوم:</strong> هر عدد اول $q$ که مقسوم‌علیه $m$ است، باید مقسوم‌علیه $a-1$ نیز باشد.</li>
-                <li><strong>شرط سوم:</strong> اگر $m$ مضرب ۴ باشد، آنگاه $a-1$ نیز باید مضرب ۴ باشد.</li>
+                <li><strong>شرط اول:</strong> <span class="formula-inline">b</span> و <span class="formula-inline">m</span> نسبت به هم اول باشند (<span class="formula-inline">(b, m) = 1</span>).</li>
+                <li><strong>شرط دوم:</strong> هر عدد اول <span class="formula-inline">q</span> که مقسوم‌علیه <span class="formula-inline">m</span> است، باید مقسوم‌علیه <span class="formula-inline">a-1</span> نیز باشد.</li>
+                <li><strong>شرط سوم:</strong> اگر <span class="formula-inline">m</span> مضرب ۴ باشد، آنگاه <span class="formula-inline">a-1</span> نیز باید مضرب ۴ باشد.</li>
             </ol>
         </div>
 
         <h3>مثال حل شده ۱۴.۲.۳ (از متن کتاب)</h3>
-        <p>فرض کنید می‌خواهیم با $m=16$ یک مولد با طول دوره کامل بسازیم.</p>
-        <ul>
-            <li><strong>بررسی شرط ۱:</strong> $b$ و ۱۶ باید نسبت به هم اول باشند. پس $b$ باید فرد باشد (مثلاً $b=3$).</li>
-            <li><strong>بررسی شرط ۲:</strong> تنها عامل اول ۱۶، عدد ۲ است. پس $a-1$ باید بر ۲ بخش‌پذیر باشد (یعنی $a$ فرد باشد).</li>
-            <li><strong>بررسی شرط ۳:</strong> ۱۶ مضرب ۴ است، پس $a-1$ هم باید مضرب ۴ باشد.
-                <ul>
-                    <li>اگر $a=5$ باشد: $a-1=4$ (صحیح)</li>
-                </ul>
-            </li>
-        </ul>
-        <p><strong>نتیجه:</strong> پارامترهای $m=16, a=5, b=3$ یک مولد کامل می‌سازند.</p>
+        <p>فرض کنید می‌خواهیم با <span class="formula-inline">m=16</span> یک مولد با طول دوره کامل بسازیم.</p>
+        <div class="box box-success">
+            <ul>
+                <li><strong>بررسی شرط ۱:</strong> <span class="formula-inline">b</span> و ۱۶ باید نسبت به هم اول باشند. پس <span class="formula-inline">b</span> باید فرد باشد (مثلاً <span class="formula-inline">b=3</span>).</li>
+                <li><strong>بررسی شرط ۲:</strong> تنها عامل اول ۱۶، عدد ۲ است. پس <span class="formula-inline">a-1</span> باید بر ۲ بخش‌پذیر باشد (یعنی <span class="formula-inline">a</span> فرد باشد).</li>
+                <li><strong>بررسی شرط ۳:</strong> ۱۶ مضرب ۴ است، پس <span class="formula-inline">a-1</span> هم باید مضرب ۴ باشد.
+                    <ul>
+                        <li>اگر <span class="formula-inline">a=5</span> باشد: <span class="formula-inline">a-1=4</span> (صحیح)</li>
+                    </ul>
+                </li>
+            </ul>
+            <p style="margin-top: 10px;"><strong>نتیجه:</strong> پارامترهای <span class="formula-inline">m=16, a=5, b=3</span> یک مولد کامل می‌سازند.</p>
+        </div>
     </section>
 
     <!-- بخش مرور شب امتحان -->
     <section class="exam-review">
-        <h2>🧠 مرور شب امتحان (خلاصه فشرده)</h2>
-        <p>این نکات را قبل از ورود به جلسه امتحان حتماً مرور کنید:</p>
-        
-        <h3>۱. فرمول‌های کلیدی</h3>
-        <ul>
-            <li>تولید عدد تصادفی نرمال شده: $u_i = x_i / m$</li>
-            <li>همنهشتی خطی: $x_{i+1} = (ax_i + b) \pmod m$</li>
-        </ul>
+        <div class="box box-tip">
+            <h3>🧠 مرور شب امتحان (خلاصه فشرده)</h3>
+            <p>این نکات را قبل از ورود به جلسه امتحان حتماً مرور کنید:</p>
+            
+            <h4>۱. فرمول‌های کلیدی</h4>
+            <ul>
+                <li>تولید عدد تصادفی نرمال شده: <span class="formula-inline">u_i = x_i / m</span></li>
+                <li>همنهشتی خطی: <span class="formula-inline">x_{i+1} = (ax_i + b) \pmod m</span></li>
+            </ul>
 
-        <h3>۲. نکات تستی طلایی</h3>
-        <ul>
-            <li><strong>روش ضربی:</strong> در این روش $b=0$ است. این روش <em>هرگز</em> طول دوره کامل $m$ ندارد (چون صفر تولید نمی‌شود).</li>
-            <li><strong>روش آمیخته:</strong> در این روش $b \neq 0$ است و می‌تواند طول دوره کامل داشته باشد.</li>
-            <li><strong>صفر در میان‌مربع:</strong> اگر تعداد ارقام $x^2$ کم بود، حتماً سمت چپ صفر بگذارید (تله رایج امتحانی).</li>
-        </ul>
+            <h4>۲. نکات تستی طلایی</h4>
+            <ul>
+                <li><strong>روش ضربی:</strong> در این روش <span class="formula-inline">b=0</span> است. این روش <em>هرگز</em> طول دوره کامل <span class="formula-inline">m</span> ندارد (چون صفر تولید نمی‌شود).</li>
+                <li><strong>روش آمیخته:</strong> در این روش <span class="formula-inline">b \neq 0</span> است و می‌تواند طول دوره کامل داشته باشد.</li>
+                <li><strong>صفر در میان‌مربع:</strong> اگر تعداد ارقام <span class="formula-inline">x^2</span> کم بود، حتماً سمت چپ صفر بگذارید (تله رایج امتحانی).</li>
+            </ul>
 
-        <h3>۳. چک‌لیست طول دوره کامل (برای سوالات "کدام گزینه صحیح است؟")</h3>
-        <ul>
-            <li>✅ آیا $b$ و $m$ متباین (نسبت به هم اول) هستند؟</li>
-            <li>✅ آیا تمام عوامل اول $m$ در $a-1$ وجود دارند؟</li>
-            <li>✅ اگر $m$ بر ۴ بخش‌پذیر است، آیا $a-1$ هم بر ۴ بخش‌پذیر است؟</li>
-        </ul>
+            <h4>۳. چک‌لیست طول دوره کامل (برای سوالات "کدام گزینه صحیح است؟")</h4>
+            <ul>
+                <li>✅ آیا <span class="formula-inline">b</span> و <span class="formula-inline">m</span> متباین (نسبت به هم اول) هستند؟</li>
+                <li>✅ آیا تمام عوامل اول <span class="formula-inline">m</span> در <span class="formula-inline">a-1</span> وجود دارند؟</li>
+                <li>✅ اگر <span class="formula-inline">m</span> بر ۴ بخش‌پذیر است، آیا <span class="formula-inline">a-1</span> هم بر ۴ بخش‌پذیر است؟</li>
+            </ul>
+        </div>
     </section>
 
     <!-- بخش سوالات امتحانی -->
@@ -158,41 +248,41 @@ excerpt: "جزوه کامل فصل ۳ شبیه‌سازی: روش‌های تو�
             <strong>۱.</strong> تفاوت «اعداد تصادفی» و «اعداد شبه‌تصادفی» در چیست؟
         </div>
         <div class="question">
-            <strong>۲.</strong> در روش میان‌مربع، اگر $N=2$ و $x_0=9$ باشد، مقدار $x_1$ را محاسبه کنید.
+            <strong>۲.</strong> در روش میان‌مربع، اگر <span class="formula-inline">N=2</span> و <span class="formula-inline">x_0=9</span> باشد، مقدار <span class="formula-inline">x_1</span> را محاسبه کنید.
         </div>
         <div class="question">
             <strong>۳.</strong> سه شرط لازم و کافی برای اینکه یک مولد همنهشتی خطی دارای طول دوره کامل باشد را بنویسید.
         </div>
         <div class="question">
-            <strong>۴.</strong> در فرمول همنهشتی خطی، اگر $b=0$ باشد، نام روش چیست و بزرگترین طول دوره ممکن چقدر است؟
+            <strong>۴.</strong> در فرمول همنهشتی خطی، اگر <span class="formula-inline">b=0</span> باشد، نام روش چیست و بزرگترین طول دوره ممکن چقدر است؟
         </div>
         <div class="question">
-            <strong>۵.</strong> با فرض $m=10$ و $a=2$ و $b=3$ و $x_0=1$، مقدار $x_1$ را محاسبه کنید.
+            <strong>۵.</strong> با فرض <span class="formula-inline">m=10</span> و <span class="formula-inline">a=2</span> و <span class="formula-inline">b=3</span> و <span class="formula-inline">x_0=1</span>، مقدار <span class="formula-inline">x_1</span> را محاسبه کنید.
         </div>
 
         <h3>سوالات تستی (چهارگزینه‌ای)</h3>
         <div class="question">
-            <strong>۱. فرمول نهایی برای تبدیل عدد صحیح تولید شده ($x_i$) به عدد تصادفی استاندارد ($u_i$) کدام است؟</strong>
+            <strong>۱. فرمول نهایی برای تبدیل عدد صحیح تولید شده (<span class="formula-inline">x_i</span>) به عدد تصادفی استاندارد (<span class="formula-inline">u_i</span>) کدام است؟</strong>
             <div class="options">
-                <label>الف) $u_i = x_i \times m$</label>
-                <label>ب) $u_i = x_i / m$</label>
-                <label>ج) $u_i = m / x_i$</label>
-                <label>د) $u_i = (x_i + m) / 2$</label>
+                <label>الف) <span class="formula-inline">u_i = x_i \times m</span></label>
+                <label>ب) <span class="formula-inline">u_i = x_i / m</span></label>
+                <label>ج) <span class="formula-inline">u_i = m / x_i</span></label>
+                <label>د) <span class="formula-inline">u_i = (x_i + m) / 2</span></label>
             </div>
         </div>
 
         <div class="question">
             <strong>۲. کدام پارامتر در روش همنهشتی خطی باعث می‌شود روش "آمیخته" (Mixed) باشد؟</strong>
             <div class="options">
-                <label>الف) $a > 0$</label>
-                <label>ب) $x_0 = 0$</label>
-                <label>ج) $b \neq 0$</label>
-                <label>د) $m$ عدد اول باشد</label>
+                <label>الف) <span class="formula-inline">a > 0</span></label>
+                <label>ب) <span class="formula-inline">x_0 = 0</span></label>
+                <label>ج) <span class="formula-inline">b \neq 0</span></label>
+                <label>د) <span class="formula-inline">m</span> عدد اول باشد</label>
             </div>
         </div>
 
         <div class="question">
-            <strong>۳. اگر $m=16$ باشد، برای داشتن طول دوره کامل، مقدار $a$ کدام می‌تواند باشد؟ (طبق شرط ۳)</strong>
+            <strong>۳. اگر <span class="formula-inline">m=16</span> باشد، برای داشتن طول دوره کامل، مقدار <span class="formula-inline">a</span> کدام می‌تواند باشد؟ (طبق شرط ۳)</strong>
             <div class="options">
                 <label>الف) ۳</label>
                 <label>ب) ۴</label>
@@ -202,7 +292,7 @@ excerpt: "جزوه کامل فصل ۳ شبیه‌سازی: روش‌های تو�
         </div>
 
         <div class="question">
-            <strong>۴. در روش میان‌مربع، اگر $x^2$ تعداد ارقامش کمتر از $2N$ باشد، چه باید کرد؟</strong>
+            <strong>۴. در روش میان‌مربع، اگر <span class="formula-inline">x^2</span> تعداد ارقامش کمتر از <span class="formula-inline">2N</span> باشد، چه باید کرد؟</strong>
             <div class="options">
                 <label>الف) عدد را دور می‌اندازیم.</label>
                 <label>ب) سمت راست صفر اضافه می‌کنیم.</label>
@@ -214,10 +304,10 @@ excerpt: "جزوه کامل فصل ۳ شبیه‌سازی: روش‌های تو�
         <div class="question">
             <strong>۵. شرط اول قضیه طول دوره کامل چیست؟</strong>
             <div class="options">
-                <label>الف) $b$ باید صفر باشد.</label>
-                <label>ب) $a$ و $m$ نسبت به هم اول باشند.</label>
-                <label>ج) $b$ و $m$ نسبت به هم اول باشند.</label>
-                <label>د) $x_0$ باید عدد فرد باشد.</label>
+                <label>الف) <span class="formula-inline">b</span> باید صفر باشد.</label>
+                <label>ب) <span class="formula-inline">a</span> و <span class="formula-inline">m</span> نسبت به هم اول باشند.</label>
+                <label>ج) <span class="formula-inline">b</span> و <span class="formula-inline">m</span> نسبت به هم اول باشند.</label>
+                <label>د) <span class="formula-inline">x_0</span> باید عدد فرد باشد.</label>
             </div>
         </div>
     </section>
@@ -226,21 +316,25 @@ excerpt: "جزوه کامل فصل ۳ شبیه‌سازی: روش‌های تو�
     <section class="answer-key">
         <h3>📌 پاسخ‌نامه کلیدی</h3>
         
-        <h4>پاسخ سوالات تشریحی:</h4>
-        <ol>
-            <li>اعداد واقعی تصادفی غیرقابل پیش‌بینی‌اند، اما اعداد شبه‌تصادفی توسط فرمول‌های ریاضی قطعی در کامپیوتر تولید می‌شوند و اگر هسته و فرمول را بدانیم، قابل پیش‌بینی هستند.</li>
-            <li>$x_0=9 \rightarrow x_0^2=81$. باید ۴ رقمی شود ($N=2 \rightarrow 2N=4$)، پس می‌شود $0081$. دو رقم وسط: $08$. پس $x_1=8$.</li>
-            <li>۱) $(b,m)=1$، ۲) عوامل اول $m$ مقسوم‌علیه $a-1$ باشند، ۳) اگر $m$ مضرب ۴ است، $a-1$ هم مضرب ۴ باشد.</li>
-            <li>نام آن روش همنهشتی «ضربی» است و طول دوره آن کمتر از $m$ است (چون صفر تولید نمی‌شود).</li>
-            <li>$x_1 = (2 \times 1 + 3) \pmod{10} = 5 \pmod{10} = 5$.</li>
-        </ol>
+        <div class="box box-def">
+            <h4>پاسخ سوالات تشریحی:</h4>
+            <ol>
+                <li>اعداد واقعی تصادفی غیرقابل پیش‌بینی‌اند، اما اعداد شبه‌تصادفی توسط فرمول‌های ریاضی قطعی در کامپیوتر تولید می‌شوند و اگر هسته و فرمول را بدانیم، قابل پیش‌بینی هستند.</li>
+                <li><span class="formula-inline">x_0=9 \rightarrow x_0^2=81</span>. باید ۴ رقمی شود (<span class="formula-inline">N=2 \rightarrow 2N=4</span>)، پس می‌شود <span class="formula-inline">0081</span>. دو رقم وسط: <span class="formula-inline">08</span>. پس <span class="formula-inline">x_1=8</span>.</li>
+                <li>۱) <span class="formula-inline">(b,m)=1</span>، ۲) عوامل اول <span class="formula-inline">m</span> مقسوم‌علیه <span class="formula-inline">a-1</span> باشند، ۳) اگر <span class="formula-inline">m</span> مضرب ۴ است، <span class="formula-inline">a-1</span> هم مضرب ۴ باشد.</li>
+                <li>نام آن روش همنهشتی «ضربی» است و طول دوره آن کمتر از <span class="formula-inline">m</span> است (چون صفر تولید نمی‌شود).</li>
+                <li><span class="formula-inline">x_1 = (2 \times 1 + 3) \pmod{10} = 5 \pmod{10} = 5</span>.</li>
+            </ol>
 
-        <h4>پاسخ سوالات تستی:</h4>
-        <ol>
-            <li><strong>گزینه ب</strong></li>
-            <li><strong>گزینه ج</strong></li>
-            <li><strong>گزینه ج</strong> (زیرا $5-1=4$ که بر ۴ بخش‌پذیر است).</li>
-            <li><strong>گزینه ج</strong></li>
-            <li><strong>گزینه ج</strong></li>
-        </ol>
+            <h4>پاسخ سوالات تستی:</h4>
+            <ol>
+                <li><strong>گزینه ب</strong></li>
+                <li><strong>گزینه ج</strong></li>
+                <li><strong>گزینه ج</strong> (زیرا <span class="formula-inline">5-1=4</span> که بر ۴ بخش‌پذیر است).</li>
+                <li><strong>گزینه ج</strong></li>
+                <li><strong>گزینه ج</strong></li>
+            </ol>
+        </div>
     </section>
+
+</div>
