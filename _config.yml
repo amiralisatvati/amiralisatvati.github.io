@@ -30,6 +30,11 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
 
+# تنظیمات SASS
+sass:
+  sass_dir: _sass
+  style: compressed
+
 # تنظیمات پیش‌فرض
 defaults:
   - scope:
@@ -49,10 +54,14 @@ defaults:
       layout: single
       author_profile: true
 
-# ساسsass:
-  sass_dir: _sass
-  style: compressed
-
-# تا غر اینجا
+# تاگ ابر
 paginate: 6
 paginate_path: "/blog/page:num/"
+
+# جستجو
+search: true
+search_full_content: true
+
+# فیڈ
+feed:
+  path: atom.xml
