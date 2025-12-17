@@ -1,1 +1,1033 @@
 <!DOCTYPE html>
+<html lang="en" class="scroll-smooth" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title id="page-title">Amir Ali Satvati | Data Analyst & Graphic Designer</title>
+    <meta name="description" content="Portfolio of Amir Ali Satvati, Statistics Student at Ferdowsi University. Specializing in Data Analysis, Data Mining, and Graphic Design.">
+    <meta name="keywords" content="Amir Ali Satvati, Statistics, Data Analyst, Graphic Design, R, Python, Data Mining, Ferdowsi University, Mashhad">
+    <meta name="author" content="Amir Ali Satvati">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://amirali-satvati.github.io/">
+    <meta property="og:title" content="Amir Ali Satvati | Portfolio">
+    <meta property="og:description" content="Statistics Student and Data Analyst showcasing projects and skills.">
+    <meta property="og:image" content="https://yourusername.github.io/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Amir Ali Satvati | Portfolio">
+    <meta property="twitter:description" content="Statistics Student and Data Analyst showcasing projects and skills.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Vazirmatn:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom Configuration -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0a0e27',
+                        darker: '#050714',
+                        accent: '#06b6d4', // Cyan for Data/Statistics
+                        accentSec: '#8b5cf6', // Purple for Statistical Modeling
+                        accentTer: '#10b981', // Green for Success/Results
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Vazirmatn', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base Styles */
+        body {
+            background: linear-gradient(135deg, #0a0e27 0%, #050714 100%);
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        /* RTL Support */
+        [dir="rtl"] {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        
+        /* Glassmorphism Navigation */
+        .glass {
+            background: rgba(10, 14, 39, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(6, 182, 212, 0.1);
+        }
+
+        /* Particle Canvas */
+        #particles-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Animated Statistical Formulas Background */
+        .formula-bg {
+            position: absolute;
+            font-family: 'JetBrains Mono', monospace;
+            opacity: 0.07;
+            font-size: 1.5rem;
+            color: #06b6d4;
+            pointer-events: none;
+            animation: float 10s infinite ease-in-out;
+            z-index: 0;
+        }
+
+        /* Typing Effect Cursor */
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            background-color: #06b6d4;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Gradient Text */
+        .text-gradient-stat {
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 50%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradient-shift 5s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Progress Bars */
+        .progress-bar {
+            position: relative;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #06b6d4, #8b5cf6);
+            border-radius: 10px;
+            width: 0; /* Animated via JS */
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+            transition: width 1.5s ease-out;
+        }
+
+        /* Project Cards */
+        .project-card {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(10px);
+        }
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(6, 182, 212, 0.15);
+            border-color: rgba(6, 182, 212, 0.4);
+        }
+
+        /* Scroll To Top Button */
+        #scroll-to-top {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        #scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #0a0e27; }
+        ::-webkit-scrollbar-thumb { 
+            background: linear-gradient(180deg, #06b6d4, #8b5cf6); 
+            border-radius: 10px; 
+        }
+        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+    </style>
+</head>
+<body class="antialiased font-sans relative selection:bg-accent/30 selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center gap-4">
+                    <a href="#" class="font-bold text-2xl tracking-tight hover:text-accent transition-colors flex items-center gap-2">
+                        <i class="fas fa-chart-network text-accent"></i>
+                        <span class="font-mono">&lt;AmirAli/&gt;</span>
+                    </a>
+                    <button onclick="toggleLanguage()" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-700 hover:border-accent text-xs font-bold text-slate-300 transition-all hover:bg-accent/10">
+                        <i class="fas fa-globe"></i> <span id="lang-text-desktop">FA</span>
+                    </button>
+                </div>
+                
+                <div class="hidden md:flex space-x-8 rtl:space-x-reverse items-center">
+                    <a href="#about" class="text-sm font-medium text-slate-300 hover:text-accent transition-colors" data-i18n="nav_about">About</a>
+                    <a href="#skills" class="text-sm font-medium text-slate-300 hover:text-accent transition-colors" data-i18n="nav_skills">Skills</a>
+                    <a href="#projects" class="text-sm font-medium text-slate-300 hover:text-accent transition-colors" data-i18n="nav_projects">Projects</a>
+                    <a href="#resources" class="text-sm font-medium text-slate-300 hover:text-accent transition-colors" data-i18n="nav_resources">Resources</a>
+                    <a href="#contact" class="px-5 py-2.5 rounded-full bg-gradient-to-r from-accent to-accentSec text-sm font-semibold text-white hover:shadow-lg hover:shadow-accent/50 transition-all" data-i18n="nav_contact">Contact</a>
+                </div>
+
+                <div class="md:hidden flex items-center gap-3">
+                    <button onclick="toggleLanguage()" class="px-2 py-1 rounded border border-slate-700 text-xs font-bold text-slate-300">
+                        <span id="lang-text-mobile">FA</span>
+                    </button>
+                    <button id="mobile-menu-btn" class="text-slate-300 hover:text-accent focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-darker/95 border-b border-slate-800 absolute w-full backdrop-blur-lg">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="#about" class="block px-3 py-3 text-base font-medium text-slate-300 hover:text-accent hover:bg-slate-800/50 rounded-md transition-colors" data-i18n="nav_about">About</a>
+                <a href="#skills" class="block px-3 py-3 text-base font-medium text-slate-300 hover:text-accent hover:bg-slate-800/50 rounded-md transition-colors" data-i18n="nav_skills">Skills</a>
+                <a href="#projects" class="block px-3 py-3 text-base font-medium text-slate-300 hover:text-accent hover:bg-slate-800/50 rounded-md transition-colors" data-i18n="nav_projects">Projects</a>
+                <a href="#resources" class="block px-3 py-3 text-base font-medium text-slate-300 hover:text-accent hover:bg-slate-800/50 rounded-md transition-colors" data-i18n="nav_resources">Resources</a>
+                <a href="#contact" class="block px-3 py-3 text-base font-medium text-accent hover:bg-slate-800/50 rounded-md transition-colors" data-i18n="nav_contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+        <!-- Interactive Particle Canvas -->
+        <canvas id="particles-canvas"></canvas>
+
+        <!-- Floating Formulas (Static decoration) -->
+        <div class="formula-bg hidden md:block" style="top: 15%; left: 10%;">σ² = Σ(x-μ)²/N</div>
+        <div class="formula-bg hidden md:block" style="top: 60%; right: 15%;">P(A|B) = P(B|A)·P(A)/P(B)</div>
+        <div class="formula-bg hidden md:block" style="bottom: 20%; left: 20%;">y = β₀ + β₁x + ε</div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="reveal active space-y-6 text-center lg:text-left rtl:lg:text-right">
+                    <div class="inline-flex items-center px-4 py-2 rounded-full border border-accent/30 bg-accent/5 backdrop-blur-sm text-accent text-xs font-bold tracking-wider uppercase">
+                        <span class="relative flex h-2 w-2 ltr:mr-2 rtl:ml-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+                        </span>
+                        <span data-i18n="hero_status">Open to Collaboration</span>
+                    </div>
+                    
+                    <h1 class="text-5xl md:text-7xl font-extrabold leading-tight">
+                        <span class="text-slate-300" data-i18n="hero_greeting">Hello, I'm</span><br>
+                        <span class="text-gradient-stat font-black" data-i18n="hero_name">Amir Ali Satvati</span>
+                    </h1>
+                    
+                    <!-- Typewriter Effect -->
+                    <div class="text-xl md:text-2xl text-slate-400 h-8 font-mono">
+                        <span id="typewriter"></span><span class="cursor">|</span>
+                    </div>
+                    
+                    <p class="text-lg text-slate-400 max-w-lg leading-relaxed mx-auto lg:mx-0 mt-4" data-i18n="hero_desc">
+                        Statistics Student & Data Analyst specializing in statistical modeling, data mining, and evidence-based insights.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-4 pt-4 justify-center lg:justify-start rtl:lg:justify-end">
+                        <a href="#projects" class="group px-8 py-4 rounded-xl bg-gradient-to-r from-accent to-accentSec hover:shadow-2xl hover:shadow-accent/40 text-white font-bold transition-all transform hover:-translate-y-1 flex items-center gap-2">
+                            <i class="fas fa-folder-open group-hover:rotate-12 transition-transform"></i>
+                            <span data-i18n="hero_btn_work">View Projects</span>
+                        </a>
+                        <a href="https://linkedin.com/in/amirali-satvati" target="_blank" class="px-8 py-4 rounded-xl border-2 border-slate-700 hover:border-accent hover:bg-accent/5 text-white font-medium transition-all flex items-center gap-2">
+                            <i class="fab fa-linkedin text-xl text-accent"></i> LinkedIn
+                        </a>
+                    </div>
+
+                    <!-- Quick Stats -->
+                    <div class="grid grid-cols-3 gap-4 pt-8 max-w-md mx-auto lg:mx-0">
+                        <div class="text-center p-3 rounded-lg bg-slate-800/30 border border-slate-700/50 backdrop-blur-sm">
+                            <div class="text-2xl font-bold text-accent counter" data-target="3">0</div>
+                            <div class="text-xs text-slate-500" data-i18n="quick_years">Years</div>
+                        </div>
+                        <div class="text-center p-3 rounded-lg bg-slate-800/30 border border-slate-700/50 backdrop-blur-sm">
+                            <div class="text-2xl font-bold text-accentSec counter" data-target="15">0</div>
+                            <div class="text-xs text-slate-500" data-i18n="quick_projects">Projects</div>
+                        </div>
+                        <div class="text-center p-3 rounded-lg bg-slate-800/30 border border-slate-700/50 backdrop-blur-sm">
+                            <div class="text-2xl font-bold text-accentTer counter" data-target="7">0</div>
+                            <div class="text-xs text-slate-500" data-i18n="quick_certs">Certs</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Enhanced Hero Visual -->
+                <div class="reveal hidden lg:block relative">
+                    <div class="relative w-full aspect-square max-w-md mx-auto">
+                        <!-- Outer Rings -->
+                        <div class="absolute inset-0 rounded-full border-2 border-dashed border-accent/60 animate-[spin_30s_linear_infinite]"></div>
+                        <div class="absolute inset-8 rounded-full border border-accentSec/60 animate-[spin_20s_linear_infinite_reverse]"></div>
+                        
+                        <!-- Central Circle (Profile Image Container) -->
+                        <div class="absolute inset-12 rounded-full bg-slate-900 border-4 border-slate-800 flex items-center justify-center overflow-hidden shadow-2xl shadow-accent/20 z-10">
+                            <!-- TODO: Replace the src below with your actual photo path (e.g., 'assets/profile.jpg') -->
+                            <img src="https://ui-avatars.com/api/?name=Amir+Ali&background=0a0e27&color=06b6d4&size=512&font-size=0.33" 
+                                 alt="Amir Ali Satvati" 
+                                 class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        </div>
+                        
+                        <!-- Floating Skill Badges -->
+                        <div class="absolute -top-4 right-4 rtl:right-auto rtl:-left-4 bg-gradient-to-br from-slate-900/90 to-slate-800/90 border border-accent/30 p-4 rounded-2xl shadow-2xl backdrop-blur-md z-20 animate-float">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center text-blue-400">
+                                    <i class="fab fa-python text-2xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-400 font-mono">Python</p>
+                                    <p class="font-bold text-white">Data Science</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="absolute bottom-8 -left-4 rtl:left-auto rtl:-right-4 bg-gradient-to-br from-slate-900/90 to-slate-800/90 border border-accentSec/30 p-4 rounded-2xl shadow-2xl backdrop-blur-md z-20 animate-float" style="animation-delay: 1s;">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center text-purple-400">
+                                    <i class="fab fa-r-project text-2xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-400 font-mono">R Studio</p>
+                                    <p class="font-bold text-white">Statistics</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="absolute top-1/2 -right-8 rtl:right-auto rtl:-left-8 bg-gradient-to-br from-slate-900/90 to-slate-800/90 border border-accentTer/30 p-4 rounded-2xl shadow-2xl backdrop-blur-md z-20 animate-float" style="animation-delay: 2s;">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center text-green-400">
+                                    <i class="fas fa-file-excel text-2xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-400 font-mono">Excel</p>
+                                    <p class="font-bold text-white">Analysis</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-darker/70 border-y border-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+                <div class="reveal">
+                    <div class="flex items-center gap-3 mb-6">
+                        <i class="fas fa-user-graduate text-3xl text-accent"></i>
+                        <h2 class="text-4xl font-black" data-i18n="about_title">About Me</h2>
+                    </div>
+                    <div class="h-1.5 w-24 bg-gradient-to-r from-accent via-accentSec to-accentTer rounded-full mb-8"></div>
+                    
+                    <p class="text-slate-400 leading-relaxed mb-6 text-justify" data-i18n="about_text">
+                        I am a passionate Statistics student at Ferdowsi University of Mashhad, specializing in statistical modeling, Data Mining, and data-driven decision making. I combine rigorous mathematical foundations with modern analytical tools to extract meaningful insights from complex datasets.
+                    </p>
+                    
+                    <div class="space-y-4 bg-slate-900/30 p-6 rounded-xl border border-slate-800">
+                        <div class="flex items-center gap-4">
+                            <i class="fas fa-graduation-cap text-accent w-6"></i>
+                            <span class="w-32 text-slate-500 font-semibold" data-i18n="about_edu_label">Education:</span>
+                            <span class="text-slate-200 font-medium" data-i18n="about_edu_val">B.Sc. Statistics, Ferdowsi Univ</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <i class="fas fa-briefcase text-accentSec w-6"></i>
+                            <span class="w-32 text-slate-500 font-semibold" data-i18n="about_role_label">Role:</span>
+                            <span class="text-slate-200 font-medium" data-i18n="about_role_val">Data Analyst & Designer</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <i class="fas fa-map-marker-alt text-accentTer w-6"></i>
+                            <span class="w-32 text-slate-500 font-semibold" data-i18n="about_loc_label">Location:</span>
+                            <span class="text-slate-200 font-medium" data-i18n="about_loc_val">Mashhad, Iran</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal space-y-6">
+                    <h3 class="text-2xl font-bold text-white flex items-center gap-2">
+                        <i class="fas fa-chart-bar text-accent"></i>
+                        <span data-i18n="expertise_title">Statistical Expertise</span>
+                    </h3>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800 hover:border-accent/30 transition-all">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-semibold text-white flex items-center gap-2">
+                                    <i class="fas fa-database text-accent"></i>
+                                    <span data-i18n="stat_inference">Data Mining</span>
+                                </span>
+                                <span class="text-sm text-accent font-mono">90%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" data-progress="90"></div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800 hover:border-accent/30 transition-all">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-semibold text-white flex items-center gap-2">
+                                    <i class="fas fa-robot text-purple-400"></i>
+                                    <span data-i18n="data_viz">Machine Learning</span>
+                                </span>
+                                <span class="text-sm text-purple-400 font-mono" data-i18n="learning_badge">Learning</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" data-progress="40"></div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800 hover:border-accent/30 transition-all">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-semibold text-white flex items-center gap-2">
+                                    <i class="fas fa-palette text-accentTer"></i>
+                                    <span data-i18n="graphic_design">Graphic Design</span>
+                                </span>
+                                <span class="text-sm text-accentTer font-mono">85%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" data-progress="85"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Skills Section -->
+    <section id="skills" class="py-24 relative bg-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl font-black mb-4 flex items-center justify-center gap-3">
+                    <i class="fas fa-code text-accent"></i>
+                    <span data-i18n="skills_title">Technical Skills</span>
+                </h2>
+                <p class="text-slate-400" data-i18n="skills_subtitle">Tools and technologies for statistical analysis and data science</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 reveal">
+                <!-- Python -->
+                <div class="group p-6 bg-gradient-to-br from-slate-900/80 to-slate-800/80 rounded-2xl border border-slate-700/50 hover:border-blue-500/50 text-center transition-all hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-500/20">
+                    <i class="fab fa-python text-5xl text-blue-400 mb-4 group-hover:scale-110 transition-transform"></i>
+                    <h3 class="text-lg font-bold text-white mb-1">Python</h3>
+                    <p class="text-xs text-slate-500">NumPy, Pandas</p>
+                </div>
+
+                <!-- R -->
+                <div class="group p-6 bg-gradient-to-br from-slate-900/80 to-slate-800/80 rounded-2xl border border-slate-700/50 hover:border-blue-600/50 text-center transition-all hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-600/20">
+                    <i class="fab fa-r-project text-5xl text-blue-500 mb-4 group-hover:scale-110 transition-transform"></i>
+                    <h3 class="text-lg font-bold text-white mb-1">R Studio</h3>
+                    <p class="text-xs text-slate-500">Statistics, ggplot2</p>
+                </div>
+
+                <!-- Data Mining -->
+                <div class="group p-6 bg-gradient-to-br from-slate-900/80 to-slate-800/80 rounded-2xl border border-slate-700/50 hover:border-orange-500/50 text-center transition-all hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-orange-500/20">
+                    <i class="fas fa-project-diagram text-5xl text-orange-500 mb-4 group-hover:scale-110 transition-transform"></i>
+                    <h3 class="text-lg font-bold text-white mb-1" data-i18n="skill_dm">Data Mining</h3>
+                    <p class="text-xs text-slate-500">Clustering, Assoc. Rules</p>
+                </div>
+
+                <!-- Photoshop -->
+                <div class="group p-6 bg-gradient-to-br from-slate-900/80 to-slate-800/80 rounded-2xl border border-slate-700/50 hover:border-pink-500/50 text-center transition-all hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-pink-500/20">
+                    <i class="fas fa-palette text-5xl text-pink-400 mb-4 group-hover:scale-110 transition-transform"></i>
+                    <h3 class="text-lg font-bold text-white mb-1">Photoshop</h3>
+                    <p class="text-xs text-slate-500">Posters, Infographics</p>
+                </div>
+
+                <!-- Excel -->
+                <div class="group p-6 bg-gradient-to-br from-slate-900/80 to-slate-800/80 rounded-2xl border border-slate-700/50 hover:border-green-500/50 text-center transition-all hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-green-500/20">
+                    <i class="fas fa-file-excel text-5xl text-green-500 mb-4 group-hover:scale-110 transition-transform"></i>
+                    <h3 class="text-lg font-bold text-white mb-1">Excel</h3>
+                    <p class="text-xs text-slate-500">Analysis, Pivot Tables</p>
+                </div>
+
+                <!-- Figma -->
+                <div class="group p-6 bg-gradient-to-br from-slate-900/80 to-slate-800/80 rounded-2xl border border-slate-700/50 hover:border-purple-500/50 text-center transition-all hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/20">
+                    <i class="fab fa-figma text-5xl text-purple-400 mb-4 group-hover:scale-110 transition-transform"></i>
+                    <h3 class="text-lg font-bold text-white mb-1">Figma</h3>
+                    <p class="text-xs text-slate-500">UI/UX Design</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 bg-darker/70">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl font-black mb-4 flex items-center justify-center gap-3">
+                    <i class="fas fa-folder-open text-accent"></i>
+                    <span data-i18n="projects_title">Statistical Projects</span>
+                </h2>
+                <p class="text-slate-400" data-i18n="projects_subtitle">Real-world applications of statistical methods and data analysis</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="reveal project-card rounded-2xl overflow-hidden border border-slate-700/50 group">
+                    <div class="h-48 w-full bg-gradient-to-br from-blue-900/20 to-blue-600/20 relative overflow-hidden flex items-center justify-center border-b border-slate-700">
+                        <i class="fab fa-r-project text-6xl text-blue-400 group-hover:scale-125 transition-transform duration-500"></i>
+                        <div class="absolute top-3 right-3 px-3 py-1 bg-blue-500/20 backdrop-blur-sm rounded-full text-xs font-mono text-blue-300 border border-blue-500/30">
+                            R Studio
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-accent transition-colors" data-i18n="proj_1_title">University Statistical Analysis</h3>
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed" data-i18n="proj_1_desc">
+                            Analyzing dataset for final course project using R, focusing on hypothesis testing and data visualization.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs font-mono text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">Hypothesis Test</span>
+                            <span class="text-xs font-mono text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/20">Regression</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: Data Mining -->
+                <div class="reveal project-card rounded-2xl overflow-hidden border border-slate-700/50 group">
+                    <div class="h-48 w-full bg-gradient-to-br from-orange-900/20 to-orange-600/20 relative overflow-hidden flex items-center justify-center border-b border-slate-700">
+                        <i class="fas fa-project-diagram text-6xl text-orange-400 group-hover:scale-125 transition-transform duration-500"></i>
+                        <div class="absolute top-3 right-3 px-3 py-1 bg-orange-500/20 backdrop-blur-sm rounded-full text-xs font-mono text-orange-300 border border-orange-500/30">
+                            Data Mining
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-orange-400 transition-colors" data-i18n="proj_dm_title">Customer Segmentation</h3>
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed" data-i18n="proj_dm_desc">
+                            Applied clustering algorithms (K-Means) to segment customers based on purchasing behavior for targeted marketing.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs font-mono text-orange-400 bg-orange-500/10 px-3 py-1 rounded-full border border-orange-500/20">Clustering</span>
+                            <span class="text-xs font-mono text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">Python/R</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="reveal project-card rounded-2xl overflow-hidden border border-slate-700/50 group">
+                    <div class="h-48 w-full bg-gradient-to-br from-pink-900/20 to-pink-600/20 relative overflow-hidden flex items-center justify-center border-b border-slate-700">
+                        <i class="fas fa-palette text-6xl text-pink-400 group-hover:scale-125 transition-transform duration-500"></i>
+                        <div class="absolute top-3 right-3 px-3 py-1 bg-pink-500/20 backdrop-blur-sm rounded-full text-xs font-mono text-pink-300 border border-pink-500/30">
+                            Design
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-pink-400 transition-colors" data-i18n="proj_6_title">Scientific Posters Design</h3>
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed" data-i18n="proj_6_desc">
+                            Designing professional posters and social media assets for Statistics Association workshops.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs font-mono text-pink-400 bg-pink-500/10 px-3 py-1 rounded-full border border-pink-500/20">Photoshop</span>
+                            <span class="text-xs font-mono text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/20">Branding</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12 reveal">
+                <a href="https://github.com/amirali-satvati" target="_blank" class="inline-flex items-center gap-3 px-8 py-4 rounded-xl border-2 border-accent hover:bg-accent/10 text-accent text-sm font-bold transition-all hover:shadow-xl hover:shadow-accent/30 group">
+                    <i class="fab fa-github text-2xl group-hover:rotate-12 transition-transform"></i> 
+                    <span data-i18n="github_btn">Explore More on GitHub</span>
+                    <i class="fas fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section id="resources" class="py-24 bg-darker/90 border-y border-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="reveal">
+                <h2 class="text-4xl font-black mb-4 text-center flex items-center justify-center gap-3">
+                    <i class="fas fa-book text-accent"></i>
+                    <span data-i18n="resources_title">Learning Resources</span>
+                </h2>
+                <p class="text-center text-slate-400 mb-12 max-w-2xl mx-auto" data-i18n="resources_desc">
+                    Curated collection of statistical cheat sheets, code snippets, and datasets for students and analysts.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal">
+                <!-- Resource 1 -->
+                <a href="#" class="group p-6 rounded-xl bg-gradient-to-br from-slate-900/80 to-slate-800/80 border border-slate-700 hover:border-blue-500/50 transition-all hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1">
+                    <div class="flex items-start gap-4">
+                        <div class="w-14 h-14 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform border border-blue-500/20">
+                            <i class="fas fa-file-code text-2xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-lg font-bold text-white group-hover:text-blue-400 transition-colors mb-1" data-i18n="res_1_title">R Programming Guide</h4>
+                            <p class="text-sm text-slate-500 mb-3">Comprehensive R syntax and ggplot2 examples</p>
+                            <div class="flex items-center gap-2 text-xs text-slate-600">
+                                <span class="px-2 py-1 bg-blue-500/10 rounded font-mono">PDF</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Resource 2 -->
+                <a href="#" class="group p-6 rounded-xl bg-gradient-to-br from-slate-900/80 to-slate-800/80 border border-slate-700 hover:border-purple-500/50 transition-all hover:shadow-xl hover:shadow-purple-500/10 hover:-translate-y-1">
+                    <div class="flex items-start gap-4">
+                        <div class="w-14 h-14 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform border border-purple-500/20">
+                            <i class="fas fa-square-root-alt text-2xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-lg font-bold text-white group-hover:text-purple-400 transition-colors mb-1" data-i18n="res_2_title">Statistical Formulas</h4>
+                            <p class="text-sm text-slate-500 mb-3">All essential probability distributions & tests</p>
+                            <div class="flex items-center gap-2 text-xs text-slate-600">
+                                <span class="px-2 py-1 bg-purple-500/10 rounded font-mono">PDF</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 relative overflow-hidden bg-darker">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center reveal">
+            <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-accent/20 to-accentSec/20 mb-6 border border-accent/30">
+                <i class="fas fa-paper-plane text-3xl text-accent"></i>
+            </div>
+            
+            <h2 class="text-4xl font-black mb-4" data-i18n="contact_title">Let's Collaborate</h2>
+            <p class="text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed" data-i18n="contact_text">
+                Interested in statistical consulting, data analysis projects, or need a designer for your academic event? Let's connect and create something impactful together.
+            </p>
+            
+            <div class="flex flex-col md:flex-row justify-center gap-4 mb-12">
+                <a href="mailto:amirali.satvati@gmail.com" class="group flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-accent/10 to-accentSec/10 hover:from-accent/20 hover:to-accentSec/20 border border-accent/30 hover:border-accent/50 transition-all">
+                    <i class="fas fa-envelope text-2xl text-accent group-hover:scale-110 transition-transform"></i>
+                    <div class="text-left rtl:text-right">
+                        <div class="text-xs text-slate-500">Email</div>
+                        <div class="text-white font-semibold">amirali.satvati@gmail.com</div>
+                    </div>
+                </a>
+                
+                <a href="https://t.me/amiralisatvati" target="_blank" class="group flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-blue-500/10 to-cyan-500/10 hover:from-blue-500/20 hover:to-cyan-500/20 border border-blue-500/30 hover:border-blue-500/50 transition-all">
+                    <i class="fab fa-telegram text-2xl text-blue-400 group-hover:scale-110 transition-transform"></i>
+                    <div class="text-left rtl:text-right">
+                        <div class="text-xs text-slate-500">Telegram</div>
+                        <div class="text-white font-semibold">@amiralisatvati</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="flex justify-center gap-6">
+                <a href="https://linkedin.com/in/amirali-satvati" target="_blank" class="group w-14 h-14 rounded-full bg-slate-800/50 border border-slate-700 hover:border-blue-500 flex items-center justify-center transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/30">
+                    <i class="fab fa-linkedin text-xl text-slate-400 group-hover:text-blue-400 transition-colors"></i>
+                </a>
+                <a href="https://github.com/amirali-satvati" target="_blank" class="group w-14 h-14 rounded-full bg-slate-800/50 border border-slate-700 hover:border-purple-500 flex items-center justify-center transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/30">
+                    <i class="fab fa-github text-xl text-slate-400 group-hover:text-purple-400 transition-colors"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-10 border-t border-slate-800/50 bg-darker/95">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex items-center justify-center gap-2 mb-4">
+                <i class="fas fa-chart-line text-accent"></i>
+                <span class="font-mono font-bold text-lg">&lt;AmirAli/&gt;</span>
+            </div>
+            <p class="text-slate-500 text-sm">
+                &copy; <span id="year"></span> Amir Ali Satvati. <span data-i18n="footer_rights">All rights reserved.</span>
+            </p>
+            <p class="text-slate-600 text-xs mt-2">
+                <span data-i18n="footer_tagline">Built with data-driven precision 📊</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll To Top Button -->
+    <button id="scroll-to-top" class="fixed bottom-8 right-8 rtl:left-8 rtl:right-auto z-50 p-3 rounded-full bg-accent hover:bg-cyan-400 text-slate-900 shadow-lg shadow-cyan-500/50 transition-all transform hover:-translate-y-1">
+        <i class="fas fa-arrow-up text-xl"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        // --- 1. Mobile Menu ---
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // --- 2. Scroll Animations & Reveal ---
+        function reveal() {
+            const reveals = document.querySelectorAll(".reveal");
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                const elementVisible = 120;
+                if (elementTop < windowHeight - elementVisible) {
+                    el.classList.add("active");
+                }
+            });
+        }
+        window.addEventListener("scroll", reveal);
+        reveal();
+
+        // Navbar Shadow
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            const scrollBtn = document.getElementById('scroll-to-top');
+            
+            // Navbar effect
+            navbar.classList.toggle('shadow-2xl', window.scrollY > 50);
+            
+            // Scroll to top button visibility
+            if (window.scrollY > 500) {
+                scrollBtn.classList.add('visible');
+            } else {
+                scrollBtn.classList.remove('visible');
+            }
+        });
+
+        // Scroll to top functionality
+        document.getElementById('scroll-to-top').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // --- 3. Progress Bars Animation ---
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelectorAll('.progress-fill').forEach(bar => {
+                    const progress = bar.getAttribute('data-progress');
+                    bar.style.width = progress + '%';
+                });
+            }, 500);
+        });
+
+        // --- 4. Counter Animation ---
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const duration = 2000;
+                const increment = target / (duration / 16);
+                let current = 0;
+                
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.textContent = Math.floor(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target;
+                    }
+                };
+                updateCounter();
+            });
+        }
+        setTimeout(animateCounters, 300);
+
+        // --- 5. Typewriter Effect ---
+        const roles = ["Statistics Student", "Data Analyst", "Graphic Designer"];
+        const rolesFa = ["دانشجوی آمار", "تحلیلگر داده", "طراح گرافیک"];
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typeSpeed = 100;
+        const deleteSpeed = 50;
+        const pauseTime = 2000;
+        const typeElement = document.getElementById('typewriter');
+
+        function typeWriter() {
+            // Determine which language array to use
+            const currentRoles = document.documentElement.dir === 'rtl' ? rolesFa : roles;
+            const currentRole = currentRoles[roleIndex];
+            
+            if (isDeleting) {
+                typeElement.textContent = currentRole.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typeElement.textContent = currentRole.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeDelay = isDeleting ? deleteSpeed : typeSpeed;
+
+            if (!isDeleting && charIndex === currentRole.length) {
+                typeDelay = pauseTime;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                roleIndex = (roleIndex + 1) % currentRoles.length;
+            }
+
+            setTimeout(typeWriter, typeDelay);
+        }
+        // Start typing effect
+        setTimeout(typeWriter, 1000);
+
+
+        // --- 6. Particle Network Animation (Vanilla JS) ---
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray;
+
+        // Handle resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        });
+
+        // Mouse interaction
+        const mouse = { x: null, y: null, radius: 150 };
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1; // Size between 1 and 3
+                this.speedX = (Math.random() * 1.5 - 0.75); // Speed between -0.75 and 0.75
+                this.speedY = (Math.random() * 1.5 - 0.75);
+                this.color = '#06b6d4'; // Accent Cyan
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Bounce off edges
+                if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
+                if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
+
+                // Mouse interaction
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx*dx + dy*dy);
+                if (distance < mouse.radius) {
+                    if (mouse.x < this.x && this.x < canvas.width - 10) this.x += 2;
+                    if (mouse.x > this.x && this.x > 10) this.x -= 2;
+                    if (mouse.y < this.y && this.y < canvas.height - 10) this.y += 2;
+                    if (mouse.y > this.y && this.y > 10) this.y -= 2;
+                }
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.width * canvas.height) / 15000; // Density
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+                
+                // Draw connecting lines
+                for (let j = i; j < particlesArray.length; j++) {
+                    const dx = particlesArray[i].x - particlesArray[j].x;
+                    const dy = particlesArray[i].y - particlesArray[j].y;
+                    const distance = Math.sqrt(dx*dx + dy*dy);
+                    
+                    if (distance < 120) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(6, 182, 212, ${1 - distance/120})`; // Fade out with distance
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+                        ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
+
+
+        // --- 7. Translations & Logic ---
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const translations = {
+            en: {
+                nav_about: "About",
+                nav_skills: "Skills",
+                nav_projects: "Projects",
+                nav_resources: "Resources",
+                nav_contact: "Contact",
+                hero_status: "Open to Collaboration",
+                hero_greeting: "Hello, I'm",
+                hero_name: "Amir Ali Satvati",
+                hero_desc: "Statistics Student & Data Analyst specializing in statistical modeling, data mining, and evidence-based insights.",
+                hero_btn_work: "View Projects",
+                quick_years: "Years",
+                quick_projects: "Projects",
+                quick_certs: "Certs",
+                about_title: "About Me",
+                about_text: "I am a passionate Statistics student at Ferdowsi University of Mashhad, specializing in statistical modeling, Data Mining, and data-driven decision making. I combine rigorous mathematical foundations with modern analytical tools to extract meaningful insights from complex datasets.",
+                about_edu_label: "Education:",
+                about_edu_val: "B.Sc. Statistics, Ferdowsi Univ",
+                about_role_label: "Role:",
+                about_role_val: "Data Analyst & Designer",
+                about_loc_label: "Location:",
+                about_loc_val: "Mashhad, Iran",
+                expertise_title: "Statistical Expertise",
+                stat_inference: "Data Mining",
+                graphic_design: "Graphic Design",
+                data_viz: "Machine Learning",
+                learning_badge: "Learning Path",
+                skills_title: "Technical Skills",
+                skills_subtitle: "Tools and technologies for statistical analysis and data science",
+                skill_dm: "Data Mining",
+                projects_title: "Statistical Projects",
+                projects_subtitle: "Real-world applications of statistical methods and data analysis",
+                proj_1_title: "University Statistical Analysis",
+                proj_1_desc: "Analyzing dataset for final course project using R, focusing on hypothesis testing and data visualization.",
+                proj_dm_title: "Customer Segmentation",
+                proj_dm_desc: "Applied clustering algorithms (K-Means) to segment customers based on purchasing behavior for targeted marketing.",
+                proj_6_title: "Scientific Posters Design",
+                proj_6_desc: "Designing professional posters and social media assets for Statistics Association workshops.",
+                github_btn: "Explore More on GitHub",
+                resources_title: "Learning Resources",
+                resources_desc: "Curated collection of statistical cheat sheets, code snippets, and datasets for students and analysts.",
+                res_1_title: "R Programming Guide",
+                res_2_title: "Statistical Formulas",
+                contact_title: "Let's Collaborate",
+                contact_text: "Interested in statistical consulting, data analysis projects, or need a designer for your academic event? Let's connect and create something impactful together.",
+                footer_rights: "All rights reserved.",
+                footer_tagline: "Built with data-driven precision 📊"
+            },
+            fa: {
+                nav_about: "درباره من",
+                nav_skills: "مهارت‌ها",
+                nav_projects: "پروژه‌ها",
+                nav_resources: "منابع",
+                nav_contact: "تماس",
+                hero_status: "آماده همکاری",
+                hero_greeting: "سلام، من",
+                hero_name: "امیرعلی سطوتی",
+                hero_desc: "دانشجوی آمار و تحلیلگر داده با تخصص در مدل‌سازی آماری، داده‌کاوی و بینش‌های مبتنی بر شواهد.",
+                hero_btn_work: "مشاهده پروژه‌ها",
+                quick_years: "سال",
+                quick_projects: "پروژه",
+                quick_certs: "گواهی",
+                about_title: "درباره من",
+                about_text: "من دانشجوی آمار در دانشگاه فردوسی مشهد هستم که به مدل‌سازی آماری، داده‌کاوی و تصمیم‌گیری مبتنی بر داده علاقه‌مندم. من پایه‌های ریاضی دقیق را با ابزارهای تحلیلی مدرن ترکیب می‌کنم تا بینش‌های معنادار از مجموعه داده‌های پیچیده استخراج کنم.",
+                about_edu_label: "تحصیلات:",
+                about_edu_val: "کارشناسی آمار، دانشگاه فردوسی",
+                about_role_label: "نقش:",
+                about_role_val: "تحلیلگر داده و طراح",
+                about_loc_label: "موقعیت:",
+                about_loc_val: "مشهد، ایران",
+                expertise_title: "تخصص آماری",
+                stat_inference: "داده‌کاوی",
+                graphic_design: "طراحی گرافیک",
+                data_viz: "یادگیری ماشین",
+                learning_badge: "درحال یادگیری",
+                skills_title: "مهارت‌های فنی",
+                skills_subtitle: "ابزارها و فناوری‌های تحلیل آماری و علم داده",
+                skill_dm: "داده‌کاوی",
+                projects_title: "پروژه‌های آماری",
+                projects_subtitle: "کاربردهای واقعی روش‌های آماری و تحلیل داده",
+                proj_1_title: "تحلیل آماری دانشگاهی",
+                proj_1_desc: "تحلیل مجموعه داده برای پروژه پایانی درس با استفاده از R، با تمرکز بر آزمون فرضیه و تجسم داده.",
+                proj_dm_title: "خوشه‌بندی مشتریان",
+                proj_dm_desc: "اعمال الگوریتم‌های خوشه‌بندی (K-Means) برای بخش‌بندی مشتریان بر اساس رفتار خرید جهت بازاریابی هدفمند.",
+                proj_6_title: "طراحی پوسترهای علمی",
+                proj_6_desc: "طراحی پوسترهای حرفه‌ای و محتوای شبکه‌های اجتماعی برای کارگاه‌های انجمن علمی آمار.",
+                github_btn: "کاوش بیشتر در گیت‌هاب",
+                resources_title: "منابع یادگیری",
+                resources_desc: "مجموعه منتخب از برگه‌های تقلب آماری، قطعه کدها و مجموعه داده‌ها برای دانشجویان و تحلیلگران.",
+                res_1_title: "راهنمای برنامه‌نویسی R",
+                res_2_title: "فرمول‌های آماری",
+                contact_title: "بیایید همکاری کنیم",
+                contact_text: "به مشاوره آماری، پروژه‌های تحلیل داده یا طراح برای رویداد دانشگاهی‌تان نیاز دارید؟ بیایید ارتباط برقرار کنیم و چیزی تاثیرگذار بسازیم.",
+                footer_rights: "تمامی حقوق محفوظ است.",
+                footer_tagline: "ساخته شده با دقت داده‌محور 📊"
+            }
+        };
+
+        let currentLang = 'en';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'fa' : 'en';
+            document.documentElement.dir = currentLang === 'fa' ? 'rtl' : 'ltr';
+            
+            document.getElementById('lang-text-desktop').textContent = currentLang === 'en' ? 'FA' : 'EN';
+            document.getElementById('lang-text-mobile').textContent = currentLang === 'en' ? 'FA' : 'EN';
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    el.textContent = translations[currentLang][key];
+                }
+            });
+        }
+    </script>
+</body>
+</html>
