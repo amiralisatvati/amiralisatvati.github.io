@@ -45,9 +45,9 @@ layout: default
                     colors: {
                         dark: '#0a0e27',
                         darker: '#050714',
-                        accent: '#06b6d4', // Cyan for Data/Statistics
-                        accentSec: '#8b5cf6', // Purple for Statistical Modeling
-                        accentTer: '#10b981', // Green for Success/Results
+                        accent: '#06b6d4',
+                        accentSec: '#8b5cf6',
+                        accentTer: '#10b981',
                     },
                     fontFamily: {
                         sans: ['Inter', 'Vazirmatn', 'sans-serif'],
@@ -68,19 +68,16 @@ layout: default
     </script>
 
     <style>
-        /* Base Styles */
         body {
             background: linear-gradient(135deg, #0a0e27 0%, #050714 100%);
             color: #e2e8f0;
             overflow-x: hidden;
         }
 
-        /* RTL Support */
         [dir="rtl"] {
             font-family: 'Vazirmatn', sans-serif;
         }
         
-        /* Glassmorphism Navigation */
         .glass {
             background: rgba(10, 14, 39, 0.7);
             backdrop-filter: blur(20px);
@@ -88,7 +85,6 @@ layout: default
             border-bottom: 1px solid rgba(6, 182, 212, 0.1);
         }
 
-        /* Particle Canvas */
         #particles-canvas {
             position: absolute;
             top: 0;
@@ -99,7 +95,6 @@ layout: default
             pointer-events: none;
         }
 
-        /* Animated Statistical Formulas Background */
         .formula-bg {
             position: absolute;
             font-family: 'JetBrains Mono', monospace;
@@ -111,7 +106,6 @@ layout: default
             z-index: 0;
         }
 
-        /* Typing Effect Cursor */
         .cursor {
             display: inline-block;
             width: 3px;
@@ -123,7 +117,6 @@ layout: default
             50% { opacity: 0; }
         }
 
-        /* Gradient Text */
         .text-gradient-stat {
             background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 50%, #10b981 100%);
             -webkit-background-clip: text;
@@ -137,7 +130,6 @@ layout: default
             50% { background-position: 100% 50%; }
         }
 
-        /* Reveal Animation */
         .reveal {
             opacity: 0;
             transform: translateY(40px);
@@ -148,7 +140,6 @@ layout: default
             transform: translateY(0);
         }
 
-        /* Progress Bars */
         .progress-bar {
             position: relative;
             height: 8px;
@@ -160,12 +151,11 @@ layout: default
             height: 100%;
             background: linear-gradient(90deg, #06b6d4, #8b5cf6);
             border-radius: 10px;
-            width: 0; /* Animated via JS */
+            width: 0;
             box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
             transition: width 1.5s ease-out;
         }
 
-        /* Project Cards */
         .project-card {
             position: relative;
             overflow: hidden;
@@ -179,7 +169,6 @@ layout: default
             border-color: rgba(6, 182, 212, 0.4);
         }
 
-        /* Scroll To Top Button */
         #scroll-to-top {
             opacity: 0;
             visibility: hidden;
@@ -190,7 +179,6 @@ layout: default
             visibility: visible;
         }
 
-        /* Scrollbar Styling */
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: #0a0e27; }
         ::-webkit-scrollbar-thumb { 
@@ -198,14 +186,6 @@ layout: default
             border-radius: 10px; 
         }
         ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
-
-        /* Blog Post Cards */
-        .blog-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .blog-card:hover {
-            transform: translateY(-4px);
-        }
     </style>
 </head>
 <body class="antialiased font-sans relative selection:bg-accent/30 selection:text-white">
@@ -256,10 +236,8 @@ layout: default
 
     <!-- Hero Section -->
     <section class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
-        <!-- Interactive Particle Canvas -->
         <canvas id="particles-canvas"></canvas>
 
-        <!-- Floating Formulas (Static decoration) -->
         <div class="formula-bg hidden md:block" style="top: 15%; left: 10%;">σ² = Σ(x-μ)²/N</div>
         <div class="formula-bg hidden md:block" style="top: 60%; right: 15%;">P(A|B) = P(B|A)·P(A)/P(B)</div>
         <div class="formula-bg hidden md:block" style="bottom: 20%; left: 20%;">y = β₀ + β₁x + ε</div>
@@ -280,7 +258,6 @@ layout: default
                         <span class="text-gradient-stat font-black" data-i18n="hero_name">Amir Ali Satvati</span>
                     </h1>
                     
-                    <!-- Typewriter Effect -->
                     <div class="text-xl md:text-2xl text-slate-400 h-8 font-mono">
                         <span id="typewriter"></span><span class="cursor">|</span>
                     </div>
@@ -299,7 +276,6 @@ layout: default
                         </a>
                     </div>
 
-                    <!-- Quick Stats -->
                     <div class="grid grid-cols-3 gap-4 pt-8 max-w-md mx-auto lg:mx-0">
                         <div class="text-center p-3 rounded-lg bg-slate-800/30 border border-slate-700/50 backdrop-blur-sm">
                             <div class="text-2xl font-bold text-accent counter" data-target="3">0</div>
@@ -316,22 +292,17 @@ layout: default
                     </div>
                 </div>
                 
-                <!-- Enhanced Hero Visual -->
                 <div class="reveal hidden lg:block relative">
                     <div class="relative w-full aspect-square max-w-md mx-auto">
-                        <!-- Outer Rings -->
                         <div class="absolute inset-0 rounded-full border-2 border-dashed border-accent/60 animate-[spin_30s_linear_infinite]"></div>
                         <div class="absolute inset-8 rounded-full border border-accentSec/60 animate-[spin_20s_linear_infinite_reverse]"></div>
                         
-                        <!-- Central Circle (Profile Image Container) -->
                         <div class="absolute inset-12 rounded-full bg-slate-900 border-4 border-slate-800 flex items-center justify-center overflow-hidden shadow-2xl shadow-accent/20 z-10">
-                            <!-- TODO: Replace the src below with your actual photo path (e.g., 'assets/profile.jpg') -->
                             <img src="https://ui-avatars.com/api/?name=Amir+Ali&background=0a0e27&color=06b6d4&size=512&font-size=0.33" 
                                  alt="Amir Ali Satvati" 
                                  class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
                         </div>
                         
-                        <!-- Floating Skill Badges -->
                         <div class="absolute -top-4 right-4 rtl:right-auto rtl:-left-4 bg-gradient-to-br from-slate-900/90 to-slate-800/90 border border-accent/30 p-4 rounded-2xl shadow-2xl backdrop-blur-md z-20 animate-float">
                             <div class="flex items-center gap-3">
                                 <div class="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center text-blue-400">
@@ -470,42 +441,36 @@ layout: default
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 reveal">
-                <!-- Python -->
                 <div class="group p-6 bg-gradient-to-br from-slate-900/80 to-slate-800/80 rounded-2xl border border-slate-700/50 hover:border-blue-500/50 text-center transition-all hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-500/20">
                     <i class="fab fa-python text-5xl text-blue-400 mb-4 group-hover:scale-110 transition-transform"></i>
                     <h3 class="text-lg font-bold text-white mb-1">Python</h3>
                     <p class="text-xs text-slate-500">NumPy, Pandas</p>
                 </div>
 
-                <!-- R -->
                 <div class="group p-6 bg-gradient-to-br from-slate-900/80 to-slate-800/80 rounded-2xl border border-slate-700/50 hover:border-blue-600/50 text-center transition-all hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-600/20">
                     <i class="fab fa-r-project text-5xl text-blue-500 mb-4 group-hover:scale-110 transition-transform"></i>
                     <h3 class="text-lg font-bold text-white mb-1">R Studio</h3>
                     <p class="text-xs text-slate-500">Statistics, ggplot2</p>
                 </div>
 
-                <!-- Data Mining -->
                 <div class="group p-6 bg-gradient-to-br from-slate-900/80 to-slate-800/80 rounded-2xl border border-slate-700/50 hover:border-orange-500/50 text-center transition-all hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-orange-500/20">
                     <i class="fas fa-project-diagram text-5xl text-orange-500 mb-4 group-hover:scale-110 transition-transform"></i>
                     <h3 class="text-lg font-bold text-white mb-1" data-i18n="skill_dm">Data Mining</h3>
                     <p class="text-xs text-slate-500">Clustering, Assoc. Rules</p>
                 </div>
 
-                <!-- Photoshop -->
                 <div class="group p-6 bg-gradient-to-br from-slate-900/80 to-slate-800/80 rounded-2xl border border-slate-700/50 hover:border-pink-500/50 text-center transition-all hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-pink-500/20">
                     <i class="fas fa-palette text-5xl text-pink-400 mb-4 group-hover:scale-110 transition-transform"></i>
                     <h3 class="text-lg font-bold text-white mb-1">Photoshop</h3>
                     <p class="text-xs text-slate-500">Posters, Infographics</p>
                 </div>
 
-                <!-- Excel -->
                 <div class="group p-6 bg-gradient-to-br from-slate-900/80 to-slate-800/80 rounded-2xl border border-slate-700/50 hover:border-green-500/50 text-center transition-all hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-green-500/20">
                     <i class="fas fa-file-excel text-5xl text-green-500 mb-4 group-hover:scale-110 transition-transform"></i>
                     <h3 class="text-lg font-bold text-white mb-1">Excel</h3>
                     <p class="text-xs text-slate-500">Analysis, Pivot Tables</p>
                 </div>
 
-                <!-- Figma -->
                 <div class="group p-6 bg-gradient-to-br from-slate-900/80 to-slate-800/80 rounded-2xl border border-slate-700/50 hover:border-purple-500/50 text-center transition-all hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/20">
                     <i class="fab fa-figma text-5xl text-purple-400 mb-4 group-hover:scale-110 transition-transform"></i>
                     <h3 class="text-lg font-bold text-white mb-1">Figma</h3>
@@ -527,7 +492,6 @@ layout: default
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Project 1 -->
                 <div class="reveal project-card rounded-2xl overflow-hidden border border-slate-700/50 group">
                     <div class="h-48 w-full bg-gradient-to-br from-blue-900/20 to-blue-600/20 relative overflow-hidden flex items-center justify-center border-b border-slate-700">
                         <i class="fab fa-r-project text-6xl text-blue-400 group-hover:scale-125 transition-transform duration-500"></i>
@@ -547,7 +511,6 @@ layout: default
                     </div>
                 </div>
 
-                <!-- Project 2: Data Mining -->
                 <div class="reveal project-card rounded-2xl overflow-hidden border border-slate-700/50 group">
                     <div class="h-48 w-full bg-gradient-to-br from-orange-900/20 to-orange-600/20 relative overflow-hidden flex items-center justify-center border-b border-slate-700">
                         <i class="fas fa-project-diagram text-6xl text-orange-400 group-hover:scale-125 transition-transform duration-500"></i>
@@ -567,7 +530,6 @@ layout: default
                     </div>
                 </div>
 
-                <!-- Project 3 -->
                 <div class="reveal project-card rounded-2xl overflow-hidden border border-slate-700/50 group">
                     <div class="h-48 w-full bg-gradient-to-br from-pink-900/20 to-pink-600/20 relative overflow-hidden flex items-center justify-center border-b border-slate-700">
                         <i class="fas fa-palette text-6xl text-pink-400 group-hover:scale-125 transition-transform duration-500"></i>
@@ -598,54 +560,56 @@ layout: default
         </div>
     </section>
 
-    <!-- Resources Section with Dynamic Blog Posts -->
+    <!-- Resources Section -->
     <section id="resources" class="py-24 bg-darker/90 border-y border-slate-800/50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="reveal">
-                <h2 class="text-4xl font-black mb-4 text-center flex items-center justify-center gap-3">
+            <div class="reveal text-center">
+                <h2 class="text-4xl font-black mb-4 flex items-center justify-center gap-3">
                     <i class="fas fa-book text-accent"></i>
                     <span data-i18n="resources_title">Learning Resources</span>
                 </h2>
-                <p class="text-center text-slate-400 mb-12 max-w-2xl mx-auto" data-i18n="resources_desc">
+                <p class="text-slate-400 mb-8 max-w-2xl mx-auto" data-i18n="resources_desc">
                     Curated collection of educational materials, blog posts, and learning resources.
                 </p>
             </div>
 
-            <!-- Blog Posts Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal mb-8">
-                {% for post in site.posts limit:6 %}
-                <a href="{{ post.url }}" class="blog-card group p-6 rounded-xl bg-gradient-to-br from-slate-900/80 to-slate-800/80 border border-slate-700 hover:border-accent/50 transition-all hover:shadow-xl hover:shadow-accent/10">
-                    <div class="flex items-start gap-4">
-                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-accent/20 to-accentSec/20 flex items-center justify-center text-accent group-hover:scale-110 transition-transform border border-accent/20">
-                            <i class="fas fa-file-alt text-2xl"></i>
-                        </div>
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 mb-2">
-                                {% for tag in post.tags limit:2 %}
-                                <span class="text-xs font-mono text-accent/70 bg-accent/10 px-2 py-0.5 rounded border border-accent/20">{{ tag }}</span>
-                                {% endfor %}
-                            </div>
-                            <h4 class="text-lg font-bold text-white group-hover:text-accent transition-colors mb-2 line-clamp-2">{{ post.title }}</h4>
-                            <p class="text-sm text-slate-500 mb-3 line-clamp-2">{{ post.description }}</p>
-                            <div class="flex items-center gap-2 text-xs text-slate-600">
-                                <i class="far fa-calendar"></i>
-                                <span>{{ post.date | date: "%b %d, %Y" }}</span>
-                            </div>
-                        </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal mb-12 max-w-5xl mx-auto">
+                <div class="group p-8 bg-gradient-to-br from-slate-900/80 to-slate-800/80 rounded-2xl border border-slate-700/50 hover:border-accent/50 transition-all hover:shadow-xl hover:shadow-accent/10 text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center border border-blue-500/30 group-hover:scale-110 transition-transform">
+                        <i class="fab fa-python text-3xl text-blue-400"></i>
                     </div>
-                </a>
-                {% endfor %}
+                    <h3 class="text-lg font-bold text-white mb-2">Programming Tutorials</h3>
+                    <p class="text-sm text-slate-400">R, Python guides and code examples</p>
+                </div>
+
+                <div class="group p-8 bg-gradient-to-br from-slate-900/80 to-slate-800/80 rounded-2xl border border-slate-700/50 hover:border-purple-500/50 transition-all hover:shadow-xl hover:shadow-purple-500/10 text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center border border-purple-500/30 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-chart-line text-3xl text-purple-400"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Statistical Methods</h3>
+                    <p class="text-sm text-slate-400">Articles on data analysis techniques</p>
+                </div>
+
+                <div class="group p-8 bg-gradient-to-br from-slate-900/80 to-slate-800/80 rounded-2xl border border-slate-700/50 hover:border-green-500/50 transition-all hover:shadow-xl hover:shadow-green-500/10 text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center border border-green-500/30 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-book-open text-3xl text-green-400"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Learning Materials</h3>
+                    <p class="text-sm text-slate-400">Curated resources and references</p>
+                </div>
             </div>
 
-            <!-- View All Posts Button -->
-            {% if site.posts.size > 6 %}
             <div class="text-center reveal">
-                <a href="/posts/" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-accent/30 hover:bg-accent/10 text-accent text-sm font-semibold transition-all">
-                    <span>View All Posts</span>
-                    <i class="fas fa-arrow-right"></i>
+                <a href="/resources/" class="group inline-flex items-center gap-3 px-10 py-5 rounded-2xl bg-gradient-to-r from-accent to-accentSec hover:shadow-2xl hover:shadow-accent/40 text-white text-lg font-bold transition-all transform hover:-translate-y-1">
+                    <i class="fas fa-graduation-cap text-2xl group-hover:rotate-12 transition-transform"></i>
+                    <span>Explore All Resources</span>
+                    <i class="fas fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
                 </a>
+                <p class="text-slate-500 text-sm mt-4">
+                    <i class="fas fa-file-alt text-accent"></i> 
+                    Browse through blog posts, tutorials, and educational content
+                </p>
             </div>
-            {% endif %}
         </div>
     </section>
 
@@ -707,19 +671,15 @@ layout: default
         </div>
     </footer>
 
-    <!-- Scroll To Top Button -->
     <button id="scroll-to-top" class="fixed bottom-8 right-8 rtl:left-8 rtl:right-auto z-50 p-3 rounded-full bg-accent hover:bg-cyan-400 text-slate-900 shadow-lg shadow-cyan-500/50 transition-all transform hover:-translate-y-1">
         <i class="fas fa-arrow-up text-xl"></i>
     </button>
 
-    <!-- JavaScript -->
     <script>
-        // --- 1. Mobile Menu ---
         document.getElementById('mobile-menu-btn').addEventListener('click', () => {
             document.getElementById('mobile-menu').classList.toggle('hidden');
         });
 
-        // --- 2. Scroll Animations & Reveal ---
         function reveal() {
             const reveals = document.querySelectorAll(".reveal");
             reveals.forEach(el => {
@@ -734,15 +694,12 @@ layout: default
         window.addEventListener("scroll", reveal);
         reveal();
 
-        // Navbar Shadow
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
             const scrollBtn = document.getElementById('scroll-to-top');
             
-            // Navbar effect
             navbar.classList.toggle('shadow-2xl', window.scrollY > 50);
             
-            // Scroll to top button visibility
             if (window.scrollY > 500) {
                 scrollBtn.classList.add('visible');
             } else {
@@ -750,12 +707,10 @@ layout: default
             }
         });
 
-        // Scroll to top functionality
         document.getElementById('scroll-to-top').addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // --- 3. Progress Bars Animation ---
         window.addEventListener('load', () => {
             setTimeout(() => {
                 document.querySelectorAll('.progress-fill').forEach(bar => {
@@ -765,7 +720,6 @@ layout: default
             }, 500);
         });
 
-        // --- 4. Counter Animation ---
         function animateCounters() {
             const counters = document.querySelectorAll('.counter');
             counters.forEach(counter => {
@@ -788,7 +742,6 @@ layout: default
         }
         setTimeout(animateCounters, 300);
 
-        // --- 5. Typewriter Effect ---
         const roles = ["Statistics Student", "Data Analyst", "Graphic Designer"];
         const rolesFa = ["دانشجوی آمار", "تحلیلگر داده", "طراح گرافیک"];
         let roleIndex = 0;
@@ -800,7 +753,6 @@ layout: default
         const typeElement = document.getElementById('typewriter');
 
         function typeWriter() {
-            // Determine which language array to use
             const currentRoles = document.documentElement.dir === 'rtl' ? rolesFa : roles;
             const currentRole = currentRoles[roleIndex];
             
@@ -824,11 +776,8 @@ layout: default
 
             setTimeout(typeWriter, typeDelay);
         }
-        // Start typing effect
         setTimeout(typeWriter, 1000);
 
-
-        // --- 6. Particle Network Animation (Vanilla JS) ---
         const canvas = document.getElementById('particles-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
@@ -836,14 +785,12 @@ layout: default
 
         let particlesArray;
 
-        // Handle resize
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             initParticles();
         });
 
-        // Mouse interaction
         const mouse = { x: null, y: null, radius: 150 };
         window.addEventListener('mousemove', (event) => {
             mouse.x = event.x;
@@ -854,20 +801,18 @@ layout: default
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 1; // Size between 1 and 3
-                this.speedX = (Math.random() * 1.5 - 0.75); // Speed between -0.75 and 0.75
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() * 1.5 - 0.75);
                 this.speedY = (Math.random() * 1.5 - 0.75);
-                this.color = '#06b6d4'; // Accent Cyan
+                this.color = '#06b6d4';
             }
             update() {
                 this.x += this.speedX;
                 this.y += this.speedY;
 
-                // Bounce off edges
                 if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
                 if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
 
-                // Mouse interaction
                 let dx = mouse.x - this.x;
                 let dy = mouse.y - this.y;
                 let distance = Math.sqrt(dx*dx + dy*dy);
@@ -888,7 +833,7 @@ layout: default
 
         function initParticles() {
             particlesArray = [];
-            let numberOfParticles = (canvas.width * canvas.height) / 15000; // Density
+            let numberOfParticles = (canvas.width * canvas.height) / 15000;
             for (let i = 0; i < numberOfParticles; i++) {
                 particlesArray.push(new Particle());
             }
@@ -900,7 +845,6 @@ layout: default
                 particlesArray[i].update();
                 particlesArray[i].draw();
                 
-                // Draw connecting lines
                 for (let j = i; j < particlesArray.length; j++) {
                     const dx = particlesArray[i].x - particlesArray[j].x;
                     const dy = particlesArray[i].y - particlesArray[j].y;
@@ -908,7 +852,7 @@ layout: default
                     
                     if (distance < 120) {
                         ctx.beginPath();
-                        ctx.strokeStyle = `rgba(6, 182, 212, ${1 - distance/120})`; // Fade out with distance
+                        ctx.strokeStyle = `rgba(6, 182, 212, ${1 - distance/120})`;
                         ctx.lineWidth = 0.5;
                         ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
                         ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
@@ -922,8 +866,6 @@ layout: default
         initParticles();
         animateParticles();
 
-
-        // --- 7. Translations & Logic ---
         document.getElementById('year').textContent = new Date().getFullYear();
 
         const translations = {
@@ -968,8 +910,6 @@ layout: default
                 github_btn: "Explore More on GitHub",
                 resources_title: "Learning Resources",
                 resources_desc: "Curated collection of educational materials, blog posts, and learning resources.",
-                res_1_title: "R Programming Guide",
-                res_2_title: "Statistical Formulas",
                 contact_title: "Let's Collaborate",
                 contact_text: "Interested in statistical consulting, data analysis projects, or need a designer for your academic event? Let's connect and create something impactful together.",
                 footer_rights: "All rights reserved.",
@@ -1016,8 +956,6 @@ layout: default
                 github_btn: "کاوش بیشتر در گیت‌هاب",
                 resources_title: "منابع یادگیری",
                 resources_desc: "مجموعه منتخب از مطالب آموزشی، پست‌های بلاگ و منابع یادگیری.",
-                res_1_title: "راهنمای برنامه‌نویسی R",
-                res_2_title: "فرمول‌های آماری",
                 contact_title: "بیایید همکاری کنیم",
                 contact_text: "به مشاوره آماری، پروژه‌های تحلیل داده یا طراح برای رویداد دانشگاهی‌تان نیاز دارید؟ بیایید ارتباط برقرار کنیم و چیزی تاثیرگذار بسازیم.",
                 footer_rights: "تمامی حقوق محفوظ است.",
