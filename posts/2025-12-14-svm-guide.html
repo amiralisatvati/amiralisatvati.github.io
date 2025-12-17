@@ -11,9 +11,392 @@ permalink: /svm-exam-guide/
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جزوه جامع ماشین بردار پشتیبان (SVM) | ویژه شب امتحان</title>
+    <title>جزوه جامع ماشین بردار پشتیبان (SVM) | شب امتحان</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --bg-color: #ecf0f1;
+            --text-color: #2c3e50;
+            --card-bg: #ffffff;
+            --border-color: #bdc3c7;
+            --code-bg: #f8f9fa;
+            --success-bg: #d4edda;
+            --warning-bg: #fff3cd;
+            --danger-bg: #f8d7da;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazir', 'Tahoma', sans-serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            text-align: center;
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 15px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: var(--accent-color);
+            font-size: 1.7em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-right: 5px solid var(--accent-color);
+            padding-right: 15px;
+        }
+
+        h3 {
+            color: #34495e;
+            font-size: 1.4em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin: 15px 0 15px 40px;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        .formula {
+            background: var(--code-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            font-size: 1.2em;
+            direction: ltr;
+        }
+
+        .highlight-box {
+            background: var(--success-bg);
+            border-right: 5px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .warning-box {
+            background: var(--warning-bg);
+            border-right: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .danger-box {
+            background: var(--danger-bg);
+            border-right: 5px solid #dc3545;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .quiz-section {
+            background: #e3f2fd;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 15px;
+            border: 2px dashed #2196F3;
+        }
+
+        .quiz-question {
+            background: white;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        strong {
+            color: var(--accent-color);
+        }
+
+        code {
+            background: var(--code-bg);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            color: #e74c3c;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .pros, .cons {
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .pros {
+            background: var(--success-bg);
+            border-right: 4px solid #28a745;
+        }
+
+        .cons {
+            background: var(--danger-bg);
+            border-right: 4px solid #dc3545;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-(محتوای کامل فایل اصلی شما اینجاست؛ عیناً بدون تغییر قرار داده شد)
+    <div class="container">
+        <h1>🎯 جزوه جامع ماشین بردار پشتیبان (SVM)</h1>
+        <p class="subtitle">ویژه شب امتحان | آموزش کامل + نکات کلیدی</p>
+
+        <div class="highlight-box">
+            <strong>💡 هدف این جزوه:</strong> این جزوه برای کمک به دانشجویانی طراحی شده که می‌خواهند مفهوم SVM را به طور کامل درک کنند و در امتحانات نمره عالی بگیرند.
+        </div>
+
+        <h2>📌 بخش اول: SVM چیست؟</h2>
+        <p>
+            تصور کنید دو گروه داده دارید (مثلاً توپ‌های آبی و قرمز) که روی زمین ریخته شده‌اند. هدف 
+            <strong>SVM</strong> این است که یک خط (یا در ابعاد بالاتر، یک صفحه) بکشد که این دو گروه را از هم جدا کند.
+        </p>
+        <p>
+            اما SVM فقط یک خط معمولی نمی‌کشد! آن سعی می‌کند <strong>بهترین و امن‌ترین خط</strong> را انتخاب کند —
+            یعنی خطی که بیشترین فاصله را از نزدیک‌ترین نقاط هر دو گروه داشته باشد.
+        </p>
+
+        <div class="warning-box">
+            <strong>⚠️ برای پاسخ به سوالات تعریفی امتحان، این موارد را دقیق به خاطر بسپارید:</strong>
+            <ul>
+                <li>SVM = Support Vector Machine</li>
+                <li>هدف: پیدا کردن <strong>ابرصفحه بهینه</strong> که دو کلاس را از هم جدا کند</li>
+                <li>معیار بهینه بودن: <strong>بیشترین فاصله (Margin)</strong> از نزدیک‌ترین نقاط</li>
+            </ul>
+        </div>
+
+        <h2>🔑 مفاهیم کلیدی</h2>
+
+        <h3>1️⃣ ابرصفحه (Hyperplane)</h3>
+        <p>
+            در فضای دوبعدی، ابرصفحه یک <strong>خط</strong> است. در فضای سه‌بعدی، یک <strong>صفحه</strong> است.
+            در ابعاد بالاتر، یک "ابرصفحه" است که معادله آن به شکل زیر است:
+        </p>
+        <div class="formula">
+            w·x + b = 0
+        </div>
+        <p>
+            که در آن <code>w</code> بردار عمود بر صفحه، <code>x</code> بردار ویژگی‌ها و <code>b</code> عرض از مبدأ است.
+        </p>
+
+        <h3>2️⃣ حاشیه (Margin)</h3>
+        <p>
+            <strong>حاشیه</strong> فاصله بین ابرصفحه جداکننده و نزدیک‌ترین نقاط هر دو کلاس است.
+            هدف SVM <strong>ماکزیمم کردن این حاشیه</strong> است.
+        </p>
+        <div class="formula">
+            Margin = 2 / ||w||
+        </div>
+
+        <h3>3️⃣ بردارهای پشتیبان (Support Vectors)</h3>
+        <div class="highlight-box">
+            <p>
+                <strong>نقاطی هستند که دقیقاً روی مرز حاشیه قرار دارند</strong> و نزدیک‌ترین نقاط به خط جداکننده هستند.
+                این نقاط موقعیت خط را تعیین می‌کنند و <strong>حذف آن‌ها باعث تغییر مرز تصمیم‌گیری می‌شود</strong>.
+            </p>
+        </div>
+
+        <h2>⚔️ Hard Margin vs Soft Margin</h2>
+
+        <p>دو رویکرد اصلی برای ترسیم مرز وجود دارد:</p>
+
+        <div class="pros-cons">
+            <div class="pros">
+                <h3>Hard Margin SVM</h3>
+                <ul>
+                    <li>هیچ خطایی را نمی‌پذیرد</li>
+                    <li>فقط برای داده‌های <strong>کاملاً جداپذیر</strong> کار می‌کند</li>
+                    <li>بسیار حساس به نویز و Outliers است</li>
+                    <li>در عمل کمتر استفاده می‌شود</li>
+                </ul>
+            </div>
+
+            <div class="cons">
+                <h3>Soft Margin SVM</h3>
+                <ul>
+                    <li>اجازه خطای کم را می‌دهد تا مدل کلی بهتری بسازد</li>
+                    <li>پارامتر <code>C</code> میزان تساهل در قبال خطا را تنظیم می‌کند</li>
+                    <li>در برابر نویز پایدارتر است</li>
+                    <li>در عمل بیشتر استفاده می‌شود</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="warning-box">
+            <strong>📌 پارامتر C چیست؟</strong>
+            <ul>
+                <li><strong>C بزرگ:</strong> خطا را کم می‌کند اما ممکن است Overfitting ایجاد شود</li>
+                <li><strong>C کوچک:</strong> حاشیه بزرگ‌تر اما خطا بیشتر — مدل ساده‌تر و عمومی‌تر</li>
+            </ul>
+        </div>
+
+        <h2>🌀 Kernel Trick (ترفند هسته)</h2>
+
+        <p>
+            وقتی داده‌ها در فضای اصلی خطی جداپذیر نیستند، از <strong>Kernel Trick</strong> استفاده می‌کنیم
+            تا آن‌ها را به فضای با بعد بالاتر منتقل کنیم.
+        </p>
+
+        <h3>انواع Kernel:</h3>
+        <ul>
+            <li><strong>Linear Kernel:</strong> برای داده‌های خطی جداپذیر</li>
+            <li><strong>Polynomial Kernel:</strong> برای روابط چندجمله‌ای</li>
+            <li><strong>RBF (Gaussian) Kernel:</strong> محبوب‌ترین — برای اکثر مسائل</li>
+            <li><strong>Sigmoid Kernel:</strong> شبیه به شبکه‌های عصبی</li>
+        </ul>
+
+        <div class="formula">
+            K(x, x') = exp(-γ ||x - x'||²)  ← RBF Kernel
+        </div>
+
+        <h2>📈 Support Vector Regression (SVR)</h2>
+
+        <p>
+            در SVR هدف این است که تابعی پیدا کنیم که از همه داده‌ها حداکثر به اندازه <strong>ε (اپسیلون)</strong> فاصله داشته باشد.
+        </p>
+
+        <div class="highlight-box">
+            <p>
+                برخلاف رگرسیون معمولی که سعی می‌کند خطا را مینیمم کند، SVR سعی می‌کند خطا را <strong>در یک محدوده قابل قبول</strong> نگه دارد.
+            </p>
+        </div>
+
+        <h2>✅ مزایا و ❌ معایب SVM</h2>
+
+        <div class="pros-cons">
+            <div class="pros">
+                <h3>✅ مزایا</h3>
+                <ul>
+                    <li>در ابعاد بالا عالی عمل می‌کند</li>
+                    <li>در مواردی که تعداد ویژگی‌ها بیشتر از نمونه‌هاست موثر است</li>
+                    <li>به خاطر استفاده از Support Vectors، مصرف حافظه کمتری دارد</li>
+                    <li>با Kernel مختلف، انعطاف‌پذیر است</li>
+                </ul>
+            </div>
+
+            <div class="cons">
+                <h3>❌ معایب</h3>
+                <ul>
+                    <li>برای dataset‌های بزرگ (میلیون‌ها نمونه) کند است</li>
+                    <li>انتخاب Kernel و تنظیم پارامترها دشوار است</li>
+                    <li>به نویز حساس است (اگر Soft Margin استفاده نشود)</li>
+                    <li>خروجی احتمالاتی مستقیم نمی‌دهد</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>📝 خلاصه شب امتحان</h2>
+
+        <div class="danger-box">
+            <p><strong>این بخش خلاصه تمام چیزی است که باید سر جلسه یادتان باشد:</strong></p>
+            <ol>
+                <li><strong>هدف SVM:</strong> ماکزیمم کردن Margin (حاشیه)</li>
+                <li><strong>Support Vectors:</strong> نقاطی که روی مرز حاشیه‌اند و مرز را تعیین می‌کنند</li>
+                <li><strong>Hard Margin:</strong> خطا نمی‌پذیرد | <strong>Soft Margin:</strong> خطا می‌پذیرد (پارامتر C)</li>
+                <li><strong>Kernel Trick:</strong> برای داده‌های غیرخطی — انتقال به فضای بالاتر</li>
+                <li><strong>RBF Kernel:</strong> محبوب‌ترین Kernel برای مسائل واقعی</li>
+                <li><strong>SVR:</strong> نسخه رگرسیون SVM — خطا را در محدوده ε نگه می‌دارد</li>
+            </ol>
+        </div>
+
+        <h2>🧠 سوالات متداول امتحانی</h2>
+
+        <div class="quiz-section">
+            <div class="quiz-question">
+                <strong>❓ چرا SVM برای داده‌های بزرگ مناسب نیست؟</strong>
+                <p><strong>پاسخ:</strong> چون با افزایش تعداد داده‌ها، زمان آموزش مدل به شدت بالا می‌رود و الگوریتم کند می‌شود.</p>
+            </div>
+
+            <div class="quiz-question">
+                <strong>❓ تفاوت SVM با Logistic Regression چیست؟</strong>
+                <p><strong>پاسخ:</strong> Logistic Regression خروجی احتمالاتی می‌دهد و برای همه نقاط تلاش می‌کند. SVM فقط روی Support Vectors تمرکز می‌کند و حاشیه را ماکزیمم می‌کند.</p>
+            </div>
+
+            <div class="quiz-question">
+                <strong>❓ چه زمانی از SVM استفاده کنیم؟</strong>
+                <p><strong>پاسخ:</strong></p>
+                <ul>
+                    <li>داده‌های با ابعاد بالا</li>
+                    <li>تعداد نمونه‌ها کم تا متوسط (کمتر از 100,000)</li>
+                    <li>نیاز به دقت بالا</li>
+                    <li>مسائل دسته‌بندی باینری یا چندکلاسه</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>🎯 نکته طلایی</h2>
+        <div class="highlight-box">
+            <p>
+                <strong>پیام اصلی درس:</strong> SVM یک "بهینه‌ساز هندسی" است. به جای اینکه فقط داده‌ها را جدا کند،
+                سعی می‌کند مطمئن‌ترین جداسازی را با ایجاد پهن‌ترین مرز ممکن انجام دهد.
+                هرجا صحبت از "دقت در ابعاد بالا" بود، یاد SVM بیفتید.
+                هرجا صحبت از "داده‌های عظیم میلیونی" بود، یاد ضعف SVM بیفتید.
+            </p>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 15px;">
+            <h3 style="color: white;">🚀 موفق باشید!</h3>
+            <p>این جزوه با ❤️ توسط امیرعلی سطوتی تهیه شده است</p>
+        </div>
+    </div>
 </body>
 </html>
