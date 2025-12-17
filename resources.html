@@ -198,66 +198,68 @@
     </div>
     
     <script>
-        // Fetch blog posts from GitHub API
-        async function loadPosts() {
+        // Blog posts data
+        const posts = [
+            {
+                title: "آموزش شبیه‌سازی - فصل ۳",
+                description: "روش‌های تولید اعداد تصادفی",
+                tags: ["R", "شبیه‌سازی"],
+                date: "1403/09/24",
+                url: "/2025/12/15/simulation-chapter3-random-number-generation.html"
+            },
+            {
+                title: "آمار: ضرایب اسپیرمن و کندال",
+                description: "ضرایب همبستگی رتبه‌ای",
+                tags: ["آمار", "همبستگی"],
+                date: "1403/09/24",
+                url: "/2025/12/15/statistics-spearman-kendall.html"
+            },
+            {
+                title: "توپولوژی: تحلیل فشردگی",
+                description: "مفاهیم فشردگی در فضاهای توپولوژیک",
+                tags: ["توپولوژی", "ریاضیات"],
+                date: "1403/09/24",
+                url: "/2025/12/15/topology-compactness-analysis.html"
+            }
+        ];
+        
+        // Load posts when page loads
+        document.addEventListener('DOMContentLoaded', () => {
             const postsContainer = document.getElementById('posts-container');
             const emptyState = document.getElementById('empty-state');
             
-            try {
-                // Try to fetch from GitHub Pages API or RSS feed
-                // For now, we'll show a message to manually add posts
-                
-                // Sample posts data (replace with actual data)
-                const posts = [
-                    {
-                        title: "آموزش شبیه‌سازی - فصل ۳",
-                        description: "روش‌های تولید اعداد تصادفی",
-                        tags: ["R", "شبیه‌سازی"],
-                        date: "1403/09/27",
-                        url: "/2024/12/17/simulation-chapter3.html"
-                    }
-                ];
-                
-                if (posts.length === 0) {
-                    emptyState.style.display = 'block';
-                    return;
-                }
-                
-                posts.forEach(post => {
-                    const card = document.createElement('a');
-                    card.href = post.url;
-                    card.className = 'post-card';
-                    
-                    card.innerHTML = `
-                        <div class="post-icon">
-                            <i class="fas fa-file-alt"></i>
-                        </div>
-                        ${
-                            post.tags ? `
-                            <div class="post-tags">
-                                ${post.tags.map(tag => `<span class="post-tag">${tag}</span>`).join('')}
-                            </div>
-                            ` : ''
-                        }
-                        <h3 class="post-title">${post.title}</h3>
-                        ${post.description ? `<p class="post-desc">${post.description}</p>` : ''}
-                        <div class="post-date">
-                            <i class="far fa-calendar"></i>
-                            <span>${post.date}</span>
-                        </div>
-                    `;
-                    
-                    postsContainer.appendChild(card);
-                });
-                
-            } catch (error) {
-                console.error('Error loading posts:', error);
+            if (posts.length === 0) {
                 emptyState.style.display = 'block';
+                return;
             }
-        }
-        
-        // Load posts when page loads
-        document.addEventListener('DOMContentLoaded', loadPosts);
+            
+            posts.forEach(post => {
+                const card = document.createElement('a');
+                card.href = post.url;
+                card.className = 'post-card';
+                
+                card.innerHTML = `
+                    <div class="post-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    ${
+                        post.tags ? `
+                        <div class="post-tags">
+                            ${post.tags.map(tag => `<span class="post-tag">${tag}</span>`).join('')}
+                        </div>
+                        ` : ''
+                    }
+                    <h3 class="post-title">${post.title}</h3>
+                    ${post.description ? `<p class="post-desc">${post.description}</p>` : ''}
+                    <div class="post-date">
+                        <i class="far fa-calendar"></i>
+                        <span>${post.date}</span>
+                    </div>
+                `;
+                
+                postsContainer.appendChild(card);
+            });
+        });
     </script>
 </body>
 </html>
