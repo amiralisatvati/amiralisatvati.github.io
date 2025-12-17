@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منابع یادگیری | امیرعلی سطوتی</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #050714 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #06b6d4, #8b5cf6, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .header p {
+            font-size: 1.125rem;
+            color: #94a3b8;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #06b6d4;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .back-link:hover {
+            gap: 1rem;
+            color: #8b5cf6;
+        }
+        
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .post-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+            border: 1px solid rgba(100, 116, 139, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .post-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(6, 182, 212, 0.5);
+            box-shadow: 0 12px 24px rgba(6, 182, 212, 0.15);
+        }
+        
+        .post-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(139, 92, 246, 0.2));
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #06b6d4;
+            margin-bottom: 1rem;
+        }
+        
+        .post-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.75rem;
+        }
+        
+        .post-tag {
+            font-size: 0.75rem;
+            font-family: 'Courier New', monospace;
+            background: rgba(6, 182, 212, 0.1);
+            color: rgba(6, 182, 212, 0.9);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+        
+        .post-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0.5rem 0;
+            line-height: 1.4;
+        }
+        
+        .post-card:hover .post-title {
+            color: #06b6d4;
+        }
+        
+        .post-desc {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            margin: 0.5rem 0;
+            line-height: 1.5;
+        }
+        
+        .post-date {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 1rem;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #64748b;
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .posts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">
+            <i class="fas fa-arrow-right"></i>
+            بازگشت به صفحه اصلی
+        </a>
+        
+        <div class="header">
+            <h1>📚 منابع یادگیری</h1>
+            <p>مجموعه منتخب از مطالب آموزشی، پست‌های بلاگ و منابع یادگیری</p>
+        </div>
+        
+        <div class="posts-grid" id="posts-container">
+            <!-- Posts will be loaded here dynamically -->
+        </div>
+        
+        <div class="empty-state" id="empty-state" style="display: none;">
+            <i class="fas fa-inbox"></i>
+            <p>هنوز پستی منتشر نشده است.</p>
+        </div>
+    </div>
+    
+    <script>
+        // Fetch blog posts from GitHub API
+        async function loadPosts() {
+            const postsContainer = document.getElementById('posts-container');
+            const emptyState = document.getElementById('empty-state');
+            
+            try {
+                // Try to fetch from GitHub Pages API or RSS feed
+                // For now, we'll show a message to manually add posts
+                
+                // Sample posts data (replace with actual data)
+                const posts = [
+                    {
+                        title: "آموزش شبیه‌سازی - فصل ۳",
+                        description: "روش‌های تولید اعداد تصادفی",
+                        tags: ["R", "شبیه‌سازی"],
+                        date: "1403/09/27",
+                        url: "/2024/12/17/simulation-chapter3.html"
+                    }
+                ];
+                
+                if (posts.length === 0) {
+                    emptyState.style.display = 'block';
+                    return;
+                }
+                
+                posts.forEach(post => {
+                    const card = document.createElement('a');
+                    card.href = post.url;
+                    card.className = 'post-card';
+                    
+                    card.innerHTML = `
+                        <div class="post-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        ${
+                            post.tags ? `
+                            <div class="post-tags">
+                                ${post.tags.map(tag => `<span class="post-tag">${tag}</span>`).join('')}
+                            </div>
+                            ` : ''
+                        }
+                        <h3 class="post-title">${post.title}</h3>
+                        ${post.description ? `<p class="post-desc">${post.description}</p>` : ''}
+                        <div class="post-date">
+                            <i class="far fa-calendar"></i>
+                            <span>${post.date}</span>
+                        </div>
+                    `;
+                    
+                    postsContainer.appendChild(card);
+                });
+                
+            } catch (error) {
+                console.error('Error loading posts:', error);
+                emptyState.style.display = 'block';
+            }
+        }
+        
+        // Load posts when page loads
+        document.addEventListener('DOMContentLoaded', loadPosts);
+    </script>
+</body>
+</html>
