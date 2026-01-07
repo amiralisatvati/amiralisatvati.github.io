@@ -1,462 +1,202 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl" class="scroll-smooth">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منابع یادگیری | امیرعلی سطوتی</title>
-
-    <!-- فونت‌ها و کتابخانه‌ها -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-
-    <!-- تنظیمات تم -->
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        accent: {
-                            light: '#3b82f6',
-                            DEFAULT: '#2563eb',
-                            dark: '#1e40af'
-                        },
-                        dark: {
-                            bg: '#0f172a',
-                            card: '#1e293b',
-                            border: '#334155'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Vazirmatn', 'system-ui', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
-
-    <!-- استایل‌های CSS سفارشی -->
+    
     <style>
-        @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
-
         * {
-            font-family: Vazirmatn, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-
+        
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Vazirmatn', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #050714 100%);
+            color: #e2e8f0;
             min-height: 100vh;
+            padding: 2rem;
         }
-
-        .glass {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
         }
-
-        .gradient-text {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #06b6d4, #8b5cf6, #10b981);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
-
-        .hover-lift {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        
+        .header p {
+            font-size: 1.125rem;
+            color: #94a3b8;
         }
-
-        .hover-lift:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #06b6d4;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            transition: all 0.3s;
         }
-
+        
+        .back-link:hover {
+            gap: 1rem;
+            color: #8b5cf6;
+        }
+        
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
         .post-card {
-            background: white;
-            border-radius: 16px;
-            padding: 24px;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+            border: 1px solid rgba(100, 116, 139, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
             transition: all 0.3s ease;
             text-decoration: none;
             color: inherit;
             display: block;
-            border: 2px solid transparent;
         }
-
+        
         .post-card:hover {
-            transform: translateY(-5px);
-            border-color: #667eea;
-            box-shadow: 0 12px 24px rgba(102, 126, 234, 0.3);
+            transform: translateY(-4px);
+            border-color: rgba(6, 182, 212, 0.5);
+            box-shadow: 0 12px 24px rgba(6, 182, 212, 0.15);
         }
-
+        
         .post-icon {
             width: 48px;
             height: 48px;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-            border: 2px solid rgba(102, 126, 234, 0.3);
-            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(139, 92, 246, 0.2));
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
-            color: #667eea;
+            color: #06b6d4;
             margin-bottom: 1rem;
         }
-
+        
         .post-tags {
             display: flex;
             gap: 0.5rem;
             flex-wrap: wrap;
             margin-bottom: 0.75rem;
         }
-
+        
         .post-tag {
             font-size: 0.75rem;
-            background: rgba(102, 126, 234, 0.1);
-            color: #667eea;
-            border: 1px solid rgba(102, 126, 234, 0.2);
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            background: rgba(6, 182, 212, 0.1);
+            color: rgba(6, 182, 212, 0.9);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
         }
-
+        
         .post-title {
             font-size: 1.25rem;
             font-weight: 700;
-            color: #1e293b;
+            color: #fff;
             margin: 0.5rem 0;
             line-height: 1.4;
         }
-
+        
+        .post-card:hover .post-title {
+            color: #06b6d4;
+        }
+        
         .post-desc {
             font-size: 0.875rem;
-            color: #64748b;
+            color: #94a3b8;
             margin: 0.5rem 0;
-            line-height: 1.6;
+            line-height: 1.5;
         }
-
+        
         .post-date {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             font-size: 0.75rem;
-            color: #94a3b8;
+            color: #64748b;
             margin-top: 1rem;
         }
-
-        /* Chat Widget Styles */
-        .chat-widget {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            z-index: 1000;
+        
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #64748b;
         }
-
-        .chat-toggle {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s;
-        }
-
-        .chat-toggle:hover {
-            transform: scale(1.1);
-        }
-
-        .chat-body {
-            display: none;
-            position: fixed;
-            bottom: 90px;
-            left: 20px;
-            width: 380px;
-            height: 500px;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .chat-body.active {
-            display: flex;
-        }
-
-        .chat-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            background: #f8fafc;
-        }
-
-        .message {
-            margin-bottom: 15px;
-            padding: 12px 16px;
-            border-radius: 12px;
-            max-width: 80%;
-            word-wrap: break-word;
-        }
-
-        .message.user {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            margin-right: auto;
-        }
-
-        .message.ai {
-            background: white;
-            color: #1f2937;
-            margin-left: auto;
-            border: 1px solid #e5e7eb;
-        }
-
-        .chat-input-area {
-            padding: 16px;
-            background: white;
-            border-top: 1px solid #e5e7eb;
-            display: flex;
-            gap: 8px;
-        }
-
-        .chat-input {
-            flex: 1;
-            padding: 10px 16px;
-            border: 1px solid #e5e7eb;
-            border-radius: 24px;
-            outline: none;
-            font-family: Vazirmatn, sans-serif;
-        }
-
-        .chat-input:focus {
-            border-color: #667eea;
-        }
-
-        .chat-send-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .chat-send-btn:disabled {
+        
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
             opacity: 0.5;
-            cursor: not-allowed;
         }
-
-        .typing-indicator {
-            display: none;
-            padding: 12px 16px;
-            background: white;
-            border-radius: 12px;
-            max-width: 80px;
-            margin-left: auto;
-            border: 1px solid #e5e7eb;
-        }
-
-        .typing-indicator.active {
-            display: block;
-        }
-
-        .typing-indicator span {
-            height: 8px;
-            width: 8px;
-            background: #667eea;
-            border-radius: 50%;
-            display: inline-block;
-            margin: 0 2px;
-            animation: bounce 1.4s infinite ease-in-out both;
-        }
-
-        .typing-indicator span:nth-child(1) {
-            animation-delay: -0.32s;
-        }
-
-        .typing-indicator span:nth-child(2) {
-            animation-delay: -0.16s;
-        }
-
-        @keyframes bounce {
-            0%, 80%, 100% {
-                transform: scale(0);
-            }
-            40% {
-                transform: scale(1);
-            }
-        }
-
-        #back-to-top {
-            position: fixed;
-            bottom: 90px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            cursor: pointer;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s;
-            z-index: 999;
-        }
-
-        #back-to-top:hover {
-            transform: translateY(-3px);
-        }
-
-        #back-to-top.show {
-            display: flex;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animate-fadeInUp {
-            animation: fadeInUp 0.6s ease-out;
-        }
-
+        
         @media (max-width: 768px) {
-            .chat-body {
-                width: calc(100vw - 40px);
-                left: 20px;
-                right: 20px;
+            body {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .posts-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
-
-<body class="antialiased font-sans relative">
-
-    <!-- نوار ناوبری بالا -->
-    <nav class="fixed w-full z-50 glass">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center space-x-4 space-x-reverse">
-                    <i class="fas fa-book-open text-2xl text-white"></i>
-                    <span class="text-white font-bold text-xl">منابع یادگیری</span>
-                </div>
-                <div class="hidden md:flex space-x-6 space-x-reverse text-white">
-                    <a href="/" class="hover:text-yellow-300 transition"><i class="fas fa-home ml-1"></i> خانه</a>
-                    <a href="#posts" class="hover:text-yellow-300 transition"><i class="fas fa-file-alt ml-1"></i> مطالب</a>
-                </div>
-            </div>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">
+            <i class="fas fa-arrow-right"></i>
+            بازگشت به صفحه اصلی
+        </a>
+        
+        <div class="header">
+            <h1>📚 منابع یادگیری</h1>
+            <p>مجموعه منتخب از مطالب آموزشی، پست‌های بلاگ و منابع یادگیری</p>
         </div>
-    </nav>
-
-    <!-- هدر اصلی -->
-    <header class="pt-32 pb-20 px-4">
-        <div class="max-w-4xl mx-auto text-center text-white">
-            <h1 class="text-5xl md:text-6xl font-bold mb-6 animate-fadeInUp">
-                📚 منابع یادگیری
-            </h1>
-            <p class="text-xl md:text-2xl mb-4 opacity-90 animate-fadeInUp">
-                مجموعه منتخب از مطالب آموزشی، پست‌های بلاگ و منابع یادگیری
-            </p>
-        </div>
-    </header>
-
-    <!-- محتوای اصلی -->
-    <div class="max-w-7xl mx-auto px-4 pb-20">
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="posts-container">
+        
+        <div class="posts-grid" id="posts-container">
             <!-- Posts will be loaded here dynamically -->
         </div>
-
-        <div class="text-center py-12" id="empty-state" style="display: none;">
-            <div class="glass-card rounded-2xl p-12 inline-block">
-                <i class="fas fa-inbox text-6xl text-gray-400 mb-4"></i>
-                <p class="text-gray-600 text-lg">هنوز پستی منتشر نشده است.</p>
-            </div>
+        
+        <div class="empty-state" id="empty-state" style="display: none;">
+            <i class="fas fa-inbox"></i>
+            <p>هنوز پستی منتشر نشده است.</p>
         </div>
     </div>
-
-    <!-- Chat Widget -->
-    <div class="chat-widget">
-        <button class="chat-toggle" onclick="toggleChat()" id="chat-toggle-btn">
-            <i class="fas fa-comments"></i>
-        </button>
-        <div class="chat-body" id="chat-body">
-            <div class="chat-header">
-                <div class="flex items-center gap-3">
-                    <i class="fas fa-robot text-2xl"></i>
-                    <div>
-                        <div class="font-bold">دستیار هوشمند</div>
-                        <div class="text-xs opacity-75">همیشه آماده کمک</div>
-                    </div>
-                </div>
-                <button onclick="toggleChat()" class="text-white hover:opacity-75">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="chat-messages" id="chat-messages">
-                <div class="message ai">
-                    سلام! من دستیار هوشمند شما هستم. در مورد مطالب آموزشی سوال دارید؟
-                </div>
-            </div>
-            <div class="typing-indicator" id="typing-indicator">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <div class="chat-input-area">
-                <input 
-                    type="text" 
-                    class="chat-input" 
-                    id="chat-input" 
-                    placeholder="سوال خود را بپرسید..."
-                    onkeypress="handleKeyPress(event)"
-                />
-                <button class="chat-send-btn" onclick="sendMessage()" id="send-btn">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- دکمه بازگشت به بالا -->
-    <button id="back-to-top" title="بازگشت به بالا">
-        <i class="fas fa-arrow-up"></i>
-    </button>
-
+    
     <script>
         // Blog posts data
         const posts = [
@@ -479,39 +219,39 @@
                 description: "روش‌های تولید اعداد تصادفی",
                 tags: ["R", "شبیه‌سازی"],
                 date: "1403/09/24",
-                url: "/posts/2025-12-15-simulation-random-numbers.html"
+                url: "/2025/12/15/simulation-chapter3-random-number-generation.html"
             },
             {
                 title: "آمار: ضرایب اسپیرمن و کندال",
                 description: "ضرایب همبستگی رتبه‌ای",
                 tags: ["آمار", "همبستگی"],
                 date: "1403/09/24",
-                url: "/posts/2025-12-15-statistics-spearman-kendall.html"
+                url: "/2025/12/15/statistics-spearman-kendall.html"
             },
             {
                 title: "توپولوژی: تحلیل فشردگی",
                 description: "مفاهیم فشردگی در فضاهای توپولوژیک",
                 tags: ["توپولوژی", "ریاضیات"],
                 date: "1403/09/24",
-                url: "/posts/2025-12-15-topology-compactness-analysis.html"
+                url: "/2025/12/15/topology-compactness-analysis.html"
             }
         ];
-
+        
         // Load posts when page loads
         document.addEventListener('DOMContentLoaded', () => {
             const postsContainer = document.getElementById('posts-container');
             const emptyState = document.getElementById('empty-state');
-
+            
             if (posts.length === 0) {
                 emptyState.style.display = 'block';
                 return;
             }
-
+            
             posts.forEach(post => {
                 const card = document.createElement('a');
                 card.href = post.url;
-                card.className = 'post-card hover-lift animate-fadeInUp';
-
+                card.className = 'post-card';
+                
                 card.innerHTML = `
                     <div class="post-icon">
                         <i class="fas fa-file-alt"></i>
@@ -530,122 +270,8 @@
                         <span>${post.date}</span>
                     </div>
                 `;
-
+                
                 postsContainer.appendChild(card);
-            });
-        });
-
-        // Chat functionality
-        const API_KEY = 'c96f118bf29e4090838b70489db9f38d.u6508qeP86GG2Lpu';
-        const API_URL = 'https://api.z.ai/api/paas/v4/chat/completions';
-        const conversationHistory = [];
-
-        function toggleChat() {
-            const chatBody = document.getElementById('chat-body');
-            chatBody.classList.toggle('active');
-        }
-
-        function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                sendMessage();
-            }
-        }
-
-        async function sendMessage() {
-            const input = document.getElementById('chat-input');
-            const message = input.value.trim();
-
-            if (!message) return;
-
-            // Add user message to chat
-            addMessageToChat('user', message);
-            input.value = '';
-
-            // Add to conversation history
-            conversationHistory.push({
-                role: 'user',
-                content: message
-            });
-
-            // Show typing indicator
-            const typingIndicator = document.getElementById('typing-indicator');
-            typingIndicator.classList.add('active');
-
-            // Disable send button
-            const sendBtn = document.getElementById('send-btn');
-            sendBtn.disabled = true;
-
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept-Language': 'fa-IR,fa',
-                        'Authorization': `Bearer ${API_KEY}`
-                    },
-                    body: JSON.stringify({
-                        model: 'glm-4.7',
-                        messages: [
-                            {
-                                role: 'system',
-                                content: 'شما یک دستیار هوشمند فارسی‌زبان هستید که در زمینه آمار، ریاضیات و علوم کامپیوتر تخصص دارید. پاسخ‌های مفید، دقیق و آموزنده بدهید.'
-                            },
-                            ...conversationHistory
-                        ],
-                        temperature: 0.7,
-                        stream: false
-                    })
-                });
-
-                const data = await response.json();
-                const aiMessage = data.choices[0].message.content;
-
-                // Add to conversation history
-                conversationHistory.push({
-                    role: 'assistant',
-                    content: aiMessage
-                });
-
-                // Add AI message to chat
-                addMessageToChat('ai', aiMessage);
-
-            } catch (error) {
-                console.error('Error:', error);
-                addMessageToChat('ai', 'متأسفم، خطایی رخ داده است. لطفاً دوباره تلاش کنید.');
-            } finally {
-                // Hide typing indicator
-                typingIndicator.classList.remove('active');
-                // Enable send button
-                sendBtn.disabled = false;
-            }
-        }
-
-        function addMessageToChat(sender, message) {
-            const messagesContainer = document.getElementById('chat-messages');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${sender}`;
-            messageDiv.textContent = message;
-            messagesContainer.appendChild(messageDiv);
-
-            // Scroll to bottom
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-
-        // Back to Top Button
-        const backToTopButton = document.getElementById('back-to-top');
-
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTopButton.classList.add('show');
-            } else {
-                backToTopButton.classList.remove('show');
-            }
-        });
-
-        backToTopButton.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
             });
         });
     </script>
