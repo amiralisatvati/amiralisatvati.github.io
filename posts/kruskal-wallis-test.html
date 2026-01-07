@@ -462,10 +462,219 @@
                 </ol>
             </section>
 
-            <!-- (محتوای بقیه بخش‌ها همان‌طور که در فایل اصلی است ادامه می‌یابد...) -->
-            <!-- Due to character limits, I'll continue with the rest in the implementation -->
+            <!-- بخش ۴: آماره آزمون -->
+            <section id="formula" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-calculator ml-3"></i>
+                    بخش ۴: آماره آزمون (Test Statistic)
+                </h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    آماره آزمون کروسکال-والیس با نماد \(H\) یا \(KW\) نمایش داده می‌شود:
+                </p>
+                
+                <div class="formula-card text-center" dir="ltr">
+                    $$H = \frac{12}{N(N+1)} \sum_{j=1}^{k} \frac{R_j^2}{n_j} - 3(N+1)$$
+                </div>
+
+                <h3 class="text-2xl font-bold mt-8 mb-4">راهنمای نمادها:</h3>
+                <ul class="space-y-2 text-gray-700">
+                    <li><span class="badge badge-blue">\(k\)</span> تعداد گروه‌ها (تیمارها یا جوامع)</li>
+                    <li><span class="badge badge-blue">\(n_j\)</span> تعداد نمونه‌ها در گروه \(j\)ام</li>
+                    <li><span class="badge badge-blue">\(N\)</span> تعداد کل مشاهدات (\(N = \sum n_j\))</li>
+                    <li><span class="badge badge-blue">\(R_j\)</span> مجموع رتبه‌های مربوط به گروه \(j\)ام</li>
+                </ul>
+            </section>
+
+            <!-- بخش ۵: ناحیه بحرانی و تصمیم‌گیری -->
+            <section id="decision" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-chart-line ml-3"></i>
+                    بخش ۵: ناحیه بحرانی و تصمیم‌گیری
+                </h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    توزیع آماره \(H\) (زمانی که \(n_j \ge 5\)) تقریباً مشابه توزیع کای-دو (\(\chi^2\)) با درجه آزادی \(k-1\) است.
+                </p>
+                
+                <div class="warning-card text-center">
+                    <strong class="block mb-2 text-lg">قانون تصمیم‌گیری:</strong>
+                    <p class="text-gray-800 leading-relaxed mb-2">
+                        اگر مقدار آماره محاسبه شده (\(H\)) بزرگتر از مقدار بحرانی جدول کای-دو باشد، فرضیه صفر رد می‌شود.
+                    </p>
+                    <div dir="ltr" class="text-xl font-bold text-red-700">
+                        $$H > \chi^2_{\alpha, k-1} \Longrightarrow \text{Reject } H_0$$
+                    </div>
+                </div>
+            </section>
+
+            <!-- بخش ۶: مثال‌های حل شده -->
+            <section id="examples" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-code ml-3"></i>
+                    بخش ۶: مثال‌های حل شده
+                </h2>
+                
+                <!-- مثال ۱ -->
+                <div class="example-card">
+                    <h3 class="text-lg font-bold text-blue-700 mb-3">
+                        <i class="fas fa-book-open ml-2"></i>
+                        مثال ۱: تاثیر کودهای شیمیایی بر رشد گیاه (بدون تکرار)
+                    </h3>
+                    <p class="text-gray-800 mb-3">
+                        آیا تفاوت معنی‌داری بین کودهای A، B و C وجود دارد؟ (\(\alpha = 0.05\))
+                    </p>
+                    
+                    <h4 class="font-bold text-gray-800 mt-4 mb-2">گام اول: تجمیع و رتبه‌دهی</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>مقدار (رشد)</th>
+                                <th>گروه</th>
+                                <th>رتبه</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>10</td><td>A</td><td>1</td></tr>
+                            <tr><td>12</td><td>A</td><td>2</td></tr>
+                            <tr><td>14</td><td>A</td><td>3</td></tr>
+                            <tr><td>20</td><td>B</td><td>4</td></tr>
+                            <tr><td>22</td><td>B</td><td>5</td></tr>
+                            <tr><td>25</td><td>B</td><td>6</td></tr>
+                            <tr><td>30</td><td>C</td><td>7</td></tr>
+                            <tr><td>32</td><td>C</td><td>8</td></tr>
+                            <tr><td>35</td><td>C</td><td>9</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h4 class="font-bold text-gray-800 mt-4 mb-2">گام دوم: مجموع رتبه‌ها (\(R_j\))</h4>
+                    <ul class="space-y-1 text-gray-700">
+                        <li>\(R_A = 1 + 2 + 3 = \mathbf{6}\)</li>
+                        <li>\(R_B = 4 + 5 + 6 = \mathbf{15}\)</li>
+                        <li>\(R_C = 7 + 8 + 9 = \mathbf{24}\)</li>
+                    </ul>
+
+                    <h4 class="font-bold text-gray-800 mt-4 mb-2">گام سوم: محاسبه \(H\) (\(N=9, n=3\))</h4>
+                    <div class="formula-card" dir="ltr" style="font-size: 0.9em;">
+                        $$H = \frac{12}{9(10)} \left( \frac{6^2}{3} + \frac{15^2}{3} + \frac{24^2}{3} \right) - 3(10)$$
+                        $$H = 0.1333 \times (12 + 75 + 192) - 30 = 7.2$$
+                    </div>
+
+                    <div class="success-card mt-3">
+                        <strong>نتیجه:</strong> چون \(7.2 > 5.991\) (مقدار جدول)، فرض صفر رد می‌شود. 
+                        <span class="text-green-700 font-bold">تفاوت معنی‌دار است.</span>
+                    </div>
+                </div>
+
+                <!-- مثال ۲ -->
+                <div class="example-card mt-6">
+                    <h3 class="text-lg font-bold text-blue-700 mb-3">
+                        <i class="fas fa-book-open ml-2"></i>
+                        مثال ۲: رضایت شغلی (با داده‌های تکراری)
+                    </h3>
+                    <p class="text-gray-800 mb-3">
+                        اعداد ۵ و ۵ تکراری هستند (رتبه‌های ۱ و ۲). میانگین آن‌ها محاسبه می‌شود: \((1+2)/2 = 1.5\)
+                    </p>
+                    
+                    <table>
+                        <thead>
+                            <tr><th>مقدار</th><th>۵</th><th>۵</th><th>۷</th><th>۹</th><th>۱۰</th><th>۱۲</th><th>۲۰</th><th>۲۲</th><th>۲۵</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><th>گروه</th><td>۱</td><td>۱</td><td>۲</td><td>۱</td><td>۲</td><td>۲</td><td>۳</td><td>۳</td><td>۳</td></tr>
+                            <tr><th>رتبه</th><td>۱.۵</td><td>۱.۵</td><td>۳</td><td>۴</td><td>۵</td><td>۶</td><td>۷</td><td>۸</td><td>۹</td></tr>
+                        </tbody>
+                    </table>
+
+                    <p class="text-gray-800 mt-3"><strong>مجموع رتبه‌ها:</strong> \(R_1=7, R_2=14, R_3=24\)</p>
+                    <p class="text-gray-800 mt-2"><strong>محاسبه \(H\):</strong></p>
+                    <div class="formula-card text-center" dir="ltr">
+                       $$H \approx 6.48$$
+                    </div>
+                    <div class="success-card mt-3">
+                        <strong>نتیجه:</strong> \(6.48 > 5.991\)، فرض صفر رد می‌شود.
+                    </div>
+                </div>
+            </section>
+
+            <!-- بخش ۷: تفاوت با آزمون فریدمن -->
+            <section id="comparison" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-balance-scale ml-3"></i>
+                    بخش ۷: تفاوت با آزمون فریدمن (Friedman Test)
+                </h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    تفاوت اصلی در <strong>مستقل</strong> یا <strong>وابسته</strong> بودن نمونه‌هاست.
+                </p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ویژگی</th>
+                            <th>کروسکال-والیس</th>
+                            <th>فریدمن</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>نوع نمونه‌ها</strong></td>
+                            <td>۳ یا چند گروه <strong>مستقل</strong> (افراد متفاوت)</td>
+                            <td>۳ یا چند گروه <strong>وابسته</strong> (افراد یکسان/تکراری)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>مثال</strong></td>
+                            <td>مقایسه ۳ رژیم غذایی روی ۳ گروه مختلف از افراد</td>
+                            <td>مقایسه ۳ رژیم غذایی روی یک گروه ثابت از افراد (در طول زمان)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>معادل پارامتریک</strong></td>
+                            <td>ANOVA یک‌طرفه</td>
+                            <td>ANOVA با اندازه‌های تکراری</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-card mt-4">
+                    <p class="text-gray-800">
+                        ✅ <strong>چک‌لیست تشخیص:</strong><br>
+                        "آیا افراد حاضر در گروه ۱، همان افراد حاضر در گروه ۲ و ۳ هستند؟"<br>
+                        خیر ← کروسکال-والیس<br>
+                        بله ← فریدمن
+                    </p>
+                </div>
+            </section>
+
+            <!-- بخش ۸: خلاصه مخصوص شب امتحان -->
+            <section id="summary" class="glass-card rounded-2xl p-8 hover-lift cheat-sheet">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-graduation-cap ml-3"></i>
+                    بخش ۸: خلاصه مخصوص شب امتحان
+                </h2>
+                <p class="text-gray-700 mb-4">اگر وقت کمی دارید، فقط همین را بخوانید!</p>
+                <ol class="space-y-3 text-gray-700">
+                    <li>
+                        <strong>شناسایی سوال:</strong> مقایسه ۳ گروه یا بیشتر + داده‌های غیرنرمال/رتبه‌ای + گروه‌های مستقل.
+                    </li>
+                    <li>
+                        <strong>فرمول اصلی:</strong>
+                        <div class="formula-card text-center" dir="ltr">
+                            $$H = \frac{12}{N(N+1)} \sum \frac{R_j^2}{n_j} - 3(N+1)$$
+                        </div>
+                    </li>
+                    <li>
+                        <strong>الگوریتم ۳ مرحله‌ای:</strong>
+                        <ul class="mr-6 mt-2 space-y-1">
+                            <li>همه اعداد را یک‌کاسه و رتبه‌بندی کنید (اعداد تکراری = میانگین رتبه).</li>
+                            <li>رتبه‌های هر گروه را جدا کرده و جمع بزنید (\(R_j\)).</li>
+                            <li>اعداد را در فرمول بگذارید.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>نتیجه‌گیری:</strong> اگر \(H >\) عدد جدول، فرض صفر رد می‌شود (تفاوت وجود دارد).
+                    </li>
+                </ol>
+            </section>
 
         </div>
+
     </div>
 
     <!-- چت‌بات هوش مصنوعی -->
@@ -510,9 +719,21 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
+    <!-- Footer -->
+    <footer class="glass-card mx-auto max-w-5xl mb-8 rounded-2xl p-6 text-center">
+        <p class="text-gray-700">
+            <i class="fas fa-university ml-2"></i>
+            جزوه آموزشی آزمون کروسکال-والیس
+        </p>
+        <p class="text-sm text-gray-600 mt-2">
+            © 2026 - تهیه شده برای دانشجویان آمار
+        </p>
+    </footer>
+
+    <!-- JavaScript -->
     <script>
         // Z.AI API تنظیمات
-        const ZAI_API_KEY = 'YOUR_API_KEY_HERE';
+        const ZAI_API_KEY = 'YOUR_API_KEY_HERE'; // کلید API خود را اینجا قرار دهید
         const ZAI_API_URL = 'https://api.z.ai/api/paas/v4/chat/completions';
         let conversationHistory = [];
 
@@ -546,7 +767,10 @@
                     body: JSON.stringify({
                         model: 'glm-4.7',
                         messages: [
-                            { role: 'system', content: 'شما یک دستیار هوش مصنوعی آمار هستید که درباره آزمون کروسکال-والیس سوالات را پاسخ می‌دهید. پاسخ‌های واضح و کاربردی به زبان فارسی ارائه دهید.' },
+                            { 
+                                role: 'system', 
+                                content: 'شما یک دستیار هوش مصنوعی آمار هستید که درباره آزمون کروسکال-والیس سوالات را پاسخ می‌دهید. پاسخ‌های واضح و کاربردی به زبان فارسی ارائه دهید.' 
+                            },
                             ...conversationHistory
                         ]
                     })
@@ -558,6 +782,7 @@
                 addMessage(aiResponse, 'ai');
                 conversationHistory.push({ role: 'assistant', content: aiResponse });
             } catch (error) {
+                console.error('Error:', error);
                 document.getElementById(loadingId).remove();
                 addMessage('خطایی رخ داد. لطفاً دوباره تلاش کنید.', 'ai');
             }
@@ -584,7 +809,18 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // Sidebar active link
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Sidebar active link on scroll
         const sections = document.querySelectorAll('section[id]');
         const sidebarLinks = document.querySelectorAll('.sidebar-link');
         window.addEventListener('scroll', () => {
@@ -596,7 +832,9 @@
             });
             sidebarLinks.forEach(link => {
                 link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) link.classList.add('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
             });
         });
     </script>
