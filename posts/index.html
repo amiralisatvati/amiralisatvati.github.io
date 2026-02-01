@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پست‌های من | امیرعلی سطوتی</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0f172a',
+                        darker: '#020617',
+                        accent: '#38bdf8',
+                    },
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen">
+    
+    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur-sm sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="text-accent hover:text-white transition-colors flex items-center gap-2">
+                    <i class="fas fa-arrow-right"></i>
+                    <span>بازگشت به صفحه اصلی</span>
+                </a>
+                <h1 class="text-2xl font-bold">پست‌های من</h1>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-12">
+        <div class="grid gap-6">
+            
+            <article class="bg-slate-900/50 border border-slate-800 rounded-xl p-6 hover:border-accent/50 transition-all group">
+                <a href="svm-guide.html" class="block">
+                    <div class="flex items-start justify-between mb-3">
+                        <h2 class="text-2xl font-bold text-white group-hover:text-accent transition-colors">
+                            جزوه جامع ماشین بردار پشتیبان (SVM)
+                        </h2>
+                        <span class="text-sm text-slate-500">۲۴ آذر ۱۴۰۳</span>
+                    </div>
+                    <p class="text-slate-400 leading-relaxed mb-4">
+                        راهنمای کامل و جامع الگوریتم SVM برای یادگیری ماشین - شامل مفاهیم Hard Margin، Soft Margin، Kernel Trick و SVR
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs bg-blue-500/10 text-blue-400 px-3 py-1 rounded-full">Machine Learning</span>
+                        <span class="text-xs bg-purple-500/10 text-purple-400 px-3 py-1 rounded-full">SVM</span>
+                        <span class="text-xs bg-green-500/10 text-green-400 px-3 py-1 rounded-full">آموزش</span>
+                    </div>
+                </a>
+            </article>
+
+        </div>
+    </main>
+
+</body>
+</html>
