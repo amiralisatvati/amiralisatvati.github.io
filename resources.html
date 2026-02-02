@@ -42,6 +42,7 @@
             background: linear-gradient(135deg, #06b6d4, #8b5cf6, #10b981);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .header p {
@@ -219,14 +220,14 @@
                 description: "روش‌های تولید اعداد تصادفی",
                 tags: ["R", "شبیه‌سازی"],
                 date: "1403/09/24",
-                url: "/_posts/2025-12-15-simulation-chapter3-random-number-generation.html"
+                url: "/posts/2025-12-15-simulation-chapter3-random-number-generation.html"
             },
             {
                 title: "آمار: ضرایب اسپیرمن و کندال",
                 description: "ضرایب همبستگی رتبه‌ای",
                 tags: ["آمار", "همبستگی"],
                 date: "1403/09/24",
-                url: "/_posts/2025-12-15-statistics-spearman-kendall.html"
+                url: "/posts/2025-12-15-statistics-spearman-kendall.html"
             },
             {
                 title: "آزمون فریدمن (Friedman Test)",
@@ -247,12 +248,12 @@
                 description: "مفاهیم فشردگی در فضاهای توپولوژیک",
                 tags: ["توپولوژی", "ریاضیات"],
                 date: "1403/09/24",
-                url: "/_posts/2025-12-15-topology-compactness-analysis.html"
+                url: "/posts/2025-12-15-topology-compactness-analysis.html"
             }
         ];
         
         // Load posts when page loads
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', function() {
             const postsContainer = document.getElementById('posts-container');
             const emptyState = document.getElementById('empty-state');
             
@@ -261,29 +262,33 @@
                 return;
             }
             
-            posts.forEach(post => {
+            posts.forEach(function(post) {
                 const card = document.createElement('a');
                 card.href = post.url;
                 card.className = 'post-card';
                 
-                card.innerHTML = `
-                    <div class="post-icon">
-                        <i class="fas fa-file-alt"></i>
-                    </div>
-                    ${
-                        post.tags ? `
-                        <div class="post-tags">
-                            ${post.tags.map(tag => `<span class="post-tag">${tag}</span>`).join('')}
-                        </div>
-                        ` : ''
-                    }
-                    <h3 class="post-title">${post.title}</h3>
-                    ${post.description ? `<p class="post-desc">${post.description}</p>` : ''}
-                    <div class="post-date">
-                        <i class="far fa-calendar"></i>
-                        <span>${post.date}</span>
-                    </div>
-                `;
+                let tagsHTML = '';
+                if (post.tags && post.tags.length > 0) {
+                    tagsHTML = '<div class="post-tags">';
+                    post.tags.forEach(function(tag) {
+                        tagsHTML += '<span class="post-tag">' + tag + '</span>';
+                    });
+                    tagsHTML += '</div>';
+                }
+                
+                let descHTML = post.description ? '<p class="post-desc">' + post.description + '</p>' : '';
+                
+                card.innerHTML = 
+                    '<div class="post-icon">' +
+                        '<i class="fas fa-file-alt"></i>' +
+                    '</div>' +
+                    tagsHTML +
+                    '<h3 class="post-title">' + post.title + '</h3>' +
+                    descHTML +
+                    '<div class="post-date">' +
+                        '<i class="far fa-calendar"></i>' +
+                        '<span>' + post.date + '</span>' +
+                    '</div>';
                 
                 postsContainer.appendChild(card);
             });
