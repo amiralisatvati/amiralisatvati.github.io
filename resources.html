@@ -1,298 +1,365 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منابع یادگیری | امیرعلی سطوتی</title>
+    <title>منابع آموزشی | امیرعلی سطوتی</title>
+    <meta name="description" content="مجموعه کامل جزوات، مقالات و منابع آموزشی آمار، داده‌کاوی، شبیه‌سازی و یادگیری ماشین">
     
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0a0e27',
+                        darker: '#050714',
+                        accent: '#06b6d4',
+                        accentSec: '#8b5cf6',
+                        accentTer: '#10b981',
+                    },
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
         body {
-            font-family: 'Vazirmatn', sans-serif;
             background: linear-gradient(135deg, #0a0e27 0%, #050714 100%);
-            color: #e2e8f0;
-            min-height: 100vh;
-            padding: 2rem;
+            font-family: 'Vazirmatn', sans-serif;
         }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+
+        .glass {
+            background: rgba(10, 14, 39, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(6, 182, 212, 0.1);
         }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #06b6d4, #8b5cf6, #10b981);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .header p {
-            font-size: 1.125rem;
-            color: #94a3b8;
-        }
-        
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #06b6d4;
-            text-decoration: none;
-            margin-bottom: 2rem;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        
-        .back-link:hover {
-            gap: 1rem;
-            color: #8b5cf6;
-        }
-        
-        .posts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-        
-        .post-card {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
-            border: 1px solid rgba(100, 116, 139, 0.2);
-            border-radius: 12px;
-            padding: 1.5rem;
+
+        .resource-card {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(10px);
             transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-            display: block;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        
-        .post-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(6, 182, 212, 0.5);
-            box-shadow: 0 12px 24px rgba(6, 182, 212, 0.15);
+
+        .resource-card:hover {
+            transform: translateY(-8px);
+            background: rgba(30, 41, 59, 0.6);
+            border-color: rgba(6, 182, 212, 0.3);
+            box-shadow: 0 20px 40px rgba(6, 182, 212, 0.15);
         }
-        
-        .post-icon {
-            width: 48px;
-            height: 48px;
+
+        .category-badge {
             background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(139, 92, 246, 0.2));
             border: 1px solid rgba(6, 182, 212, 0.3);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: #06b6d4;
-            margin-bottom: 1rem;
         }
-        
-        .post-tags {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-bottom: 0.75rem;
+
+        .search-box {
+            background: rgba(30, 41, 59, 0.5);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            transition: all 0.3s ease;
         }
-        
-        .post-tag {
-            font-size: 0.75rem;
-            font-family: 'Courier New', monospace;
+
+        .search-box:focus {
+            border-color: rgba(6, 182, 212, 0.6);
+            background: rgba(30, 41, 59, 0.7);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 50%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .filter-btn {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .filter-btn:hover {
+            border-color: rgba(6, 182, 212, 0.5);
             background: rgba(6, 182, 212, 0.1);
-            color: rgba(6, 182, 212, 0.9);
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
         }
-        
-        .post-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #fff;
-            margin: 0.5rem 0;
-            line-height: 1.4;
-        }
-        
-        .post-card:hover .post-title {
-            color: #06b6d4;
-        }
-        
-        .post-desc {
-            font-size: 0.875rem;
-            color: #94a3b8;
-            margin: 0.5rem 0;
-            line-height: 1.5;
-        }
-        
-        .post-date {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.75rem;
-            color: #64748b;
-            margin-top: 1rem;
-        }
-        
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: #64748b;
-        }
-        
-        .empty-state i {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            opacity: 0.5;
-        }
-        
-        @media (max-width: 768px) {
-            body {
-                padding: 1rem;
-            }
-            
-            .header h1 {
-                font-size: 2rem;
-            }
-            
-            .posts-grid {
-                grid-template-columns: 1fr;
-            }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+            border-color: transparent;
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <a href="/" class="back-link">
-            <i class="fas fa-arrow-right"></i>
-            بازگشت به صفحه اصلی
-        </a>
-        
-        <div class="header">
-            <h1>📚 منابع یادگیری</h1>
-            <p>مجموعه منتخب از مطالب آموزشی، پست‌های بلاگ و منابع یادگیری</p>
+<body class="text-slate-200">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="/" class="font-bold text-2xl hover:text-accent transition-colors flex items-center gap-2">
+                    <i class="fas fa-chart-network text-accent"></i>
+                    <span class="font-mono">&lt;AmirAli/&gt;</span>
+                </a>
+                
+                <div class="flex items-center gap-6">
+                    <a href="/" class="text-sm font-medium text-slate-300 hover:text-accent transition-colors">خانه</a>
+                    <a href="/resources.html" class="text-sm font-medium text-accent">منابع آموزشی</a>
+                    <a href="/#contact" class="px-4 py-2 rounded-full bg-gradient-to-r from-accent to-accentSec text-sm font-semibold text-white hover:shadow-lg transition-all">تماس</a>
+                </div>
+            </div>
         </div>
-        
-        <div class="posts-grid" id="posts-container">
-            <!-- Posts will be loaded here dynamically -->
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-16 px-4">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="inline-flex items-center px-4 py-2 rounded-full border border-accent/30 bg-accent/5 backdrop-blur-sm text-accent text-xs font-bold tracking-wider uppercase mb-6">
+                <i class="fas fa-book-open ml-2"></i>
+                منابع آموزشی رایگان
+            </div>
+            
+            <h1 class="text-5xl md:text-6xl font-black mb-6">
+                <span class="gradient-text">کتابخانه علمی</span>
+            </h1>
+            
+            <p class="text-xl text-slate-400 max-w-3xl mx-auto mb-12">
+                مجموعه کامل جزوات، مقالات و منابع آموزشی در زمینه آمار، داده‌کاوی، شبیه‌سازی و یادگیری ماشین
+            </p>
+
+            <!-- Search Box -->
+            <div class="max-w-2xl mx-auto">
+                <div class="relative">
+                    <i class="fas fa-search absolute right-4 top-1/2 -translate-y-1/2 text-accent"></i>
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="جستجو در منابع... (نام، موضوع، کلیدواژه)"
+                        class="search-box w-full py-4 px-12 rounded-2xl text-white placeholder-slate-500 outline-none"
+                    >
+                </div>
+            </div>
         </div>
-        
-        <div class="empty-state" id="empty-state" style="display: none;">
-            <i class="fas fa-inbox"></i>
-            <p>هنوز پستی منتشر نشده است.</p>
+    </section>
+
+    <!-- Filter Buttons -->
+    <section class="pb-12 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-wrap justify-center gap-3">
+                <button onclick="filterResources('all')" class="filter-btn active px-6 py-2 rounded-full text-sm font-semibold" data-category="all">
+                    <i class="fas fa-list ml-2"></i>همه منابع
+                </button>
+                <button onclick="filterResources('statistics')" class="filter-btn px-6 py-2 rounded-full text-sm font-semibold bg-slate-800/50" data-category="statistics">
+                    <i class="fas fa-chart-bar ml-2"></i>آمار
+                </button>
+                <button onclick="filterResources('simulation')" class="filter-btn px-6 py-2 rounded-full text-sm font-semibold bg-slate-800/50" data-category="simulation">
+                    <i class="fas fa-random ml-2"></i>شبیه‌سازی
+                </button>
+                <button onclick="filterResources('machine-learning')" class="filter-btn px-6 py-2 rounded-full text-sm font-semibold bg-slate-800/50" data-category="machine-learning">
+                    <i class="fas fa-robot ml-2"></i>یادگیری ماشین
+                </button>
+                <button onclick="filterResources('topology')" class="filter-btn px-6 py-2 rounded-full text-sm font-semibold bg-slate-800/50" data-category="topology">
+                    <i class="fas fa-project-diagram ml-2"></i>توپولوژی
+                </button>
+                <button onclick="filterResources('design')" class="filter-btn px-6 py-2 rounded-full text-sm font-semibold bg-slate-800/50" data-category="design">
+                    <i class="fas fa-palette ml-2"></i>طراحی
+                </button>
+            </div>
         </div>
-    </div>
-    
+    </section>
+
+    <!-- Resources Grid -->
+    <section class="pb-24 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div id="resourcesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Resources will be injected here by JavaScript -->
+            </div>
+            
+            <div id="noResults" class="hidden text-center py-20">
+                <i class="fas fa-search text-6xl text-slate-700 mb-4"></i>
+                <p class="text-xl text-slate-500">هیچ منبعی پیدا نشد</p>
+                <p class="text-sm text-slate-600 mt-2">لطفاً کلیدواژه دیگری امتحان کنید</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-10 border-t border-slate-800/50 bg-darker/95">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex items-center justify-center gap-2 mb-4">
+                <i class="fas fa-chart-line text-accent"></i>
+                <span class="font-mono font-bold text-lg">&lt;AmirAli/&gt;</span>
+            </div>
+            <p class="text-slate-500 text-sm">
+                &copy; <span id="year"></span> امیرعلی سطوتی. تمامی حقوق محفوظ است.
+            </p>
+        </div>
+    </footer>
+
     <script>
-        // Blog posts data
-        const posts = [
+        // Resources Data
+        const resources = [
             {
-                title: "آزمون کروسکال-والیس (Kruskal-Wallis Test)",
-                description: "راهنمای کامل آزمون ناپارامتریک کروسکال-والیس با مثال‌های حل شده و مقایسه با آزمون فریدمن",
-                tags: ["آمار", "آزمون‌های ناپارامتریک", "کروسکال-والیس"],
-                date: "1404/10/18",
-                url: "/posts/kruskal-wallis-test.html"
+                title: "فصل ۳ شبیه‌سازی: روش‌های تولید اعداد تصادفی",
+                description: "جزوه کامل شامل روش‌های میان‌مربع، همنهشتی خطی (LCG)، تست‌های یکنواختی و نکات کنکوری",
+                category: "simulation",
+                icon: "fa-random",
+                color: "orange",
+                url: "/posts/2025-12-15-simulation-chapter3-random-number-generation.html",
+                tags: ["شبیه‌سازی", "اعداد تصادفی", "LCG"]
             },
             {
-                title: "جزوه جامع همبستگی در آمار چندمتغیره",
-                description: "راهنمای کامل ضریب همبستگی جزئی، چندگانه و کانونی با مثال‌های عملی",
-                tags: ["آمار", "همبستگی", "چندمتغیره"],
-                date: "1403/10/04",
-                url: "/posts/correlation-guide.html"
+                title: "ضرایب همبستگی اسپیرمن و کندال",
+                description: "راهنمای جامع محاسبه و تفسیر ضرایب همبستگی رتبه‌ای برای داده‌های غیرنرمال",
+                category: "statistics",
+                icon: "fa-chart-line",
+                color: "blue",
+                url: "/posts/2025-12-15-statistics-spearman-kendall.html",
+                tags: ["آمار", "همبستگی", "آزمون ناپارامتری"]
             },
             {
-                title: "آموزش شبیه‌سازی - فصل ۳",
-                description: "روش‌های تولید اعداد تصادفی",
-                tags: ["R", "شبیه‌سازی"],
-                date: "1403/09/24",
-                url: "/posts/2025-12-15-simulation-chapter3-random-number-generation.html"
-            },
-            {
-                title: "آمار: ضرایب اسپیرمن و کندال",
-                description: "ضرایب همبستگی رتبه‌ای",
-                tags: ["آمار", "همبستگی"],
-                date: "1403/09/24",
-                url: "/posts/2025-12-15-statistics-spearman-kendall.html"
+                title: "فشردگی در توپولوژی",
+                description: "تحلیل مفهوم compactness و کاربردهای آن در فضاهای متریک",
+                category: "topology",
+                icon: "fa-project-diagram",
+                color: "purple",
+                url: "/posts/2025-12-15-topology-compactness-analysis.html",
+                tags: ["توپولوژی", "ریاضیات", "فشردگی"]
             },
             {
                 title: "آزمون فریدمن (Friedman Test)",
-                description: "راهنمای کامل آزمون ناپارامتریک فریدمن برای مقایسه گروه‌های وابسته",
-                tags: ["آمار", "آزمون‌های ناپارامتریک", "فریدمن"],
-                date: "1404/10/19",
-                url: "/posts/friedman-test.html"
+                description: "راهنمای کامل آزمون ناپارامتری فریدمن برای مقایسه چند گروه وابسته",
+                category: "statistics",
+                icon: "fa-chart-bar",
+                color: "green",
+                url: "/posts/friedman-test.html",
+                tags: ["آمار", "آزمون فرض", "ناپارامتری"]
             },
             {
-                title: "همبستگی در آمار چندمتغیره",
-                description: "مفاهیم پیشرفته همبستگی در تحلیل چندمتغیره",
-                tags: ["آمار", "همبستگی", "چندمتغیره"],
-                date: "1403/10/05",
-                url: "/posts/correlation-multivariate-statistics.html"
-            },
-            {
-                title: "توپولوژی: تحلیل فشردگی",
-                description: "مفاهیم فشردگی در فضاهای توپولوژیک",
-                tags: ["توپولوژی", "ریاضیات"],
-                date: "1403/09/24",
-                url: "/posts/2025-12-15-topology-compactness-analysis.html"
+                title: "ماشین بردار پشتیبان (SVM)",
+                description: "آموزش جامع الگوریتم SVM، کرنل‌ها و کاربردها در یادگیری ماشین",
+                category: "machine-learning",
+                icon: "fa-robot",
+                color: "pink",
+                url: "/posts/svm-guide.html",
+                tags: ["یادگیری ماشین", "SVM", "طبقه‌بندی"]
             }
         ];
-        
-        // Load posts when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            const postsContainer = document.getElementById('posts-container');
-            const emptyState = document.getElementById('empty-state');
+
+        // Color mappings
+        const colorClasses = {
+            blue: { bg: 'from-blue-900/20 to-blue-600/20', border: 'border-blue-500/30', text: 'text-blue-400', hover: 'hover:text-blue-300' },
+            orange: { bg: 'from-orange-900/20 to-orange-600/20', border: 'border-orange-500/30', text: 'text-orange-400', hover: 'hover:text-orange-300' },
+            purple: { bg: 'from-purple-900/20 to-purple-600/20', border: 'border-purple-500/30', text: 'text-purple-400', hover: 'hover:text-purple-300' },
+            green: { bg: 'from-green-900/20 to-green-600/20', border: 'border-green-500/30', text: 'text-green-400', hover: 'hover:text-green-300' },
+            pink: { bg: 'from-pink-900/20 to-pink-600/20', border: 'border-pink-500/30', text: 'text-pink-400', hover: 'hover:text-pink-300' }
+        };
+
+        // Render resources
+        function renderResources(filteredResources) {
+            const grid = document.getElementById('resourcesGrid');
+            const noResults = document.getElementById('noResults');
             
-            if (posts.length === 0) {
-                emptyState.style.display = 'block';
+            if (filteredResources.length === 0) {
+                grid.classList.add('hidden');
+                noResults.classList.remove('hidden');
                 return;
             }
             
-            posts.forEach(function(post) {
-                const card = document.createElement('a');
-                card.href = post.url;
-                card.className = 'post-card';
-                
-                let tagsHTML = '';
-                if (post.tags && post.tags.length > 0) {
-                    tagsHTML = '<div class="post-tags">';
-                    post.tags.forEach(function(tag) {
-                        tagsHTML += '<span class="post-tag">' + tag + '</span>';
-                    });
-                    tagsHTML += '</div>';
-                }
-                
-                let descHTML = post.description ? '<p class="post-desc">' + post.description + '</p>' : '';
-                
-                card.innerHTML = 
-                    '<div class="post-icon">' +
-                        '<i class="fas fa-file-alt"></i>' +
-                    '</div>' +
-                    tagsHTML +
-                    '<h3 class="post-title">' + post.title + '</h3>' +
-                    descHTML +
-                    '<div class="post-date">' +
-                        '<i class="far fa-calendar"></i>' +
-                        '<span>' + post.date + '</span>' +
-                    '</div>';
-                
-                postsContainer.appendChild(card);
+            grid.classList.remove('hidden');
+            noResults.classList.add('hidden');
+            
+            grid.innerHTML = filteredResources.map(resource => {
+                const colors = colorClasses[resource.color];
+                return `
+                    <div class="resource-card rounded-2xl overflow-hidden group" data-category="${resource.category}" data-title="${resource.title.toLowerCase()}" data-tags="${resource.tags.join(' ').toLowerCase()}">
+                        <div class="h-48 w-full bg-gradient-to-br ${colors.bg} relative overflow-hidden flex items-center justify-center border-b border-slate-700">
+                            <i class="fas ${resource.icon} text-6xl ${colors.text} group-hover:scale-125 transition-transform duration-500"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white mb-2 group-hover:${colors.hover} transition-colors">
+                                ${resource.title}
+                            </h3>
+                            <p class="text-slate-400 text-sm mb-4 leading-relaxed">
+                                ${resource.description}
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                ${resource.tags.map(tag => `
+                                    <span class="text-xs font-mono ${colors.text} bg-${resource.color}-500/10 px-3 py-1 rounded-full border ${colors.border}">${tag}</span>
+                                `).join('')}
+                            </div>
+                            <a href="${resource.url}" class="inline-flex items-center gap-2 ${colors.text} ${colors.hover} font-semibold text-sm transition-all group-hover:gap-3">
+                                <span>مشاهده جزوه</span>
+                                <i class="fas fa-arrow-left"></i>
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Filter resources by category
+        function filterResources(category) {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('bg-slate-800/50');
             });
+            
+            const activeBtn = document.querySelector(`[data-category="${category}"]`);
+            activeBtn.classList.add('active');
+            activeBtn.classList.remove('bg-slate-800/50');
+            
+            const filtered = category === 'all' ? resources : resources.filter(r => r.category === category);
+            renderResources(filtered);
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.resource-card');
+            let visibleCount = 0;
+            
+            cards.forEach(card => {
+                const title = card.dataset.title;
+                const tags = card.dataset.tags;
+                const matches = title.includes(searchTerm) || tags.includes(searchTerm);
+                
+                if (matches) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            const grid = document.getElementById('resourcesGrid');
+            const noResults = document.getElementById('noResults');
+            
+            if (visibleCount === 0) {
+                grid.classList.add('hidden');
+                noResults.classList.remove('hidden');
+            } else {
+                grid.classList.remove('hidden');
+                noResults.classList.add('hidden');
+            }
         });
+
+        // Initial render
+        renderResources(resources);
+        
+        // Set year
+        document.getElementById('year').textContent = new Date().getFullYear();
     </script>
 </body>
 </html>
