@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ضرایب همبستگی اسپیرمن و کندال</title>
+
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Vazirmatn, Tahoma, Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e3a8a;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #1e40af, #7e22ce);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            font-weight: 500;
+        }
+
+        h2 {
+            color: #1e40af;
+            font-size: 1.8rem;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3b82f6;
+            font-weight: 800;
+        }
+
+        h3 {
+            color: #7e22ce;
+            font-size: 1.4rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        h4 {
+            color: #059669;
+            font-size: 1.2rem;
+            margin-top: 25px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        p, li {
+            color: #334155;
+            font-size: 1.05rem;
+            margin-bottom: 15px;
+            line-height: 2;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin-right: 30px;
+            margin-bottom: 25px;
+        }
+
+        li {
+            margin-bottom: 12px;
+        }
+
+        strong {
+            color: #1e40af;
+            font-weight: 700;
+        }
+
+        .formula-box {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border: 3px solid #60a5fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.15);
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 3px solid #4ade80;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 8px 20px rgba(74, 222, 128, 0.15);
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 3px solid #fbbf24;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: 0 8px 20px rgba(251, 191, 36, 0.15);
+        }
+
+        .comparison-box {
+            background: linear-gradient(135deg, #fae8ff 0%, #f3e8ff 100%);
+            border: 3px solid #c084fc;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 8px 20px rgba(192, 132, 252, 0.15);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        th {
+            background: linear-gradient(135deg, #3b82f6 0%, #7e22ce 100%);
+            color: white;
+            padding: 18px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-align: center;
+        }
+
+        td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 1rem;
+        }
+
+        tr:hover {
+            background-color: #f8fafc;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #fef08a 0%, #fde047 100%);
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            color: #854d0e;
+        }
+
+        .result-success {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-right: 5px solid #10b981;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-weight: 600;
+            color: #065f46;
+        }
+
+        .result-fail {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-right: 5px solid #ef4444;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-weight: 600;
+            color: #991b1b;
+        }
+
+        code {
+            background: #f1f5f9;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            color: #dc2626;
+            font-weight: 600;
+        }
+
+        hr {
+            border: none;
+            border-top: 2px dashed #cbd5e1;
+            margin: 50px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            table {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📊 ضرایب همبستگی اسپیرمن و کندال</h1>
+    <p class="subtitle">راهنمای جامع ضرایب همبستگی رتبه‌ای برای داده‌های ناپارامتری</p>
+
+    <hr>
+
+    <h2>🔵 ۱. ضریب همبستگی رتبه‌ای اسپیرمن (Spearman's Rank Correlation)</h2>
+
+    <p><strong>ضریب همبستگی رتبه‌ای اسپیرمن</strong> یک <span class="highlight">آزمون ناپارامتری</span> برای بررسی رابطه بین دو متغیر بر اساس <strong>رتبه‌ها</strong> است.</p>
+
+    <div class="info-box">
+        <h4>🎯 چه زمانی استفاده می‌شود؟</h4>
+        <ul>
+            <li>داده‌ها <strong>نرمال نیستند</strong></li>
+            <li>داده‌ها <strong>رتبه‌ای</strong> هستند</li>
+            <li>رابطه بین متغیرها <strong>خطی نیست</strong> (اما یکنواخت است)</li>
+            <li>حجم نمونه <strong>کم است</strong></li>
+        </ul>
+    </div>
+
+    <h3>📝 فرمول استاندارد</h3>
+
+    <div class="formula-box">
+        $$ \rho = 1 - \frac{6 \sum D^2}{n(n^2-1)} $$
+        <p style="margin-top: 20px; font-size: 1.1rem; color: #475569;">که در آن:</p>
+        <ul style="text-align: right; list-style: none; padding: 0; margin-top: 15px; color: #334155;">
+            <li style="margin: 8px 0;"><strong>$\rho$ (rho)</strong> = ضریب همبستگی اسپیرمن</li>
+            <li style="margin: 8px 0;"><strong>$D$</strong> = اختلاف رتبه‌ها (R - S)</li>
+            <li style="margin: 8px 0;"><strong>$n$</strong> = تعداد زوج داده‌ها</li>
+        </ul>
+    </div>
+
+    <div class="example-box">
+        <h4>📝 مثال ۱: نمرات زبان و ریاضی</h4>
+        <p><strong>مسئله:</strong> نمرات زبان و ریاضی ۹ دانشجو داده شده است. می‌خواهیم بدانیم آیا بین نمره زبان و ریاضی رابطه‌ای وجود دارد؟ (سطح معنی‌داری α = 0.05)</p>
+
+        <table>
+            <tr>
+                <th>دانشجو</th>
+                <th>رتبه زبان (R)</th>
+                <th>رتبه ریاضی (S)</th>
+                <th>D = R - S</th>
+                <th>D²</th>
+            </tr>
+            <tr><td>1</td><td>8</td><td>4</td><td>4</td><td>16</td></tr>
+            <tr><td>2</td><td>4</td><td>2</td><td>2</td><td>4</td></tr>
+            <tr><td>3</td><td>8</td><td>7</td><td>1</td><td>1</td></tr>
+            <tr><td>4</td><td>9</td><td>9</td><td>0</td><td>0</td></tr>
+            <tr><td>5</td><td>2</td><td>1</td><td>1</td><td>1</td></tr>
+            <tr><td>6</td><td>5</td><td>6</td><td>-1</td><td>1</td></tr>
+            <tr><td>7</td><td>5</td><td>3</td><td>2</td><td>4</td></tr>
+            <tr><td>8</td><td>11</td><td>8</td><td>3</td><td>9</td></tr>
+            <tr><td>9</td><td>7</td><td>5</td><td>2</td><td>4</td></tr>
+            <tr style="font-weight: 700; background: #dbeafe;"><td colspan="4">جمع ΣD²</td><td>40</td></tr>
+        </table>
+
+        <p><strong>محاسبه:</strong> با n = 9 و ΣD² = 40 داریم:</p>
+
+        <div class="formula-box">
+            $$ \rho = 1 - \frac{6 \times 40}{9(81-1)} = 1 - \frac{240}{720} = 1 - 0.33 = 0.67 $$
+        </div>
+
+        <h4>📈 آزمون معنی‌داری</h4>
+        <p>آماره Z تقریبی برای اسپیرمن (برای n نسبتاً بزرگ) به صورت زیر است:</p>
+
+        <div class="formula-box">
+            $$ Z = \rho \sqrt{n-1} $$
+        </div>
+
+        <p>در این مثال:</p>
+        <div class="formula-box">
+            $$ Z = 0.67 \times \sqrt{9-1} = 0.67 \times 2.83 \approx 1.90 $$
+        </div>
+
+        <div class="result-fail">
+            <strong>❌ نتیجه:</strong> چون Z = 1.90 < 1.96، در سطح 0.05 فرض صفر رد نمی‌شود و نمی‌توانیم بگوییم بین نمره زبان و ریاضی رابطه معنی‌داری وجود دارد.
+        </div>
+    </div>
+
+    <div class="example-box">
+        <h4>📝 مثال ۲: مصاحبه شغلی</h4>
+        <p><strong>داده‌ها:</strong> ۸ متقاضی را دو داور رتبه‌بندی کرده‌اند.</p>
+
+        <table>
+            <tr>
+                <th>متقاضی</th>
+                <th>رتبه داور ۱ (R)</th>
+                <th>رتبه داور ۲ (S)</th>
+                <th>D = R - S</th>
+                <th>D²</th>
+            </tr>
+            <tr><td>1</td><td>5</td><td>7</td><td>-2</td><td>4</td></tr>
+            <tr><td>2</td><td>8</td><td>5</td><td>3</td><td>9</td></tr>
+            <tr><td>3</td><td>4</td><td>4</td><td>0</td><td>0</td></tr>
+            <tr><td>4</td><td>3</td><td>2</td><td>1</td><td>1</td></tr>
+            <tr><td>5</td><td>6</td><td>8</td><td>-2</td><td>4</td></tr>
+            <tr><td>6</td><td>2</td><td>1</td><td>1</td><td>1</td></tr>
+            <tr><td>7</td><td>7</td><td>6</td><td>1</td><td>1</td></tr>
+            <tr><td>8</td><td>1</td><td>3</td><td>-2</td><td>4</td></tr>
+            <tr style="font-weight: 700; background: #dbeafe;"><td colspan="4">جمع ΣD²</td><td>24</td></tr>
+        </table>
+
+        <p><strong>محاسبه:</strong> با n = 8 و ΣD² = 24 داریم:</p>
+
+        <div class="formula-box">
+            $$ \rho = 1 - \frac{6 \times 24}{8(64-1)} = 1 - \frac{144}{504} = 1 - 0.29 = 0.71 $$
+        </div>
+
+        <p><strong>آماره Z:</strong></p>
+        <div class="formula-box">
+            $$ Z = 0.71 \times \sqrt{7} = 0.71 \times 2.65 \approx 1.89 $$
+        </div>
+
+        <div class="result-fail">
+            <strong>⚠️ نتیجه:</strong> چون Z = 1.89 < 1.96، فرض صفر رد نمی‌شود؛ یعنی با این حجم نمونه، اگرچه ضریب 0.71 نسبتاً بزرگ است، اما شواهد کافی برای معنی‌دار بودن رابطه نداریم.
+        </div>
+    </div>
+
+    <hr>
+
+    <h2>🔶 ۲. ضریب همبستگی کندال (Kendall's Tau)</h2>
+
+    <p><strong>ضریب کندال</strong> بر اساس <span class="highlight">مقایسه زوج‌های مرتب‌شده</span> داده‌ها تعریف می‌شود و میزان <strong>توافق یا عدم توافق</strong> رتبه‌ها را می‌سنجد.</p>
+
+    <h3>📝 فرمول‌ها</h3>
+
+    <div class="formula-box">
+        <p><strong>فرم متداول ۱:</strong></p>
+        $$ \tau = \frac{P - N}{\frac{1}{2}n(n-1)} $$
+        
+        <p style="margin-top: 30px;"><strong>فرم متداول ۲:</strong></p>
+        $$ \hat{\tau} = \frac{4P}{n(n-1)} - 1 $$
+        
+        <p style="margin-top: 20px; font-size: 1.1rem; color: #475569;">که در آن:</p>
+        <ul style="text-align: right; list-style: none; padding: 0; margin-top: 15px; color: #334155;">
+            <li style="margin: 8px 0;"><strong>P</strong> = تعداد زوج‌های هماهنگ (Concordant Pairs)</li>
+            <li style="margin: 8px 0;"><strong>N</strong> = تعداد زوج‌های ناهماهنگ (Discordant Pairs)</li>
+            <li style="margin: 8px 0;"><strong>n</strong> = تعداد مشاهدات</li>
+        </ul>
+    </div>
+
+    <div class="info-box">
+        <h4>💡 نحوه محاسبه P (زوج‌های هماهنگ)</h4>
+        <ol>
+            <li>داده‌ها را بر اساس متغیر اول مرتب کنید</li>
+            <li>برای هر عدد در متغیر دوم، تعداد عددهایی که بعد از آن هستند و <strong>بزرگتر</strong> از آن هستند را بشمارید</li>
+            <li>جمع همه این تعدادها = P</li>
+        </ol>
+    </div>
+
+    <div class="example-box">
+        <h4>📝 مثال ۱: نظرات دو معلم</h4>
+        <p><strong>مسئله:</strong> دو معلم درباره رتبه‌بندی ۸ دانشجو نظر داده‌اند. آیا همبستگی معنی‌داری بین نظرات آنها وجود دارد؟</p>
+
+        <table>
+            <tr>
+                <th>دانشجو</th>
+                <th>معلم a</th>
+                <th>معلم b</th>
+            </tr>
+            <tr><td>1</td><td>1</td><td>2</td></tr>
+            <tr><td>2</td><td>2</td><td>1</td></tr>
+            <tr><td>3</td><td>3</td><td>4</td></tr>
+            <tr><td>4</td><td>4</td><td>5</td></tr>
+            <tr><td>5</td><td>5</td><td>3</td></tr>
+            <tr><td>6</td><td>6</td><td>6</td></tr>
+            <tr><td>7</td><td>7</td><td>8</td></tr>
+            <tr><td>8</td><td>8</td><td>7</td></tr>
+        </table>
+
+        <p><strong>ردیف معلم b:</strong> {2, 1, 4, 5, 3, 6, 8, 7}</p>
+
+        <p><strong>محاسبه P:</strong></p>
+        <ul>
+            <li>عدد ۲: تعداد بزرگترها بعد از آن = 6 (اعداد 4, 5, 6, 8, 7 > 2)</li>
+            <li>عدد ۱: تعداد بزرگترها = 6</li>
+            <li>عدد ۴: تعداد بزرگترها = 4</li>
+            <li>عدد ۵: تعداد بزرگترها = 3</li>
+            <li>عدد ۳: تعداد بزرگترها = 3</li>
+            <li>عدد ۶: تعداد بزرگترها = 2</li>
+            <li>عدد ۸: تعداد بزرگترها = 0</li>
+            <li>عدد ۷: تعداد بزرگترها = 0</li>
+        </ul>
+
+        <div class="formula-box">
+            <p>P = 6 + 6 + 4 + 3 + 3 + 2 + 0 + 0 = <strong>24</strong></p>
+        </div>
+
+        <p><strong>محاسبه ضریب کندال:</strong> با n = 8 و P = 24 داریم:</p>
+
+        <div class="formula-box">
+            $$ \hat{\tau} = \frac{4 \times 24}{8(7)} - 1 = \frac{96}{56} - 1 = 1.71 - 1 = 0.71 $$
+        </div>
+
+        <h4>📈 آزمون معنی‌داری</h4>
+        <p>واریانس تقریبی برای τ̂ (بدون گره‌ها):</p>
+
+        <div class="formula-box">
+            $$ Var(\hat{\tau}) = \frac{2(2n+5)}{9n(n-1)} $$
+        </div>
+
+        <p>برای n = 8:</p>
+        <div class="formula-box">
+            $$ Var(\hat{\tau}) = \frac{2(16+5)}{9 \times 8 \times 7} = \frac{42}{504} = 0.083 $$
+            $$ SD(\hat{\tau}) = \sqrt{0.083} \approx 0.29 $$
+        </div>
+
+        <p><strong>آماره Z:</strong></p>
+        <div class="formula-box">
+            $$ Z = \frac{\hat{\tau}}{SD(\hat{\tau})} = \frac{0.71}{0.29} \approx 2.46 $$
+        </div>
+
+        <div class="result-success">
+            <strong>✅ نتیجه:</strong> چون Z = 2.46 > 1.96، فرض صفر رد می‌شود و بین نظرات دو معلم همبستگی معنی‌دار وجود دارد.
+        </div>
+    </div>
+
+    <div class="example-box">
+        <h4>📝 مثال ۲: ارزیابی ۱۰ کارگر</h4>
+        <p><strong>مسئله:</strong> دو داور درباره عملکرد ۱۰ کارگر رتبه‌بندی کرده‌اند.</p>
+
+        <table>
+            <tr>
+                <th>کارگر</th>
+                <th>داور ۱</th>
+                <th>داور ۲</th>
+            </tr>
+            <tr><td>1</td><td>1</td><td>2</td></tr>
+            <tr><td>2</td><td>2</td><td>3</td></tr>
+            <tr><td>3</td><td>3</td><td>1</td></tr>
+            <tr><td>4</td><td>4</td><td>5</td></tr>
+            <tr><td>5</td><td>5</td><td>4</td></tr>
+            <tr><td>6</td><td>6</td><td>6</td></tr>
+            <tr><td>7</td><td>7</td><td>8</td></tr>
+            <tr><td>8</td><td>8</td><td>7</td></tr>
+            <tr><td>9</td><td>9</td><td>10</td></tr>
+            <tr><td>10</td><td>10</td><td>9</td></tr>
+        </table>
+
+        <p><strong>ردیف داور ۲:</strong> {2, 3, 1, 5, 4, 6, 8, 7, 10, 9}</p>
+
+        <p><strong>محاسبه P:</strong></p>
+        <p>P = 8 + 7 + 7 + 5 + 5 + 4 + 2 + 2 + 0 + 0 = <strong>40</strong></p>
+
+        <div class="formula-box">
+            $$ \hat{\tau} = \frac{4 \times 40}{10(9)} - 1 = \frac{160}{90} - 1 = 1.78 - 1 = 0.78 $$
+        </div>
+
+        <p><strong>واریانس تقریبی (برای n = 10):</strong></p>
+        <div class="formula-box">
+            $$ Var(\hat{\tau}) = \frac{2(20+5)}{9 \times 10 \times 9} = \frac{50}{810} = 0.062 $$
+            $$ SD(\hat{\tau}) = \sqrt{0.062} \approx 0.25 $$
+        </div>
+
+        <p><strong>آماره Z:</strong></p>
+        <div class="formula-box">
+            $$ Z = \frac{0.78}{0.25} = 3.12 $$
+        </div>
+
+        <div class="result-success">
+            <strong>✅ نتیجه:</strong> چون Z = 3.12 > 1.96، فرض صفر رد می‌شود و بین دو ارزیاب، همبستگی بسیار معنی‌داری وجود دارد.
+        </div>
+    </div>
+
+    <hr>
+
+    <h2>⚖️ ۳. مقایسه اسپیرمن و کندال</h2>
+
+    <div class="comparison-box">
+        <table>
+            <tr>
+                <th>ویژگی</th>
+                <th>اسپیرمن</th>
+                <th>کندال</th>
+            </tr>
+            <tr>
+                <td><strong>مبنای محاسبه</strong></td>
+                <td>بر اساس فاصله رتبه‌ها (D و D²)</td>
+                <td>بر اساس تعداد زوج‌های هماهنگ و ناهماهنگ (P و N)</td>
+            </tr>
+            <tr>
+                <td><strong>پیچیدگی محاسبات</strong></td>
+                <td>ساده‌تر برای محاسبه دستی</td>
+                <td>زمان‌برتر برای شمارش زوج‌ها</td>
+            </tr>
+            <tr>
+                <td><strong>کارایی در نمونه‌های کوچک</strong></td>
+                <td>خوب، اما حساس‌تر به داده‌های پرت</td>
+                <td>اغلب دقیق‌تر و باثبات‌تر در نمونه‌های کوچک</td>
+            </tr>
+            <tr>
+                <td><strong>حساسیت به گره‌ها</strong></td>
+                <td>کمتر تنظیم‌شده برای گره‌ها</td>
+                <td>نسخه‌های اصلاح‌شده (Tau-b و Tau-c) برای گره‌ها مناسب‌تر هستند</td>
+            </tr>
+        </table>
+    </div>
+
+    <hr>
+
+    <h2>⚠️ ۴. نکته مهم: معنی‌داری آماری</h2>
+
+    <div class="info-box">
+        <p>اگر <strong>آماره Z محاسبه‌شده</strong> (یا t در بعضی منابع) از <span class="highlight">مقدار بحرانی</span> (مثلاً 1.96 برای α = 0.05 در آزمون دوطرفه) کمتر باشد، <strong>فرض صفر رد نمی‌شود</strong>، حتی اگر مقدار ضریب همبستگی از نظر عددی بزرگ به‌نظر برسد؛ یعنی نمی‌توان با اطمینان گفت <strong>رابطه معنی‌دار است</strong>.</p>
+
+        <p style="margin-top: 15px;">در چنین مواردی، بهتر است:</p>
+        <ul>
+            <li>حجم نمونه را <strong>افزایش</strong> دهید</li>
+            <li>از روش‌های دیگر مانند <strong>Bootstrap</strong> استفاده کنید</li>
+            <li>به دنبال <strong>شواهد بیشتر</strong> باشید</li>
+        </ul>
+    </div>
+
+</div>
+
+</body>
+</html>
