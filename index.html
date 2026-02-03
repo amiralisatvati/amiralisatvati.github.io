@@ -2,7 +2,7 @@
 layout: default
 ---
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth" dir="ltr">
+<html lang="en" class="scroll-smooth" dir="ltr" id="html-root">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -200,7 +200,7 @@ layout: default
                         <i class="fas fa-chart-network text-accent"></i>
                         <span class="font-mono">&lt;AmirAli/&gt;</span>
                     </a>
-                    <button onclick="toggleLanguage()" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-700 hover:border-accent text-xs font-bold text-slate-300 transition-all hover:bg-accent/10" aria-label="Toggle language">
+                    <button onclick="toggleLanguage()" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-700 hover:border-accent text-xs font-bold text-slate-300 transition-all hover:bg-accent/10" aria-label="Toggle language between English and Persian">
                         <i class="fas fa-globe"></i> <span id="lang-text-desktop">FA</span>
                     </button>
                 </div>
@@ -214,7 +214,7 @@ layout: default
                 </div>
 
                 <div class="md:hidden flex items-center gap-3">
-                    <button onclick="toggleLanguage()" class="px-2 py-1 rounded border border-slate-700 text-xs font-bold text-slate-300" aria-label="Toggle language">
+                    <button onclick="toggleLanguage()" class="px-2 py-1 rounded border border-slate-700 text-xs font-bold text-slate-300" aria-label="Toggle language between English and Persian">
                         <span id="lang-text-mobile">FA</span>
                     </button>
                     <button id="mobile-menu-btn" class="text-slate-300 hover:text-accent focus:outline-none" aria-label="Toggle mobile menu">
@@ -984,8 +984,9 @@ layout: default
 
         function toggleLanguage() {
             currentLang = currentLang === 'en' ? 'fa' : 'en';
-            document.documentElement.lang = currentLang === 'fa' ? 'fa' : 'en';
-            document.documentElement.dir = currentLang === 'fa' ? 'rtl' : 'ltr';
+            const htmlRoot = document.getElementById('html-root');
+            htmlRoot.lang = currentLang === 'fa' ? 'fa' : 'en';
+            htmlRoot.dir = currentLang === 'fa' ? 'rtl' : 'ltr';
             
             document.getElementById('lang-text-desktop').textContent = currentLang === 'en' ? 'FA' : 'EN';
             document.getElementById('lang-text-mobile').textContent = currentLang === 'en' ? 'FA' : 'EN';
