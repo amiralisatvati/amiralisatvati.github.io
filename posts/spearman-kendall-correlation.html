@@ -1,560 +1,670 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ضرایب همبستگی اسپیرمن و کندال</title>
 
-    <script>
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']]
-            }
-        };
-    </script>
+    <!-- فونت‌ها و کتابخانه‌ها -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
+    <!-- تنظیمات تم -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        accent: {
+                            light: '#8b5cf6',
+                            DEFAULT: '#7c3aed',
+                            dark: '#6d28d9'
+                        },
+                        dark: {
+                            bg: '#0f172a',
+                            card: '#1e293b',
+                            border: '#334155'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- استایل‌های CSS سفارشی -->
     <style>
         @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
 
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Vazirmatn, Tahoma, Arial, sans-serif;
+            font-family: Vazirmatn, sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
             min-height: 100vh;
-            padding: 20px;
-            line-height: 1.8;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.98);
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 50px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        h1 {
-            text-align: center;
-            color: #1e3a8a;
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            font-weight: 900;
-            background: linear-gradient(135deg, #1e40af, #7e22ce);
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .subtitle {
-            text-align: center;
-            color: #64748b;
-            font-size: 1.1rem;
-            margin-bottom: 40px;
-            font-weight: 500;
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        h2 {
-            color: #1e40af;
-            font-size: 1.8rem;
-            margin-top: 50px;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #3b82f6;
-            font-weight: 800;
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
         }
 
-        h3 {
-            color: #7e22ce;
-            font-size: 1.4rem;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            font-weight: 700;
+        .sidebar-link {
+            display: block;
+            padding: 10px 16px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            color: #475569;
         }
 
-        h4 {
-            color: #059669;
-            font-size: 1.2rem;
-            margin-top: 25px;
-            margin-bottom: 12px;
-            font-weight: 600;
+        .sidebar-link:hover {
+            background: #f1f5f9;
+            color: #7c3aed;
+            transform: translateX(-4px);
         }
 
-        p, li {
-            color: #334155;
-            font-size: 1.05rem;
-            margin-bottom: 15px;
-            line-height: 2;
-            text-align: justify;
+        .sidebar-link.active {
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            color: white;
         }
 
-        ul, ol {
-            margin-right: 30px;
-            margin-bottom: 25px;
+        .formula-card {
+            background: #fef3c7;
+            border-right: 4px solid #f59e0b;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
         }
 
-        li {
-            margin-bottom: 12px;
+        .example-card {
+            background: #dbeafe;
+            border-right: 4px solid #3b82f6;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
         }
 
-        strong {
-            color: #1e40af;
-            font-weight: 700;
+        .success-card {
+            background: #d1fae5;
+            border-right: 4px solid #10b981;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
         }
 
-        .formula-box {
-            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-            border: 3px solid #60a5fa;
-            border-radius: 15px;
-            padding: 30px;
-            margin: 30px 0;
-            text-align: center;
-            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.15);
-        }
-
-        .example-box {
-            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-            border: 3px solid #4ade80;
-            border-radius: 15px;
-            padding: 30px;
-            margin: 30px 0;
-            box-shadow: 0 8px 20px rgba(74, 222, 128, 0.15);
-        }
-
-        .info-box {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            border: 3px solid #fbbf24;
-            border-radius: 15px;
-            padding: 25px;
-            margin: 30px 0;
-            box-shadow: 0 8px 20px rgba(251, 191, 36, 0.15);
-        }
-
-        .comparison-box {
-            background: linear-gradient(135deg, #fae8ff 0%, #f3e8ff 100%);
-            border: 3px solid #c084fc;
-            border-radius: 15px;
-            padding: 30px;
-            margin: 30px 0;
-            box-shadow: 0 8px 20px rgba(192, 132, 252, 0.15);
+        .info-card {
+            background: #e0f2fe;
+            border-right: 4px solid #0ea5e9;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 30px 0;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #e5e7eb;
+            padding: 12px;
+            text-align: center;
         }
 
         th {
-            background: linear-gradient(135deg, #3b82f6 0%, #7e22ce 100%);
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
             color: white;
-            padding: 18px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            text-align: center;
-        }
-
-        td {
-            padding: 15px;
-            text-align: center;
-            border-bottom: 1px solid #e2e8f0;
-            font-size: 1rem;
-        }
-
-        tr:hover {
-            background-color: #f8fafc;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        .highlight {
-            background: linear-gradient(120deg, #fef08a 0%, #fde047 100%);
-            padding: 3px 10px;
-            border-radius: 6px;
-            font-weight: 700;
-            color: #854d0e;
-        }
-
-        .result-success {
-            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
-            border-right: 5px solid #10b981;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
             font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-blue {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-green {
+            background: #d1fae5;
             color: #065f46;
         }
 
-        .result-fail {
-            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-            border-right: 5px solid #ef4444;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            font-weight: 600;
-            color: #991b1b;
+        .badge-yellow {
+            background: #fef3c7;
+            color: #92400e;
         }
 
-        code {
-            background: #f1f5f9;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-family: 'Courier New', monospace;
-            color: #dc2626;
-            font-weight: 600;
-        }
-
-        hr {
+        #back-to-top {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            color: white;
             border: none;
-            border-top: 2px dashed #cbd5e1;
-            margin: 50px 0;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s;
+            z-index: 1000;
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 30px 20px;
+        #back-to-top:hover {
+            transform: translateY(-3px);
+        }
+
+        #back-to-top.show {
+            display: flex;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
             }
-            h1 {
-                font-size: 2rem;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
-            h2 {
-                font-size: 1.5rem;
-            }
-            table {
-                font-size: 0.9rem;
-            }
+        }
+
+        .animate-fadeInUp {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .example-box {
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .example-title {
+            color: #15803d;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .highlight-box {
+            background-color: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1e3a8a;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
         }
     </style>
 </head>
-<body>
 
-<div class="container">
-    <h1>📊 ضرایب همبستگی اسپیرمن و کندال</h1>
-    <p class="subtitle">راهنمای جامع ضرایب همبستگی رتبه‌ای برای داده‌های ناپارامتری</p>
+<body class="antialiased font-sans">
 
-    <hr>
+    <!-- نوار ناوبری بالا -->
+    <nav class="fixed w-full z-50 glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <i class="fas fa-chart-line text-2xl text-white"></i>
+                    <span class="text-white font-bold text-xl">ضرایب همبستگی رتبه‌ای</span>
+                </div>
+                <div class="hidden md:flex space-x-6 space-x-reverse text-white">
+                    <a href="#spearman" class="hover:text-yellow-300 transition">اسپیرمن</a>
+                    <a href="#kendall" class="hover:text-yellow-300 transition">کندال</a>
+                    <a href="#examples" class="hover:text-yellow-300 transition">مثال‌ها</a>
+                    <a href="#comparison" class="hover:text-yellow-300 transition">مقایسه</a>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-    <h2>🔵 ۱. ضریب همبستگی رتبه‌ای اسپیرمن (Spearman's Rank Correlation)</h2>
+    <!-- هدر اصلی -->
+    <header class="pt-32 pb-20 px-4">
+        <div class="max-w-4xl mx-auto text-center text-white">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 animate-fadeInUp">
+                ضرایب همبستگی رتبه‌ای
+            </h1>
+            <p class="text-xl md:text-2xl mb-4 opacity-90 animate-fadeInUp">
+                اسپیرمن و کندال
+            </p>
+            <p class="text-lg mb-4 opacity-80 animate-fadeInUp">
+                (Spearman's Rho & Kendall's Tau)
+            </p>
+            <div class="flex justify-center gap-4 mt-8 animate-fadeInUp">
+                <span class="badge badge-blue"><i class="fas fa-book"></i> 4 بخش</span>
+                <span class="badge badge-green"><i class="fas fa-calculator"></i> 4 مثال</span>
+                <span class="badge badge-yellow"><i class="fas fa-table"></i> 5 جدول</span>
+            </div>
+        </div>
+    </header>
 
-    <p><strong>ضریب همبستگی رتبه‌ای اسپیرمن</strong> یک <span class="highlight">آزمون ناپارامتری</span> برای بررسی رابطه بین دو متغیر بر اساس <strong>رتبه‌ها</strong> است.</p>
+    <!-- چیدمان اصلی صفحه -->
+    <div class="max-w-7xl mx-auto px-4 pb-20 grid lg:grid-cols-4 gap-8">
 
-    <div class="info-box">
-        <h4>🎯 چه زمانی استفاده می‌شود؟</h4>
-        <ul>
-            <li>داده‌ها <strong>نرمال نیستند</strong></li>
-            <li>داده‌ها <strong>رتبه‌ای</strong> هستند</li>
-            <li>رابطه بین متغیرها <strong>خطی نیست</strong> (اما یکنواخت است)</li>
-            <li>حجم نمونه <strong>کم است</strong></li>
-        </ul>
+        <!-- نوار کناری -->
+        <aside class="hidden lg:block col-span-1">
+            <div class="sticky top-24">
+                <div class="glass-card rounded-2xl p-6">
+                    <h3 class="font-bold text-lg mb-4 gradient-text">
+                        <i class="fas fa-list"></i> فهرست سریع
+                    </h3>
+                    <nav class="space-y-2">
+                        <a href="#spearman" class="sidebar-link">
+                            <i class="fas fa-chart-bar"></i> ضریب اسپیرمن
+                        </a>
+                        <a href="#spearman-formula" class="sidebar-link">
+                            <i class="fas fa-calculator"></i> فرمول اسپیرمن
+                        </a>
+                        <a href="#spearman-examples" class="sidebar-link">
+                            <i class="fas fa-code"></i> مثال‌های اسپیرمن
+                        </a>
+                        <a href="#kendall" class="sidebar-link">
+                            <i class="fas fa-chart-line"></i> ضریب کندال
+                        </a>
+                        <a href="#kendall-formula" class="sidebar-link">
+                            <i class="fas fa-calculator"></i> فرمول کندال
+                        </a>
+                        <a href="#kendall-examples" class="sidebar-link">
+                            <i class="fas fa-code"></i> مثال‌های کندال
+                        </a>
+                        <a href="#comparison" class="sidebar-link">
+                            <i class="fas fa-balance-scale"></i> مقایسه
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </aside>
+
+        <!-- محتوای اصلی -->
+        <div class="col-span-1 lg:col-span-3 space-y-8">
+
+            <!-- بخش ۱: ضریب اسپیرمن -->
+            <section id="spearman" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-chart-bar ml-3"></i>
+                    ۱. ضریب همبستگی رتبه‌ای اسپیرمن
+                </h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    ضریب همبستگی رتبه‌ای اسپیرمن یک آزمون ناپارامتری برای بررسی رابطه بین دو متغیر بر اساس <strong>رتبه‌ها</strong> است.
+                </p>
+                <div class="highlight-box">
+                    <strong>چه زمانی استفاده می‌شود؟</strong>
+                    <ul class="mr-6 mt-2 space-y-1">
+                        <li>داده‌ها نرمال نیستند</li>
+                        <li>داده‌ها رتبه‌ای هستند</li>
+                        <li>رابطه بین متغیرها خطی نیست (اما یکنواخت است)</li>
+                        <li>حجم نمونه کم است</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- بخش ۲: فرمول اسپیرمن -->
+            <section id="spearman-formula" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-calculator ml-3"></i>
+                    ۲. فرمول استاندارد اسپیرمن
+                </h2>
+                
+                <div class="formula-card text-center" dir="ltr">
+                    $$ \rho = 1 - \frac{6 \sum D^2}{n(n^2-1)} $$
+                </div>
+
+                <h3 class="text-2xl font-bold mt-8 mb-4">راهنمای نمادها:</h3>
+                <ul class="space-y-2 text-gray-700">
+                    <li><span class="badge badge-blue">\(\rho\)</span> ضریب همبستگی اسپیرمن</li>
+                    <li><span class="badge badge-blue">\(D\)</span> اختلاف رتبه‌ها (R - S)</li>
+                    <li><span class="badge badge-blue">\(n\)</span> تعداد زوج داده‌ها</li>
+                </ul>
+
+                <div class="info-card mt-6">
+                    <strong>آزمون معنی‌داری:</strong>
+                    <div class="formula-card text-center mt-3" dir="ltr">
+                        $$ Z = \rho \sqrt{n-1} $$
+                    </div>
+                    <p class="text-gray-700 mt-2">مقدار بحرانی برای α = 0.05: <strong>Z = 1.96</strong></p>
+                </div>
+            </section>
+
+            <!-- بخش ۳: مثال‌های اسپیرمن -->
+            <section id="spearman-examples" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-code ml-3"></i>
+                    ۳. مثال‌های حل شده - اسپیرمن
+                </h2>
+                
+                <!-- مثال ۱ -->
+                <div class="example-box">
+                    <span class="example-title">مثال ۱: نمرات زبان و ریاضی</span>
+                    <p class="text-gray-800 mb-3">مسئله: نمرات زبان و ریاضی ۹ دانشجو داده شده است. آیا بین نمره زبان و ریاضی رابطه‌ای وجود دارد؟</p>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>دانشجو</th>
+                                <th>رتبه زبان (R)</th>
+                                <th>رتبه ریاضی (S)</th>
+                                <th>D = R - S</th>
+                                <th>D²</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1</td><td>8</td><td>4</td><td>4</td><td>16</td></tr>
+                            <tr><td>2</td><td>4</td><td>2</td><td>2</td><td>4</td></tr>
+                            <tr><td>3</td><td>8</td><td>7</td><td>1</td><td>1</td></tr>
+                            <tr><td>4</td><td>9</td><td>9</td><td>0</td><td>0</td></tr>
+                            <tr><td>5</td><td>2</td><td>1</td><td>1</td><td>1</td></tr>
+                            <tr><td>6</td><td>5</td><td>6</td><td>-1</td><td>1</td></tr>
+                            <tr><td>7</td><td>5</td><td>3</td><td>2</td><td>4</td></tr>
+                            <tr><td>8</td><td>11</td><td>8</td><td>3</td><td>9</td></tr>
+                            <tr><td>9</td><td>7</td><td>5</td><td>2</td><td>4</td></tr>
+                            <tr style="background-color: #e0f2fe; font-weight: bold;">
+                                <td colspan="4">جمع ΣD²</td>
+                                <td>40</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="text-gray-800 mt-4"><strong>محاسبه:</strong></p>
+                    <div class="formula-card" style="font-size: 0.9em;" dir="ltr">
+                        \(\rho = 1 - \frac{6 \times 40}{9(81-1)} = 1 - 0.33 = 0.67\) <br>
+                        \(Z = 0.67 \times \sqrt{8} = 1.90\)
+                    </div>
+                    <p class="text-gray-800"><strong>نتیجه:</strong> \(Z = 1.90 < 1.96\) \(\leftarrow\) <span style="color:#b91c1c; font-weight:bold;">فرض صفر رد نمی‌شود.</span></p>
+                </div>
+
+                <!-- مثال ۲ -->
+                <div class="example-box mt-6">
+                    <span class="example-title">مثال ۲: مصاحبه شغلی</span>
+                    <p class="text-gray-800 mb-3">داده‌ها: ۸ متقاضی را دو داور رتبه‌بندی کرده‌اند.</p>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>متقاضی</th>
+                                <th>رتبه داور ۱</th>
+                                <th>رتبه داور ۲</th>
+                                <th>D</th>
+                                <th>D²</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1</td><td>5</td><td>7</td><td>-2</td><td>4</td></tr>
+                            <tr><td>2</td><td>8</td><td>5</td><td>3</td><td>9</td></tr>
+                            <tr><td>3</td><td>4</td><td>4</td><td>0</td><td>0</td></tr>
+                            <tr><td>4</td><td>3</td><td>2</td><td>1</td><td>1</td></tr>
+                            <tr><td>5</td><td>6</td><td>8</td><td>-2</td><td>4</td></tr>
+                            <tr><td>6</td><td>2</td><td>1</td><td>1</td><td>1</td></tr>
+                            <tr><td>7</td><td>7</td><td>6</td><td>1</td><td>1</td></tr>
+                            <tr><td>8</td><td>1</td><td>3</td><td>-2</td><td>4</td></tr>
+                            <tr style="background-color: #e0f2fe; font-weight: bold;">
+                                <td colspan="4">جمع ΣD²</td>
+                                <td>24</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="text-gray-800 mt-4"><strong>محاسبه:</strong></p>
+                    <div class="formula-card" style="font-size: 0.9em;" dir="ltr">
+                        \(\rho = 1 - \frac{6 \times 24}{8(64-1)} = 1 - 0.29 = 0.71\) <br>
+                        \(Z = 0.71 \times \sqrt{7} = 1.89\)
+                    </div>
+                    <p class="text-gray-800"><strong>نتیجه:</strong> \(Z = 1.89 < 1.96\) \(\leftarrow\) <span style="color:#b91c1c; font-weight:bold;">فرض صفر رد نمی‌شود.</span></p>
+                </div>
+            </section>
+
+            <!-- بخش ۴: ضریب کندال -->
+            <section id="kendall" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-chart-line ml-3"></i>
+                    ۴. ضریب همبستگی کندال
+                </h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    ضریب کندال بر اساس <strong>مقایسه زوج‌های مرتب‌شده</strong> داده‌ها تعریف می‌شود و میزان توافق یا عدم توافق رتبه‌ها را می‌سنجد.
+                </p>
+            </section>
+
+            <!-- بخش ۵: فرمول کندال -->
+            <section id="kendall-formula" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-calculator ml-3"></i>
+                    ۵. فرمول کندال
+                </h2>
+                
+                <div class="formula-card text-center" dir="ltr">
+                    $$ \hat{\tau} = \frac{4P}{n(n-1)} - 1 $$
+                </div>
+
+                <h3 class="text-2xl font-bold mt-8 mb-4">راهنمای نمادها:</h3>
+                <ul class="space-y-2 text-gray-700">
+                    <li><span class="badge badge-blue">P</span> تعداد زوج‌های هماهنگ (Concordant Pairs)</li>
+                    <li><span class="badge badge-blue">n</span> تعداد مشاهدات</li>
+                </ul>
+
+                <div class="info-card mt-6">
+                    <strong>نحوه محاسبه P:</strong>
+                    <ol class="mr-6 mt-2 space-y-1">
+                        <li>داده‌ها را بر اساس متغیر اول مرتب کنید</li>
+                        <li>برای هر عدد در متغیر دوم، تعداد عددهایی که بعد از آن هستند و بزرگتر از آن هستند را بشمارید</li>
+                        <li>جمع همه این تعدادها = P</li>
+                    </ol>
+                </div>
+
+                <div class="info-card mt-4">
+                    <strong>آزمون معنی‌داری:</strong>
+                    <div class="formula-card text-center mt-3" dir="ltr">
+                        $$ Var(\hat{\tau}) = \frac{2(2n+5)}{9n(n-1)} $$
+                        $$ Z = \frac{\hat{\tau}}{\sqrt{Var(\hat{\tau})}} $$
+                    </div>
+                </div>
+            </section>
+
+            <!-- بخش ۶: مثال‌های کندال -->
+            <section id="kendall-examples" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-code ml-3"></i>
+                    ۶. مثال‌های حل شده - کندال
+                </h2>
+                
+                <!-- مثال ۱ -->
+                <div class="example-box">
+                    <span class="example-title">مثال ۱: نظرات دو معلم</span>
+                    <p class="text-gray-800 mb-3">دو معلم درباره رتبه‌بندی ۸ دانشجو نظر داده‌اند.</p>
+                    
+                    <table>
+                        <thead>
+                            <tr><th>دانشجو</th><th>معلم a</th><th>معلم b</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1</td><td>1</td><td>2</td></tr>
+                            <tr><td>2</td><td>2</td><td>1</td></tr>
+                            <tr><td>3</td><td>3</td><td>4</td></tr>
+                            <tr><td>4</td><td>4</td><td>5</td></tr>
+                            <tr><td>5</td><td>5</td><td>3</td></tr>
+                            <tr><td>6</td><td>6</td><td>6</td></tr>
+                            <tr><td>7</td><td>7</td><td>8</td></tr>
+                            <tr><td>8</td><td>8</td><td>7</td></tr>
+                        </tbody>
+                    </table>
+
+                    <p class="text-gray-800 mt-4"><strong>محاسبه P:</strong> 6 + 6 + 4 + 3 + 3 + 2 + 0 + 0 = <strong>24</strong></p>
+                    <div class="formula-card" style="font-size: 0.9em;" dir="ltr">
+                        \(\hat{\tau} = \frac{4 \times 24}{8(7)} - 1 = 1.71 - 1 = 0.71\) <br>
+                        \(Var = 0.083, \quad SD = 0.29\) <br>
+                        \(Z = \frac{0.71}{0.29} = 2.46\)
+                    </div>
+                    <p class="text-gray-800"><strong>نتیجه:</strong> \(Z = 2.46 > 1.96\) \(\leftarrow\) <span style="color:green; font-weight:bold;">فرض صفر رد می‌شود.</span></p>
+                </div>
+
+                <!-- مثال ۲ -->
+                <div class="example-box mt-6">
+                    <span class="example-title">مثال ۲: ارزیابی ۱۰ کارگر</span>
+                    <p class="text-gray-800 mb-3">دو داور درباره عملکرد ۱۰ کارگر رتبه‌بندی کرده‌اند.</p>
+                    
+                    <table>
+                        <thead>
+                            <tr><th>کارگر</th><th>داور ۱</th><th>داور ۲</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1</td><td>1</td><td>2</td></tr>
+                            <tr><td>2</td><td>2</td><td>3</td></tr>
+                            <tr><td>3</td><td>3</td><td>1</td></tr>
+                            <tr><td>4</td><td>4</td><td>5</td></tr>
+                            <tr><td>5</td><td>5</td><td>4</td></tr>
+                            <tr><td>6</td><td>6</td><td>6</td></tr>
+                            <tr><td>7</td><td>7</td><td>8</td></tr>
+                            <tr><td>8</td><td>8</td><td>7</td></tr>
+                            <tr><td>9</td><td>9</td><td>10</td></tr>
+                            <tr><td>10</td><td>10</td><td>9</td></tr>
+                        </tbody>
+                    </table>
+
+                    <p class="text-gray-800 mt-4"><strong>محاسبه P:</strong> 8 + 7 + 7 + 5 + 5 + 4 + 2 + 2 + 0 + 0 = <strong>40</strong></p>
+                    <div class="formula-card" style="font-size: 0.9em;" dir="ltr">
+                        \(\hat{\tau} = \frac{4 \times 40}{10(9)} - 1 = 1.78 - 1 = 0.78\) <br>
+                        \(Z = 3.12\)
+                    </div>
+                    <p class="text-gray-800"><strong>نتیجه:</strong> \(Z = 3.12 > 1.96\) \(\leftarrow\) <span style="color:green; font-weight:bold;">فرض صفر رد می‌شود.</span></p>
+                </div>
+            </section>
+
+            <!-- بخش ۷: مقایسه -->
+            <section id="comparison" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-balance-scale ml-3"></i>
+                    ۷. مقایسه اسپیرمن و کندال
+                </h2>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ویژگی</th>
+                            <th>اسپیرمن</th>
+                            <th>کندال</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>مبنای محاسبه</strong></td>
+                            <td>فاصله رتبه‌ها (D و D²)</td>
+                            <td>زوج‌های هماهنگ (P)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>پیچیدگی</strong></td>
+                            <td>ساده‌تر</td>
+                            <td>زمان‌برتر</td>
+                        </tr>
+                        <tr>
+                            <td><strong>کارایی</strong></td>
+                            <td>حساس‌تر به داده‌های پرت</td>
+                            <td>باثبات‌تر</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+        </div>
+
     </div>
 
-    <h3>📝 فرمول استاندارد</h3>
+    <!-- دکمه بازگشت به بالا -->
+    <button id="back-to-top" title="بازگشت به بالا">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
-    <div class="formula-box">
-        $$ \rho = 1 - \frac{6 \sum D^2}{n(n^2-1)} $$
-        <p style="margin-top: 20px; font-size: 1.1rem; color: #475569;">که در آن:</p>
-        <ul style="text-align: right; list-style: none; padding: 0; margin-top: 15px; color: #334155;">
-            <li style="margin: 8px 0;"><strong>$\rho$ (rho)</strong> = ضریب همبستگی اسپیرمن</li>
-            <li style="margin: 8px 0;"><strong>$D$</strong> = اختلاف رتبه‌ها (R - S)</li>
-            <li style="margin: 8px 0;"><strong>$n$</strong> = تعداد زوج داده‌ها</li>
-        </ul>
-    </div>
+    <!-- Footer -->
+    <footer class="glass-card mx-auto max-w-5xl mb-8 rounded-2xl p-6 text-center">
+        <p class="text-gray-700">
+            <i class="fas fa-university ml-2"></i>
+            جزوه آموزشی ضرایب همبستگی رتبه‌ای
+        </p>
+        <p class="text-sm text-gray-600 mt-2">
+            © 2026 - تهیه شده برای دانشجویان آمار
+        </p>
+    </footer>
 
-    <div class="example-box">
-        <h4>📝 مثال ۱: نمرات زبان و ریاضی</h4>
-        <p><strong>مسئله:</strong> نمرات زبان و ریاضی ۹ دانشجو داده شده است. می‌خواهیم بدانیم آیا بین نمره زبان و ریاضی رابطه‌ای وجود دارد؟ (سطح معنی‌داری α = 0.05)</p>
+    <!-- JavaScript -->
+    <script>
+        const backToTopButton = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            backToTopButton.classList.toggle('show', window.pageYOffset > 300);
+        });
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
 
-        <table>
-            <tr>
-                <th>دانشجو</th>
-                <th>رتبه زبان (R)</th>
-                <th>رتبه ریاضی (S)</th>
-                <th>D = R - S</th>
-                <th>D²</th>
-            </tr>
-            <tr><td>1</td><td>8</td><td>4</td><td>4</td><td>16</td></tr>
-            <tr><td>2</td><td>4</td><td>2</td><td>2</td><td>4</td></tr>
-            <tr><td>3</td><td>8</td><td>7</td><td>1</td><td>1</td></tr>
-            <tr><td>4</td><td>9</td><td>9</td><td>0</td><td>0</td></tr>
-            <tr><td>5</td><td>2</td><td>1</td><td>1</td><td>1</td></tr>
-            <tr><td>6</td><td>5</td><td>6</td><td>-1</td><td>1</td></tr>
-            <tr><td>7</td><td>5</td><td>3</td><td>2</td><td>4</td></tr>
-            <tr><td>8</td><td>11</td><td>8</td><td>3</td><td>9</td></tr>
-            <tr><td>9</td><td>7</td><td>5</td><td>2</td><td>4</td></tr>
-            <tr style="font-weight: 700; background: #dbeafe;"><td colspan="4">جمع ΣD²</td><td>40</td></tr>
-        </table>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
 
-        <p><strong>محاسبه:</strong> با n = 9 و ΣD² = 40 داریم:</p>
-
-        <div class="formula-box">
-            $$ \rho = 1 - \frac{6 \times 40}{9(81-1)} = 1 - \frac{240}{720} = 1 - 0.33 = 0.67 $$
-        </div>
-
-        <h4>📈 آزمون معنی‌داری</h4>
-        <p>آماره Z تقریبی برای اسپیرمن (برای n نسبتاً بزرگ) به صورت زیر است:</p>
-
-        <div class="formula-box">
-            $$ Z = \rho \sqrt{n-1} $$
-        </div>
-
-        <p>در این مثال:</p>
-        <div class="formula-box">
-            $$ Z = 0.67 \times \sqrt{9-1} = 0.67 \times 2.83 \approx 1.90 $$
-        </div>
-
-        <div class="result-fail">
-            <strong>❌ نتیجه:</strong> چون Z = 1.90 < 1.96، در سطح 0.05 فرض صفر رد نمی‌شود و نمی‌توانیم بگوییم بین نمره زبان و ریاضی رابطه معنی‌داری وجود دارد.
-        </div>
-    </div>
-
-    <div class="example-box">
-        <h4>📝 مثال ۲: مصاحبه شغلی</h4>
-        <p><strong>داده‌ها:</strong> ۸ متقاضی را دو داور رتبه‌بندی کرده‌اند.</p>
-
-        <table>
-            <tr>
-                <th>متقاضی</th>
-                <th>رتبه داور ۱ (R)</th>
-                <th>رتبه داور ۲ (S)</th>
-                <th>D = R - S</th>
-                <th>D²</th>
-            </tr>
-            <tr><td>1</td><td>5</td><td>7</td><td>-2</td><td>4</td></tr>
-            <tr><td>2</td><td>8</td><td>5</td><td>3</td><td>9</td></tr>
-            <tr><td>3</td><td>4</td><td>4</td><td>0</td><td>0</td></tr>
-            <tr><td>4</td><td>3</td><td>2</td><td>1</td><td>1</td></tr>
-            <tr><td>5</td><td>6</td><td>8</td><td>-2</td><td>4</td></tr>
-            <tr><td>6</td><td>2</td><td>1</td><td>1</td><td>1</td></tr>
-            <tr><td>7</td><td>7</td><td>6</td><td>1</td><td>1</td></tr>
-            <tr><td>8</td><td>1</td><td>3</td><td>-2</td><td>4</td></tr>
-            <tr style="font-weight: 700; background: #dbeafe;"><td colspan="4">جمع ΣD²</td><td>24</td></tr>
-        </table>
-
-        <p><strong>محاسبه:</strong> با n = 8 و ΣD² = 24 داریم:</p>
-
-        <div class="formula-box">
-            $$ \rho = 1 - \frac{6 \times 24}{8(64-1)} = 1 - \frac{144}{504} = 1 - 0.29 = 0.71 $$
-        </div>
-
-        <p><strong>آماره Z:</strong></p>
-        <div class="formula-box">
-            $$ Z = 0.71 \times \sqrt{7} = 0.71 \times 2.65 \approx 1.89 $$
-        </div>
-
-        <div class="result-fail">
-            <strong>⚠️ نتیجه:</strong> چون Z = 1.89 < 1.96، فرض صفر رد نمی‌شود؛ یعنی با این حجم نمونه، اگرچه ضریب 0.71 نسبتاً بزرگ است، اما شواهد کافی برای معنی‌دار بودن رابطه نداریم.
-        </div>
-    </div>
-
-    <hr>
-
-    <h2>🔶 ۲. ضریب همبستگی کندال (Kendall's Tau)</h2>
-
-    <p><strong>ضریب کندال</strong> بر اساس <span class="highlight">مقایسه زوج‌های مرتب‌شده</span> داده‌ها تعریف می‌شود و میزان <strong>توافق یا عدم توافق</strong> رتبه‌ها را می‌سنجد.</p>
-
-    <h3>📝 فرمول‌ها</h3>
-
-    <div class="formula-box">
-        <p><strong>فرم متداول ۱:</strong></p>
-        $$ \tau = \frac{P - N}{\frac{1}{2}n(n-1)} $$
-        
-        <p style="margin-top: 30px;"><strong>فرم متداول ۲:</strong></p>
-        $$ \hat{\tau} = \frac{4P}{n(n-1)} - 1 $$
-        
-        <p style="margin-top: 20px; font-size: 1.1rem; color: #475569;">که در آن:</p>
-        <ul style="text-align: right; list-style: none; padding: 0; margin-top: 15px; color: #334155;">
-            <li style="margin: 8px 0;"><strong>P</strong> = تعداد زوج‌های هماهنگ (Concordant Pairs)</li>
-            <li style="margin: 8px 0;"><strong>N</strong> = تعداد زوج‌های ناهماهنگ (Discordant Pairs)</li>
-            <li style="margin: 8px 0;"><strong>n</strong> = تعداد مشاهدات</li>
-        </ul>
-    </div>
-
-    <div class="info-box">
-        <h4>💡 نحوه محاسبه P (زوج‌های هماهنگ)</h4>
-        <ol>
-            <li>داده‌ها را بر اساس متغیر اول مرتب کنید</li>
-            <li>برای هر عدد در متغیر دوم، تعداد عددهایی که بعد از آن هستند و <strong>بزرگتر</strong> از آن هستند را بشمارید</li>
-            <li>جمع همه این تعدادها = P</li>
-        </ol>
-    </div>
-
-    <div class="example-box">
-        <h4>📝 مثال ۱: نظرات دو معلم</h4>
-        <p><strong>مسئله:</strong> دو معلم درباره رتبه‌بندی ۸ دانشجو نظر داده‌اند. آیا همبستگی معنی‌داری بین نظرات آنها وجود دارد؟</p>
-
-        <table>
-            <tr>
-                <th>دانشجو</th>
-                <th>معلم a</th>
-                <th>معلم b</th>
-            </tr>
-            <tr><td>1</td><td>1</td><td>2</td></tr>
-            <tr><td>2</td><td>2</td><td>1</td></tr>
-            <tr><td>3</td><td>3</td><td>4</td></tr>
-            <tr><td>4</td><td>4</td><td>5</td></tr>
-            <tr><td>5</td><td>5</td><td>3</td></tr>
-            <tr><td>6</td><td>6</td><td>6</td></tr>
-            <tr><td>7</td><td>7</td><td>8</td></tr>
-            <tr><td>8</td><td>8</td><td>7</td></tr>
-        </table>
-
-        <p><strong>ردیف معلم b:</strong> {2, 1, 4, 5, 3, 6, 8, 7}</p>
-
-        <p><strong>محاسبه P:</strong></p>
-        <ul>
-            <li>عدد ۲: تعداد بزرگترها بعد از آن = 6 (اعداد 4, 5, 6, 8, 7 > 2)</li>
-            <li>عدد ۱: تعداد بزرگترها = 6</li>
-            <li>عدد ۴: تعداد بزرگترها = 4</li>
-            <li>عدد ۵: تعداد بزرگترها = 3</li>
-            <li>عدد ۳: تعداد بزرگترها = 3</li>
-            <li>عدد ۶: تعداد بزرگترها = 2</li>
-            <li>عدد ۸: تعداد بزرگترها = 0</li>
-            <li>عدد ۷: تعداد بزرگترها = 0</li>
-        </ul>
-
-        <div class="formula-box">
-            <p>P = 6 + 6 + 4 + 3 + 3 + 2 + 0 + 0 = <strong>24</strong></p>
-        </div>
-
-        <p><strong>محاسبه ضریب کندال:</strong> با n = 8 و P = 24 داریم:</p>
-
-        <div class="formula-box">
-            $$ \hat{\tau} = \frac{4 \times 24}{8(7)} - 1 = \frac{96}{56} - 1 = 1.71 - 1 = 0.71 $$
-        </div>
-
-        <h4>📈 آزمون معنی‌داری</h4>
-        <p>واریانس تقریبی برای τ̂ (بدون گره‌ها):</p>
-
-        <div class="formula-box">
-            $$ Var(\hat{\tau}) = \frac{2(2n+5)}{9n(n-1)} $$
-        </div>
-
-        <p>برای n = 8:</p>
-        <div class="formula-box">
-            $$ Var(\hat{\tau}) = \frac{2(16+5)}{9 \times 8 \times 7} = \frac{42}{504} = 0.083 $$
-            $$ SD(\hat{\tau}) = \sqrt{0.083} \approx 0.29 $$
-        </div>
-
-        <p><strong>آماره Z:</strong></p>
-        <div class="formula-box">
-            $$ Z = \frac{\hat{\tau}}{SD(\hat{\tau})} = \frac{0.71}{0.29} \approx 2.46 $$
-        </div>
-
-        <div class="result-success">
-            <strong>✅ نتیجه:</strong> چون Z = 2.46 > 1.96، فرض صفر رد می‌شود و بین نظرات دو معلم همبستگی معنی‌دار وجود دارد.
-        </div>
-    </div>
-
-    <div class="example-box">
-        <h4>📝 مثال ۲: ارزیابی ۱۰ کارگر</h4>
-        <p><strong>مسئله:</strong> دو داور درباره عملکرد ۱۰ کارگر رتبه‌بندی کرده‌اند.</p>
-
-        <table>
-            <tr>
-                <th>کارگر</th>
-                <th>داور ۱</th>
-                <th>داور ۲</th>
-            </tr>
-            <tr><td>1</td><td>1</td><td>2</td></tr>
-            <tr><td>2</td><td>2</td><td>3</td></tr>
-            <tr><td>3</td><td>3</td><td>1</td></tr>
-            <tr><td>4</td><td>4</td><td>5</td></tr>
-            <tr><td>5</td><td>5</td><td>4</td></tr>
-            <tr><td>6</td><td>6</td><td>6</td></tr>
-            <tr><td>7</td><td>7</td><td>8</td></tr>
-            <tr><td>8</td><td>8</td><td>7</td></tr>
-            <tr><td>9</td><td>9</td><td>10</td></tr>
-            <tr><td>10</td><td>10</td><td>9</td></tr>
-        </table>
-
-        <p><strong>ردیف داور ۲:</strong> {2, 3, 1, 5, 4, 6, 8, 7, 10, 9}</p>
-
-        <p><strong>محاسبه P:</strong></p>
-        <p>P = 8 + 7 + 7 + 5 + 5 + 4 + 2 + 2 + 0 + 0 = <strong>40</strong></p>
-
-        <div class="formula-box">
-            $$ \hat{\tau} = \frac{4 \times 40}{10(9)} - 1 = \frac{160}{90} - 1 = 1.78 - 1 = 0.78 $$
-        </div>
-
-        <p><strong>واریانس تقریبی (برای n = 10):</strong></p>
-        <div class="formula-box">
-            $$ Var(\hat{\tau}) = \frac{2(20+5)}{9 \times 10 \times 9} = \frac{50}{810} = 0.062 $$
-            $$ SD(\hat{\tau}) = \sqrt{0.062} \approx 0.25 $$
-        </div>
-
-        <p><strong>آماره Z:</strong></p>
-        <div class="formula-box">
-            $$ Z = \frac{0.78}{0.25} = 3.12 $$
-        </div>
-
-        <div class="result-success">
-            <strong>✅ نتیجه:</strong> چون Z = 3.12 > 1.96، فرض صفر رد می‌شود و بین دو ارزیاب، همبستگی بسیار معنی‌داری وجود دارد.
-        </div>
-    </div>
-
-    <hr>
-
-    <h2>⚖️ ۳. مقایسه اسپیرمن و کندال</h2>
-
-    <div class="comparison-box">
-        <table>
-            <tr>
-                <th>ویژگی</th>
-                <th>اسپیرمن</th>
-                <th>کندال</th>
-            </tr>
-            <tr>
-                <td><strong>مبنای محاسبه</strong></td>
-                <td>بر اساس فاصله رتبه‌ها (D و D²)</td>
-                <td>بر اساس تعداد زوج‌های هماهنگ و ناهماهنگ (P و N)</td>
-            </tr>
-            <tr>
-                <td><strong>پیچیدگی محاسبات</strong></td>
-                <td>ساده‌تر برای محاسبه دستی</td>
-                <td>زمان‌برتر برای شمارش زوج‌ها</td>
-            </tr>
-            <tr>
-                <td><strong>کارایی در نمونه‌های کوچک</strong></td>
-                <td>خوب، اما حساس‌تر به داده‌های پرت</td>
-                <td>اغلب دقیق‌تر و باثبات‌تر در نمونه‌های کوچک</td>
-            </tr>
-            <tr>
-                <td><strong>حساسیت به گره‌ها</strong></td>
-                <td>کمتر تنظیم‌شده برای گره‌ها</td>
-                <td>نسخه‌های اصلاح‌شده (Tau-b و Tau-c) برای گره‌ها مناسب‌تر هستند</td>
-            </tr>
-        </table>
-    </div>
-
-    <hr>
-
-    <h2>⚠️ ۴. نکته مهم: معنی‌داری آماری</h2>
-
-    <div class="info-box">
-        <p>اگر <strong>آماره Z محاسبه‌شده</strong> (یا t در بعضی منابع) از <span class="highlight">مقدار بحرانی</span> (مثلاً 1.96 برای α = 0.05 در آزمون دوطرفه) کمتر باشد، <strong>فرض صفر رد نمی‌شود</strong>، حتی اگر مقدار ضریب همبستگی از نظر عددی بزرگ به‌نظر برسد؛ یعنی نمی‌توان با اطمینان گفت <strong>رابطه معنی‌دار است</strong>.</p>
-
-        <p style="margin-top: 15px;">در چنین مواردی، بهتر است:</p>
-        <ul>
-            <li>حجم نمونه را <strong>افزایش</strong> دهید</li>
-            <li>از روش‌های دیگر مانند <strong>Bootstrap</strong> استفاده کنید</li>
-            <li>به دنبال <strong>شواهد بیشتر</strong> باشید</li>
-        </ul>
-    </div>
-
-</div>
+        const sections = document.querySelectorAll('section[id]');
+        const sidebarLinks = document.querySelectorAll('.sidebar-link');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                if (window.pageYOffset >= (section.offsetTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            sidebarLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>
