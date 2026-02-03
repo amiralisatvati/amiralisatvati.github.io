@@ -15,15 +15,16 @@ layout: default
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://amirali-satvati.github.io/">
+    <meta property="og:url" content="https://amiralisatvati.github.io/">
     <meta property="og:title" content="Amir Ali Satvati | Portfolio">
     <meta property="og:description" content="Statistics Student and Data Analyst showcasing projects and skills.">
-    <meta property="og:image" content="https://yourusername.github.io/og-image.jpg">
+    <meta property="og:image" content="https://amiralisatvati.github.io/assets/og-image.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:title" content="Amir Ali Satvati | Portfolio">
     <meta property="twitter:description" content="Statistics Student and Data Analyst showcasing projects and skills.">
+    <meta property="twitter:image" content="https://amiralisatvati.github.io/assets/og-image.jpg">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -199,7 +200,7 @@ layout: default
                         <i class="fas fa-chart-network text-accent"></i>
                         <span class="font-mono">&lt;AmirAli/&gt;</span>
                     </a>
-                    <button onclick="toggleLanguage()" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-700 hover:border-accent text-xs font-bold text-slate-300 transition-all hover:bg-accent/10">
+                    <button onclick="toggleLanguage()" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-700 hover:border-accent text-xs font-bold text-slate-300 transition-all hover:bg-accent/10" aria-label="Toggle language">
                         <i class="fas fa-globe"></i> <span id="lang-text-desktop">FA</span>
                     </button>
                 </div>
@@ -213,10 +214,10 @@ layout: default
                 </div>
 
                 <div class="md:hidden flex items-center gap-3">
-                    <button onclick="toggleLanguage()" class="px-2 py-1 rounded border border-slate-700 text-xs font-bold text-slate-300">
+                    <button onclick="toggleLanguage()" class="px-2 py-1 rounded border border-slate-700 text-xs font-bold text-slate-300" aria-label="Toggle language">
                         <span id="lang-text-mobile">FA</span>
                     </button>
-                    <button id="mobile-menu-btn" class="text-slate-300 hover:text-accent focus:outline-none">
+                    <button id="mobile-menu-btn" class="text-slate-300 hover:text-accent focus:outline-none" aria-label="Toggle mobile menu">
                         <i class="fas fa-bars text-2xl"></i>
                     </button>
                 </div>
@@ -671,7 +672,7 @@ layout: default
         </div>
     </footer>
 
-    <button id="scroll-to-top" class="fixed bottom-8 right-8 rtl:left-8 rtl:right-auto z-50 p-3 rounded-full bg-accent hover:bg-cyan-400 text-slate-900 shadow-lg shadow-cyan-500/50 transition-all transform hover:-translate-y-1">
+    <button id="scroll-to-top" class="fixed bottom-8 right-8 rtl:left-8 rtl:right-auto z-50 p-3 rounded-full bg-accent hover:bg-cyan-400 text-slate-900 shadow-lg shadow-cyan-500/50 transition-all transform hover:-translate-y-1" aria-label="Scroll to top">
         <i class="fas fa-arrow-up text-xl"></i>
     </button>
 
@@ -983,6 +984,7 @@ layout: default
 
         function toggleLanguage() {
             currentLang = currentLang === 'en' ? 'fa' : 'en';
+            document.documentElement.lang = currentLang === 'fa' ? 'fa' : 'en';
             document.documentElement.dir = currentLang === 'fa' ? 'rtl' : 'ltr';
             
             document.getElementById('lang-text-desktop').textContent = currentLang === 'en' ? 'FA' : 'EN';
