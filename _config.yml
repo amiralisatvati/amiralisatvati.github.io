@@ -8,14 +8,17 @@ author:
   name: "امیرعلی سطوتی"
   bio: "دانشجوی آمار دانشگاه فردوسی | R & Python Developer"
   location: "مشهد، ایران"
-  email: "amiralisatvati5995@gmail.com"
+  email: "amirali.satvati@gmail.com"
   links:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/amiralisatvati"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://linkedin.com/in/amirali-satvati"
     - label: "Email"
       icon: "fas fa-fw fa-envelope"
-      url: "mailto:amiralisatvati5995@gmail.com"
+      url: "mailto:amirali.satvati@gmail.com"
 
 # تم و تنظیمات
 remote_theme: "mmistakes/minimal-mistakes@4.26.2"
