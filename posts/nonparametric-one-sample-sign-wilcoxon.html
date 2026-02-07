@@ -1,28 +1,36 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>آزمون‌های ناپارامتری یک‌نمونه‌ای و زوجی</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آزمون‌های ناپارامتری یک‌نمونه‌ای</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
+        * { font-family: Vazirmatn, sans-serif; }
+        body { background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%); }
+        .glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); }
+        .gradient-text { background: linear-gradient(135deg, #3b82f6, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        th, td { border: 1px solid #e5e7eb; padding: 0.75rem; text-align: center; }
+        th { background: #f3f4f6; font-weight: 600; }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>آزمون‌های ناپارامتری یک‌نمونه‌ای و داده‌های زوجی</h1>
-    <p>مروری بر آزمون علامت، آزمون میانه و آزمون ویلکاکسون برای یک نمونه یا داده‌های قبل و بعد.</p>
-  </header>
-  <main>
-    <section>
-      <h2>۱. چرا ناپارامتری؟</h2>
-      <p>وقتی توزیع جامعه نرمال نیست یا مقیاس داده‌ها رتبه‌ای است، آزمون‌های پارامتری مثل t مناسب نیستند و از آزمون‌های ناپارامتری استفاده می‌کنیم.</p>
-    </section>
-    <section>
-      <h2>۲. آزمون علامت برای میانه</h2>
-      <p>برای آزمون ادعایی روی میانه \(\eta_0\)، فقط جهت اختلاف نسبت به \(\eta_0\) (مثبت/منفی) در نظر گرفته می‌شود و تعداد علامت‌ها بر اساس توزیع دوجمله‌ای با \(p=0.5\) بررسی می‌شود.</p>
-    </section>
-    <section>
-      <h2>۳. داده‌های قبل و بعد (زوجی)</h2>
-      <p>در حالت قبل و بعد، ابتدا اختلاف‌ها محاسبه می‌شوند، مقادیر صفر حذف و سپس برای آزمون علامت یا ویلکاکسون از علامت‌ها یا رتبه‌بندی اختلاف‌ها استفاده می‌شود.</p>
-    </section>
-  </main>
+    <nav class="fixed w-full z-50 glass"><div class="max-w-7xl mx-auto px-4 h-16 flex items-center"><i class="fas fa-square-root-variable text-2xl text-white ml-3"></i><span class="text-white font-bold text-xl">آزمون‌های ناپارامتری</span></div></nav>
+    <header class="pt-32 pb-20 px-4 text-center text-white"><h1 class="text-5xl font-bold mb-4">آزمون‌های ناپارامتری یک‌نمونه‌ای و زوجی</h1><p class="text-lg opacity-80">آزمون علامت، میانه و ویلکاکسون</p></header>
+    <div class="max-w-7xl mx-auto px-4 pb-20 space-y-8">
+        <section class="card rounded-2xl p-8"><h2 class="text-3xl font-bold mb-4 gradient-text"><i class="fas fa-question-circle ml-2"></i>چرا ناپارامتری؟</h2><p class="text-gray-700 mb-3">در آزمون‌های سنتی (مثل t)، فرض نرمال بودن لازم است. اما در موارد زیر از روش‌های ناپارامتری استفاده می‌شود:</p><ul class="text-gray-700 space-y-2 mr-6"><li>• داده‌های رتبه‌ای یا اسمی</li><li>• حجم نمونه کوچک</li><li>• داده‌های پرت (outliers)</li><li>• توزیع غیرنرمال</li></ul></section>
+        <section class="card rounded-2xl p-8"><h2 class="text-3xl font-bold mb-4 gradient-text"><i class="fas fa-plus-minus ml-2"></i>۱. آزمون علامت</h2><p class="text-gray-700 mb-3">ساده‌ترین آزمون که فقط جهت اختلاف (مثبت/منفی) را بررسی می‌کند.</p><p class="text-gray-700 mb-2"><strong>فرضیه:</strong> \(H_0: \eta = \eta_0\)</p><p class="text-gray-700"><strong>مثال:</strong> ادعا: میانه عمر باتری 60 ساعت است. داده: 58,62,65,55,68,70,61,63,59,67 → 7 مثبت، 3 منفی → p-value=0.34 → رد نمی‌شود.</p></section>
+        <section class="card rounded-2xl p-8"><h2 class="text-3xl font-bold mb-4 gradient-text"><i class="fas fa-divide ml-2"></i>۲. آزمون میانه</h2><p class="text-gray-700 mb-2">برای آزمون صدک p-ام (مثل میانه=صدک 50).</p><p class="text-gray-700"><strong>فرض:</strong> \(H_0: P(X>\eta_0)=p\). آماره B پیرو توزیع دوجمله‌ای با p=0.5 است.</p></section>
+        <section class="card rounded-2xl p-8"><h2 class="text-3xl font-bold mb-4 gradient-text"><i class="fas fa-arrows-alt-v ml-2"></i>۳. آزمون علامت زوجی</h2><p class="text-gray-700 mb-3">برای داده‌های قبل/بعد. اختلافات محاسبه و علامت آن‌ها بررسی می‌شود.</p><table><tr><th>بیمار</th><th>قبل</th><th>بعد</th><th>D</th><th>علامت</th></tr><tr><td>1</td><td>150</td><td>140</td><td>10</td><td>+</td></tr><tr><td>2</td><td>160</td><td>158</td><td>2</td><td>+</td></tr><tr><td>3</td><td>155</td><td>150</td><td>5</td><td>+</td></tr><tr><td>4</td><td>170</td><td>165</td><td>5</td><td>+</td></tr><tr><td>5</td><td>145</td><td>145</td><td>0</td><td>حذف</td></tr><tr><td>6</td><td>152</td><td>148</td><td>4</td><td>+</td></tr><tr><td>7</td><td>148</td><td>142</td><td>6</td><td>+</td></tr><tr><td>8</td><td>162</td><td>160</td><td>2</td><td>+</td></tr></table><p class="text-gray-700 mt-3"><strong>نتیجه:</strong> 7 مثبت → (0.5)^7=0.0078 < 0.05 → دارو مؤثر است.</p></section>
+        <section class="card rounded-2xl p-8"><h2 class="text-3xl font-bold mb-4 gradient-text"><i class="fas fa-ranking-star ml-2"></i>۴. آزمون ویلکاکسون</h2><p class="text-gray-700 mb-3">قدرتمندتر از آزمون علامت. از رتبه‌بندی قدر مطلق اختلافات استفاده می‌کند.</p><ol class="text-gray-700 space-y-1 mr-6"><li>1. اختلاف D را محاسبه کن</li><li>2. صفرها را حذف کن</li><li>3. |D| را رتبه‌بندی کن</li><li>4. علامت را به رتبه برگردان</li><li>5. T⁺ و T⁻ را جمع کن</li><li>6. T=min(T⁺,T⁻)</li><li>7. با جدول مقایسه کن</li></ol></section>
+        <section class="card rounded-2xl p-8"><h2 class="text-3xl font-bold mb-4 gradient-text"><i class="fas fa-chart-line ml-2"></i>۵. تقریب نرمال (n>10)</h2><p class="text-gray-700">برای نمونه‌های بزرگ، از تقریب نرمال با تصحیج پیوستگی استفاده می‌شود. <strong>قانون 0.5:</strong> اگر آماره > امید → -0.5، وگرنه +0.5</p></section>
+    </div>
+    <footer class="py-10 bg-black/20 text-center text-white"><p class="text-sm opacity-75">&copy; 2026 امیرعلی سطوتی</p></footer>
 </body>
 </html>
