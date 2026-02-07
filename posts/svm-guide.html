@@ -1,391 +1,49 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang='fa' dir='rtl'>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جزوه جامع ماشین بردار پشتیبان (SVM) | امیرعلی سطوتی</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        dark: '#0f172a',
-                        darker: '#020617',
-                        accent: '#38bdf8',
-                    },
-                    fontFamily: {
-                        sans: ['Vazirmatn', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <style>
-        body {
-            background-color: #0f172a;
-            color: #e2e8f0;
-            font-family: 'Vazirmatn', sans-serif;
-        }
-        
-        .post-content h2 {
-            font-size: 1.875rem;
-            font-weight: 700;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            color: #38bdf8;
-        }
-        
-        .post-content h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-top: 1.5rem;
-            margin-bottom: 0.75rem;
-            color: #a78bfa;
-        }
-        
-        .post-content h4 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-top: 1.25rem;
-            margin-bottom: 0.5rem;
-            color: #f472b6;
-        }
-        
-        .post-content p {
-            margin-bottom: 1.25rem;
-            line-height: 1.875;
-            color: #cbd5e1;
-        }
-        
-        .post-content ul, .post-content ol {
-            margin: 1.5rem 0 1.5rem 2rem;
-            list-style-position: outside;
-        }
-        
-        .post-content ul {
-            list-style-type: disc;
-        }
-        
-        .post-content ol {
-            list-style-type: decimal;
-        }
-        
-        .post-content li {
-            margin-bottom: 0.75rem;
-            color: #cbd5e1;
-            line-height: 1.75;
-        }
-        
-        .post-content strong {
-            color: #38bdf8;
-            font-weight: 700;
-        }
-        
-        .post-content em {
-            color: #a78bfa;
-            font-style: italic;
-        }
-        
-        .post-content code {
-            background: rgba(56, 189, 248, 0.1);
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.375rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.875rem;
-            color: #38bdf8;
-        }
-        
-        .post-content pre {
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            overflow-x: auto;
-            margin: 1.5rem 0;
-        }
-        
-        .post-content pre code {
-            background: transparent;
-            padding: 0;
-            color: #e2e8f0;
-        }
-        
-        .post-content blockquote {
-            border-right: 4px solid #38bdf8;
-            padding-right: 1.5rem;
-            margin: 1.5rem 0;
-            color: #94a3b8;
-            font-style: italic;
-            background: rgba(56, 189, 248, 0.05);
-            padding: 1rem 1.5rem;
-            border-radius: 0.5rem;
-        }
-        
-        .highlight-box {
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(167, 139, 250, 0.1));
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            margin: 2rem 0;
-        }
-        
-        .warning-box {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            border-right: 4px solid #ef4444;
-            border-radius: 0.5rem;
-            padding: 1rem 1.5rem;
-            margin: 1.5rem 0;
-        }
-        
-        .success-box {
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            border-right: 4px solid #22c55e;
-            border-radius: 0.5rem;
-            padding: 1rem 1.5rem;
-            margin: 1.5rem 0;
-        }
-    </style>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>ماشین بردار پشتیبان (SVM)</title>
 </head>
-<body class="antialiased min-h-screen">
+<body>
+  <header>
+    <h1>ماشین بردار پشتیبان (SVM)</h1>
+    <p>جزوه جامع برای درک شهودی و فرمولی SVM، مرز حاشیه ای، کرنل ها و کاربرد ها در طبقه بندی و رگرسیون.</p>
+  </header>
 
-    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur-sm sticky top-0 z-50">
-        <div class="max-w-4xl mx-auto px-4 py-6">
-            <div class="flex items-center justify-between">
-                <a href="index.html" class="text-accent hover:text-white transition-colors flex items-center gap-2">
-                    <i class="fas fa-arrow-right"></i>
-                    <span>بازگشت به لیست پست‌ها</span>
-                </a>
-                <a href="../index.html" class="text-slate-400 hover:text-white transition-colors flex items-center gap-2">
-                    <i class="fas fa-home"></i>
-                    <span>خانه</span>
-                </a>
-            </div>
-        </div>
-    </header>
+  <main>
+    <section>
+      <h2>۱. ایده اصلی SVM</h2>
+      <p>در ساده ترین حالت، SVM به دنبال یافتن یک خط یا ابرصفحه است که دو کلاس داده را طوری جدا کند که حاشیه بین آنها حداکثر شود[file:12].</p>
+      <p>نقاطی که به این مرز نزدیک ترند و آن را تعیین می کنند به نام بردارهای پشتیبان شناخته می شوند و حذف آنها مرز تصمیم را تغییر می دهد، در حالی که حذف بقیه نقاط تاثیری بر مرز ندارد[file:12].</p>
+    </section>
 
-    <article class="max-w-4xl mx-auto px-4 py-12">
-        
-        <header class="mb-12 text-center">
-            <h1 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
-                جزوه جامع ماشین بردار پشتیبان (SVM)
-            </h1>
-            
-            <div class="flex items-center justify-center gap-6 text-sm text-slate-400 mb-6">
-                <div class="flex items-center gap-2">
-                    <i class="far fa-calendar"></i>
-                    <span>۲۴ آذر ۱۴۰۳</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <i class="far fa-clock"></i>
-                    <span>۱۵ دقیقه مطالعه</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <i class="far fa-user"></i>
-                    <span>امیرعلی سطوتی</span>
-                </div>
-            </div>
-            
-            <div class="flex items-center justify-center gap-3 flex-wrap">
-                <span class="text-xs bg-blue-500/10 text-blue-400 px-4 py-2 rounded-full border border-blue-500/20">Machine Learning</span>
-                <span class="text-xs bg-purple-500/10 text-purple-400 px-4 py-2 rounded-full border border-purple-500/20">SVM</span>
-                <span class="text-xs bg-green-500/10 text-green-400 px-4 py-2 rounded-full border border-green-500/20">Classification</span>
-            </div>
-        </header>
+    <section>
+      <h2>۲. هارد مارجین و سافت مارجین</h2>
+      <p>در حالت هارد مارجین فرض می شود داده ها کاملا جدا پذیر هستند و هیچ نقطه ای اجازه عبور از مرز اشتباه را ندارد، اما این مدل نسبت به نویز بسیار حساس است[file:12].</p>
+      <p>در حالت سافت مارجین، با معرفی متغیرهای خطا و پارامتر C مقدار کمی خطا پذیرفته می شود تا تعادل بهتری بین پهنای حاشیه و تعداد خطاها برقرار شود و مدل تعمیم پذیرتر شود[file:12].</p>
+    </section>
 
-        <div class="post-content bg-slate-900/30 border border-slate-800 rounded-2xl p-8 md:p-12">
-            
-            <div class="highlight-box">
-                <h2 class="!mt-0">🎯 هدف این جزوه</h2>
-                <p class="!mb-0">
-                    این جزوه برای کمک به دانشجویانی طراحی شده که می‌خواهند مفهوم SVM را به طور کامل درک کنند. از مفاهیم پایه تا کاربردهای پیشرفته را پوشش می‌دهد.
-                </p>
-            </div>
+    <section>
+      <h2>۳. کرنل ها و فضاهای با بعد بالا</h2>
+      <p>SVM می تواند با استفاده از توابع کرنل، داده های غیرخطی را در فضای ویژگی با بعد بالاتر به صورت خطی جدا پذیر کند بدون آنکه نگاشت را به طور صریح محاسبه کند[file:12].</p>
+      <p>این ویژگی باعث می شود SVM در فضاهای با بعد بالا عملکرد بسیار خوبی داشته باشد، هرچند برای مجموعه داده های فوق العاده بزرگ از نظر محاسباتی پرهزینه است[file:12].</p>
+    </section>
 
-            <h2>مقدمه: SVM چیست؟</h2>
-            <p>
-                تصور کنید دو گروه داده دارید (مثلاً توپ‌های آبی و قرمز) که روی زمین ریخته شده‌اند. هدف <strong>SVM</strong> این است که یک خط (یا در ابعاد بالاتر، یک صفحه) بکشد که این دو گروه را از هم جدا کند.
-            </p>
-            <p>
-                اما SVM فقط یک خط معمولی نمی‌کشد! آن سعی می‌کند <strong>بهترین و امن‌ترین خط</strong> را انتخاب کند - یعنی خطی که بیشترین فاصله را از نزدیک‌ترین نقاط هر دو گروه داشته باشد.
-            </p>
+    <section>
+      <h2>۴. رگرسیون بردار پشتیبان (SVR)</h2>
+      <p>در SVR به جای طبقه بندی، هدف تقریب یک تابع عددی است؛ تابعی انتخاب می شود که همه نقاط حداکثر تا فاصله \( \varepsilon \) از آن قرار گیرند و پیچیدگی مدل حداقل شود[file:12].</p>
+      <p>نقاطی که بیرون از لوله \( \varepsilon \) قرار می گیرند نقش مشابه بردارهای پشتیبان را بازی می کنند و در تعیین تابع نهایی موثرند[file:12].</p>
+    </section>
 
-            <div class="success-box">
-                <p class="!mb-0">
-                    <strong>تعریف رسمی:</strong> SVM یک الگوریتم یادگیری نظارت‌شده است که برای مسائل دسته‌بندی و رگرسیون استفاده می‌شود و با یافتن بهینه‌ترین ابرصفحه جداکننده، داده‌ها را طبقه‌بندی می‌کند.
-                </p>
-            </div>
-
-            <h2>مفاهیم کلیدی</h2>
-
-            <h3>۱. ابرصفحه (Hyperplane)</h3>
-            <p>
-                در فضای دوبعدی، ابرصفحه یک خط است. در فضای سه‌بعدی، یک صفحه است. در ابعاد بالاتر، یک "ابرصفحه" است که معادله آن به شکل زیر است:
-            </p>
-            <p class="text-center text-lg">
-                \(w^T x + b = 0\)
-            </p>
-            <p>
-                که در آن <code>w</code> بردار وزن، <code>x</code> بردار ویژگی و <code>b</code> عرض از مبدأ است.
-            </p>
-
-            <h3>۲. حاشیه (Margin)</h3>
-            <p>
-                <strong>حاشیه</strong> فاصله بین ابرصفحه جداکننده و نزدیک‌ترین نقاط هر دو کلاس است. هدف SVM <strong>ماکزیمم کردن این حاشیه</strong> است.
-            </p>
-
-            <h3>۳. بردارهای پشتیبان (Support Vectors)</h3>
-            <p>
-                نقاطی هستند که دقیقاً روی مرز حاشیه قرار دارند و نزدیک‌ترین نقاط به خط جداکننده هستند. این نقاط موقعیت خط را تعیین می‌کنند و <strong>حذف آن‌ها باعث تغییر مرز تصمیم‌گیری می‌شود</strong>.
-            </p>
-
-            <div class="warning-box">
-                <p class="!mb-0">
-                    <strong>⚠️ نکته مهم:</strong> فقط Support Vectors در تعیین مرز تصمیم نقش دارند. بقیه نقاط می‌توانند حذف شوند بدون اینکه مرز تغییر کند!
-                </p>
-            </div>
-
-            <h2>Hard Margin vs Soft Margin</h2>
-
-            <h3>Hard Margin SVM</h3>
-            <ul>
-                <li>هیچ خطایی را نمی‌پذیرد</li>
-                <li>فقط برای داده‌های <strong>کاملاً جداپذیر</strong> کار می‌کند</li>
-                <li>بسیار حساس به نویز و Outliers است</li>
-                <li>در عمل کمتر استفاده می‌شود</li>
-            </ul>
-
-            <h3>Soft Margin SVM</h3>
-            <ul>
-                <li>اجازه خطای کم را می‌دهد تا مدل کلی بهتری بسازد</li>
-                <li>پارامتر <code>C</code> میزان تساهل در قبال خطا را تنظیم می‌کند</li>
-                <li>در برابر نویز پایدارتر است</li>
-                <li>در عمل بیشتر استفاده می‌شود</li>
-            </ul>
-
-            <div class="highlight-box">
-                <h4 class="!mt-0">پارامتر C چیست؟</h4>
-                <ul class="!mb-0">
-                    <li><strong>C بزرگ:</strong> خطا را کم می‌کند اما ممکن است Overfitting ایجاد شود</li>
-                    <li><strong>C کوچک:</strong> حاشیه بزرگ‌تر اما خطا بیشتر - مدل ساده‌تر و عمومی‌تر</li>
-                </ul>
-            </div>
-
-            <h2>Kernel Trick</h2>
-            <p>
-                وقتی داده‌ها در فضای اصلی خطی جداپذیر نیستند، از <strong>Kernel Trick</strong> استفاده می‌کنیم تا آن‌ها را به فضای با بعد بالاتر منتقل کنیم.
-            </p>
-
-            <h3>انواع Kernel</h3>
-            <ul>
-                <li><strong>Linear Kernel:</strong> برای داده‌های خطی جداپذیر</li>
-                <li><strong>Polynomial Kernel:</strong> برای روابط چندجمله‌ای</li>
-                <li><strong>RBF (Gaussian) Kernel:</strong> محبوب‌ترین - برای اکثر مسائل</li>
-                <li><strong>Sigmoid Kernel:</strong> شبیه به شبکه‌های عصبی</li>
-            </ul>
-
-            <h2>Support Vector Regression (SVR)</h2>
-            <p>
-                SVR برای مسائل رگرسیون (پیش‌بینی عدد) استفاده می‌شود. هدف آن یافتن تابعی است که داده‌ها حداکثر به اندازه اپسیلون (ε) از آن فاصله داشته باشند.
-            </p>
-
-            <div class="success-box">
-                <p class="!mb-0">
-                    در SVR، به جای ماکزیمم کردن حاشیه، سعی می‌کنیم خطا را در یک "لوله" با شعاع ε نگه داریم.
-                </p>
-            </div>
-
-            <h2>مزایا و معایب SVM</h2>
-
-            <h3>✅ مزایا</h3>
-            <ul>
-                <li>در ابعاد بالا عالی عمل می‌کند</li>
-                <li>در مواردی که تعداد ویژگی‌ها بیشتر از نمونه‌هاست موثر است</li>
-                <li>به خاطر استفاده از Support Vectors، مصرف حافظه کمتری دارد</li>
-                <li>با Kernel مختلف، انعطاف‌پذیر است</li>
-            </ul>
-
-            <h3>❌ معایب</h3>
-            <ul>
-                <li>برای dataset‌های بزرگ (میلیون‌ها نمونه) کند است</li>
-                <li>انتخاب Kernel و تنظیم پارامترها دشوار است</li>
-                <li>به نویز حساس است (اگر Soft Margin استفاده نشود)</li>
-                <li>خروجی احتمالاتی مستقیم نمی‌دهد</li>
-            </ul>
-
-            <h2>سوالات متداول</h2>
-
-            <h4>۱. چرا SVM برای داده‌های بزرگ مناسب نیست؟</h4>
-            <p>
-                چون با افزایش تعداد داده‌ها، زمان آموزش مدل به شدت بالا می‌رود (پیچیدگی \(O(n^2)\) تا \(O(n^3)\)).
-            </p>
-
-            <h4>۲. تفاوت SVM با Logistic Regression چیست؟</h4>
-            <p>
-                Logistic Regression خروجی احتمالاتی می‌دهد و برای همه نقاط تلاش می‌کند. SVM فقط روی Support Vectors تمرکز می‌کند و حاشیه را ماکزیمم می‌کند.
-            </p>
-
-            <h4>۳. چه زمانی از SVM استفاده کنیم؟</h4>
-            <ul>
-                <li>داده‌های با ابعاد بالا</li>
-                <li>تعداد نمونه‌ها کم تا متوسط (کمتر از ۱۰۰,۰۰۰)</li>
-                <li>نیاز به دقت بالا</li>
-                <li>مسائل دسته‌بندی باینری یا چندکلاسه</li>
-            </ul>
-
-            <div class="highlight-box">
-                <h2 class="!mt-0">💡 نکات کلیدی برای یادگیری</h2>
-                <ul class="!mb-0">
-                    <li>SVM یک "بهینه‌ساز هندسی" است</li>
-                    <li>هدف: ماکزیمم کردن حاشیه</li>
-                    <li>فقط Support Vectors مهم هستند</li>
-                    <li>Kernel Trick برای داده‌های غیرخطی</li>
-                    <li>پارامتر C تعادل بین خطا و حاشیه را کنترل می‌کند</li>
-                </ul>
-            </div>
-
-            <h2>نتیجه‌گیری</h2>
-            <p>
-                SVM یکی از قدرتمندترین الگوریتم‌های یادگیری ماشین است که با رویکرد هندسی منحصر به فرد خود، دقت بالایی در دسته‌بندی ارائه می‌دهد. درک صحیح مفاهیم پایه‌ای مانند حاشیه، Support Vectors و Kernel Trick کلید موفقیت در استفاده از این الگوریتم است.
-            </p>
-
-        </div>
-
-        <footer class="mt-12 pt-8 border-t border-slate-800">
-            <div class="flex items-center justify-between">
-                <a href="index.html" class="text-accent hover:text-white transition-colors flex items-center gap-2">
-                    <i class="fas fa-list"></i>
-                    <span>همه پست‌ها</span>
-                </a>
-                
-                <div class="flex items-center gap-4">
-                    <span class="text-slate-500">اشتراک‌گذاری:</span>
-                    <a href="#" class="text-slate-400 hover:text-blue-400 transition-colors">
-                        <i class="fab fa-twitter text-xl"></i>
-                    </a>
-                    <a href="#" class="text-slate-400 hover:text-blue-500 transition-colors">
-                        <i class="fab fa-linkedin text-xl"></i>
-                    </a>
-                    <a href="#" class="text-slate-400 hover:text-green-400 transition-colors">
-                        <i class="fab fa-whatsapp text-xl"></i>
-                    </a>
-                </div>
-            </div>
-        </footer>
-
-    </article>
-
+    <section>
+      <h2>۵. نکات امتحانی</h2>
+      <ul>
+        <li>هدف اصلی SVM ماکزیمم کردن حاشیه بین کلاس ها است، نه صرفا کمینه کردن خطا روی داده های آموزشی[file:12].</li>
+        <li>معادله ابرصفحه تصمیم معمولا به صورت \( w^T x + b = 0 \) نوشته می شود[file:12].</li>
+        <li>در تست های مفهومی، هر جا صحبت از دقت بالا در فضاهای با بعد زیاد باشد، SVM گزینه مناسبی است؛ در مقابل، برای داده های بسیار حجیم، هزینه محاسباتی آن به یک نقطه ضعف تبدیل می شود[file:12].</li>
+      </ul>
+    </section>
+  </main>
 </body>
 </html>
