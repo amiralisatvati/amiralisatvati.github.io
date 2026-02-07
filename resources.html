@@ -166,7 +166,7 @@
                     <i class="fas fa-random ml-2"></i>شبیه‌سازی
                 </button>
                 <button onclick="filterResources('machine-learning')" class="filter-btn px-6 py-2 rounded-full text-sm font-semibold bg-slate-800/50" data-category="machine-learning">
-                    <i class="fas fa-robot ml-2"></i>یادگیری ماشین
+                    <i class="fas fa-robot ml-2"></i>یادگیری机器
                 </button>
                 <button onclick="filterResources('topology')" class="filter-btn px-6 py-2 rounded-full text-sm font-semibold bg-slate-800/50" data-category="topology">
                     <i class="fas fa-project-diagram ml-2"></i>توپولوژی
@@ -228,6 +228,87 @@
                 tags: ["آمار", "همبستگی", "آزمون ناپارامتری"]
             },
             {
+                title: "مثال‌های اسپیرمن و کندال",
+                description: "مجموعه‌ای از مثال‌های حل‌شده برای تمرین ضرایب همبستگی رتبه‌ای و تفسیر آماری آنها",
+                category: "statistics",
+                icon: "fa-chart-line",
+                color: "blue",
+                url: "/posts/spearman-kendall-examples.html",
+                tags: ["آمار", "همبستگی", "اسپیرمن", "کندال"]
+            },
+            {
+                title: "آزمون کروسکال–والیس",
+                description: "معادل ناپارامتری ANOVA یک‌طرفه برای مقایسه چند جامعه مستقل بر اساس رتبه‌ها",
+                category: "statistics",
+                icon: "fa-chart-bar",
+                color: "green",
+                url: "/posts/kruskal-wallis-test.html",
+                tags: ["آمار", "کروسکال والیس", "ناپارامتری"]
+            },
+            {
+                title: "آزمون فریدمن (Friedman Test)",
+                description: "راهنمای کامل آزمون ناپارامتری فریدمن برای مقایسه چند گروه وابسته (اندازه‌های تکراری)",
+                category: "statistics",
+                icon: "fa-chart-bar",
+                color: "green",
+                url: "/posts/friedman-test.html",
+                tags: ["آمار", "آزمون فرض", "ناپارامتری", "فریدمن"]
+            },
+            {
+                title: "آزمون‌های ناپارامتری یک‌نمونه‌ای و زوجی",
+                description: "مرور آزمون علامت، آزمون میانه و آزمون ویلکاکسون برای یک نمونه و داده‌های قبل/بعد",
+                category: "statistics",
+                icon: "fa-square-root-variable",
+                color: "blue",
+                url: "/posts/nonparametric-one-sample-sign-wilcoxon.html",
+                tags: ["آمار", "آزمون علامت", "ویلکاکسون"]
+            },
+            {
+                title: "آزمون من–ویتنی و آزمون گشت",
+                description: "جزوه‌ای برای آزمون من–ویتنی (مقایسه دو جامعه مستقل) و آزمون گشت برای بررسی تصادفی بودن توالی",
+                category: "statistics",
+                icon: "fa-square-root-variable",
+                color: "blue",
+                url: "/posts/mann-whitney-runs-test.html",
+                tags: ["آمار", "من ویتنی", "Runs Test"]
+            },
+            {
+                title: "آزمون هتلینگ T² و نواحی اطمینان چندمتغیره",
+                description: "تعمیم ماتریسی آزمون t و ساخت نواحی اطمینان همزمان برای بردار میانگین",
+                category: "statistics",
+                icon: "fa-infinity",
+                color: "purple",
+                url: "/posts/multivariate-hotelling-T2.html",
+                tags: ["آمار چندمتغیره", "T² هتلینگ", "فاصله اطمینان"]
+            },
+            {
+                title: "ضریب همبستگی پیرسون در آمار چندمتغیره",
+                description: "بررسی ماتریس کوواریانس، آزمون فرض برای همبستگی و تبدیل Z فیشر در چارچوب چندمتغیره",
+                category: "statistics",
+                icon: "fa-chart-line",
+                color: "blue",
+                url: "/posts/multivariate-pearson-correlation.html",
+                tags: ["آمار چندمتغیره", "پیرسون", "همبستگی"]
+            },
+            {
+                title: "ماشین بردار پشتیبان (SVM)",
+                description: "آموزش جامع الگوریتم SVM، حاشیه سخت/نرم، کرنل‌ها و SVR به زبان ساده",
+                category: "machine-learning",
+                icon: "fa-robot",
+                color: "pink",
+                url: "/posts/svm-guide.html",
+                tags: ["یادگیری ماشین", "SVM", "طبقه‌بندی"]
+            },
+            {
+                title: "یادگیری بدون نظارت و داده‌کاوی",
+                description: "مروری بر کاهش بعد (PCA، t-SNE)، خوشه‌بندی و قوانین انجمنی در یادگیری بدون نظارت",
+                category: "machine-learning",
+                icon: "fa-brain",
+                color: "pink",
+                url: "/posts/unsupervised-learning-and-data-mining.html",
+                tags: ["یادگیری بدون نظارت", "خوشه‌بندی", "Apriori"]
+            },
+            {
                 title: "فشردگی در توپولوژی",
                 description: "تحلیل مفهوم compactness و کاربردهای آن در فضاهای متریک",
                 category: "topology",
@@ -235,24 +316,6 @@
                 color: "purple",
                 url: "/posts/2025-12-15-topology-compactness-analysis.html",
                 tags: ["توپولوژی", "ریاضیات", "فشردگی"]
-            },
-            {
-                title: "آزمون فریدمن (Friedman Test)",
-                description: "راهنمای کامل آزمون ناپارامتری فریدمن برای مقایسه چند گروه وابسته",
-                category: "statistics",
-                icon: "fa-chart-bar",
-                color: "green",
-                url: "/posts/friedman-test.html",
-                tags: ["آمار", "آزمون فرض", "ناپارامتری"]
-            },
-            {
-                title: "ماشین بردار پشتیبان (SVM)",
-                description: "آموزش جامع الگوریتم SVM، کرنل‌ها و کاربردها در یادگیری ماشین",
-                category: "machine-learning",
-                icon: "fa-robot",
-                color: "pink",
-                url: "/posts/svm-guide.html",
-                tags: ["یادگیری ماشین", "SVM", "طبقه‌بندی"]
             }
         ];
 
