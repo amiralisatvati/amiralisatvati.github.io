@@ -1,34 +1,85 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>آزمون کروسکال–والیس (Kruskal–Wallis)</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آزمون کروسکال–والیس (Kruskal–Wallis Test)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
+        * { font-family: Vazirmatn, sans-serif; }
+        body { background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); min-height: 100vh; }
+        .glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); }
+        .gradient-text { background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15); }
+    </style>
 </head>
-<body>
-  <header>
-    <h1>آزمون کروسکال–والیس (Kruskal–Wallis Test)</h1>
-    <p>معادل ناپارامتری آزمون آنالیز واریانس یک‌طرفه (One-way ANOVA) برای مقایسه سه یا چند جامعه مستقل بر اساس رتبه‌ها.</p>
-  </header>
-  <main>
-    <section>
-      <h2>۱. هدف و کاربرد</h2>
-      <p>هدف آزمون بررسی این است که آیا \(k\) جامعه مستقل (سه گروه یا بیشتر) توزیع یکسانی دارند یا حداقل دو جامعه با هم تفاوت معنی‌دار دارند.</p>
-      <p>وقتی فرض نرمال بودن یا برابری واریانس‌ها برای ANOVA برقرار نباشد، از آزمون کروسکال–والیس استفاده می‌کنیم.</p>
-    </section>
-    <section>
-      <h2>۲. مراحل انجام آزمون</h2>
-      <ol>
-        <li>تمام مشاهدات همه گروه‌ها را با هم یک‌جا قرار دهید و از کوچک به بزرگ رتبه‌بندی کنید (۱ تا \(N\)).</li>
-        <li>در صورت تساوی داده‌ها، به آن‌ها رتبه میانگین بدهید.</li>
-        <li>برای هر گروه، مجموع رتبه‌ها را محاسبه کنید و آن را \(R_j\) بنامید.</li>
-        <li>آماره آزمون \(H\) را با فرمول استاندارد کروسکال–والیس محاسبه کنید و با مقدار بحرانی کای‌دو با \(k-1\) درجه آزادی مقایسه کنید.</li>
-      </ol>
-    </section>
-    <section>
-      <h2>۳. تفسیر نتیجه</h2>
-      <p>اگر مقدار \(H\) بزرگ‌تر از مقدار بحرانی جدول کای‌دو باشد، فرض صفر رد می‌شود و نتیجه می‌گیریم که حداقل دو گروه از نظر توزیع (یا میانه/میانگین رتبه) با هم تفاوت دارند.</p>
-    </section>
-  </main>
+<body class="antialiased font-sans">
+    <nav class="fixed w-full z-50 glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <i class="fas fa-chart-line text-2xl text-white"></i>
+                    <span class="text-white font-bold text-xl">آزمون کروسکال–والیس</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="pt-32 pb-20 px-4">
+        <div class="max-w-4xl mx-auto text-center text-white">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6">آزمون کروسکال–والیس</h1>
+            <p class="text-xl md:text-2xl mb-4 opacity-90">(Kruskal–Wallis Test)</p>
+            <p class="text-lg mb-4 opacity-80">معادل ناپارامتری آنالیز واریانس یک‌طرفه (One-way ANOVA) برای مقایسه سه یا چند جامعه مستقل بر اساس رتبه‌ها.</p>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 pb-20">
+        <div class="space-y-8">
+            <section class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-star ml-3"></i>۱. هدف و کاربرد
+                </h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    هدف آزمون بررسی این است که آیا \(k\) جامعه مستقل (سه گروه یا بیشتر) توزیع یکسانی دارند یا حداقل دو جامعه با هم تفاوت معنی‌دار دارند.
+                </p>
+                <p class="text-gray-700 leading-relaxed">
+                    وقتی فرض نرمال بودن یا برابری واریانس‌ها برای ANOVA برقرار نباشد، از آزمون کروسکال–والیس استفاده می‌کنیم.
+                </p>
+            </section>
+
+            <section class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-list-ol ml-3"></i>۲. مراحل انجام آزمون
+                </h2>
+                <ol class="space-y-3 text-gray-700 leading-relaxed mr-6">
+                    <li><strong>رتبه‌دهی:</strong> تمام مشاهدات را (از همه گروه‌ها) از کوچک به بزرگ رتبه‌بندی کنید (۱ تا \(N\)).</li>
+                    <li><strong>تساوی:</strong> در صورت تساوی داده‌ها، به آن‌ها رتبه میانگین بدهید.</li>
+                    <li><strong>مجموع رتبه‌ها:</strong> برای هر گروه، مجموع رتبه‌ها را محاسبه کنید و آن را \(R_j\) بنامید.</li>
+                    <li><strong>آماره آزمون:</strong> آماره آزمون \(H\) را با فرمول استاندارد کروسکال–والیس محاسبه کنید و با مقدار بحرانی کای‌دو با \(k-1\) درجه آزادی مقایسه کنید.</li>
+                </ol>
+            </section>
+
+            <section class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-calculator ml-3"></i>۳. تفسیر نتیجه
+                </h2>
+                <p class="text-gray-700 leading-relaxed">
+                    اگر مقدار \(H\) بزرگ‌تر از مقدار بحرانی جدول کای‌دو باشد، فرض صفر رد می‌شود و نتیجه می‌گیریم که حداقل دو گروه از نظر توزیع (یا میانه/میانگین رتبه) با هم تفاوت دارند.
+                </p>
+            </section>
+        </div>
+    </div>
+
+    <footer class="py-10 border-t border-slate-800/50 bg-darker/95">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-slate-500 text-sm">&copy; 2026 امیرعلی سطوتی</p>
+        </div>
+    </footer>
 </body>
 </html>
