@@ -46,25 +46,25 @@
         }
 
         body {
-            background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
             min-height: 100vh;
         }
 
         .glass {
-            background: rgba(15, 23, 42, 0.35);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(148, 163, 184, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .glass-card {
-            background: rgba(15, 23, 42, 0.96);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(148, 163, 184, 0.4);
-            box-shadow: 0 8px 32px rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
 
         .gradient-text {
-            background: linear-gradient(135deg, #e0f2fe 0%, #38bdf8 40%, #0ea5e9 70%, #0369a1 100%);
+            background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -76,92 +76,7 @@
 
         .hover-lift:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(15, 23, 42, 0.7);
-        }
-
-        .formula-card {
-            background: #e0f2fe;
-            border-right: 4px solid #0ea5e9;
-            padding: 16px;
-            border-radius: 8px;
-            margin: 16px 0;
-        }
-
-        .example-card {
-            background: #ecfeff;
-            border-right: 4px solid #06b6d4;
-            padding: 16px;
-            border-radius: 8px;
-            margin: 16px 0;
-        }
-
-        .warning-card {
-            background: #fee2e2;
-            border-right: 4px solid #ef4444;
-            padding: 16px;
-            border-radius: 8px;
-            margin: 16px 0;
-        }
-
-        .success-card {
-            background: #dcfce7;
-            border-right: 4px solid #16a34a;
-            padding: 16px;
-            border-radius: 8px;
-            margin: 16px 0;
-        }
-
-        .info-card {
-            background: #e0f2fe;
-            border-right: 4px solid #0ea5e9;
-            padding: 16px;
-            border-radius: 8px;
-            margin: 16px 0;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-
-        th, td {
-            border: 1px solid #e5e7eb;
-            padding: 12px;
-            text-align: center;
-        }
-
-        th {
-            background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
-            color: white;
-            font-weight: 600;
-        }
-
-        tr:nth-child(even) {
-            background: #f9fafb;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .badge-blue {
-            background: #e0f2fe;
-            color: #0369a1;
-        }
-
-        .badge-green {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .badge-yellow {
-            background: #fef9c3;
-            color: #854d0e;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
         }
 
         #back-to-top {
@@ -171,14 +86,14 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
+            background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
             color: white;
             border: none;
             cursor: pointer;
             display: none;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.6);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             transition: transform 0.3s;
             z-index: 1000;
         }
@@ -206,13 +121,31 @@
             animation: fadeInUp 0.6s ease-out;
         }
 
-        .content-wrapper {
-            background-color: #0b1120;
-            border-radius: 1rem;
-            padding: 2rem;
-            color: #e5e7eb;
-            line-height: 1.9;
-            white-space: pre-wrap;
+        .content-text {
+            line-height: 1.8;
+            color: #1f2937;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #e5e7eb;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
         }
     </style>
 </head>
@@ -222,81 +155,107 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center space-x-4 space-x-reverse">
-                    <i class="fas fa-square-root-alt text-2xl text-sky-100"></i>
-                    <span class="text-sky-100 font-bold text-xl">آزمون‌های ناپارامتری</span>
+                    <i class="fas fa-chart-line text-2xl text-white"></i>
+                    <span class="text-white font-bold text-xl">آزمون‌های ناپارامتری</span>
                 </div>
-                <div class="hidden md:flex space-x-6 space-x-reverse text-sky-100">
-                    <span class="opacity-80">جزوه آموزشی</span>
+                <div class="hidden md:flex space-x-6 space-x-reverse text-white">
+                    <a href="/resources.html" class="hover:text-yellow-300 transition">بازگشت</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- هدر -->
-    <header class="pt-32 pb-16 px-4">
-        <div class="max-w-4xl mx-auto text-center text-sky-50">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4 animate-fadeInUp gradient-text">
+    <!-- هدر اصلی -->
+    <header class="pt-32 pb-20 px-4">
+        <div class="max-w-4xl mx-auto text-center text-white">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 animate-fadeInUp">
                 آزمون‌های ناپارامتری
             </h1>
-            <p class="text-lg md:text-xl opacity-90 animate-fadeInUp">
-                بر اساس جزوه ارسالی شما (متن دقیق و بدون هیچ تغییری در ادامه آمده است)
+            <p class="text-xl md:text-2xl mb-4 opacity-90 animate-fadeInUp">
+                (Nonparametric Tests)
+            </p>
+            <p class="text-lg mb-4 opacity-80 animate-fadeInUp">
+                راهنمای کامل آزمون‌های ناپارامتری با مثال‌های حل شده
             </p>
         </div>
     </header>
 
-    <!-- محتوای اصلی: متن شما بدون هیچ تغییر -->
-    <main class="max-w-5xl mx-auto px-4 pb-20">
-        <section class="glass-card rounded-2xl p-6 hover-lift">
-            <div class="content-wrapper">
-در تحلیلهای آماری سنتی (مانند آزمون t)، فرض بر این است که جامعه آماری از توزیع نرمال پیروی میکند. اما در بسیاری از موارد، این فرض باطل است. دلایل استفاده از روشهای ناپارامتری عبارتند از:
+    <!-- محتوای اصلی -->
+    <div class="max-w-5xl mx-auto px-4 pb-20">
+        <section class="glass-card rounded-2xl p-8 hover-lift">
+            <div class="content-text">
+                <p>در تحلیلهای آماری سنتی (مانند آزمون t)، فرض بر این است که جامعه آماری از توزیع نرمال پیروی میکند. اما در بسیاری از موارد، این فرض باطل است. دلایل استفاده از روشهای ناپارامتری عبارتند از:</p>
 
-این آزمون برای مقایسه "مکان" (Location) دو جامعه مستقل به کار میرود. یعنی میخواهیم بدانیم آیا میانگین/میانه دو جامعه با هم تفاوت معنیداری دارند یا خیر.
+                <p style="margin-top: 1rem;">این آزمون برای مقایسه "مکان" (Location) دو جامعه مستقل به کار میرود. یعنی میخواهیم بدانیم آیا میانگین/میانه دو جامعه با هم تفاوت معنیداری دارند یا خیر.</p>
 
-فرض کنید دو گروه \(X\) (با \(m\) عضو) و \(Y\) (با \(n\) عضو) داریم. کل مشاهدات \(N = m + n\).
+                <p style="margin-top: 1rem;">فرض کنید دو گروه \(X\) (با \(m\) عضو) و \(Y\) (با \(n\) عضو) داریم. کل مشاهدات \(N = m + n\).</p>
 
-این آزمون یکی از قدیمیترین و سادهترین آزمونهای ناپارامتری است که فقط بر اساس جهت اختلاف دادهها نسبت به یک مقدار مرجع (\(\eta_0\)) کار میکند.
+                <p style="margin-top: 1rem;">این آزمون یکی از قدیمیترین و سادهترین آزمونهای ناپارامتری است که فقط بر اساس جهت اختلاف دادهها نسبت به یک مقدار مرجع (\(\eta_0\)) کار میکند.</p>
 
-اگر بخواهیم ادعایی را درباره صدک \(p\)-ام (مانند میانه که صدک ۵۰ام است) بسنجیم:
+                <p style="margin-top: 1rem;">اگر بخواهیم ادعایی را درباره صدک \(p\)-ام (مانند میانه که صدک ۵۰ام است) بسنجیم:</p>
 
-در آزمون میانه (\(p=0.5\))، آماره \(B\) پیرو توزیع دوجملهای با احتمال موفقیت \(0.5\) است.
+                <p style="margin-top: 1rem;">در آزمون میانه (\(p=0.5\))، آماره \(B\) پیرو توزیع دوجملهای با احتمال موفقیت \(0.5\) است.</p>
 
-ادعا: میانه عمر باتریها ۶۰ ساعت است. دادهها:
+                <p style="margin-top: 1rem;">ادعا: میانه عمر باتریها ۶۰ ساعت است. دادهها:</p>
 
-`58, 62, 65, 55, 68, 70, 61, 63, 59, 67`
+                <p style="margin-top: 0.5rem;"><code>58, 62, 65, 55, 68, 70, 61, 63, 59, 67</code></p>
 
-این بخش برای مسائلی است که در آن "یک نمونه" در "دو وضعیت متفاوت" (مثل قبل و بعد) سنجیده میشود.
+                <p style="margin-top: 1rem;">این بخش برای مسائلی است که در آن "یک نمونه" در "دو وضعیت متفاوت" (مثل قبل و بعد) سنجیده میشود.</p>
 
-هدف: بررسی تاثیر دارو بر فشار خون ۸ بیمار.
+                <p style="margin-top: 1rem;">هدف: بررسی تاثیر دارو بر فشار خون ۸ بیمار.</p>
 
-|بیمار|قبل|بعد|اختلاف (D)|علامت|
-|--|--|--|--|--|
-|۱|۱۵۰|۱۴۰|۱۰|+|
-|۲|۱۶۰|۱۵۸|۲|+|
-|۳|۱۵۵|۱۵۰|۵|+|
-|۴|۱۷۰|۱۶۵|۵|+|
-|۵|۱۴۵|۱۴۵|۰|حذف|
-|۶|۱۵۲|۱۴۸|۴|+|
-|۷|۱۴۸|۱۴۲|۶|+|
-|۸|۱۶۲|۱۶۰|۲|+|
-نتیجه: چون هر ۷ نفر کاهش فشار داشتند، احتمال رخ دادن این اتفاق به صورت تصادفی \( (0.5)^7 = 0.0078 \) است که از ۵٪ کمتر است. پس دارو موثر است.
+                <table>
+                    <thead>
+                        <tr>
+                            <th>بیمار</th>
+                            <th>قبل</th>
+                            <th>بعد</th>
+                            <th>اختلاف (D)</th>
+                            <th>علامت</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>۱</td><td>۱۵۰</td><td>۱۴۰</td><td>۱۰</td><td>+</td></tr>
+                        <tr><td>۲</td><td>۱۶۰</td><td>۱۵۸</td><td>۲</td><td>+</td></tr>
+                        <tr><td>۳</td><td>۱۵۵</td><td>۱۵۰</td><td>۵</td><td>+</td></tr>
+                        <tr><td>۴</td><td>۱۷۰</td><td>۱۶۵</td><td>۵</td><td>+</td></tr>
+                        <tr><td>۵</td><td>۱۴۵</td><td>۱۴۵</td><td>۰</td><td>حذف</td></tr>
+                        <tr><td>۶</td><td>۱۵۲</td><td>۱۴۸</td><td>۴</td><td>+</td></tr>
+                        <tr><td>۷</td><td>۱۴۸</td><td>۱۴۲</td><td>۶</td><td>+</td></tr>
+                        <tr><td>۸</td><td>۱۶۲</td><td>۱۶۰</td><td>۲</td><td>+</td></tr>
+                    </tbody>
+                </table>
 
-اگر بخواهیم فقط "تغییر" را بسنجیم (نه لزوماً بهبود)، آزمون دوطرفه میشود. در مثال نمرات دانشجویان، با ۸ داده موثر، احتمال مشاهده ۷ مثبت یا بیشتر (یا ۷ منفی یا بیشتر) بررسی شد و نتیجه این بود که تغییرات در سطح ۵٪ معنیدار نیستند (\(P \approx 0.07\)).
+                <p>نتیجه: چون هر ۷ نفر کاهش فشار داشتند، احتمال رخ دادن این اتفاق به صورت تصادفی \( (0.5)^7 = 0.0078 \) است که از ۵٪ کمتر است. پس دارو موثر است.</p>
 
-این آزمون از رتبهبندی اختلافات استفاده میکند. در مثال زمان واکنش ۶ نفر:
+                <p style="margin-top: 1rem;">اگر بخواهیم فقط "تغییر" را بسنجیم (نه لزوماً بهبود)، آزمون دوطرفه میشود. در مثال نمرات دانشجویان، با ۸ داده موثر، احتمال مشاهده ۷ مثبت یا بیشتر (یا ۷ منفی یا بیشتر) بررسی شد و نتیجه این بود که تغییرات در سطح ۵٪ معنیدار نیستند (\(P \approx 0.07\)).</p>
 
-وقتی حجم نمونه بالا میرود (معمولاً \(n, m > 10\))، استفاده از جداول توزیع دوجملهای یا ویلکاکسون سخت میشود. در این حالت از تقریب نرمال با "تصحیح پیوستگی" استفاده میکنیم:
+                <p style="margin-top: 1rem;">این آزمون از رتبهبندی اختلافات استفاده میکند. در مثال زمان واکنش ۶ نفر:</p>
 
-**قانون ۰.۵ واحد:** اگر آماره مشاهده شده از امید ریاضی بزرگتر بود، از آن ۰.۵ کم میکنیم و اگر کوچکتر بود، به آن ۰.۵ اضافه میکنیم.
+                <p style="margin-top: 1rem;">وقتی حجم نمونه بالا میرود (معمولاً \(n, m > 10\))، استفاده از جداول توزیع دوجملهای یا ویلکاکسون سخت میشود. در این حالت از تقریب نرمال با "تصحیح پیوستگی" استفاده میکنیم:</p>
+
+                <p style="margin-top: 1rem;"><strong>قانون ۰.۵ واحد:</strong> اگر آماره مشاهده شده از امید ریاضی بزرگتر بود، از آن ۰.۵ کم میکنیم و اگر کوچکتر بود، به آن ۰.۵ اضافه میکنیم.</p>
             </div>
         </section>
-    </main>
+    </div>
 
     <!-- دکمه بازگشت به بالا -->
     <button id="back-to-top" title="بازگشت به بالا">
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <!-- JavaScript برای اسکرول و دکمه بالا -->
+    <!-- Footer -->
+    <footer class="glass-card mx-auto max-w-5xl mb-8 rounded-2xl p-6 text-center">
+        <p class="text-gray-700">
+            <i class="fas fa-university ml-2"></i>
+            جزوه آموزشی آزمون‌های ناپارامتری
+        </p>
+        <p class="text-sm text-gray-600 mt-2">
+            © 2026 - تهیه شده برای دانشجویان آمار
+        </p>
+    </footer>
+
+    <!-- JavaScript -->
     <script>
         const backToTopButton = document.getElementById('back-to-top');
         window.addEventListener('scroll', () => {
@@ -304,6 +263,16 @@
         });
         backToTopButton.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
         });
     </script>
 </body>
