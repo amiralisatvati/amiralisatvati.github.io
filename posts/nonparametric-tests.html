@@ -1,498 +1,0 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جزوه کامل آزمون‌های ناپارامتری</title>
-    
-    <script>
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']]
-            }
-        };
-    </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
-    <style>
-        @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
-
-        :root {
-            --primary-color: #2c3e50;
-            --accent-color: #3498db;
-            --success-color: #27ae60;
-            --warning-color: #f39c12;
-            --danger-color: #e74c3c;
-            --bg-color: #f8f9fa;
-            --text-color: #333;
-            --border-color: #e2e8f0;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Vazirmatn', Tahoma, Arial, sans-serif;
-            line-height: 1.8;
-            color: var(--text-color);
-            background-color: var(--bg-color);
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 40px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-radius: 8px;
-            margin-top: 30px;
-            margin-bottom: 30px;
-        }
-
-        header {
-            text-align: center;
-            border-bottom: 3px solid var(--accent-color);
-            padding-bottom: 20px;
-            margin-bottom: 40px;
-        }
-
-        h1 {
-            color: var(--primary-color);
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            font-weight: 800;
-        }
-
-        h2 {
-            color: var(--accent-color);
-            border-right: 5px solid var(--accent-color);
-            padding-right: 15px;
-            margin-top: 40px;
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        h3 {
-            color: var(--primary-color);
-            margin-top: 30px;
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        h4 {
-            color: var(--success-color);
-            margin-top: 20px;
-            margin-bottom: 10px;
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        p {
-            margin-bottom: 15px;
-            text-align: justify;
-            line-height: 2;
-        }
-
-        .formula-box {
-            background: linear-gradient(135deg, #f1f8ff 0%, #e3f2fd 100%);
-            border: 2px solid #90caf9;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 25px 0;
-            text-align: center;
-            font-size: 1.2rem;
-            direction: ltr;
-            box-shadow: 0 2px 8px rgba(33, 150, 243, 0.1);
-        }
-
-        .example-box {
-            background: linear-gradient(135deg, #f1f8f4 0%, #e8f5e9 100%);
-            border-right: 5px solid var(--success-color);
-            padding: 20px;
-            margin: 25px 0;
-            border-radius: 5px;
-            box-shadow: 0 2px 8px rgba(76, 175, 80, 0.1);
-        }
-
-        .warning-box {
-            background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);
-            border: 2px solid #ffc107;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 25px 0;
-            box-shadow: 0 2px 8px rgba(255, 193, 7, 0.1);
-        }
-
-        .info-box {
-            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-            border-right: 5px solid #2196f3;
-            padding: 20px;
-            margin: 25px 0;
-            border-radius: 5px;
-            box-shadow: 0 2px 8px rgba(33, 150, 243, 0.1);
-        }
-
-        .danger-box {
-            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
-            border-right: 5px solid var(--danger-color);
-            padding: 20px;
-            margin: 25px 0;
-            border-radius: 5px;
-            box-shadow: 0 2px 8px rgba(244, 67, 54, 0.1);
-        }
-
-        ul, ol {
-            padding-right: 30px;
-            margin-bottom: 20px;
-        }
-
-        li {
-            margin-bottom: 10px;
-            line-height: 1.8;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 25px 0;
-            background: #fff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        th {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 1rem;
-        }
-
-        td {
-            padding: 12px 15px;
-            text-align: center;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        tr:hover {
-            background-color: #f8f9fa;
-        }
-
-        .highlight {
-            background: linear-gradient(120deg, #ffd54f 0%, #ffeb3b 100%);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-
-        code {
-            background: #f5f5f5;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            color: #d63384;
-            font-size: 0.9em;
-        }
-
-        .step-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 30px;
-            height: 30px;
-            background: var(--accent-color);
-            color: white;
-            border-radius: 50%;
-            font-weight: 700;
-            margin-left: 10px;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 50px;
-            padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            font-weight: 600;
-            border-radius: 8px;
-        }
-
-        @media print {
-            body { background: #fff; }
-            .container { box-shadow: none; margin: 0; }
-        }
-
-        @media (max-width: 768px) {
-            .container { padding: 20px; }
-            h1 { font-size: 1.8rem; }
-            h2 { font-size: 1.3rem; }
-            table { font-size: 0.85rem; }
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <header>
-        <h1>📊 جزوه جامع آزمون‌های ناپارامتری</h1>
-        <p style="color: #666; font-size: 1.1rem;">راهنمای کامل Mann-Whitney، آزمون علامت، Wilcoxon و تقریب نرمال</p>
-    </header>
-
-    <section>
-        <h2>📖 ۱. مقدمه: چرا روش‌های ناپارامتری؟</h2>
-        
-        <p>در تحلیل‌های اماری سنتی (مانند <span class="highlight">آزمون t</span>)، فرض بر این است که جامعه آماری از <strong>توزیع نرمال</strong> پیروی می‌کند. اما در بسیاری از موارد، این فرض باطل است.</p>
-
-        <div class="info-box">
-            <h4>⚠️ دلایل استفاده از روش‌های ناپارامتری:</h4>
-            <ul>
-                <li><strong>داده‌ها نرمال نیستند</strong> (چوله‌دار، دارای داده‌های پرت)
-                <li><strong>حجم نمونه کم است</strong> (و نمی‌توان روی قضیه حد مرکزی حساب باز کرد)
-                <li><strong>داده‌ها رتبه‌ای هستند</strong> (مثل رتبه‌بندی رضایت مشتریان)
-                <li><strong>داده‌ها اسمی هستند</strong> (مثل رنگ چشم، جنسیت)
-            </ul>
-        </div>
-    </section>
-
-    <hr style="margin: 40px 0; border: none; border-top: 2px dashed #ddd;">
-
-    <section>
-        <h2>🔍 ۲. آزمون Mann-Whitney (ویلکاکسون دو نمونه‌ای)</h2>
-        
-        <h3>🎯 هدف</h3>
-        <p>این آزمون برای مقایسه <span class="highlight">مکان (Location)</span> دو جامعه <strong>مستقل</strong> به کار می‌رود. یعنی می‌خواهیم بدانیم آیا میانگین/میانه دو جامعه با هم تفاوت معنی‌داری دارند یا خیر.</p>
-
-        <div class="warning-box">
-            <h4>ℹ️ نکته مهم</h4>
-            <p>این آزمون <strong>معادل ناپارامتری آزمون t دو نمونه‌ای مستقل</strong> است.</p>
-        </div>
-
-        <h3>👥 فرضیات</h3>
-        <p>فرض کنید دو گروه $X$ (با $m$ عضو) و $Y$ (با $n$ عضو) داریم. کل مشاهدات: $N = m + n$</p>
-
-        <h3>📊 مراحل انجام آزمون</h3>
-        <ol>
-            <li><span class="step-number">۱</span> <strong>ترکیب و رتبه‌بندی:</strong> همه داده‌ها را با هم ترکیب کرده و رتبه‌بندی صعودی می‌کنیم.</li>
-            <li><span class="step-number">۲</span> <strong>محاسبه مجموع رتبه‌لا:</strong> مجموع رتبه‌های گروه $X$ را محاسبه می‌کنیم: $W_X$</li>
-            <li><span class="step-number">۳</span> <strong>محاسبه آماره U:</strong></li>
-        </ol>
-
-        <div class="formula-box">
-            $$ U = W_X - \frac{m(m+1)}{2} $$
-            <p style="margin-top: 15px; font-size: 0.9rem; color: #666;">یا</p>
-            $$ U = mn + \frac{m(m+1)}{2} - W_X $$
-        </div>
-
-        <ol start="4">
-            <li><span class="step-number">۴</span> <strong>مقایسه با جدول:</strong> آماره $U$ را با مقدار بحرانی از جدول Mann-Whitney مقایسه می‌کنیم.</li>
-        </ol>
-
-        <div class="danger-box">
-            <h4>❗ قاعده تصمیم‌گیری</h4>
-            <p>اگر $U_{calculated} < U_{critical}$ باشد → فرض صفر رد می‌شود (تفاوت معنی‌دار است)</p>
-        </div>
-    </section>
-
-    <hr style="margin: 40px 0; border: none; border-top: 2px dashed #ddd;">
-
-    <section>
-        <h2>✅ ۳. آزمون علامت (Sign Test)</h2>
-        
-        <p>این آزمون یکی از <span class="highlight">قدیمی‌ترین و ساده‌ترین آزمون‌های ناپارامتری</span> است که فقط بر اساس <strong>جهت اختلاف</strong> داده‌ها نسبت به یک مقدار مرجع ($\eta_0$) کار می‌کند.</p>
-
-        <h3>🎯 کاربرد</h3>
-        <ul>
-            <li>آزمون میانه (Median Test)</li>
-            <li>آزمون صدک $p$-ام (Percentile Test)</li>
-            <li>مقایسه قبل و بعد (Paired Comparison)</li>
-        </ul>
-
-        <h3>📝 فرضیات</h3>
-        <p>اگر بخواهیم ادعایی را درباره <strong>صدک $p$-ام</strong> (مانند میانه که صدک ۵۰ام است) بسنجیم:</p>
-
-        <div class="formula-box">
-            <p><strong>فرض صفر:</strong> $H_0: \eta_p = \eta_0$</p>
-            <p><strong>فرض مقابل:</strong> $H_1: \eta_p \neq \eta_0$ (یا $>$ یا $<$)</p>
-        </div>
-
-        <h3>🔢 آماره آزمون</h3>
-        <p>در آزمون میانه ($p=0.5$)، آماره $B$ پیرو <span class="highlight">توزیع دوجمله‌ای</span> با احتمال موفقیت $0.5$ است:</p>
-
-        <div class="formula-box">
-            $$ B \sim Binomial(n, p=0.5) $$
-            $$ P(B = k) = \binom{n}{k} (0.5)^n $$
-        </div>
-
-        <div class="example-box">
-            <h4>📝 مثال: آزمون میانه عمر باتری</h4>
-            <p><strong>ادعا:</strong> میانه عمر باتری‌ها ۶۰ ساعت است.</p>
-            <p><strong>داده‌ها:</strong></p>
-            <code>58, 62, 65, 55, 68, 70, 61, 63, 59, 67</code>
-            
-            <p style="margin-top: 15px;"><strong>حل:</strong></p>
-            <ul>
-                <li>تعداد عددهای بیشتر از ۶۰: <strong>۷ عدد</strong> ($+$ علامت)</li>
-                <li>تعداد عددهای کمتر از ۶۰: <strong>۳ عدد</strong> ($-$ علامت)</li>
-                <li>کل نمونه: $n = 10$</li>
-            </ul>
-            
-            <p style="margin-top: 15px;"><strong>محاسبه P-value (دوطرفه):</strong></p>
-            <p>$P(B \leq 3 \text{ or } B \geq 7) = 2 \times P(B \leq 3)$</p>
-            <p>با استفاده از جدول دوجمله‌ای یا نرم‌افزار: $P \approx 0.344$</p>
-            <p style="background: #fff3cd; padding: 10px; border-radius: 5px; margin-top: 10px;">
-                <strong>نتیجه:</strong> چون $P > 0.05$ → فرض صفر رد نمی‌شود. (میانه می‌تواند ۶۰ ساعت باشد)
-            </p>
-        </div>
-    </section>
-
-    <hr style="margin: 40px 0; border: none; border-top: 2px dashed #ddd;">
-
-    <section>
-        <h2>🔄 ۴. آزمون علامت برای داده‌های زوجی</h2>
-        
-        <p>این بخش برای مسائلی است که در آن <span class="highlight">یک نمونه</span> در <span class="highlight">دو وضعیت متفاوت</span> (مثل قبل و بعد) سنجیده می‌شود.</p>
-
-        <div class="example-box">
-            <h4>💊 مثال: تاثیر دارو بر فشار خون</h4>
-            <p><strong>هدف:</strong> بررسی تاثیر دارو بر فشار خون ۸ بیمار.</p>
-
-            <table>
-                <tr>
-                    <th>بیمار</th>
-                    <th>قبل</th>
-                    <th>بعد</th>
-                    <th>اختلاف (D)</th>
-                    <th>علامت</th>
-                </tr>
-                <tr><td>۱</td><td>۱۵۰</td><td>۱۴۰</td><td>۱۰</td><td>+</td></tr>
-                <tr><td>۲</td><td>۱۶۰</td><td>۱۵۸</td><td>۲</td><td>+</td></tr>
-                <tr><td>۳</td><td>۱۵۵</td><td>۱۵۰</td><td>۵</td><td>+</td></tr>
-                <tr><td>۴</td><td>۱۷۰</td><td>۱۶۵</td><td>۵</td><td>+</td></tr>
-                <tr><td>۵</td><td>۱۴۵</td><td>۱۴۵</td><td>۰</td><td>حذف</td></tr>
-                <tr><td>۶</td><td>۱۵۲</td><td>۱۴۸</td><td>۴</td><td>+</td></tr>
-                <tr><td>۷</td><td>۱۴۸</td><td>۱۴۲</td><td>۶</td><td>+</td></tr>
-                <tr><td>۸</td><td>۱۶۲</td><td>۱۶۰</td><td>۲</td><td>+</td></tr>
-            </table>
-
-            <p style="margin-top: 15px;"><strong>تحلیل:</strong></p>
-            <ul>
-                <li>داده‌های موثر: $n = 7$ (بیمار ۵ حذف شد)</li>
-                <li>تعداد علامت مثبت: <strong>۷ نفر</strong></li>
-                <li>احتمال رخ دادن این اتفاق به صورت تصادفی: $(0.5)^7 = 0.0078$</li>
-            </ul>
-
-            <p style="background: #d4edda; padding: 10px; border-radius: 5px; margin-top: 10px; border-right: 5px solid #28a745;">
-                <strong>✅ نتیجه:</strong> چون هر ۷ نفر کاهش فشار داشتند، و $P = 0.0078 < 0.05$ → <strong>دارو موثر است</strong>
-            </p>
-        </div>
-
-        <div class="info-box">
-            <h4>📌 آزمون دوطرفه vs. یک‌طرفه</h4>
-            <p>اگر بخواهیم فقط <strong>تغییر</strong> را بسنجیم (نه لزوماً بهبود)، آزمون <strong>دوطرفه</strong> می‌شود.</p>
-            <p>در مثال نمرات دانشجویان، با ۸ داده موثر، احتمال مشاهده ۷ مثبت یا بیشتر (یا ۷ منفی یا بیشتر) بررسی شد و نتیجه این بود که <strong>تغییرات در سطح ۵٪ معنی‌دار نیستند</strong> ($P \approx 0.07$).</p>
-        </div>
-    </section>
-
-    <hr style="margin: 40px 0; border: none; border-top: 2px dashed #ddd;">
-
-    <section>
-        <h2>🔢 ۵. آزمون رتبه‌دار علامت‌دار ویلکاکسون</h3>
-        
-        <p>این آزمون از <span class="highlight">رتبه‌بندی اختلافات</span> استفاده می‌کند و نسبت به آزمون علامت <strong>قدرتمندتر</strong> است.</p>
-
-        <div class="example-box">
-            <h4>⏱️ مثال: زمان واکنش ۶ نفر</h4>
-            <p>فرض کنید زمان واکنش افراد قبل و بعد از مصرف قهوه اندازه‌گیری شده است:</p>
-
-            <table>
-                <tr>
-                    <th>فرد</th>
-                    <th>قبل</th>
-                    <th>بعد</th>
-                    <th>D = قبل - بعد</th>
-                    <th>|D|</th>
-                    <th>رتبه</th>
-                    <th>علامت</th>
-                </tr>
-                <tr><td>۱</td><td>۲۵۰</td><td>۲۴۰</td><td>+۱۰</td><td>۱۰</td><td>۴</td><td>+</td></tr>
-                <tr><td>۲</td><td>۲۲۰</td><td>۲۳۰</td><td>-۱۰</td><td>۱۰</td><td>۴</td><td>-</td></tr>
-                <tr><td>۳</td><td>۲۸۰</td><td>۲۶۵</td><td>+۱۵</td><td>۱۵</td><td>۶</td><td>+</td></tr>
-                <tr><td>۴</td><td>۲۰۰</td><td>۲۰۵</td><td>-۵</td><td>۵</td><td>۲</td><td>-</td></tr>
-                <tr><td>۵</td><td>۲۴۰</td><td>۲۳۵</td><td>+۵</td><td>۵</td><td>۲</td><td>+</td></tr>
-                <tr><td>۶</td><td>۲۶۰</td><td>۲۵۵</td><td>+۵</td><td>۵</td><td>۲</td><td>+</td></tr>
-            </table>
-
-            <p style="margin-top: 15px;"><strong>محاسبه آماره $T$:</strong></p>
-            <ul>
-                <li>مجموع رتبه‌های مثبت: $T_+ = 4 + 6 + 2 + 2 = 14$</li>
-                <li>مجموع رتبه‌های منفی: $T_- = 4 + 2 = 6$</li>
-                <li>آماره آزمون: $T = \min(T_+, T_-) = 6$</li>
-            </ul>
-
-            <p>سپس مقدار $T$ را با جدول بحرانی ویلکاکسون مقایسه می‌کنیم.</p>
-        </div>
-    </section>
-
-    <hr style="margin: 40px 0; border: none; border-top: 2px dashed #ddd;">
-
-    <section>
-        <h2>📈 ۶. تقریب نرمال برای نمونه‌های بزرگ</h2>
-        
-        <p>وقتی حجم نمونه بالا می‌رود (معمولاً $n, m > 10$)، استفاده از جداول توزیع دوجمله‌ای یا ویلکاکسون سخت می‌شود. در این حالت از <span class="highlight">تقریب نرمال</span> با <span class="highlight">تصحیح پیوستگی</span> استفاده می‌کنیم.</p>
-
-        <div class="formula-box">
-            <p><strong>فرمول عمومی:</strong></p>
-            $$ Z = \frac{X \pm 0.5 - \mu}{\sigma} $$
-        </div>
-
-        <div class="warning-box">
-            <h4>❗ قانون ۰.۵ واحد (تصحیح پیوستگی)</h4>
-            <ul>
-                <li>اگر آماره مشاهده شده از امید ریاضی <strong>بزرگتر</strong> بود → از آن <strong>۰.۵ کم</strong> می‌کنیم</li>
-                <li>اگر آماره مشاهده شده از امید ریاضی <strong>کوچکتر</strong> بود → به آن <strong>۰.۵ اضافه</strong> می‌کنیم</li>
-            </ul>
-        </div>
-
-        <h3>📊 مثال‌های کاربردی</h3>
-
-        <h4>🔹 ۱. تقریب نرمال برای آزمون علامت</h4>
-        <div class="formula-box">
-            $$ \mu = np = n \times 0.5 $$
-            $$ \sigma = \sqrt{np(1-p)} = \sqrt{n \times 0.25} = 0.5\sqrt{n} $$
-            $$ Z = \frac{B \pm 0.5 - 0.5n}{0.5\sqrt{n}} $$
-        </div>
-
-        <h4>🔹 ۲. تقریب نرمال برای Mann-Whitney</h4>
-        <div class="formula-box">
-            $$ \mu_U = \frac{mn}{2} $$
-            $$ \sigma_U = \sqrt{\frac{mn(m+n+1)}{12}} $$
-            $$ Z = \frac{U \pm 0.5 - \mu_U}{\sigma_U} $$
-        </div>
-
-        <h4>🔹 ۳. تقریب نرمال برای Wilcoxon</h4>
-        <div class="formula-box">
-            $$ \mu_T = \frac{n(n+1)}{4} $$
-            $$ \sigma_T = \sqrt{\frac{n(n+1)(2n+1)}{24}} $$
-            $$ Z = \frac{T \pm 0.5 - \mu_T}{\sigma_T} $$
-        </div>
-    </section>
-
-    <footer>
-        📚 تهیه شده توسط امیرعلی سطوتی | سال تحصیلی ۱۴۰۴-۱۴۰۵
-    </footer>
-</div>
-
-<script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-</script>
-
-</body>
-</html>
