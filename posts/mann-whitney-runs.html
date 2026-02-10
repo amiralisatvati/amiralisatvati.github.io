@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>درسنامه جامع آمار ناپارامتری - من-ویتنی و گشت</title>
+
+    <!-- فونت‌ها و کتابخانه‌ها -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- تنظیمات تم -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        accent: {
+                            light: '#8b5cf6',
+                            DEFAULT: '#7c3aed',
+                            dark: '#6d28d9'
+                        },
+                        dark: {
+                            bg: '#0f172a',
+                            card: '#1e293b',
+                            border: '#334155'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- استایل‌های CSS سفارشی -->
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
+
+        * {
+            font-family: Vazirmatn, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            min-height: 100vh;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .sidebar-link {
+            display: block;
+            padding: 10px 16px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            color: #475569;
+        }
+
+        .sidebar-link:hover {
+            background: #f1f5f9;
+            color: #7c3aed;
+            transform: translateX(-4px);
+        }
+
+        .sidebar-link.active {
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            color: white;
+        }
+
+        .formula-card {
+            background: #fef3c7;
+            border-right: 4px solid #f59e0b;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            direction: ltr;
+            text-align: center;
+        }
+
+        .example-box {
+            background-color: #fff7ed;
+            border: 1px solid #fed7aa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .example-title {
+            color: #9a3412;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .highlight-box {
+            background-color: #fef2f2;
+            border-right: 4px solid #ef4444;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .note {
+            background: #ecfdf5;
+            color: #065f46;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #a7f3d0;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #e5e7eb;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-blue {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-green {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-yellow {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        #back-to-top {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s;
+            z-index: 1000;
+        }
+
+        #back-to-top:hover {
+            transform: translateY(-3px);
+        }
+
+        #back-to-top.show {
+            display: flex;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fadeInUp {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+
+<body class="antialiased font-sans">
+
+    <!-- نوار ناوبری بالا -->
+    <nav class="fixed w-full z-50 glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <i class="fas fa-chart-bar text-2xl text-white"></i>
+                    <span class="text-white font-bold text-xl">آزمون‌های من-ویتنی و گشت</span>
+                </div>
+                <div class="hidden md:flex space-x-6 space-x-reverse text-white">
+                    <a href="#mann-whitney" class="hover:text-yellow-300 transition">من-ویتنی</a>
+                    <a href="#runs-test" class="hover:text-yellow-300 transition">گشت</a>
+                    <a href="#normal-approx" class="hover:text-yellow-300 transition">تقریب نرمال</a>
+                    <a href="#guide" class="hover:text-yellow-300 transition">راهنما</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- هدر اصلی -->
+    <header class="pt-32 pb-20 px-4">
+        <div class="max-w-4xl mx-auto text-center text-white">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 animate-fadeInUp">
+                درسنامه جامع آمار ناپارامتری
+            </h1>
+            <p class="text-xl md:text-2xl mb-4 opacity-90 animate-fadeInUp">
+                تحلیل دقیق آزمون‌های من–ویتنی و گشت
+            </p>
+            <p class="text-lg mb-4 opacity-80 animate-fadeInUp">
+                نسخه کامل آموزشی
+            </p>
+            <div class="flex justify-center gap-4 mt-8 animate-fadeInUp">
+                <span class="badge badge-blue"><i class="fas fa-book"></i> 5 بخش</span>
+                <span class="badge badge-green"><i class="fas fa-calculator"></i> 2 مثال</span>
+                <span class="badge badge-yellow"><i class="fas fa-table"></i> 1 جدول</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- چیدمان اصلی صفحه -->
+    <div class="max-w-7xl mx-auto px-4 pb-20 grid lg:grid-cols-4 gap-8">
+
+        <!-- نوار کناری -->
+        <aside class="hidden lg:block col-span-1">
+            <div class="sticky top-24">
+                <div class="glass-card rounded-2xl p-6">
+                    <h3 class="font-bold text-lg mb-4 gradient-text">
+                        <i class="fas fa-list"></i> فهرست سریع
+                    </h3>
+                    <nav class="space-y-2">
+                        <a href="#intro" class="sidebar-link">
+                            <i class="fas fa-info-circle"></i> مقدمه
+                        </a>
+                        <a href="#mann-whitney" class="sidebar-link">
+                            <i class="fas fa-balance-scale"></i> من-ویتنی
+                        </a>
+                        <a href="#runs-test" class="sidebar-link">
+                            <i class="fas fa-random"></i> آزمون گشت
+                        </a>
+                        <a href="#normal-approx" class="sidebar-link">
+                            <i class="fas fa-calculator"></i> تقریب نرمال
+                        </a>
+                        <a href="#extra-points" class="sidebar-link">
+                            <i class="fas fa-lightbulb"></i> نکات تکمیلی
+                        </a>
+                        <a href="#guide" class="sidebar-link">
+                            <i class="fas fa-map-signs"></i> راهنمای انتخاب
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </aside>
+
+        <!-- محتوای اصلی -->
+        <div class="col-span-1 lg:col-span-3 space-y-8">
+
+            <!-- بخش مقدمه -->
+            <section id="intro" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-info-circle ml-3"></i>
+                    مقدمه
+                </h2>
+                <p class="text-gray-700 leading-relaxed">
+                    آزمون‌های ناپارامتری زمانی استفاده می‌شوند که پیش‌فرض‌های آزمون پارامتری (مانند نرمال بودن توزیع جامعه یا مقیاس فاصله‌ای داده‌ها) برقرار نباشد. این درسنامه به تشریح دقیق دو آزمون حیاتی «من–ویتنی» و «گشت» می‌پردازد.
+                </p>
+            </section>
+
+            <!-- بخش اول: من-ویتنی -->
+            <section id="mann-whitney" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-balance-scale ml-3"></i>
+                    بخش اول: آزمون من–ویتنی (Mann–Whitney U)
+                </h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    این آزمون که به آزمون «مجموع رتبه‌های ویلکاکسون» نیز معروف است، برای مقایسه مکان (Location) دو جامعه مستقل به کار می‌رود.
+                </p>
+
+                <h3 class="text-2xl font-bold mt-8 mb-4 text-purple-700">۱. فرضیات زیربنایی</h3>
+                <ul class="space-y-2 text-gray-700 mr-6">
+                    <li>نمونه‌ها تصادفی و مستقل هستند.</li>
+                    <li>مقیاس داده‌ها حداقل رتبه‌ای است.</li>
+                    <li>اگر فرض صفر رد شود، تفاوت دو جامعه فقط در جابجایی (Shift) مکان توزیع است.</li>
+                </ul>
+
+                <h3 class="text-2xl font-bold mt-8 mb-4 text-purple-700">۲. آماره‌های \(W_{XY}\) و \(W_{YX}\) و رابطه طلایی</h3>
+                <ul class="space-y-2 text-gray-700">
+                    <li><strong>آماره \(W_{XY}\):</strong> تعداد دفعاتی که عضو جامعه X کوچکتر از Y است.</li>
+                    <li><strong>آماره \(W_{YX}\):</strong> تعداد دفعاتی که عضو جامعه X بزرگتر از Y است.</li>
+                </ul>
+                <div class="formula-card">
+                    \[ W_{XY} + W_{YX} = m \times n \]
+                </div>
+
+                <h3 class="text-2xl font-bold mt-8 mb-4 text-purple-700">۳. رابطه بازگشتی و تشکیل جدول</h3>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    برای محاسبه احتمال دقیق \(h_{m,n}(u)\) از رابطه زیر استفاده می‌شود که اساس جداول آماری است:
+                </p>
+                <div class="formula-card">
+                    \[ h_{m,n}(u) = \frac{m}{m+n} h_{m-1,n}(u) + \frac{n}{m+n} h_{m,n-1}(u-m) \]
+                </div>
+
+                <h3 class="text-2xl font-bold mt-8 mb-4 text-purple-700">۴. برخورد با داده‌های تکراری (Ties)</h3>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    در صورت وجود داده‌های برابر، از <strong>رتبه میانگین</strong> استفاده می‌کنیم. برای مثال اگر داده‌های رتبه ۴ و ۵ برابر باشند، به هر دو رتبه ۴.۵ می‌دهیم.
+                </p>
+                <p class="text-gray-700 leading-relaxed">
+                    <strong>تعدیل واریانس در نمونه بزرگ:</strong> اگر گره (Tie) وجود داشته باشد، واریانس تقریب نرمال به صورت زیر اصلاح می‌شود:
+                </p>
+                <div class="formula-card">
+                    \[ \sigma^2_{adj} = \frac{mn}{12} \left[ (m+n+1) - \frac{\sum (t_i^3 - t_i)}{(m+n)(m+n-1)} \right] \]
+                </div>
+
+                <div class="example-box">
+                    <span class="example-title">۵. مثال عملی: سیگارهای نوع A و B</span>
+                    <ul class="mr-6 space-y-2 text-gray-800">
+                        <li>نمونه A (ایکس): \(\{12, 9, 13, 11, 14\}\) (\(m=5\))</li>
+                        <li>نمونه B (وای): \(\{8, 10, 7\}\) (\(n=3\))</li>
+                    </ul>
+                    <ol class="mr-6 mt-4 space-y-2 text-gray-800">
+                        <li><strong>مرتب‌سازی:</strong> \(7(B), 8(B), 9(A), 10(B), 11(A), 12(A), 13(A), 14(A)\)</li>
+                        <li><strong>رتبه‌جمع B (\(W_s\)):</strong> رتبه‌های B عبارتند از ۱، ۲ و ۴. پس \(W_s = 7\).</li>
+                        <li><strong>محاسبه \(W_{XY}\):</strong> \(W_{XY} = W_s - \frac{n(n+1)}{2} = 7 - 6 = 1\).</li>
+                        <li><strong>نتیجه:</strong> \(W_{YX} = 15 - 1 = 14\). (غلبه شدید جامعه A بر B).</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- بخش دوم: آزمون گشت -->
+            <section id="runs-test" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-random ml-3"></i>
+                    بخش دوم: آزمون گشت (Runs Test)
+                </h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    این آزمون برای بررسی <strong>تصادفی بودن (Randomness)</strong> ترتیب مشاهدات استفاده می‌شود.
+                </p>
+
+                <h3 class="text-2xl font-bold mt-8 mb-4 text-purple-700">۱. تعریف و فلسفه</h3>
+                <ul class="space-y-2 text-gray-700 mr-6">
+                    <li><strong>گشت (Run):</strong> دنباله‌ای از نمادهای مشابه.</li>
+                    <li><strong>گشت کم:</strong> نشانه کلاستربندی یا روند (عدم تصادفی بودن).</li>
+                    <li><strong>گشت زیاد:</strong> نشانه نوسان سیستماتیک (عدم تصادفی بودن).</li>
+                </ul>
+
+                <h3 class="text-2xl font-bold mt-8 mb-4 text-purple-700">۲. فرمول‌های احتمال دقیق (نمونه کوچک)</h3>
+                <p class="text-gray-700 leading-relaxed"><strong>حالت زوج (\(R=2k\)):</strong></p>
+                <div class="formula-card">
+                    \[ P(R=2k) = \frac{2 \binom{n_1-1}{k-1} \binom{n_2-1}{k-1}}{\binom{n_1+n_2}{n_1}} \]
+                </div>
+                <p class="text-gray-700 leading-relaxed mt-4"><strong>حالت فرد (\(R=2k+1\)):</strong></p>
+                <div class="formula-card">
+                    \[ P(R=2k+1) = \frac{\binom{n_1-1}{k} \binom{n_2-1}{k-1} + \binom{n_1-1}{k-1} \binom{n_2-1}{k}}{\binom{n_1+n_2}{n_1}} \]
+                </div>
+
+                <div class="example-box">
+                    <span class="example-title">۳. مثال بارندگی (\(n_1=4, n_2=4\))</span>
+                    <p class="text-gray-800 mb-3">برای محاسبه \(P(R \le 3)\):</p>
+                    <ul class="mr-6 space-y-2 text-gray-800">
+                        <li>کل حالات: \(\binom{8}{4} = 70\).</li>
+                        <li>برای \(R=2\) (زوج، \(k=1\)): صورت کسر = \(2 \times 1 \times 1 = 2\).</li>
+                        <li>برای \(R=3\) (فرد، \(k=1\)): صورت کسر = \(3 \times 1 + 1 \times 3 = 6\).</li>
+                        <li><strong>احتمال نهایی:</strong> \(P = \frac{2+6}{70} = \frac{8}{70} \approx 0.114\).</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- بخش سوم: تقریب نرمال -->
+            <section id="normal-approx" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-calculator ml-3"></i>
+                    بخش سوم: تقریب نرمال و قاعده تصمیم‌گیری
+                </h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    زمانی که حجم نمونه‌ها زیاد شود، توزیع آماره‌ها به سمت توزیع نرمال میل می‌کند.
+                </p>
+
+                <h3 class="text-2xl font-bold mt-8 mb-4 text-purple-700">۱. آماره Z برای من-ویتنی (\(m, n > 10\))</h3>
+                <div class="formula-card">
+                    \[ \mu_U = \frac{mn}{2} , \sigma_U = \sqrt{\frac{mn(m+n+1)}{12}} \rightarrow Z = \frac{U - \mu_U}{\sigma_U} \]
+                </div>
+
+                <h3 class="text-2xl font-bold mt-8 mb-4 text-purple-700">۲. آماره Z برای آزمون گشت (\(n_1, n_2 > 20\))</h3>
+                <div class="formula-card">
+                    \[ \mu_R = \frac{2n_1 n_2}{n_1+n_2} + 1 , \sigma_R = \sqrt{\frac{2n_1 n_2 (2n_1 n_2 - n_1 - n_2)}{(n_1+n_2)^2 (n_1+n_2-1)}} \]
+                </div>
+
+                <div class="highlight-box">
+                    <strong>قاعده تصمیم‌گیری (Decision Rule):</strong>
+                    <p class="text-gray-800 mt-2">
+                        در هر دو آزمون، اگر \(|Z_{calc}| > Z_{\alpha/2}\) باشد (یا اگر P-value کمتر از سطح خطا \(\alpha\) باشد)، فرض صفر (\(H_0\)) رد می‌شود.
+                    </p>
+                    <ul class="mr-6 mt-2 space-y-1 text-gray-800">
+                        <li>در من-ویتنی: رد \(H_0\) یعنی دو جامعه با هم تفاوت معنادار دارند.</li>
+                        <li>در آزمون گشت: رد \(H_0\) یعنی توالی مشاهدات تصادفی نیست.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- بخش چهارم: نکات تکمیلی -->
+            <section id="extra-points" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-lightbulb ml-3"></i>
+                    بخش چهارم: نکات تکمیلی و مفهومی
+                </h2>
+                
+                <h3 class="text-2xl font-bold mt-6 mb-4 text-purple-700">۱. آزمون گشت برای داده‌های پیوسته</h3>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    اگر داده‌ها به صورت عددی باشند، برای اجرای آزمون گشت ابتدا «میانه» کل داده‌ها را حساب می‌کنیم. سپس مقادیر را به صورت زیر کدگذاری می‌کنیم:
+                </p>
+                <ul class="space-y-2 text-gray-700 mr-6">
+                    <li>مقادیر بزرگتر از میانه: علامت <strong>(+)</strong></li>
+                    <li>مقادیر کوچکتر از میانه: علامت <strong>(-)</strong></li>
+                </ul>
+                <p class="text-gray-700 leading-relaxed mt-4">
+                    سپس آزمون گشت را بر روی توالی این علائم اجرا می‌کنیم.
+                </p>
+
+                <h3 class="text-2xl font-bold mt-8 mb-4 text-purple-700">۲. قدرت آزمون (Efficiency)</h3>
+                <p class="text-gray-700 leading-relaxed">
+                    کارایی نسبی آزمون من-ویتنی در مقایسه با آزمون \(t\) پارامتری در نمونه‌های بزرگ حدود <strong>۹۵.۵ درصد</strong> است. این یعنی حتی اگر توزیع نرمال باشد، استفاده از من-ویتنی ضرر زیادی به قدرت آزمون نمی‌زند، اما اگر توزیع نرمال نباشد، من-ویتنی بسیار قدرتمندتر از آزمون \(t\) است.
+                </p>
+            </section>
+
+            <!-- بخش پنجم: راهنمای انتخاب -->
+            <section id="guide" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-map-signs ml-3"></i>
+                    بخش پنجم: راهنمای انتخاب آزمون
+                </h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>سناریو</th>
+                            <th>آزمون</th>
+                            <th>معیار تصمیم‌گیری</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>مقایسه دو رژیم غذایی</td>
+                            <td><strong>من-ویتنی</strong></td>
+                            <td>تفاوت در میانگین رتبه‌ها</td>
+                        </tr>
+                        <tr>
+                            <td>تصادفی بودن توالی اعداد نسبت به میانه</td>
+                            <td><strong>گشت</strong></td>
+                            <td>بررسی استقلال مشاهدات</td>
+                        </tr>
+                        <tr>
+                            <td>وجود مقادیر پرت شدید</td>
+                            <td><strong>من-ویتنی</strong></td>
+                            <td>عدم حساسیت رتبه به مقدار عددی پرت</td>
+                        </tr>
+                        <tr>
+                            <td>داده‌های رتبه‌ای (مانند نمرات عالی، خوب، متوسط)</td>
+                            <td><strong>من-ویتنی</strong></td>
+                            <td>مناسب برای مقیاس‌های کیفی-رتبه‌ای</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="note">
+                    <strong>نکته نهایی:</strong> تعداد گشت خیلی کم نشانه <strong>وجود روند (Trend)</strong> و تعداد گشت خیلی زیاد نشانه <strong>نوسانات تناوبی (Cyclical)</strong> است.
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+
+    <!-- دکمه بازگشت به بالا -->
+    <button id="back-to-top" title="بازگشت به بالا">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer class="glass-card mx-auto max-w-5xl mb-8 rounded-2xl p-6 text-center">
+        <p class="text-gray-700">
+            <i class="fas fa-university ml-2"></i>
+            درسنامه جامع آمار ناپارامتری
+        </p>
+        <p class="text-sm text-gray-600 mt-2">
+            © 2026 - تهیه شده برای دانشجویان آمار
+        </p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Scroll scripts
+        const backToTopButton = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            backToTopButton.classList.toggle('show', window.pageYOffset > 300);
+        });
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Sidebar active link on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const sidebarLinks = document.querySelectorAll('.sidebar-link');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                if (window.pageYOffset >= (section.offsetTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            sidebarLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
