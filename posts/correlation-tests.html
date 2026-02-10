@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آزمون‌های همبستگی</title>
+
+    <!-- فونت‌ها و کتابخانه‌ها -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- تنظیمات تم -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        accent: {
+                            light: '#8b5cf6',
+                            DEFAULT: '#7c3aed',
+                            dark: '#6d28d9'
+                        },
+                        dark: {
+                            bg: '#0f172a',
+                            card: '#1e293b',
+                            border: '#334155'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- استایل‌های CSS سفارشی -->
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
+
+        * { font-family: Vazirmatn, sans-serif; }
+        body { background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); min-height: 100vh; }
+        .glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); }
+        .gradient-text { background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15); }
+        
+        .chat-widget { position: fixed; bottom: 20px; left: 20px; z-index: 1000; }
+        .chat-body { display: none; width: 380px; height: 500px; background: white; border-radius: 16px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2); flex-direction: column; }
+        .chat-body.active { display: flex; }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 20px; }
+        .message { margin-bottom: 15px; padding: 12px 16px; border-radius: 12px; max-width: 80%; }
+        .message.user { background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); color: white; margin-right: auto; }
+        .message.ai { background: #f3f4f6; color: #1f2937; margin-left: auto; }
+        
+        .sidebar-link { display: block; padding: 10px 16px; border-radius: 8px; transition: all 0.2s; color: #475569; }
+        .sidebar-link:hover { background: #f1f5f9; color: #7c3aed; transform: translateX(-4px); }
+        .sidebar-link.active { background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); color: white; }
+        
+        .formula-card { background: #fef3c7; border-right: 4px solid #f59e0b; padding: 16px; border-radius: 8px; margin: 16px 0; text-align: center; direction: ltr; }
+        .highlight-box { background-color: #eff6ff; border: 1px solid #bfdbfe; color: #1e3a8a; padding: 15px; border-radius: 8px; margin: 15px 0; }
+        .example-card { background: #fff; border: 2px dashed #a78bfa; padding: 20px; margin: 20px 0; border-radius: 8px; }
+        
+        .badge { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+        .badge-blue { background: #dbeafe; color: #1e40af; }
+        .badge-green { background: #d1fae5; color: #065f46; }
+        .badge-yellow { background: #fef3c7; color: #92400e; }
+        
+        #back-to-top { position: fixed; bottom: 90px; left: 20px; width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); color: white; border: none; cursor: pointer; display: none; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); transition: transform 0.3s; z-index: 1000; }
+        #back-to-top:hover { transform: translateY(-3px); }
+        #back-to-top.show { display: flex; }
+        
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fadeInUp { animation: fadeInUp 0.6s ease-out; }
+        
+        .content-text { line-height: 1.8; color: #1f2937; }
+        
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #e5e7eb; padding: 12px; text-align: center; }
+        th { background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); color: white; font-weight: 600; }
+        tr:nth-child(even) { background: #f9fafb; }
+        
+        .step-list { list-style: none; padding: 0; margin-top: 10px; }
+        .step-list li { padding: 8px 0; border-bottom: 1px solid #f1f5f9; }
+        .step-list li::before { content: "📍"; margin-left: 8px; }
+    </style>
+</head>
+<body class="antialiased font-sans">
+
+    <!-- نوار ناوبری -->
+    <nav class="fixed w-full z-50 glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <i class="fas fa-project-diagram text-2xl text-white"></i>
+                    <span class="text-white font-bold text-xl">آزمون‌های همبستگی</span>
+                </div>
+                <div class="hidden md:flex space-x-6 space-x-reverse text-white">
+                    <a href="#pearson" class="hover:text-yellow-300 transition">پیرسون</a>
+                    <a href="#spearman" class="hover:text-yellow-300 transition">اسپیرمن</a>
+                    <a href="#kendall" class="hover:text-yellow-300 transition">کندال</a>
+                    <a href="#summary" class="hover:text-yellow-300 transition">جمع‌بندی</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- هدر -->
+    <header class="pt-32 pb-20 px-4">
+        <div class="max-w-4xl mx-auto text-center text-white">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 animate-fadeInUp">📊 آزمون‌های همبستگی</h1>
+            <p class="text-lg md:text-xl mb-4 opacity-90 animate-fadeInUp">(پیرسون، اسپیرمن، کندال)</p>
+            <div class="flex justify-center gap-4 mt-8 animate-fadeInUp">
+                <span class="badge badge-blue"><i class="fas fa-book"></i> 3 آزمون اصلی</span>
+                <span class="badge badge-green"><i class="fas fa-calculator"></i> مثال‌های حل شده</span>
+                <span class="badge badge-yellow"><i class="fas fa-pencil-alt"></i> فرمول‌های کاربردی</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- محتوا -->
+    <div class="max-w-7xl mx-auto px-4 pb-20 grid lg:grid-cols-4 gap-8">
+
+        <!-- سایدبار -->
+        <aside class="hidden lg:block col-span-1">
+            <div class="sticky top-24">
+                <div class="glass-card rounded-2xl p-6">
+                    <h3 class="font-bold text-lg mb-4 gradient-text"><i class="fas fa-list"></i> فهرست مطالب</h3>
+                    <nav class="space-y-2">
+                        <a href="#intro" class="sidebar-link"><i class="fas fa-info-circle"></i> مقدمه</a>
+                        <a href="#pearson" class="sidebar-link"><i class="fas fa-chart-line"></i> ضریب همبستگی پیرسون</a>
+                        <a href="#spearman" class="sidebar-link"><i class="fas fa-sort-numeric-down"></i> ضریب همبستگی اسپیرمن</a>
+                        <a href="#kendall" class="sidebar-link"><i class="fas fa-network-wired"></i> ضریب همبستگی کندال</a>
+                        <a href="#summary" class="sidebar-link"><i class="fas fa-clipboard-list"></i> مقایسه و جمع‌بندی</a>
+                    </nav>
+                    <div class="mt-8 p-4 bg-gradient-to-br from-purple-600 to-violet-600 rounded-xl text-white text-center">
+                        <i class="fas fa-robot text-3xl mb-2"></i>
+                        <p class="text-sm mb-3">سوال داری؟ بپرس!</p>
+                        <button onclick="toggleChat()" class="bg-white text-purple-600 px-4 py-2 rounded-lg text-sm font-bold hover:bg-gray-100 transition"><i class="fas fa-comments"></i> شروع چت</button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- متن اصلی -->
+        <div class="col-span-1 lg:col-span-3 space-y-8">
+
+            <!-- مقدمه -->
+            <section id="intro" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center"><i class="fas fa-info-circle ml-3"></i> مقدمه</h2>
+                <div class="highlight-box">
+                    <p>این صفحه شامل آموزش کامل سه آزمون همبستگی مهم (پیرسون، اسپیرمن و کندال) است که برای سنجش شدت و جهت رابطه بین دو متغیر تصادفی \(X\) و \(Y\) استفاده می‌شوند.</p>
+                </div>
+            </section>
+
+            <!-- پیرسون -->
+            <section id="pearson" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center"><i class="fas fa-chart-line ml-3"></i> ضریب همبستگی پیرسون</h2>
+                <div class="content-text">
+                    <span class="badge badge-blue mb-4">مخصوص داده‌های کمی، فاصله‌ای و نرمال</span>
+                    <p>سوال: آیا بین ساعات مطالعه (\(X\)) و نمره (\(Y\)) رابطه‌ای وجود دارد؟</p>
+                    <div class="example-card">
+                        <strong>مثال داده‌ها:</strong> \((2, 10), (3, 12), (5, 14)\)
+                        <table>
+                            <tr><th>\(X\)</th><th>\(Y\)</th><th>\(X^2\)</th><th>\(Y^2\)</th><th>\(XY\)</th></tr>
+                            <tr><td>2</td><td>10</td><td>4</td><td>100</td><td>20</td></tr>
+                            <tr><td>3</td><td>12</td><td>9</td><td>144</td><td>36</td></tr>
+                            <tr><td>5</td><td>14</td><td>25</td><td>196</td><td>70</td></tr>
+                            <tr><td>\(\sum=10\)</td><td>\(\sum=36\)</td><td>\(\sum=38\)</td><td>\(\sum=440\)</td><td>\(\sum=126\)</td></tr>
+                        </table>
+                        <p>تعداد نمونه \(n=3\)</p>
+                    </div>
+                    <div class="formula-card">
+                        \[r = \frac{n(\sum XY) - (\sum X)(\sum Y)}{\sqrt{[n\sum X^2 - (\sum X)^2][n\sum Y^2 - (\sum Y)^2]}}\]
+                        \[r = \frac{3(126) - (10)(36)}{\sqrt{[3(38) - 100][3(440) - 1296]}} \approx 0.98\]
+                    </div>
+                </div>
+            </section>
+
+            <!-- اسپیرمن -->
+            <section id="spearman" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center"><i class="fas fa-sort-numeric-down ml-3"></i> ضریب همبستگی اسپیرمن</h2>
+                <div class="content-text">
+                    <span class="badge badge-green mb-4">مخصوص داده‌های رتبه‌ای یا غیرنرمال</span>
+                    <p>اگر داده‌های تکراری زیاد نباشند، از فرمول زیر استفاده می‌کنیم:</p>
+                    <div class="formula-card">
+                        \[r_s = 1 - \frac{6 \sum d_i^2}{n(n^2 - 1)}\]
+                    </div>
+                    <p>\(d_i\): اختلاف رتبه متغیر اول و دوم برای مشاهده \(i\)</p>
+                    
+                    <div class="example-card">
+                        <strong>مثال: رتبه ۵ دانش‌آموز در ریاضی و هنر</strong>
+                        <table>
+                            <tr><th>دانش‌آموز</th><th>رتبه ریاضی</th><th>رتبه هنر</th><th>\(d\) (اختلاف)</th><th>\(d^2\)</th></tr>
+                            <tr><td>A</td><td>1</td><td>3</td><td>-2</td><td>4</td></tr>
+                            <tr><td>B</td><td>2</td><td>1</td><td>1</td><td>1</td></tr>
+                            <tr><td>C</td><td>3</td><td>2</td><td>1</td><td>1</td></tr>
+                            <tr><td>D</td><td>4</td><td>5</td><td>-1</td><td>1</td></tr>
+                            <tr><td>E</td><td>5</td><td>4</td><td>1</td><td>1</td></tr>
+                            <tr><td colspan="4">مجموع</td><td>\(\sum d^2 = 8\)</td></tr>
+                        </table>
+                    </div>
+
+                    <h3 class="text-xl font-bold mt-6 mb-3">مثال دوم (محاسبه کامل)</h3>
+                    <p>فرض کنید \(n = 9\) و \(\sum D^2 = 28\) باشد:</p>
+                    <div class="formula-card">
+                        \[R_s = 1 - \frac{6 \times 28}{9(81 - 1)} = 1 - \frac{168}{720} \approx 0.767\]
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <strong>آزمون معنی‌داری (تقریب نرمال):</strong>
+                        برای \(n\) بزرگ:
+                        \[Z = R_s \times \sqrt{n - 1} \approx 0.767 \times \sqrt{8} \approx 2.16\]
+                        چون \(Z = 2.16 > 1.96\)، فرض صفر رد می‌شود (رابطه معنی‌دار است).
+                    </div>
+                </div>
+            </section>
+
+            <!-- کندال -->
+            <section id="kendall" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center"><i class="fas fa-network-wired ml-3"></i> ضریب همبستگی کندال</h2>
+                <div class="content-text">
+                    <span class="badge badge-yellow mb-4">مخصوص داده‌های رتبه‌ای و نمونه‌های کوچک</span>
+                    <p>این آزمون بر اساس جفت‌های هماهنگ (Concordant) و ناهماهنگ (Discordant) کار می‌کند.</p>
+                    
+                    <div class="formula-card">
+                        \[\hat{\tau} = \frac{C - D}{\frac{1}{2}n(n-1)} \quad \text{یا} \quad \hat{\tau} = \frac{4P}{n(n - 1)} - 1\]
+                    </div>
+                    
+                    <div class="example-card">
+                        <strong>مثال حل شده:</strong>
+                        <p>تعداد هماهنگ (\(P\)) = 24، تعداد نمونه \(n=8\)</p>
+                        \[\hat{\tau} = \frac{4(24)}{8(7)} - 1 = \frac{96}{56} - 1 \approx 0.71\]
+                        <hr class="my-3 border-dashed">
+                        <strong>آزمون معنی‌داری:</strong>
+                        \[Var(\hat{\tau}) = \frac{2(2n + 5)}{9n(n - 1)} \approx 0.083\]
+                        \[Z = \frac{\hat{\tau}}{\sqrt{Var}} \approx 2.46\]
+                        چون \(2.46 > 1.96\)، فرض صفر رد می‌شود.
+                    </div>
+                </div>
+            </section>
+
+            <!-- جمع‌بندی -->
+            <section id="summary" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center"><i class="fas fa-clipboard-list ml-3"></i> مقایسه و جمع‌بندی</h2>
+                <table>
+                    <thead>
+                        <tr><th>آزمون</th><th>کاربرد کلیدی</th><th>فرمول کلی</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>پیرسون (\(r\))</td><td>داده‌های کمی و نرمال</td><td>بر اساس گشتاورها</td></tr>
+                        <tr><td>اسپیرمن (\(r_s\))</td><td>داده‌های رتبه‌ای (اختلاف رتبه)</td><td>\(1 - \frac{6 \sum d^2}{n(n^2-1)}\)</td></tr>
+                        <tr><td>کندال (\(\tau\))</td><td>رتبه‌ای (هماهنگ/ناهماهنگ)</td><td>\(\frac{C - D}{\text{تعداد کل}}\)</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- دکمه بازگشت به بالا -->
+    <button id="back-to-top" title="بازگشت به بالا"><i class="fas fa-arrow-up"></i></button>
+
+    <!-- فوتر -->
+    <footer class="glass-card mx-auto max-w-5xl mb-8 rounded-2xl p-6 text-center">
+        <p class="text-gray-700"><i class="fas fa-university ml-2"></i> جزوه آموزشی آزمون‌های همبستگی</p>
+        <p class="text-sm text-gray-600 mt-2">© 2026</p>
+    </footer>
+
+    <!-- اسکریپت‌ها -->
+    <script>
+        const mockResponses = {
+            'پیرسون': 'پیرسون برای داده‌های کمی و نرمال استفاده می‌شود و رابطه خطی را می‌سنجد.',
+            'اسپیرمن': 'اسپیرمن برای داده‌های رتبه‌ای است و بر اساس اختلاف رتبه‌ها کار می‌کند. فرمول آن 1 منهای (6 در مجموع d2 تقسیم بر n(n2-1)) است.',
+            'کندال': 'کندال بر اساس جفت‌های هماهنگ و ناهماهنگ کار می‌کند و برای نمونه‌های کوچک دقیق‌تر و باثبات‌تر از اسپیرمن است.',
+            'default': 'می‌تونی درباره: پیرسون، اسپیرمن، کندال یا فرمول‌ها بپرسی.'
+        };
+
+        function toggleChat() { document.getElementById('chatBody').classList.toggle('active'); }
+        function handleKeyPress(event) { if (event.key === 'Enter') sendMessage(); }
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
+            addMessage(message, 'user');
+            input.value = '';
+            setTimeout(() => {
+                const response = getResponse(message);
+                addMessage(response, 'ai');
+            }, 400);
+        }
+        function getResponse(message) {
+            const msg = message.toLowerCase();
+            if (msg.includes('پیرسون')) return mockResponses['پیرسون'];
+            if (msg.includes('اسپیرمن')) return mockResponses['اسپیرمن'];
+            if (msg.includes('کندال')) return mockResponses['کندال'];
+            return mockResponses['default'];
+        }
+        function addMessage(text, type) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            messageDiv.innerHTML = text.replace(/\n/g, '<br>');
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        const backToTopButton = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => { backToTopButton.classList.toggle('show', window.pageYOffset > 300); });
+        backToTopButton.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+            });
+        });
+        
+        const sections = document.querySelectorAll('section[id]');
+        const sidebarLinks = document.querySelectorAll('.sidebar-link');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => { if (window.pageYOffset >= (section.offsetTop - 200)) { current = section.getAttribute('id'); } });
+            sidebarLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) { link.classList.add('active'); }
+            });
+        });
+    </script>
+</body>
+</html>
