@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آمار چندمتغیره – آزمون T² و نواحی اطمینان</title>
+
+    <!-- فونت‌ها و کتابخانه‌ها -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- تنظیمات تم -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        accent: {
+                            light: '#4f46e5',
+                            DEFAULT: '#4338ca',
+                            dark: '#3730a3'
+                        },
+                        dark: {
+                            bg: '#0f172a',
+                            card: '#1e293b',
+                            border: '#334155'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- استایل‌های CSS سفارشی -->
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
+
+        * {
+            font-family: Vazirmatn, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
+            min-height: 100vh;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .chat-widget {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .chat-body {
+            display: none;
+            width: 380px;
+            height: 500px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            flex-direction: column;
+        }
+
+        .chat-body.active {
+            display: flex;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            max-width: 80%;
+        }
+
+        .message.user {
+            background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
+            color: white;
+            margin-right: auto;
+        }
+
+        .message.ai {
+            background: #f3f4f6;
+            color: #1f2937;
+            margin-left: auto;
+        }
+
+        .sidebar-link {
+            display: block;
+            padding: 10px 16px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            color: #475569;
+        }
+
+        .sidebar-link:hover {
+            background: #f1f5f9;
+            color: #4338ca;
+            transform: translateX(-4px);
+        }
+
+        .sidebar-link.active {
+            background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
+            color: white;
+        }
+
+        .formula-card {
+            background: #e0e7ff;
+            border-right: 4px solid #4f46e5;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            overflow-x: auto;
+        }
+
+        .example-card {
+            background: #dbeafe;
+            border-right: 4px solid #3b82f6;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+
+        .warning-card {
+            background: #fee2e2;
+            border-right: 4px solid #ef4444;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+
+        .success-card {
+            background: #d1fae5;
+            border-right: 4px solid #10b981;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+
+        .info-card {
+            background: #f3f4f6;
+            border-right: 4px solid #6b7280;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #e5e7eb;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-indigo {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .badge-blue {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-purple {
+            background: #f3e8ff;
+            color: #6b21a8;
+        }
+
+        #back-to-top {
+            position: fixed;
+            bottom: 90px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s;
+            z-index: 1000;
+        }
+
+        #back-to-top:hover {
+            transform: translateY(-3px);
+        }
+
+        #back-to-top.show {
+            display: flex;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fadeInUp {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .cheat-sheet {
+            background: #fffbeb;
+            border: 2px dashed #fcd34d;
+            position: relative;
+            padding: 24px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .cheat-sheet::before {
+            content: '📄 برگه تقلب فرمول‌ها';
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: #fff;
+            padding: 0 10px;
+            font-weight: bold;
+            color: #d97706;
+        }
+    </style>
+</head>
+
+<body class="antialiased font-sans">
+
+    <!-- نوار ناوبری بالا -->
+    <nav class="fixed w-full z-50 glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <i class="fas fa-chart-area text-2xl text-white"></i>
+                    <span class="text-white font-bold text-xl">آمار چندمتغیره</span>
+                </div>
+                <div class="hidden md:flex space-x-6 space-x-reverse text-white">
+                    <a href="#intro" class="hover:text-yellow-300 transition">مفاهیم پایه</a>
+                    <a href="#hotelling" class="hover:text-yellow-300 transition">آزمون T²</a>
+                    <a href="#confidence" class="hover:text-yellow-300 transition">ناحیه اطمینان</a>
+                    <a href="#cheat-sheet" class="hover:text-yellow-300 transition">فرمول‌ها</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- هدر اصلی -->
+    <header class="pt-32 pb-20 px-4">
+        <div class="max-w-4xl mx-auto text-center text-white">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 animate-fadeInUp leading-tight">
+                آزمون هتلینگ T² و بازه‌های همزمان
+            </h1>
+            <p class="text-xl md:text-2xl mb-4 opacity-90 animate-fadeInUp">
+                ناحیه اطمینان و استنباط آماری برای بردارهای میانگین
+            </p>
+            <div class="flex justify-center gap-4 mt-8 animate-fadeInUp flex-wrap">
+                <span class="badge badge-indigo"><i class="fas fa-book"></i> جزوه کامل</span>
+                <span class="badge badge-blue"><i class="fas fa-calculator"></i> مثال‌های حل‌شده</span>
+                <span class="badge badge-purple"><i class="fas fa-file-alt"></i> برگه فرمول</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- چیدمان اصلی صفحه -->
+    <div class="max-w-7xl mx-auto px-4 pb-20 grid lg:grid-cols-4 gap-8">
+
+        <!-- نوار کناری -->
+        <aside class="hidden lg:block col-span-1">
+            <div class="sticky top-24">
+                <div class="glass-card rounded-2xl p-6">
+                    <h3 class="font-bold text-lg mb-4 gradient-text">
+                        <i class="fas fa-list"></i> فهرست مطالب
+                    </h3>
+                    <nav class="space-y-2">
+                        <a href="#intro" class="sidebar-link">
+                            <i class="fas fa-arrow-right"></i> مقدمه و گذار
+                        </a>
+                        <a href="#univariate" class="sidebar-link">
+                            <i class="fas fa-sync"></i> مرور تک‌متغیره
+                        </a>
+                        <a href="#hotelling" class="sidebar-link">
+                            <i class="fas fa-superscript"></i> آزمون هتلینگ T²
+                        </a>
+                        <a href="#example-simple" class="sidebar-link">
+                            <i class="fas fa-pencil-alt"></i> مثال عددی ساده
+                        </a>
+                        <a href="#example-med" class="sidebar-link">
+                            <i class="fas fa-user-md"></i> مثال پزشکی
+                        </a>
+                        <a href="#confidence" class="sidebar-link">
+                            <i class="fas fa-chart-pie"></i> ناحیه اطمینان
+                        </a>
+                        <a href="#simultaneous" class="sidebar-link">
+                            <i class="fas fa-layer-group"></i> بازه‌های همزمان
+                        </a>
+                        <a href="#cheat-sheet" class="sidebar-link font-bold text-amber-600">
+                            <i class="fas fa-star"></i> برگه فرمول
+                        </a>
+                    </nav>
+
+                    <div class="mt-8 p-4 bg-gradient-to-br from-indigo-600 to-blue-600 rounded-xl text-white text-center">
+                        <i class="fas fa-robot text-3xl mb-2"></i>
+                        <p class="text-sm mb-3">سوال داری؟ از دستیار هوش مصنوعی بپرس!</p>
+                        <button onclick="toggleChat()" class="bg-white text-indigo-600 px-4 py-2 rounded-lg text-sm font-bold hover:bg-gray-100 transition">
+                            <i class="fas fa-comments"></i> شروع چت
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- محتوای اصلی -->
+        <div class="col-span-1 lg:col-span-3 space-y-8">
+
+            <!-- بخش A1: مقدمه -->
+            <section id="intro" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-random ml-3"></i>
+                    A-1. از تک‌متغیره به چندمتغیره
+                </h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    در آمار مقدماتی، روی یک متغیر تصادفی نرمال تمرکز می‌شود و آزمون فرض و فاصله اطمینان برای میانگین \( \mu \) با آماره \( t \) انجام می‌گردد.
+                </p>
+                <div class="info-card">
+                    <p class="text-gray-800">
+                        در آمار چندمتغیره، با یک <strong>بردار میانگین</strong> \( \mu = (\mu_1, \dots, \mu_p)' \) و یک <strong>ماتریس کوواریانس</strong> \( \Sigma \) سر و کار داریم و باید همین ایده‌ها (آزمون، فاصله اطمینان، ناحیه اطمینان) را به صورت ماتریسی و چندبعدی تعمیم دهیم.
+                    </p>
+                </div>
+            </section>
+
+            <!-- بخش A2: مرور تک‌متغیره -->
+            <section id="univariate" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-history ml-3"></i>
+                    A-2. مرور آزمون t و فاصله اطمینان
+                </h2>
+
+                <h3 class="text-xl font-bold mt-4 mb-2 text-indigo-700">فرضیه‌ها</h3>
+                <ul class="list-disc list-inside text-gray-700 mb-4 mr-4">
+                    <li>فرض صفر: \( H_0: \mu = \mu_0 \)</li>
+                    <li>فرض مقابل: \( H_1: \mu \neq \mu_0 \)</li>
+                </ul>
+
+                <h3 class="text-xl font-bold mt-4 mb-2 text-indigo-700">آماره t استیودنت</h3>
+                <div class="formula-card text-center" dir="ltr">
+                    $$t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}$$
+                </div>
+                <p class="text-sm text-gray-600 text-center mb-4">توزیع تحت \( H_0 \) تقریبا \( t_{(n-1)} \) است.</p>
+
+                <h3 class="text-xl font-bold mt-4 mb-2 text-indigo-700">ناحیه رد و فاصله اطمینان</h3>
+                <div class="success-card">
+                    <ul class="list-disc list-inside text-gray-700 mr-4">
+                        <li>رد \( H_0 \) اگر \( |t| > t_{(n-1, \alpha/2)} \)</li>
+                        <li>فاصله اطمینان \( 100(1-\alpha)\% \):
+                            <span dir="ltr" class="font-bold mx-2">\(\bar{x} \pm t_{(n-1, \alpha/2)} \frac{s}{\sqrt{n}}\)</span>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- بخش A3: آزمون T² -->
+            <section id="hotelling" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-superscript ml-3"></i>
+                    A-3. آزمون بردار میانگین با آماره هتلینگ T²
+                </h2>
+
+                <h3 class="text-xl font-bold mt-4 mb-2 text-indigo-700">مدل و نمادها</h3>
+                <ul class="list-disc list-inside text-gray-700 mb-4 mr-4">
+                    <li>نمونه: \( X_1, \dots, X_n \sim i.i.d. N_p(\mu, \Sigma) \)</li>
+                    <li>میانگین نمونه: \( \bar{X} = \frac{1}{n} \sum X_i \)</li>
+                    <li>کوواریانس نمونه: \( S = \frac{1}{n-1} \sum (X_i - \bar{X})(X_i - \bar{X})' \)</li>
+                </ul>
+
+                <h3 class="text-xl font-bold mt-4 mb-2 text-indigo-700">تعریف آماره هتلینگ T²</h3>
+                <div class="formula-card text-center" dir="ltr">
+                    $$T^2 = n (\bar{X} - \mu_0)' S^{-1} (\bar{X} - \mu_0)$$
+                </div>
+                <p class="text-gray-700 mb-4 text-justify">
+                    این عبارت در واقع مربع فاصله ماهالانوبیس بین \( \bar{X} \) و \( \mu_0 \) است. برای \( p=1 \) به همان \( t^2 \) تبدیل می‌شود.
+                </p>
+
+                <h3 class="text-xl font-bold mt-4 mb-2 text-indigo-700">توزیع T² و رابطه با F</h3>
+                <div class="formula-card text-center" dir="ltr">
+                    $$\frac{n - p}{p (n - 1)} T^2 \sim F_{p, n-p}$$
+                </div>
+                
+                <div class="warning-card mt-4">
+                    <strong>قانون تصمیم:</strong> فرض صفر رد می‌شود اگر:
+                    <div dir="ltr" class="text-center mt-2 font-bold">
+                        $$T^2 > \frac{p (n - 1)}{n - p} F_{p, n-p, \alpha}$$
+                    </div>
+                </div>
+            </section>
+
+            <!-- بخش A4: مثال عددی -->
+            <section id="example-simple" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-pencil-alt ml-3"></i>
+                    A-4. مثال ساده T² (دو متغیر، سه مشاهده)
+                </h2>
+                
+                <p class="text-gray-700 mb-2">داده‌ها:</p>
+                <div class="bg-gray-100 p-3 rounded-lg text-center font-mono text-sm mb-4" dir="ltr">
+                    D = [[2, 4, 6], [3, 1, 5]] <br>
+                    μ₀ = [5, 2]'
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="example-card">
+                        <h4 class="font-bold text-blue-800 mb-2">۱. میانگین نمونه</h4>
+                        <div dir="ltr" class="text-center">
+                            \(\bar{x}_1 = 4\), \(\bar{x}_2 = 3\) <br>
+                            \(\bar{X} = [4, 3]'\)
+                        </div>
+                    </div>
+                    <div class="example-card">
+                        <h4 class="font-bold text-blue-800 mb-2">۲. کوواریانس S</h4>
+                        <div dir="ltr" class="text-center">
+                            \(S = \begin{bmatrix} 4 & 2 \\ 2 & 4 \end{bmatrix}\)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card mt-4">
+                    <h4 class="font-bold text-blue-800 mb-2">۳. محاسبه T²</h4>
+                    <p class="text-sm text-gray-700 mb-2">وارون S برابر است با \( S^{-1} = \frac{1}{12} \begin{bmatrix} 4 & -2 \\ -2 & 4 \end{bmatrix} \)</p>
+                    <p class="text-sm text-gray-700 mb-2">اختلاف میانگین: \( d = [-1, 1]' \)</p>
+                    <div dir="ltr" class="text-center font-bold text-lg my-3">
+                        $$T^2 = 3 \times 1 = 3$$
+                    </div>
+                    <p class="text-sm text-gray-700 text-center">
+                        تبدیل به F: <br>
+                        \( F = \frac{1}{4} \times 3 = 0.75 \sim F_{2,1} \)
+                    </p>
+                </div>
+            </section>
+
+            <!-- بخش A5: مثال پزشکی -->
+            <section id="example-med" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-user-md ml-3"></i>
+                    A-5. مثال پزشکی (سه متغیر، هشت مشاهده)
+                </h2>
+                <ul class="list-disc list-inside text-gray-700 mb-4 mr-4">
+                    <li><strong>متغیرها:</strong> قند خون، فشار سیستولیک، فشار دیاستولیک (\( p=3 \))</li>
+                    <li><strong>نمونه:</strong> \( n=8 \)</li>
+                    <li><strong>فرض صفر:</strong> دارو بی‌اثر است (\( \mu = 0 \))</li>
+                </ul>
+
+                <div class="success-card text-center">
+                    <div class="text-lg font-bold mb-2">نتیجه محاسبات:</div>
+                    <div dir="ltr" class="mb-2">\( T^2 = 79.063 \)</div>
+                    <div dir="ltr" class="mb-2">\( F = \frac{5}{21} \times 79.063 \approx 18.824 \)</div>
+                    <div class="text-green-800 font-bold mt-2">
+                        نتیجه: \( 18.824 > 5.41 \) ← رد فرض صفر (دارو مؤثر است)
+                    </div>
+                </div>
+            </section>
+
+            <!-- بخش A6: ناحیه اطمینان -->
+            <section id="confidence" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-chart-pie ml-3"></i>
+                    A-6. ناحیه اطمینان برای بردار میانگین
+                </h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    ناحیه اطمینان چندمتغیره \( 100(1-\alpha)\% \) شامل تمام \( \mu \)هایی است که در نامساوی زیر صدق کنند:
+                </p>
+                <div class="formula-card text-center" dir="ltr">
+                    $$n (\bar{X} - \mu)' S^{-1} (\bar{X} - \mu) \le T^2_\alpha$$
+                </div>
+                <div class="info-card mt-4">
+                    <h4 class="font-bold text-gray-800 mb-2">تفسیر هندسی:</h4>
+                    <ul class="list-disc list-inside text-gray-700">
+                        <li>تعمیم چندبعدی «فاصله اطمینان» است.</li>
+                        <li>برای \( p=2 \)، شکل ناحیه یک <strong>بیضی</strong> به مرکز \( \bar{X} \) است.</li>
+                        <li>جهت‌گیری بیضی به بردارهای ویژه ماتریس \( S \) بستگی دارد.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- بخش A7: بازه‌های همزمان -->
+            <section id="simultaneous" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-layer-group ml-3"></i>
+                    A-7. بازه‌های اطمینان همزمان
+                </h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    هدف ساخت خانواده‌ای از بازه‌هاست که با احتمال \( 1-\alpha \) <strong>همه آن‌ها با هم</strong> صحیح باشند. استفاده از t معمولی باعث کاهش سطح اطمینان کلی می‌شود (\( (1-\alpha)^p \)).
+                </p>
+
+                <h3 class="text-xl font-bold mt-4 mb-2 text-indigo-700">فرمول بازه همزمان T²</h3>
+                <div class="formula-card text-center" dir="ltr">
+                    $$a' \bar{X} \pm \sqrt{\frac{T^2_\alpha}{n} a' S a}$$
+                </div>
+                <p class="text-gray-700 mb-4 text-center text-sm">این بازه برای هر ترکیب خطی \( a'\mu \) معتبر است.</p>
+
+                <div class="grid md:grid-cols-2 gap-4 mt-6">
+                    <div class="warning-card">
+                        <h4 class="font-bold text-red-800 mb-2 text-center">بازه‌های t معمولی</h4>
+                        <ul class="text-sm text-red-900 list-disc list-inside">
+                            <li>کوتاه‌تر (دقیق‌تر به نظر می‌رسند)</li>
+                            <li>خطای همزمان زیاد</li>
+                            <li>همبستگی را نادیده می‌گیرد</li>
+                        </ul>
+                    </div>
+                    <div class="success-card">
+                        <h4 class="font-bold text-green-800 mb-2 text-center">بازه‌های T² همزمان</h4>
+                        <ul class="text-sm text-green-900 list-disc list-inside">
+                            <li>بلندتر (محافظه‌کارانه)</li>
+                            <li>تضمین پوشش همزمان ۹۵٪</li>
+                            <li>لحاظ کردن همبستگی متغیرها</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- بخش B: برگه فرمول -->
+            <section id="cheat-sheet" class="cheat-sheet hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center justify-center">
+                    B. برگه فرمول یک‌صفحه‌ای (خلاصه)
+                </h2>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- ستون ۱ -->
+                    <div>
+                        <h3 class="text-lg font-bold text-indigo-800 mb-2 border-b-2 border-indigo-200 pb-1">۱. آزمون t یک‌متغیره</h3>
+                        <ul class="text-sm space-y-2 mb-4">
+                            <li><strong>آماره:</strong> \( t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}} \)</li>
+                            <li><strong>فاصله اطمینان:</strong> \( \bar{x} \pm t_{(n-1, \alpha/2)} \frac{s}{\sqrt{n}} \)</li>
+                        </ul>
+
+                        <h3 class="text-lg font-bold text-indigo-800 mb-2 border-b-2 border-indigo-200 pb-1">۳. ناحیه اطمینان μ</h3>
+                        <ul class="text-sm space-y-2 mb-4">
+                            <li><strong>نامساوی:</strong> \( n (\bar{X} - \mu)' S^{-1} (\bar{X} - \mu) \le T^2_\alpha \)</li>
+                            <li><strong>شکل:</strong> بیضی (در p=2) یا بیضی‌گون</li>
+                        </ul>
+                    </div>
+
+                    <!-- ستون ۲ -->
+                    <div>
+                        <h3 class="text-lg font-bold text-indigo-800 mb-2 border-b-2 border-indigo-200 pb-1">۲. آزمون هتلینگ T²</h3>
+                        <ul class="text-sm space-y-2 mb-4">
+                            <li><strong>آماره:</strong> \( T^2 = n (\bar{X} - \mu_0)' S^{-1} (\bar{X} - \mu_0) \)</li>
+                            <li><strong>تبدیل به F:</strong> \( \frac{n - p}{p (n - 1)} T^2 \sim F_{p, n-p} \)</li>
+                            <li><strong>مقدار بحرانی:</strong> \( T^2_\alpha = \frac{p (n - 1)}{n - p} F_{p, n-p, \alpha} \)</li>
+                        </ul>
+
+                        <h3 class="text-lg font-bold text-indigo-800 mb-2 border-b-2 border-indigo-200 pb-1">۴. بازه‌های همزمان</h3>
+                        <ul class="text-sm space-y-2 mb-4">
+                            <li><strong>فرمول کلی:</strong> \( a' \bar{X} \pm \sqrt{\frac{T^2_\alpha}{n} a' S a} \)</li>
+                            <li><strong>واریانس اختلاف:</strong> \( \frac{1}{n}(S_{ii} - 2S_{ij} + S_{jj}) \)</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- چت‌بات هوش مصنوعی -->
+    <div class="chat-widget">
+        <div class="chat-body" id="chatBody">
+            <div class="bg-gradient-to-r from-indigo-600 to-blue-600 text-white p-4 rounded-t-2xl flex justify-between items-center">
+                <div class="flex items-center">
+                    <i class="fas fa-robot text-2xl ml-2"></i>
+                    <span class="font-bold">دستیار آماری</span>
+                </div>
+                <button onclick="toggleChat()" class="text-white hover:bg-white hover:bg-opacity-20 rounded-full w-8 h-8 flex items-center justify-center">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message ai">
+                    سلام! من دستیار هوش مصنوعی شما هستم. درباره آزمون T² یا آمار چندمتغیره سوالی دارید؟
+                </div>
+            </div>
+            <div class="p-4 border-t">
+                <div class="flex gap-2">
+                    <input 
+                        type="text" 
+                        id="chatInput" 
+                        placeholder="سوال خود را بنویسید..."
+                        class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        onkeypress="handleKeyPress(event)"
+                    >
+                    <button 
+                        onclick="sendMessage()" 
+                        class="bg-gradient-to-r from-indigo-600 to-blue-600 text-white px-4 py-2 rounded-lg hover:opacity-90 transition"
+                    >
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- دکمه بازگشت به بالا -->
+    <button id="back-to-top" title="بازگشت به بالا">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer class="glass-card mx-auto max-w-5xl mb-8 rounded-2xl p-6 text-center">
+        <p class="text-gray-700">
+            <i class="fas fa-university ml-2"></i>
+            جزوه آموزشی آمار چندمتغیره
+        </p>
+        <p class="text-sm text-gray-600 mt-2">
+            © 2026 - ویژه دانشجویان آمار و علوم داده
+        </p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mock AI responses
+        const mockResponses = {
+            't2': 'آزمون T² هتلینگ تعمیم چندمتغیره آزمون t است. وقتی به جای یک عدد، با یک بردار میانگین سروکار داریم از آن استفاده می‌کنیم.\n\nفرمول:\nT² = n(X̄ - μ₀)′ S⁻¹ (X̄ - μ₀)',
+            'f': 'آماره T² توزیع مستقیم ندارد اما با یک ضریب تبدیل به توزیع F می‌شود:\n\nF = [ (n-p) / (p(n-1)) ] × T²',
+            'ناحیه': 'ناحیه اطمینان در حالت دو متغیره یک بیضی است. مرکز بیضی میانگین نمونه است و جهت آن توسط ماتریس کوواریانس تعیین می‌شود.',
+            'همزمان': 'بازه‌های اطمینان همزمان (Simultaneous CIs) تضمین می‌کنند که تمام بازه‌ها با هم (مثلا ۹۵٪) درست باشند. این بازه‌ها از بازه‌های t معمولی عریض‌تر هستند.',
+            'تفاوت': 'تفاوت اصلی:\n\n✅ آزمون t: برای یک متغیر (اسکالر)\n✅ آزمون T²: برای چندین متغیر همبسته (بردار)\n\nT² همبستگی بین متغیرها را در نظر می‌گیرد!',
+            'default': 'سوال خوبی بود! می‌توانید درباره موارد زیر بپرسید:\n\n📌 فرمول T²\n📌 نحوه تبدیل به F\n📌 ناحیه اطمینان بیضی\n📌 بازه‌های همزمان\n📌 تفاوت با t معمولی'
+        };
+
+        function toggleChat() {
+            document.getElementById('chatBody').classList.toggle('active');
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') sendMessage();
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            addMessage(message, 'user');
+            input.value = '';
+
+            setTimeout(() => {
+                const response = getResponse(message);
+                addMessage(response, 'ai');
+            }, 500);
+        }
+
+        function getResponse(message) {
+            const msg = message.toLowerCase();
+            
+            if (msg.includes('t2') || msg.includes('هتلینگ')) return mockResponses['t2'];
+            if (msg.includes('f') || msg.includes('توزیع')) return mockResponses['f'];
+            if (msg.includes('ناحیه') || msg.includes('بیضی')) return mockResponses['ناحیه'];
+            if (msg.includes('همزمان') || msg.includes('بازه')) return mockResponses['همزمان'];
+            if (msg.includes('تفاوت') || msg.includes('فرق')) return mockResponses['تفاوت'];
+            
+            return mockResponses['default'];
+        }
+
+        function addMessage(text, type) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            messageDiv.innerHTML = text.replace(/\n/g, '<br>');
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Scroll scripts
+        const backToTopButton = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            backToTopButton.classList.toggle('show', window.pageYOffset > 300);
+        });
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Sidebar active link on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const sidebarLinks = document.querySelectorAll('.sidebar-link');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                if (window.pageYOffset >= (section.offsetTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            sidebarLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
