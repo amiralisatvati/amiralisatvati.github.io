@@ -3,23 +3,332 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>آزمون کروسکال–والیس (Kruskal–Wallis Test)</title>
+    <title>آزمون کروسکال–والیس (Kruskal–Wallis)</title>
+
+    <!-- فونت‌ها و کتابخانه‌ها -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- تنظیمات تم -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        accent: {
+                            light: '#8b5cf6',
+                            DEFAULT: '#7c3aed',
+                            dark: '#6d28d9'
+                        },
+                        dark: {
+                            bg: '#0f172a',
+                            card: '#1e293b',
+                            border: '#334155'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- استایل‌های CSS سفارشی -->
     <style>
         @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
-        * { font-family: Vazirmatn, sans-serif; }
-        body { background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); min-height: 100vh; }
-        .glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
-        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); }
-        .gradient-text { background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .hover-lift:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15); }
+
+        * {
+            font-family: Vazirmatn, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            min-height: 100vh;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .sidebar-link {
+            display: block;
+            padding: 10px 16px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            color: #475569;
+        }
+
+        .sidebar-link:hover {
+            background: #f1f5f9;
+            color: #7c3aed;
+            transform: translateX(-4px);
+        }
+
+        .sidebar-link.active {
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            color: white;
+        }
+
+        .formula-card {
+            background: #fef3c7;
+            border-right: 4px solid #f59e0b;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            direction: ltr;
+            text-align: center;
+        }
+
+        .example-box {
+            background-color: #fff7ed;
+            border: 1px solid #fed7aa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .example-title {
+            color: #9a3412;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .highlight-box {
+            background-color: #fef2f2;
+            border-right: 4px solid #ef4444;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .note {
+            background: #ecfdf5;
+            color: #065f46;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #a7f3d0;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #e5e7eb;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-blue { background: #dbeafe; color: #1e40af; }
+        .badge-green { background: #d1fae5; color: #065f46; }
+        .badge-yellow { background: #fef3c7; color: #92400e; }
+
+        #back-to-top {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s;
+            z-index: 1000;
+        }
+
+        #back-to-top:hover {
+            transform: translateY(-3px);
+        }
+
+        #back-to-top.show {
+            display: flex;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fadeInUp {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* استایل‌های چت بات */
+        #chat-widget {
+            position: fixed;
+            bottom: 80px;
+            left: 20px;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+
+        #chat-header {
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        #chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background: #f8fafc;
+        }
+
+        #chat-input-area {
+            padding: 15px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 10px;
+            background: white;
+        }
+
+        #chat-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        #chat-send {
+            background: #7c3aed;
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        #chat-send:hover {
+            background: #6d28d9;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border-radius: 12px;
+            max-width: 80%;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .message.user {
+            background: #7c3aed;
+            color: white;
+            margin-right: auto;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message.bot {
+            background: #e2e8f0;
+            color: #1e293b;
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+
+        #chat-toggle {
+            position: fixed;
+            bottom: 20px;
+            left: 80px;
+            background: white;
+            color: #7c3aed;
+            padding: 10px 20px;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 1000;
+            transition: transform 0.2s;
+        }
+
+        #chat-toggle:hover {
+            transform: translateY(-2px);
+        }
     </style>
 </head>
+
 <body class="antialiased font-sans">
+
+    <!-- نوار ناوبری بالا -->
     <nav class="fixed w-full z-50 glass">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
@@ -27,59 +336,397 @@
                     <i class="fas fa-chart-line text-2xl text-white"></i>
                     <span class="text-white font-bold text-xl">آزمون کروسکال–والیس</span>
                 </div>
+                <div class="hidden md:flex space-x-6 space-x-reverse text-white">
+                    <a href="#goal" class="hover:text-yellow-300 transition">هدف</a>
+                    <a href="#formula" class="hover:text-yellow-300 transition">فرمول</a>
+                    <a href="#examples" class="hover:text-yellow-300 transition">مثال‌ها</a>
+                    <a href="#comparison" class="hover:text-yellow-300 transition">مقایسه با فریدمن</a>
+                </div>
             </div>
         </div>
     </nav>
 
+    <!-- هدر اصلی -->
     <header class="pt-32 pb-20 px-4">
         <div class="max-w-4xl mx-auto text-center text-white">
-            <h1 class="text-5xl md:text-6xl font-bold mb-6">آزمون کروسکال–والیس</h1>
-            <p class="text-xl md:text-2xl mb-4 opacity-90">(Kruskal–Wallis Test)</p>
-            <p class="text-lg mb-4 opacity-80">معادل ناپارامتری آنالیز واریانس یک‌طرفه (One-way ANOVA) برای مقایسه سه یا چند جامعه مستقل بر اساس رتبه‌ها.</p>
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 animate-fadeInUp">
+                آزمون کروسکال–والیس
+            </h1>
+            <p class="text-xl md:text-2xl mb-4 opacity-90 animate-fadeInUp">
+                (Kruskal-Wallis Test)
+            </p>
+            <p class="text-lg mb-4 opacity-80 animate-fadeInUp">
+                معادل ناپارامتری آنالیز واریانس یک‌طرفه (One-way ANOVA)
+            </p>
+            <div class="flex justify-center gap-4 mt-8 animate-fadeInUp">
+                <span class="badge badge-blue"><i class="fas fa-book"></i> 8 بخش</span>
+                <span class="badge badge-green"><i class="fas fa-calculator"></i> 2 مثال</span>
+                <span class="badge badge-yellow"><i class="fas fa-table"></i> مقایسه</span>
+            </div>
         </div>
     </header>
 
-    <div class="max-w-7xl mx-auto px-4 pb-20">
-        <div class="space-y-8">
-            <section class="glass-card rounded-2xl p-8 hover-lift">
+    <!-- چیدمان اصلی صفحه -->
+    <div class="max-w-7xl mx-auto px-4 pb-20 grid lg:grid-cols-4 gap-8">
+
+        <!-- نوار کناری -->
+        <aside class="hidden lg:block col-span-1">
+            <div class="sticky top-24">
+                <div class="glass-card rounded-2xl p-6">
+                    <h3 class="font-bold text-lg mb-4 gradient-text">
+                        <i class="fas fa-list"></i> فهرست سریع
+                    </h3>
+                    <nav class="space-y-2">
+                        <a href="#goal" class="sidebar-link">
+                            <i class="fas fa-bullseye"></i> هدف آزمون
+                        </a>
+                        <a href="#hypothesis" class="sidebar-link">
+                            <i class="fas fa-question"></i> فرضیه‌ها
+                        </a>
+                        <a href="#steps" class="sidebar-link">
+                            <i class="fas fa-shoe-prints"></i> مراحل انجام
+                        </a>
+                        <a href="#formula" class="sidebar-link">
+                            <i class="fas fa-calculator"></i> فرمول و آماره
+                        </a>
+                        <a href="#examples" class="sidebar-link">
+                            <i class="fas fa-chalkboard-teacher"></i> مثال‌های حل شده
+                        </a>
+                        <a href="#comparison" class="sidebar-link">
+                            <i class="fas fa-balance-scale"></i> تفاوت با فریدمن
+                        </a>
+                        <a href="#cheat-sheet" class="sidebar-link">
+                            <i class="fas fa-lightbulb"></i> خلاصه شب امتحان
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </aside>
+
+        <!-- محتوای اصلی -->
+        <div class="col-span-1 lg:col-span-3 space-y-8">
+
+            <!-- بخش ۱: هدف -->
+            <section id="goal" class="glass-card rounded-2xl p-8 hover-lift">
                 <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
-                    <i class="fas fa-star ml-3"></i>۱. هدف و کاربرد
+                    <i class="fas fa-bullseye ml-3"></i>
+                    ۱. هدف آزمون
                 </h2>
                 <p class="text-gray-700 leading-relaxed mb-4">
-                    هدف آزمون بررسی این است که آیا \(k\) جامعه مستقل (سه گروه یا بیشتر) توزیع یکسانی دارند یا حداقل دو جامعه با هم تفاوت معنی‌دار دارند.
+                    این آزمون زمانی استفاده می‌شود که فرضیات توزیع نرمال یا برابری واریانس‌ها برقرار نباشد. هدف آن بررسی این است که آیا \(k\) جامعه مستقل دارای توزیع یکسان هستند یا خیر.
                 </p>
-                <p class="text-gray-700 leading-relaxed">
-                    وقتی فرض نرمال بودن یا برابری واریانس‌ها برای ANOVA برقرار نباشد، از آزمون کروسکال–والیس استفاده می‌کنیم.
-                </p>
+                <div class="highlight-box">
+                    <strong>کاربرد اصلی:</strong> مقایسه سه یا بیش از سه جامعه مستقل.
+                </div>
             </section>
 
-            <section class="glass-card rounded-2xl p-8 hover-lift">
+            <!-- بخش ۲: فرضیه‌ها -->
+            <section id="hypothesis" class="glass-card rounded-2xl p-8 hover-lift">
                 <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
-                    <i class="fas fa-list-ol ml-3"></i>۲. مراحل انجام آزمون
+                    <i class="fas fa-question ml-3"></i>
+                    ۲. تدوین فرضیه‌ها
                 </h2>
-                <ol class="space-y-3 text-gray-700 leading-relaxed mr-6">
-                    <li><strong>رتبه‌دهی:</strong> تمام مشاهدات را (از همه گروه‌ها) از کوچک به بزرگ رتبه‌بندی کنید (۱ تا \(N\)).</li>
-                    <li><strong>تساوی:</strong> در صورت تساوی داده‌ها، به آن‌ها رتبه میانگین بدهید.</li>
-                    <li><strong>مجموع رتبه‌ها:</strong> برای هر گروه، مجموع رتبه‌ها را محاسبه کنید و آن را \(R_j\) بنامید.</li>
-                    <li><strong>آماره آزمون:</strong> آماره آزمون \(H\) را با فرمول استاندارد کروسکال–والیس محاسبه کنید و با مقدار بحرانی کای‌دو با \(k-1\) درجه آزادی مقایسه کنید.</li>
+                <p class="text-gray-700 mb-2"><strong>فرضیه صفر (\(H_0\)):</strong> \(k\) جامعه دارای توزیع یکسان هستند.</p>
+                <div class="formula-card">
+                    \[ H_0: \mu_1 = \mu_2 = \dots = \mu_k \]
+                </div>
+                <p class="text-gray-700 mb-2"><strong>فرضیه مقابل (\(H_1\)):</strong> حداقل دو جامعه از نظر توزیع تفاوت دارند.</p>
+                <div class="formula-card">
+                    \[ H_1: \text{Not all } \mu_j \text{ are equal} \]
+                </div>
+            </section>
+
+            <!-- بخش ۳: مراحل انجام -->
+            <section id="steps" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-shoe-prints ml-3"></i>
+                    ۳. مراحل انجام آزمون
+                </h2>
+                <ol class="space-y-3 text-gray-700 leading-relaxed mr-6 list-decimal">
+                    <li><strong>تجمیع داده‌ها:</strong> تمام مشاهدات از همه گروه‌ها را روی هم می‌ریزیم.</li>
+                    <li><strong>رتبه‌دهی:</strong> به تمام مشاهدات (از کوچک به بزرگ) رتبه می‌دهیم (۱ تا \(N\)).</li>
+                    <li><strong>داده‌های تکراری:</strong> میانگین رتبه‌ها را به آن‌ها اختصاص می‌دهیم.</li>
+                    <li><strong>محاسبه مجموع رتبه‌ها (\(R_j\)):</strong> مجموع رتبه‌های هر گروه را جداگانه حساب می‌کنیم.</li>
                 </ol>
             </section>
 
-            <section class="glass-card rounded-2xl p-8 hover-lift">
+            <!-- بخش ۴: فرمول -->
+            <section id="formula" class="glass-card rounded-2xl p-8 hover-lift">
                 <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
-                    <i class="fas fa-calculator ml-3"></i>۳. تفسیر نتیجه
+                    <i class="fas fa-calculator ml-3"></i>
+                    ۴. آماره آزمون (Test Statistic)
                 </h2>
-                <p class="text-gray-700 leading-relaxed">
-                    اگر مقدار \(H\) بزرگ‌تر از مقدار بحرانی جدول کای‌دو باشد، فرض صفر رد می‌شود و نتیجه می‌گیریم که حداقل دو گروه از نظر توزیع (یا میانه/میانگین رتبه) با هم تفاوت دارند.
-                </p>
+                <div class="formula-card">
+                    \[ H = \frac{12}{N(N+1)} \sum_{j=1}^{k} \frac{R_j^2}{n_j} - 3(N+1) \]
+                </div>
+                <div class="grid grid-cols-2 gap-4 text-sm text-gray-600 mt-4">
+                    <div>\(k\): تعداد گروه‌ها</div>
+                    <div>\(n_j\): تعداد نمونه در گروه \(j\)</div>
+                    <div>\(N\): تعداد کل مشاهدات</div>
+                    <div>\(R_j\): مجموع رتبه‌های گروه \(j\)</div>
+                </div>
+
+                <div class="note">
+                    <strong>تصمیم‌گیری:</strong> اگر \(H > \chi^2_{\alpha, k-1}\) باشد، فرض صفر رد می‌شود.
+                </div>
             </section>
+
+            <!-- بخش ۶: مثال‌ها -->
+            <section id="examples" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-chalkboard-teacher ml-3"></i>
+                    ۶. مثال‌های حل شده
+                </h2>
+
+                <!-- مثال ۱ -->
+                <div class="example-box">
+                    <span class="example-title">مثال ۱: تاثیر کودهای شیمیایی</span>
+                    <p class="text-gray-700 mb-3">آیا تفاوت معنی‌داری بین سه نوع کود A, B, C وجود دارد؟ (\(\alpha = 0.05\))</p>
+                    
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr><th>گروه</th><th>داده‌ها</th><th>رتبه‌ها</th><th>مجموع (\(R_j\))</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>A</td><td>10, 12, 14</td><td>1, 2, 3</td><td>6</td></tr>
+                                <tr><td>B</td><td>20, 22, 25</td><td>4, 5, 6</td><td>15</td></tr>
+                                <tr><td>C</td><td>30, 32, 35</td><td>7, 8, 9</td><td>24</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <p class="text-gray-800 mt-2 font-bold">محاسبه:</p>
+                    <div class="formula-card">
+                        \[ H = \frac{12}{90} \left( \frac{36}{3} + \frac{225}{3} + \frac{576}{3} \right) - 30 = 7.2 \]
+                    </div>
+                    <p class="text-green-700 font-bold mt-2">
+                        نتیجه: \(7.2 > 5.991\) (مقدار جدول) ← تفاوت معنی‌دار است.
+                    </p>
+                </div>
+
+                <!-- مثال ۲ -->
+                <div class="example-box mt-8">
+                    <span class="example-title">مثال ۲: رضایت شغلی (با داده‌های تکراری)</span>
+                    <p class="text-gray-700 mb-3">داده‌های زیر با تکرار (5, 5) وجود دارند:</p>
+                    
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr><th>گروه</th><th>داده‌ها</th><th>رتبه‌ها</th><th>\(R_j\)</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>5, 5, 9</td><td>1.5, 1.5, 4</td><td>7</td></tr>
+                                <tr><td>2</td><td>7, 10, 12</td><td>3, 5, 6</td><td>14</td></tr>
+                                <tr><td>3</td><td>20, 22, 25</td><td>7, 8, 9</td><td>24</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <p class="text-gray-800 mt-2 font-bold">محاسبه:</p>
+                    <div class="formula-card">
+                        \[ H \approx 6.48 \]
+                    </div>
+                    <p class="text-green-700 font-bold mt-2">
+                        نتیجه: \(6.48 > 5.991\) ← تفاوت معنی‌دار است.
+                    </p>
+                </div>
+            </section>
+
+            <!-- بخش ۷: مقایسه -->
+            <section id="comparison" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-balance-scale ml-3"></i>
+                    ۷. تفاوت با آزمون فریدمن
+                </h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ویژگی</th>
+                            <th>کروسکال-والیس</th>
+                            <th>فریدمن</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>نوع نمونه</td>
+                            <td><strong>مستقل</strong> (گروه‌های متفاوت)</td>
+                            <td><strong>وابسته</strong> (تکراری/جفت‌شده)</td>
+                        </tr>
+                        <tr>
+                            <td>معادل پارامتری</td>
+                            <td>ANOVA یک‌طرفه</td>
+                            <td>Repeated Measures ANOVA</td>
+                        </tr>
+                        <tr>
+                            <td>روش رتبه‌بندی</td>
+                            <td>کل داده‌ها یکجا</td>
+                            <td>هر ردیف (فرد) جداگانه</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="highlight-box">
+                    <strong>چک‌لیست تشخیص:</strong> آیا افراد گروه ۱ همان افراد گروه ۲ هستند؟
+                    <br>
+                    خیر ← کروسکال-والیس | بله ← فریدمن
+                </div>
+            </section>
+
+            <!-- بخش ۸: خلاصه شب امتحان -->
+            <section id="cheat-sheet" class="glass-card rounded-2xl p-8 hover-lift" style="border: 2px dashed #f59e0b; background: #fffbeb;">
+                <h2 class="text-3xl font-bold mb-6 text-amber-700 flex items-center">
+                    <i class="fas fa-lightbulb ml-3"></i>
+                    ۸. خلاصه شب امتحان (Cheat Sheet)
+                </h2>
+                <ul class="space-y-3 text-gray-800 mr-6 list-disc">
+                    <li><strong>کلیدواژه:</strong> مقایسه ۳ گروه یا بیشتر + مستقل + ناپارامتری.</li>
+                    <li><strong>فرمول:</strong> فقط فرمول \(H\) را حفظ کنید.</li>
+                    <li><strong>الگوریتم:</strong> همه را یکجا بریزید ← رتبه‌دهی کنید ← فرمول بگذارید.</li>
+                    <li><strong>درجه آزادی:</strong> تعداد گروه‌ها منهای ۱ (\(k-1\)).</li>
+                    <li><strong>نتیجه:</strong> اگر \(H\) > عدد جدول بود ← فرض صفر رد می‌شود.</li>
+                </ul>
+            </section>
+
+        </div>
+
+    </div>
+
+    <!-- دکمه بازگشت به بالا -->
+    <button id="back-to-top" title="بازگشت به بالا">
+        <i class="fas fa-arrow-up\"></i>
+    </button>
+
+    <!-- چت بات هوشمند -->
+    <div id="chat-toggle">
+        <i class="fas fa-robot"></i> دستیار هوشمند
+    </div>
+
+    <div id="chat-widget">
+        <div id="chat-header">
+            <span><i class="fas fa-robot ml-2"></i>دستیار آماری</span>
+            <span style="cursor: pointer;" onclick="toggleChat()"><i class="fas fa-times"></i></span>
+        </div>
+        <div id="chat-messages">
+            <div class="message bot">
+                سلام! من دستیار هوشمند شما هستم. هر سوالی درباره آزمون کروسکال-والیس دارید بپرسید!
+            </div>
+        </div>
+        <div id="chat-input-area">
+            <input type="text" id="chat-input" placeholder="سوال خود را بپرسید...">
+            <button id="chat-send"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
 
-    <footer class="py-10 border-t border-slate-800/50 bg-darker/95">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-slate-500 text-sm">&copy; 2026 امیرعلی سطوتی</p>
-        </div>
+    <!-- Footer -->
+    <footer class="glass-card mx-auto max-w-5xl mb-8 rounded-2xl p-6 text-center">
+        <p class="text-gray-700">
+            <i class="fas fa-university ml-2"></i>
+            درسنامه جامع آمار ناپارامتری
+        </p>
+        <p class="text-sm text-gray-600 mt-2">
+            © 2026 - تهیه شده برای دانشجویان آمار
+        </p>
     </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Scroll scripts
+        const backToTopButton = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            backToTopButton.classList.toggle('show', window.pageYOffset > 300);
+        });
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Sidebar active link on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const sidebarLinks = document.querySelectorAll('.sidebar-link');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                if (window.pageYOffset >= (section.offsetTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            sidebarLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Chatbot functionality
+        const chatWidget = document.getElementById('chat-widget');
+        const chatToggle = document.getElementById('chat-toggle');
+        const chatInput = document.getElementById('chat-input');
+        const chatSend = document.getElementById('chat-send');
+        const chatMessages = document.getElementById('chat-messages');
+
+        function toggleChat() {
+            if (chatWidget.style.display === 'none' || chatWidget.style.display === '') {
+                chatWidget.style.display = 'flex';
+                chatToggle.style.display = 'none';
+            } else {
+                chatWidget.style.display = 'none';
+                chatToggle.style.display = 'flex';
+            }
+        }
+
+        chatToggle.addEventListener('click', toggleChat);
+
+        function addMessage(text, sender) {
+            const div = document.createElement('div');
+            div.className = `message ${sender}`;
+            div.textContent = text;
+            chatMessages.appendChild(div);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function handleChat() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            addMessage(text, 'user');
+            chatInput.value = '';
+
+            // Simple responses based on keywords
+            setTimeout(() => {
+                let response = "متوجه نشدم، لطفا سوال دقیق‌تری بپرسید.";
+                
+                if (text.includes("کروسکال") || text.includes("هدف")) {
+                    response = "هدف آزمون بررسی این است که آیا k جامعه مستقل دارای توزیع یکسان هستند یا خیر.";
+                } else if (text.includes("فریدمن") || text.includes("تفاوت")) {
+                    response = "تفاوت اصلی: کروسکال-والیس برای گروه‌های مستقل و فریدمن برای گروه‌های وابسته (تکراری) است.";
+                } else if (text.includes("فرمول")) {
+                    response = "فرمول H = 12/N(N+1) * Σ(R²/n) - 3(N+1) است.";
+                } else if (text.includes("مثال")) {
+                    response = "دو مثال کامل (کودهای شیمیایی و رضایت شغلی) در متن درسنامه وجود دارد.";
+                } else if (text.includes("سلام")) {
+                    response = "سلام! من آماده‌ام تا به سوالات شما درباره آزمون کروسکال-والیس پاسخ دهم.";
+                }
+
+                addMessage(response, 'bot');
+            }, 1000);
+        }
+
+        chatSend.addEventListener('click', handleChat);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleChat();
+        });
+    </script>
+
 </body>
 </html>
