@@ -1,50 +1,924 @@
 <!DOCTYPE html>
-<html lang='fa' dir='rtl'>
+<html lang="fa" dir="rtl" class="scroll-smooth">
 <head>
-  <meta charset='UTF-8'>
-  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-  <title>آزمون فریدمن (Friedman Test)</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آزمون فریدمن (Friedman Test)</title>
+
+    <!-- فونت‌ها و کتابخانه‌ها -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- تنظیمات تم -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        accent: {
+                            light: '#8b5cf6',
+                            DEFAULT: '#7c3aed',
+                            dark: '#6d28d9'
+                        },
+                        dark: {
+                            bg: '#0f172a',
+                            card: '#1e293b',
+                            border: '#334155'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- استایل‌های CSS سفارشی -->
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
+
+        * {
+            font-family: Vazirmatn, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            min-height: 100vh;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .chat-widget {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .chat-body {
+            display: none;
+            width: 380px;
+            height: 500px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            flex-direction: column;
+        }
+
+        .chat-body.active {
+            display: flex;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            max-width: 80%;
+        }
+
+        .message.user {
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            color: white;
+            margin-right: auto;
+        }
+
+        .message.ai {
+            background: #f3f4f6;
+            color: #1f2937;
+            margin-left: auto;
+        }
+
+        .sidebar-link {
+            display: block;
+            padding: 10px 16px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            color: #475569;
+        }
+
+        .sidebar-link:hover {
+            background: #f1f5f9;
+            color: #7c3aed;
+            transform: translateX(-4px);
+        }
+
+        .sidebar-link.active {
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            color: white;
+        }
+
+        .formula-card {
+            background: #fef3c7;
+            border-right: 4px solid #f59e0b;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+
+        .example-card {
+            background: #dbeafe;
+            border-right: 4px solid #3b82f6;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+
+        .warning-card {
+            background: #fee2e2;
+            border-right: 4px solid #ef4444;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+
+        .success-card {
+            background: #d1fae5;
+            border-right: 4px solid #10b981;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+
+        .info-card {
+            background: #e0f2fe;
+            border-right: 4px solid #0ea5e9;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #e5e7eb;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-blue {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-green {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-yellow {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        #back-to-top {
+            position: fixed;
+            bottom: 90px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s;
+            z-index: 1000;
+        }
+
+        #back-to-top:hover {
+            transform: translateY(-3px);
+        }
+
+        #back-to-top.show {
+            display: flex;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fadeInUp {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .cheat-sheet {
+            background: #fffbeb;
+            border: 2px dashed #fcd34d;
+            position: relative;
+            padding: 24px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .cheat-sheet::before {
+            content: '💡 چک‌لیست نهایی';
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: #fff;
+            padding: 0 10px;
+            font-weight: bold;
+            color: #d97706;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #7c3aed;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .example-box {
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .example-title {
+            color: #15803d;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .highlight-box {
+            background-color: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1e3a8a;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .important-note {
+            background-color: #fee2e2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            margin: 15px 0;
+            color: #7f1d1d;
+        }
+    </style>
 </head>
-<body>
-  <header>
-    <h1>آزمون فریدمن (Friedman Test)</h1>
-    <p>معادل ناپارامتری آنالیز واریانس با اندازه های تکراری برای مقایسه چند تیمار روی یک گروه یکسان از افراد.</p>
-  </header>
 
-  <main>
-    <section>
-      <h2>۱. کاربرد آزمون</h2>
-      <p>هر زمان بخواهیم اثر \(k\) تیمار مختلف را روی همان افراد یا همان واحدهای آزمایشی مقایسه کنیم و فرض نرمال بودن یا فاصله ای بودن داده ها برقرار نباشد، از آزمون فریدمن استفاده می شود[file:7].</p>
-      <p>نمونه های کلاسیک شامل مقایسه چند رژیم غذایی بر روی گروهی از افراد در زمان های مختلف یا مقایسه نظر چند داور روی همان شرکت کنندگان است[file:7].</p>
-    </section>
+<body class="antialiased font-sans">
 
-    <section>
-      <h2>۲. فرضیه ها</h2>
-      <p>فرض صفر: همه تیمارها اثر یکسانی دارند و میانگین رتبه های آنها برابر است.</p>
-      <p>فرض مقابل: حداقل دو تیمار از نظر اثر با هم تفاوت معنی دار دارند[file:7].</p>
-    </section>
+    <!-- نوار ناوبری بالا -->
+    <nav class="fixed w-full z-50 glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <i class="fas fa-chart-line text-2xl text-white"></i>
+                    <span class="text-white font-bold text-xl">آزمون فریدمن</span>
+                </div>
+                <div class="hidden md:flex space-x-6 space-x-reverse text-white">
+                    <a href="#intro" class="hover:text-yellow-300 transition">کاربرد</a>
+                    <a href="#steps" class="hover:text-yellow-300 transition">مراحل</a>
+                    <a href="#examples" class="hover:text-yellow-300 transition">مثال‌ها</a>
+                    <a href="#comparison" class="hover:text-yellow-300 transition">مقایسه</a>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-    <section>
-      <h2>۳. مراحل انجام آزمون</h2>
-      <ol>
-        <li>چیدن داده ها در قالب یک جدول \(n \times k\) که در آن سطرها افراد یا بلوک ها و ستون ها تیمارها هستند[file:7].</li>
-        <li>در هر سطر، مقادیر را از کوچک به بزرگ رتبه بندی می کنیم و در صورت تساوی، رتبه میانگین می دهیم[file:7].</li>
-        <li>رتبه های هر ستون را جمع می کنیم تا \(R_j\) یعنی مجموع رتبه های تیمار \(j\) ام به دست آید[file:7].</li>
-        <li>آماره آزمون \( \chi_r^2 \) را با فرمول استاندارد فریدمن محاسبه می کنیم و با مقدار بحرانی کای دو مقایسه می کنیم[file:7].</li>
-      </ol>
-    </section>
+    <!-- هدر اصلی -->
+    <header class="pt-32 pb-20 px-4">
+        <div class="max-w-4xl mx-auto text-center text-white">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 animate-fadeInUp">
+                آزمون فریدمن
+            </h1>
+            <p class="text-xl md:text-2xl mb-4 opacity-90 animate-fadeInUp">
+                (Friedman Test)
+            </p>
+            <p class="text-lg mb-4 opacity-80 animate-fadeInUp">
+                جایگزین ناپارامتری تحلیل واریانس با اندازه‌گیری‌های مکرر (One-Way Repeated Measures ANOVA)
+            </p>
+            <div class="flex justify-center gap-4 mt-8 animate-fadeInUp">
+                <span class="badge badge-blue"><i class="fas fa-book"></i> 10 بخش</span>
+                <span class="badge badge-green"><i class="fas fa-calculator"></i> 3 مثال</span>
+                <span class="badge badge-yellow"><i class="fas fa-table"></i> 5 جدول</span>
+            </div>
+        </div>
+    </header>
 
-    <section>
-      <h2>۴. مثال خلاصه</h2>
-      <p>در مثالی با سه رژیم و چهار فرد، پس از رتبه دهی سطری، مجموع رتبه ها برای سه رژیم به ترتیب ۴، ۸ و ۱۲ می شود و با قرار دادن در فرمول، آماره \( \chi_r^2 = 8 \) به دست می آید[file:7].</p>
-      <p>با توجه به اینکه درجه آزادی برابر دو است، مقدار بحرانی کای دو در سطح 0.05 حدود 5.99 است و چون 8 از آن بزرگتر است، فرض صفر رد و نتیجه گرفته می شود که رژیم ها تفاوت معنی دار دارند[file:7].</p>
-    </section>
+    <!-- چیدمان اصلی صفحه -->
+    <div class="max-w-7xl mx-auto px-4 pb-20 grid lg:grid-cols-4 gap-8">
 
-    <section>
-      <h2>۵. ارتباط با آزمون کروسکال والیس</h2>
-      <p>هر دو آزمون از رتبه ها استفاده می کنند، اما کروسکال والیس برای گروه های مستقل و فریدمن برای اندازه های تکراری روی همان افراد به کار می رود[file:10][file:7].</p>
-      <p>در فریدمن رتبه بندی در هر سطر جداگانه انجام می شود، در حالی که در کروسکال والیس همه داده ها با هم رتبه بندی می شوند[file:10][file:7].</p>
-    </section>
-  </main>
+        <!-- نوار کناری -->
+        <aside class="hidden lg:block col-span-1">
+            <div class="sticky top-24">
+                <div class="glass-card rounded-2xl p-6">
+                    <h3 class="font-bold text-lg mb-4 gradient-text">
+                        <i class="fas fa-list"></i> فهرست سریع
+                    </h3>
+                    <nav class="space-y-2">
+                        <a href="#intro" class="sidebar-link">
+                            <i class="fas fa-star"></i> کاربرد آزمون
+                        </a>
+                        <a href="#assumptions" class="sidebar-link">
+                            <i class="fas fa-check-circle"></i> پیش‌فرض‌ها
+                        </a>
+                        <a href="#hypothesis" class="sidebar-link">
+                            <i class="fas fa-flask"></i> فرضیه‌ها
+                        </a>
+                        <a href="#steps" class="sidebar-link">
+                            <i class="fas fa-list-ol"></i> مراحل انجام
+                        </a>
+                        <a href="#formula" class="sidebar-link">
+                            <i class="fas fa-calculator"></i> فرمول محاسباتی
+                        </a>
+                        <a href="#decision" class="sidebar-link">
+                            <i class="fas fa-chart-line"></i> تصمیم‌گیری
+                        </a>
+                        <a href="#posthoc" class="sidebar-link">
+                            <i class="fas fa-search-plus"></i> آزمون‌های تعقیبی
+                        </a>
+                        <a href="#comparison" class="sidebar-link">
+                            <i class="fas fa-balance-scale"></i> مقایسه
+                        </a>
+                        <a href="#examples" class="sidebar-link">
+                            <i class="fas fa-code"></i> مثال‌ها
+                        </a>
+                        <a href="#checklist" class="sidebar-link">
+                            <i class="fas fa-graduation-cap"></i> چک‌لیست
+                        </a>
+                    </nav>
+
+                    <div class="mt-8 p-4 bg-gradient-to-br from-purple-600 to-violet-600 rounded-xl text-white text-center">
+                        <i class="fas fa-robot text-3xl mb-2"></i>
+                        <p class="text-sm mb-3">سوال داری؟ از دستیار هوش مصنوعی بپرس!</p>
+                        <button onclick="toggleChat()" class="bg-white text-purple-600 px-4 py-2 rounded-lg text-sm font-bold hover:bg-gray-100 transition">
+                            <i class="fas fa-comments"></i> شروع چت
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- محتوای اصلی -->
+        <div class="col-span-1 lg:col-span-3 space-y-8">
+
+            <!-- بخش ۱: کاربرد آزمون -->
+            <section id="intro" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-star ml-3"></i>
+                    ۱. کاربرد آزمون (Application)
+                </h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    این آزمون زمانی استفاده می‌شود که بخواهیم تفاوت بین سه یا بیشتر گروه وابسته (یا شرایط مختلف) را بررسی کنیم، اما داده‌های ما شرایط استفاده از آزمون‌های پارامتریک (مانند توزیع نرمال) را ندارند.
+                </p>
+                <div class="highlight-box">
+                    <strong>موارد استفاده اصلی:</strong>
+                    <ul class="mr-6 mt-2 space-y-1">
+                        <li>زمانی که متغیر وابسته در سطح سنجش رتبه‌ای (Ordinal) است.</li>
+                        <li>زمانی که توزیع داده‌ها نرمال نیست.</li>
+                        <li>زمانی که نمونه‌ها همبسته (Related) هستند (مثلاً یک گروه از افراد در سه زمان مختلف تست شده‌اند).</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- بخش ۲: پیش‌فرض‌ها -->
+            <section id="assumptions" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-check-circle ml-3"></i>
+                    ۲. پیش‌فرض‌های آزمون (Assumptions)
+                </h2>
+                <p class="text-gray-700 leading-relaxed mb-4">برای انجام این آزمون، شرایط زیر باید برقرار باشد:</p>
+                <ul class="space-y-2 text-gray-700 mr-6">
+                    <li>یک گروه نمونه وجود دارد که در \(k\) موقعیت یا شرایط مختلف اندازه‌گیری شده‌اند (اندازه‌گیری مکرر).</li>
+                    <li>متغیر وابسته باید حداقل در سطح سنجش رتبه‌ای باشد.</li>
+                    <li>نمونه‌ها به صورت تصادفی انتخاب شده باشند.</li>
+                    <li>مشاهدات درون بلوک‌ها مستقل هستند، اما اندازه‌گیری‌های داخل هر بلوک (شرایط مختلف برای یک فرد) وابسته هستند.</li>
+                </ul>
+            </section>
+
+            <!-- بخش ۳: فرضیه‌ها -->
+            <section id="hypothesis" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-flask ml-3"></i>
+                    ۳. فرضیه‌های آماری (Hypotheses)
+                </h2>
+                <ul class="space-y-4">
+                    <li>
+                        <strong class="text-blue-600">فرضیه صفر (\(H_0\)):</strong> 
+                        <span class="text-gray-700">هیچ تفاوت معناداری بین رتبه‌های شرایط مختلف (تیمارها) وجود ندارد. (توزیع متغیر در تمام گروه‌ها یکسان است).</span>
+                        <div class="formula-card text-center" dir="ltr">
+                            $$H_0: M_1 = M_2 = \dots = M_k$$
+                        </div>
+                        <div style="text-align:center; font-size:0.9em; color:#666;">(میانگین رتبه‌ها برابر است)</div>
+                    </li>
+                    <li>
+                        <strong class="text-red-600">فرضیه مقابل (\(H_1\)):</strong>
+                        <span class="text-gray-700">حداقل بین دو مورد از شرایط (تیمارها)، تفاوت معناداری وجود دارد. (توزیع‌ها یکسان نیستند).</span>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- بخش ۴: مراحل انجام -->
+            <section id="steps" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-list-ol ml-3"></i>
+                    ۴. مراحل انجام آزمون و رتبه‌بندی
+                </h2>
+                <div class="important-note">
+                    <strong>⚠️ نکته کلیدی رتبه‌بندی:</strong> رتبه‌بندی باید در هر سطر (برای هر فرد) به صورت جداگانه انجام شود.
+                </div>
+                <ol class="space-y-3 text-gray-700 leading-relaxed mr-6">
+                    <li>
+                        <strong>مرتب‌سازی داده‌ها:</strong> داده‌ها را در یک جدول مرتب می‌کنیم (سطرها: افراد/بلوک‌ها، ستون‌ها: شرایط).
+                    </li>
+                    <li>
+                        <strong>رتبه‌دهی:</strong> برای هر فرد (در هر سطر)، نمرات را از کوچک به بزرگ رتبه‌بندی می‌کنیم (از ۱ تا \(k\)).
+                        <ul class="mr-6 mt-2 space-y-1">
+                            <li>اگر نمرات تکراری (Tied) وجود داشته باشد، میانگین رتبه‌ها به آن‌ها اختصاص می‌یابد.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>محاسبه مجموع رتبه‌ها:</strong> مجموع رتبه‌های هر ستون (شرایط) را محاسبه می‌کنیم که با \(R_j\) نشان داده می‌شود.
+                    </li>
+                </ol>
+            </section>
+
+            <!-- بخش ۵: فرمول -->
+            <section id="formula" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-calculator ml-3"></i>
+                    ۵. فرمول محاسباتی (Formula)
+                </h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    آماره آزمون فریدمن معمولاً با نماد \(\chi^2_r\) یا \(Fr\) نشان داده می‌شود:
+                </p>
+                
+                <div class="formula-card text-center" dir="ltr">
+                    $$\chi^2_r = \left[ \frac{12}{N k (k+1)} \sum_{j=1}^{k} R_j^2 \right] - 3N(k+1)$$
+                </div>
+
+                <h3 class="text-2xl font-bold mt-8 mb-4">راهنمای نمادها:</h3>
+                <ul class="space-y-2 text-gray-700">
+                    <li><span class="badge badge-blue">\(N\)</span> تعداد آزمودنی‌ها (تعداد سطرها).</li>
+                    <li><span class="badge badge-blue">\(k\)</span> تعداد شرایط یا تیمارها (تعداد ستون‌ها).</li>
+                    <li><span class="badge badge-blue">\(R_j\)</span> مجموع رتبه‌ها برای هر ستون (شرایط).</li>
+                    <li><span class="badge badge-blue">\(\sum R_j^2\)</span> مجموع توان دومِ مجموع رتبه‌ها.</li>
+                </ul>
+            </section>
+
+            <!-- بخش ۶: تصمیم‌گیری -->
+            <section id="decision" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-chart-line ml-3"></i>
+                    ۶. تصمیم‌گیری و تفسیر (Decision Rule)
+                </h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    مقدار آماره محاسبه شده (\(\chi^2_r\)) را با مقدار بحرانی از جدول توزیع خی-دو (Chi-Square) مقایسه می‌کنیم.
+                </p>
+                
+                <ul class="space-y-2 text-gray-700">
+                    <li><strong>درجه آزادی (\(df\)):</strong> برابر است با تعداد گروه‌ها منهای یک (\(k-1\)).</li>
+                </ul>
+
+                <div class="success-card text-center">
+                    <strong class="block mb-2 text-lg">قاعده رد فرض صفر:</strong>
+                    <p class="text-gray-800 leading-relaxed mb-2">
+                        اگر \(\chi^2_{calculated} > \chi^2_{critical}\) باشد (یا P-value < 0.05)، فرض صفر رد می‌شود.
+                    </p>
+                    <div class="text-green-700 font-bold">
+                        نتیجه: تفاوت بین گروه‌ها معنادار است.
+                    </div>
+                </div>
+            </section>
+
+            <!-- بخش ۷: آزمون‌های تعقیبی -->
+            <section id="posthoc" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-search-plus ml-3"></i>
+                    ۷. آزمون‌های تعقیبی (Post-hoc Tests)
+                </h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    اگر آزمون فریدمن تفاوت معنادار را نشان داد، برای اینکه بفهمیم دقیقاً کدام گروه‌ها با هم تفاوت دارند، باید از آزمون‌های تعقیبی استفاده کنیم.
+                </p>
+                <p class="text-gray-700 leading-relaxed">
+                    یکی از روش‌های رایج، استفاده از <strong>آزمون ویلکاکسون (Wilcoxon)</strong> با <strong>تصحیح بونفرونی (Bonferroni correction)</strong> برای بررسی‌های دو به دو است.
+                </p>
+            </section>
+
+            <!-- بخش ۸: مقایسه -->
+            <section id="comparison" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-balance-scale ml-3"></i>
+                    ۸. مقایسه با آزمون کروسکال-والیس
+                </h2>
+                <p class="text-gray-700 leading-relaxed mb-4">تفاوت اصلی در <strong>مستقل</strong> یا <strong>وابسته</strong> بودن نمونه‌هاست.</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ویژگی</th>
+                            <th>کروسکال-والیس (Kruskal-Wallis)</th>
+                            <th>فریدمن (Friedman)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>نوع نمونه‌ها</strong></td>
+                            <td>۳ یا چند گروه <strong>مستقل</strong> (افراد متفاوت)</td>
+                            <td>۳ یا چند گروه <strong>وابسته</strong> (افراد یکسان/تکراری)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>سناریو مثال</strong></td>
+                            <td>۳۰ نفر متفاوت در ۳ گروه رژیم غذایی A, B, C</td>
+                            <td>۱۰ نفر یکسان که هر ۳ رژیم A, B, C را به نوبت گرفته‌اند</td>
+                        </tr>
+                        <tr>
+                            <td><strong>معادل پارامتریک</strong></td>
+                            <td>One-Way ANOVA</td>
+                            <td>Repeated Measures ANOVA</td>
+                        </tr>
+                        <tr>
+                            <td><strong>رتبه‌بندی</strong></td>
+                            <td>همه داده‌ها یکجا رتبه‌بندی می‌شوند</td>
+                            <td>داده‌ها در هر سطر جداگانه رتبه‌بندی می‌شوند</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- بخش ۹: مثال‌ها -->
+            <section id="examples" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-code ml-3"></i>
+                    ۹. مثال‌های حل شده
+                </h2>
+                
+                <!-- مثال ۱ -->
+                <div class="example-box">
+                    <span class="example-title">مثال ۱: تاثیر سه نوع رژیم غذایی (ساده)</span>
+                    <p class="text-gray-800 mb-3">۴ نفر هر کدام ۳ رژیم غذایی (A, B, C) را امتحان کرده‌اند. آیا رژیم‌ها تفاوت معنی‌داری دارند؟</p>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>فرد</th>
+                                <th>رژیم A (\(R_1\))</th>
+                                <th>رژیم B (\(R_2\))</th>
+                                <th>رژیم C (\(R_3\))</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>۱</td><td>1</td><td>2</td><td>3</td></tr>
+                            <tr><td>۲</td><td>1</td><td>2</td><td>3</td></tr>
+                            <tr><td>۳</td><td>1</td><td>2</td><td>3</td></tr>
+                            <tr><td>۴</td><td>1</td><td>2</td><td>3</td></tr>
+                            <tr style="background-color: #e0f2fe; font-weight: bold;">
+                                <td>مجموع (\(R_j\))</td>
+                                <td>4</td>
+                                <td>8</td>
+                                <td>12</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="text-gray-800 mt-4"><strong>محاسبه:</strong></p>
+                    <div class="formula-card" style="font-size: 0.9em;" dir="ltr">
+                        \(\sum R_j^2 = 224\) <br>
+                        \(\chi^2_r = \frac{12}{4(3)(4)} (224) - 3(4)(4) = 56 - 48 = 8\)
+                    </div>
+                    <p class="text-gray-800"><strong>نتیجه:</strong> \(8 > 5.99\) \(\leftarrow\) <span style="color:green; font-weight:bold;">فرض صفر رد می‌شود.</span> (رژیم‌ها تفاوت دارند)</p>
+                </div>
+
+                <!-- مثال ۲ -->
+                <div class="example-box mt-6">
+                    <span class="example-title">مثال ۲: ارزیابی داوران (با داده‌های تکراری)</span>
+                    <p class="text-gray-800 mb-3">آیا نظر ۳ داور در مورد ۵ شرکت‌کننده یکسان است؟ (برخی نمرات تکراری بوده‌اند)</p>
+                    
+                    <table>
+                        <thead>
+                            <tr><th>فرد</th><th>داور ۱</th><th>داور ۲</th><th>داور ۳</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>۱</td><td>1.5</td><td>1.5</td><td>3</td></tr>
+                            <tr><td>۲</td><td>3</td><td>1</td><td>2</td></tr>
+                            <tr><td>۳</td><td>2</td><td>2</td><td>2</td></tr>
+                            <tr><td>۴</td><td>1</td><td>2</td><td>3</td></tr>
+                            <tr><td>۵</td><td>2</td><td>1</td><td>3</td></tr>
+                            <tr style="background-color: #e0f2fe; font-weight: bold;">
+                                <td>مجموع (\(R_j\))</td>
+                                <td>9.5</td>
+                                <td>7.5</td>
+                                <td>13</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="text-gray-800 mt-4"><strong>محاسبه:</strong></p>
+                    <div class="formula-card" style="font-size: 0.9em;" dir="ltr">
+                        \(\sum R_j^2 = 315.5\) <br>
+                        \(\chi^2_r = \frac{12}{60} (315.5) - 60 = 63.1 - 60 = 3.1\)
+                    </div>
+                    <p class="text-gray-800"><strong>نتیجه:</strong> \(3.1 < 5.99\) \(\leftarrow\) <span style="color:#b91c1c; font-weight:bold;">فرض صفر رد نمی‌شود.</span> (تفاوت معنی‌دار نیست)</p>
+                </div>
+
+                <!-- مثال ۳ -->
+                <div class="example-box mt-6">
+                    <span class="example-title">مثال ۳: تاثیر مسکن‌ها (کامل)</span>
+                    <p class="text-gray-800 mb-3">بررسی اثر ۳ داروی مسکن روی ۵ بیمار (مدت زمان تسکین).</p>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th rowspan="2">بیمار</th>
+                                <th colspan="2">داروی A</th>
+                                <th colspan="2">داروی B</th>
+                                <th colspan="2">داروی C</th>
+                            </tr>
+                            <tr>
+                                <th style="font-size: 0.85em; background: #eef2ff;">ساعت</th>
+                                <th style="background: #e0e7ff; color: #7c3aed;">رتبه</th>
+                                <th style="font-size: 0.85em; background: #eef2ff;">ساعت</th>
+                                <th style="background: #e0e7ff; color: #7c3aed;">رتبه</th>
+                                <th style="font-size: 0.85em; background: #eef2ff;">ساعت</th>
+                                <th style="background: #e0e7ff; color: #7c3aed;">رتبه</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>۱</td><td>2</td><td><strong>1</strong></td><td>4</td><td><strong>2</strong></td><td>7</td><td><strong>3</strong></td></tr>
+                            <tr><td>۲</td><td>3</td><td><strong>1</strong></td><td>5</td><td><strong>2</strong></td><td>8</td><td><strong>3</strong></td></tr>
+                            <tr><td>۳</td><td>5</td><td><strong>2</strong></td><td>2</td><td><strong>1</strong></td><td>6</td><td><strong>3</strong></td></tr>
+                            <tr><td>۴</td><td>1</td><td><strong>1</strong></td><td>3</td><td><strong>2</strong></td><td>5</td><td><strong>3</strong></td></tr>
+                            <tr><td>۵</td><td>4</td><td><strong>1</strong></td><td>5</td><td><strong>2</strong></td><td>9</td><td><strong>3</strong></td></tr>
+                            <tr style="background-color: #f3e8ff; font-weight: bold; border-top: 2px solid #d8b4fe;">
+                                <td>مجموع (\(R_j\))</td>
+                                <td colspan="2" style="color: #7c3aed; font-size: 1.1em;">6</td>
+                                <td colspan="2" style="color: #7c3aed; font-size: 1.1em;">9</td>
+                                <td colspan="2" style="color: #7c3aed; font-size: 1.1em;">15</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="text-gray-800 mt-4"><strong>محاسبه و نتیجه:</strong></p>
+                    <div class="formula-card" style="font-size: 0.9em;" dir="ltr">
+                        \(\sum R_j^2 = 342\) <br>
+                        \(\chi^2_r = 68.4 - 60 = 8.4\)
+                    </div>
+                    <p class="text-gray-800"><strong>نتیجه:</strong> \(8.4 > 5.99\) \(\leftarrow\) <span style="color:green; font-weight:bold;">فرض صفر رد می‌شود.</span> (تفاوت معنی‌دار است)</p>
+                </div>
+            </section>
+
+            <!-- بخش ۱۰: چک‌لیست -->
+            <section id="checklist" class="glass-card rounded-2xl p-8 hover-lift cheat-sheet">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-graduation-cap ml-3"></i>
+                    ۱۰. چک‌لیست نهایی (برای جلوگیری از اشتباه)
+                </h2>
+                <p class="text-gray-700 mb-4">همیشه به این سوال پاسخ دهید:</p>
+                <div style="font-size: 1.1em; font-weight: bold; text-align: center; margin: 15px 0;">
+                    "آیا افراد حاضر در گروه ۱، همان افراد حاضر در گروه ۲ و ۳ هستند؟"
+                </div>
+                <ul class="space-y-2 text-gray-700">
+                    <li style="color: #b91c1c;">اگر پاسخ <strong>خیر</strong> است \(\leftarrow\) <strong>کروسکال-والیس</strong></li>
+                    <li style="color: #15803d;">اگر پاسخ <strong>بله</strong> است \(\leftarrow\) <strong>فریدمن</strong></li>
+                </ul>
+            </section>
+
+        </div>
+
+    </div>
+
+    <!-- چت‌بات هوش مصنوعی -->
+    <div class="chat-widget">
+        <div class="chat-body" id="chatBody">
+            <div class="bg-gradient-to-r from-purple-600 to-violet-600 text-white p-4 rounded-t-2xl flex justify-between items-center">
+                <div class="flex items-center">
+                    <i class="fas fa-robot text-2xl ml-2"></i>
+                    <span class="font-bold">دستیار هوش مصنوعی</span>
+                </div>
+                <button onclick="toggleChat()" class="text-white hover:bg-white hover:bg-opacity-20 rounded-full w-8 h-8 flex items-center justify-center">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message ai">
+                    سلام! من دستیار هوش مصنوعی شما هستم. درباره آزمون فریدمن چه سوالی دارید؟
+                </div>
+            </div>
+            <div class="p-4 border-t">
+                <div class="flex gap-2">
+                    <input 
+                        type="text" 
+                        id="chatInput" 
+                        placeholder="سوال خود را بنویسید..."
+                        class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        onkeypress="handleKeyPress(event)"
+                    >
+                    <button 
+                        onclick="sendMessage()" 
+                        class="bg-gradient-to-r from-purple-600 to-violet-600 text-white px-4 py-2 rounded-lg hover:opacity-90 transition"
+                    >
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- دکمه بازگشت به بالا -->
+    <button id="back-to-top" title="بازگشت به بالا">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer class="glass-card mx-auto max-w-5xl mb-8 rounded-2xl p-6 text-center">
+        <p class="text-gray-700">
+            <i class="fas fa-university ml-2"></i>
+            جزوه آموزشی آزمون فریدمن
+        </p>
+        <p class="text-sm text-gray-600 mt-2">
+            © 2026 - تهیه شده برای دانشجویان آمار
+        </p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mock AI responses
+        const mockResponses = {
+            'تفاوت': 'تفاوت اصلی بین فریدمن و کروسکال-والیس در نوع داده‌هاست:\n\n✅ فریدمن: برای داده‌های وابسته (همان افراد در شرایط مختلف)\n✅ کروسکال-والیس: برای داده‌های مستقل (افراد متفاوت)',
+            'رتبه': 'در آزمون فریدمن، رتبه‌بندی در هر سطر (برای هر فرد) به صورت جداگانه انجام می‌شود. اگر داده تکراری داشتید، میانگین رتبه‌ها را به آن‌ها اختصاص دهید.',
+            'فرمول': 'فرمول فریدمن:\n\nχ²ᵣ = [12/(Nk(k+1)) × ΣRⱼ²] - 3N(k+1)\n\nکه در آن:\nN = تعداد افراد\nk = تعداد گروه‌ها\nRⱼ = مجموع رتبه‌های هر ستون',
+            'مثال': 'مثال ساده: فرض کنید 5 نفر 3 رژیم غذایی را امتحان کرده‌اند. شما باید:\n\n1️⃣ برای هر فرد، رتبه 1 تا 3 بدهید\n2️⃣ رتبه‌های هر ستون را جمع کنید\n3️⃣ در فرمول قرار دهید',
+            'کی': 'از آزمون فریدمن زمانی استفاده کنید که:\n\n✓ بیش از 2 گروه دارید\n✓ همان افراد در همه گروه‌ها هستند\n✓ داده‌ها نرمال نیستند\n✓ داده‌ها رتبه‌ای هستند',
+            'default': 'سوال جالبی است! می‌توانید درباره موارد زیر بپرسید:\n\n📌 تفاوت فریدمن با کروسکال-والیس\n📌 نحوه رتبه‌بندی\n📌 فرمول محاسبه\n📌 مثال حل شده\n📌 کاربرد آزمون'
+        };
+
+        function toggleChat() {
+            document.getElementById('chatBody').classList.toggle('active');
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') sendMessage();
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            addMessage(message, 'user');
+            input.value = '';
+
+            setTimeout(() => {
+                const response = getResponse(message);
+                addMessage(response, 'ai');
+            }, 500);
+        }
+
+        function getResponse(message) {
+            const msg = message.toLowerCase();
+            
+            if (msg.includes('تفاوت') || msg.includes('مقایسه') || msg.includes('کروسکال')) {
+                return mockResponses['تفاوت'];
+            }
+            if (msg.includes('رتبه') || msg.includes('رنک')) {
+                return mockResponses['رتبه'];
+            }
+            if (msg.includes('فرمول') || msg.includes('محاسبه')) {
+                return mockResponses['فرمول'];
+            }
+            if (msg.includes('مثال') || msg.includes('نمونه')) {
+                return mockResponses['مثال'];
+            }
+            if (msg.includes('کی') || msg.includes('چه موقع') || msg.includes('کاربرد')) {
+                return mockResponses['کی'];
+            }
+            
+            return mockResponses['default'];
+        }
+
+        function addMessage(text, type) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            messageDiv.innerHTML = text.replace(/\n/g, '<br>');
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Scroll scripts
+        const backToTopButton = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            backToTopButton.classList.toggle('show', window.pageYOffset > 300);
+        });
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Sidebar active link on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const sidebarLinks = document.querySelectorAll('.sidebar-link');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                if (window.pageYOffset >= (section.offsetTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            sidebarLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>
