@@ -1,384 +1,259 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ضرایب همبستگی رتبه‌ای</title>
+  <title>ضرایب همبستگی رتبه‌ای (اسپیرمن و کندال)</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          colors: { accent: { light: '#8b5cf6', DEFAULT: '#7c3aed', dark: '#6d28d9' } }
+          colors: {
+            accent: { light: '#8b5cf6', DEFAULT: '#7c3aed', dark: '#6d28d9' }
+          },
+          fontFamily: { sans: ['Vazirmatn', 'system-ui'] }
         }
       }
     }
   </script>
   <style>
     @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
-    * { font-family: Vazirmatn, Tahoma, sans-serif; }
-    body {
-      background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
-      min-height: 100vh;
-      line-height: 1.8;
-      margin: 0;
-      padding: 0;
-    }
+    * { font-family: Vazirmatn, sans-serif; }
+    body { background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); min-height: 100vh; }
     .glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
-    .content-card { background: rgba(255, 255, 255, 0.95); padding: 2rem; border-radius: 16px; margin: 20px auto; max-width: 1200px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); }
-    h1, h2, h3, h4 { color: #7c3aed; }
-    h1 { font-size: 2.5rem; text-align: center; margin-bottom: 1rem; }
-    h2 { font-size: 2rem; margin-top: 2rem; margin-bottom: 1rem; border-bottom: 3px solid #7c3aed; padding-bottom: 0.5rem; }
-    h3 { font-size: 1.5rem; margin-top: 1.5rem; margin-bottom: 0.75rem; }
-    h4 { font-size: 1.2rem; margin-top: 1rem; margin-bottom: 0.5rem; }
-    table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.9rem; }
-    th, td { border: 1px solid #555; padding: 8px; text-align: center; }
+    .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); }
+    .gradient-text { background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hover-lift { transition: transform 0.3s ease; }
+    .hover-lift:hover { transform: translateY(-5px); }
+    .sidebar-link { display: block; padding: 10px 16px; border-radius: 8px; transition: all 0.2s; color: #475569; }
+    .sidebar-link:hover { background: #f1f5f9; color: #7c3aed; transform: translateX(-4px); }
+    .sidebar-link.active { background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); color: white; }
+    .formula-card { background: #fef3c7; border-right: 4px solid #f59e0b; padding: 16px; border-radius: 8px; margin: 16px 0; direction: ltr; text-align: center; font-weight: bold; }
+    .example-box { background: #fff7ed; border: 1px solid #fed7aa; border-radius: 8px; padding: 1.5rem; margin-top: 1.5rem; }
+    .example-title { color: #9a3412; font-weight: bold; display: block; margin-bottom: 10px; font-size: 1.1rem; }
+    .note { background: #ecfdf5; color: #065f46; padding: 15px; border-radius: 8px; border: 1px solid #a7f3d0; margin: 20px 0; }
+    .info-box { background: #fafafa; border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin: 16px 0; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    th, td { border: 1px solid #e5e7eb; padding: 12px; text-align: center; }
     th { background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); color: white; font-weight: 600; }
     tr:nth-child(even) { background: #f9fafb; }
-    .formula { display: block; background: #fef3c7; padding: 12px; margin: 12px 0; border-radius: 8px; border-right: 4px solid #f59e0b; direction: ltr; text-align: center; font-weight: bold; font-size: 1.1rem; }
-    .box { border: 1px solid #a78bfa; padding: 12px; border-radius: 8px; margin: 16px 0; background: #f5f3ff; }
-    .note { background: #ecfdf5; color: #065f46; padding: 15px; border-radius: 8px; border: 1px solid #a7f3d0; margin: 20px 0; }
-    ul, ol { margin: 0.5rem 0; padding-right: 1.5rem; }
-    li { margin: 0.25rem 0; }
-    code { background: #f5f5f5; padding: 2px 6px; border-radius: 4px; }
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+    .badge-blue { background: #dbeafe; color: #1e40af; }
+    .badge-green { background: #d1fae5; color: #065f46; }
+    #back-to-top { position: fixed; bottom: 20px; left: 20px; width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); color: white; border: none; cursor: pointer; display: none; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); z-index: 1000; }
+    #back-to-top.show { display: flex; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-fadeInUp { animation: fadeInUp 0.6s ease-out; }
   </style>
 </head>
-<body>
-  <div style="padding: 2rem 1rem;">
-    <div class="content-card">
-      <h1>خلاصه جامع ضرایب همبستگی رتبه‌ای</h1>
-      
-      <h2>ضریب همبستگی اسپیرمن (Spearman's Rank Correlation)</h2>
-      
-      <h3>تعریف و کاربرد</h3>
-      <div class="box">
-        <p>ضریب همبستگی رتبه‌ای اسپیرمن یک آزمون ناپارامتری برای بررسی رابطه بین دو متغیر بر اساس <strong>رتبه‌ها</strong> است و زمانی استفاده می‌شود که:</p>
-        <ul>
-          <li>حداقل یکی از متغیرها رتبه‌ای (Ordinal) باشد.</li>
-          <li>داده‌ها دارای داده‌های پرت (Outliers) باشند.</li>
-          <li>توزیع داده‌ها نرمال نباشد یا شکل آن نامشخص باشد.</li>
-        </ul>
-      </div>
-      
-      <h3>فرمول محاسبه ضریب اسپیرمن</h3>
-      <p>فرمول استاندارد ضریب اسپیرمن به صورت زیر است:</p>
-      <div class="formula">R<sub>s</sub> = 1 - ( 6 &Sigma; D<sub>i</sub><sup>2</sup> / ( n ( n<sup>2</sup> - 1 ) ) )</div>
-      <p>که در آن:</p>
-      <ul>
-        <li>D<sub>i</sub> = R<sub>i</sub> - S<sub>i</sub> (اختلاف بین رتبه‌های دو متغیر برای مشاهده i)</li>
-        <li>n: تعداد نمونه‌ها</li>
-        <li>R<sub>i</sub>: رتبه متغیر اول برای مشاهده i</li>
-        <li>S<sub>i</sub>: رتبه متغیر دوم برای مشاهده i</li>
-      </ul>
-      
-      <h3>مراحل محاسبه اسپیرمن</h3>
-      <ol>
-        <li>به هر مقدار از متغیر اول و دوم رتبه اختصاص دهید.</li>
-        <li>برای هر زوج داده، اختلاف رتبه‌ها را محاسبه کنید: D<sub>i</sub> = R<sub>i</sub> - S<sub>i</sub>.</li>
-        <li>مجذور اختلاف‌ها را حساب کنید و آن‌ها را جمع کنید: &Sigma; D<sub>i</sub><sup>2</sup>.</li>
-        <li>مقادیر n و &Sigma;D<sub>i</sub><sup>2</sup> را در فرمول قرار دهید و R<sub>s</sub> را به‌دست آورید.</li>
-      </ol>
-      
-      <h3>مثال حل شده ۱: نمره زبان و ریاضی (9 دانشجو)</h3>
-      <div class="box">
-        <p>مسئله: نمرات زبان و ریاضی ۹ دانشجو داده شده است. می‌خواهیم بدانیم آیا بین نمره زبان و ریاضی رابطه‌ای وجود دارد؟ (سطح معنی‌داری &alpha; = 0.05)</p>
-      </div>
-      
-      <h4>مرحله ۱: رتبه‌بندی داده‌ها و محاسبه D و D²</h4>
-      <table>
-        <thead>
-          <tr>
-            <th>دانشجو</th>
-            <th>رتبه زبان (R)</th>
-            <th>رتبه ریاضی (S)</th>
-            <th>D = R - S</th>
-            <th>D²</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>1</td><td>5</td><td>4</td><td>1</td><td>1</td></tr>
-          <tr><td>2</td><td>4</td><td>2</td><td>2</td><td>4</td></tr>
-          <tr><td>3</td><td>8</td><td>7</td><td>1</td><td>1</td></tr>
-          <tr><td>4</td><td>9</td><td>9</td><td>0</td><td>0</td></tr>
-          <tr><td>5</td><td>2</td><td>1</td><td>1</td><td>1</td></tr>
-          <tr><td>6</td><td>7</td><td>6</td><td>1</td><td>1</td></tr>
-          <tr><td>7</td><td>5</td><td>3</td><td>2</td><td>4</td></tr>
-          <tr><td>8</td><td>11</td><td>8</td><td>3</td><td>9</td></tr>
-          <tr><td>9</td><td>7</td><td>5</td><td>2</td><td>4</td></tr>
-          <tr style="background:#e9d5ff;font-weight:bold">
-            <td colspan="4"><strong>جمع &Sigma;D²</strong></td>
-            <td><strong>28</strong></td>
-          </tr>
-        </tbody>
-      </table>
-      
-      <h4>مرحله ۲: محاسبه ضریب اسپیرمن</h4>
-      <p>با n = 9 و &Sigma;D² = 28 داریم:</p>
-      <div class="formula">
-        R<sub>s</sub> = 1 - ( 6 &times; 28 / ( 9 ( 81 - 1 ) ) )<br>
-        = 1 - ( 168 / 720 )<br>
-        &approx; 0.767
-      </div>
-      
-      <h4>مرحله ۳: آزمون معنی‌داری (تقریب نرمال)</h4>
-      <p>آماره Z تقریبی برای اسپیرمن:</p>
-      <div class="formula">Z = R<sub>s</sub> &times; &radic;(n - 1)</div>
-      <p>در این مثال:</p>
-      <div class="formula">
-        Z &approx; 0.767 &times; &radic;8 &approx; 0.767 &times; 2.828 &approx; 2.16
-      </div>
-      <p style="color:green;font-weight:bold">چون Z = 2.16 &gt; 1.96، در سطح 0.05 فرض صفر رد می‌شود و نتیجه می‌گیریم بین نمره زبان و ریاضی رابطه معنی‌دار وجود دارد.</p>
-      
-      <h3>مثال حل شده ۲: رتبه‌بندی دو داور (8 متقاضی)</h3>
-      <div class="box">
-        <p>داده‌ها:</p>
-        <ul>
-          <li>داور ۱: 5، 8، 4، 3، 6، 2، 7، 1</li>
-          <li>داور ۲: 7، 5، 4، 2، 8، 1، 6، 3</li>
-        </ul>
-      </div>
-      
-      <h4>محاسبه اختلاف‌ها</h4>
-      <table>
-        <thead>
-          <tr>
-            <th>متقاضی</th>
-            <th>رتبه داور ۱ (R)</th>
-            <th>رتبه داور ۲ (S)</th>
-            <th>D = R - S</th>
-            <th>D²</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>1</td><td>5</td><td>7</td><td>-2</td><td>4</td></tr>
-          <tr><td>2</td><td>8</td><td>5</td><td>3</td><td>9</td></tr>
-          <tr><td>3</td><td>4</td><td>4</td><td>0</td><td>0</td></tr>
-          <tr><td>4</td><td>3</td><td>2</td><td>1</td><td>1</td></tr>
-          <tr><td>5</td><td>6</td><td>8</td><td>-2</td><td>4</td></tr>
-          <tr><td>6</td><td>2</td><td>1</td><td>1</td><td>1</td></tr>
-          <tr><td>7</td><td>7</td><td>6</td><td>1</td><td>1</td></tr>
-          <tr><td>8</td><td>1</td><td>3</td><td>-2</td><td>4</td></tr>
-          <tr style="background:#e9d5ff;font-weight:bold">
-            <td colspan="4"><strong>جمع &Sigma;D²</strong></td>
-            <td><strong>24</strong></td>
-          </tr>
-        </tbody>
-      </table>
-      
-      <h4>محاسبه ضریب اسپیرمن و آزمون Z</h4>
-      <p>با n = 8 و &Sigma;D² = 24 داریم:</p>
-      <div class="formula">
-        R<sub>s</sub> = 1 - ( 6 &times; 24 / ( 8 ( 64 - 1 ) ) )<br>
-        = 1 - ( 144 / 504 )<br>
-        &approx; 0.714
-      </div>
-      <p>آماره Z:</p>
-      <div class="formula">
-        Z &approx; 0.714 &times; &radic;7 &approx; 1.89
-      </div>
-      <p style="color:#b91c1c;font-weight:bold">چون Z = 1.89 &lt; 1.96، فرض صفر رد نمی‌شود؛ یعنی با این حجم نمونه، شواهد کافی برای معنی‌دار بودن رابطه نداریم.</p>
-      
-      <hr style="margin: 40px 0; border: 0; border-top: 2px solid #7c3aed;">
-      
-      <h2>ضریب همبستگی کندال (Kendall's Tau)</h2>
-      
-      <h3>تعریف و مفهوم</h3>
-      <p>ضریب کندال بر اساس مقایسه زوج‌های مرتب‌شده داده‌ها تعریف می‌شود و میزان توافق یا عدم توافق رتبه‌ها را می‌سنجد.</p>
-      <ul>
-        <li><strong>هماهنگ (Concordant)</strong>: زوج‌هایی که جهت تغییرات آن‌ها یکسان است.</li>
-        <li><strong>ناهماهنگ (Discordant)</strong>: زوج‌هایی که جهت تغییرات آن‌ها مخالف است.</li>
-      </ul>
-      
-      <h3>فرمول محاسبه کندال</h3>
-      <div class="formula">
-        &tau; = ( 4P / ( n ( n - 1 ) ) ) - 1
-      </div>
-      <p>که در آن:</p>
-      <ul>
-        <li>P: تعداد زوج‌های هماهنگ</li>
-        <li>n: تعداد مشاهدات</li>
-      </ul>
-      
-      <h3>روش محاسبه P</h3>
-      <ol>
-        <li>رتبه‌های یکی از متغیرها را از 1 تا n مرتب کنید.</li>
-        <li>ردیف دوم را بر اساس همان ترتیب بنویسید.</li>
-        <li>برای هر عدد، تعداد اعداد بزرگ‌تر سمت راست را بشمارید.</li>
-        <li>مجموع این تعدادها = P</li>
-      </ol>
-      
-      <h3>مثال حل شده ۳: رتبه‌بندی دو معلم (8 دانشجو)</h3>
-      
-      <h4>مرحله ۱: مرتب‌سازی بر اساس معلم a</h4>
-      <table>
-        <thead>
-          <tr>
-            <th>دانشجو</th>
-            <th>معلم a</th>
-            <th>معلم b</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>1</td><td>1</td><td>2</td></tr>
-          <tr><td>2</td><td>2</td><td>1</td></tr>
-          <tr><td>3</td><td>3</td><td>4</td></tr>
-          <tr><td>4</td><td>4</td><td>5</td></tr>
-          <tr><td>5</td><td>5</td><td>3</td></tr>
-          <tr><td>6</td><td>6</td><td>6</td></tr>
-          <tr><td>7</td><td>7</td><td>8</td></tr>
-          <tr><td>8</td><td>8</td><td>7</td></tr>
-        </tbody>
-      </table>
-      
-      <h4>مرحله ۲: محاسبه P</h4>
-      <p>ردیف معلم b: {2, 1, 4, 5, 3, 6, 8, 7}</p>
-      <ul>
-        <li>۲: اعداد بزرگ‌تر سمت راست = {4, 5, 3, 6, 8, 7} → ۶ عدد</li>
-        <li>۱: اعداد بزرگ‌تر سمت راست = {4, 5, 3, 6, 8, 7} → ۶ عدد</li>
-        <li>۴: اعداد بزرگ‌تر سمت راست = {5, 6, 8, 7} → ۴ عدد</li>
-        <li>۵: اعداد بزرگ‌تر سمت راست = {6, 8, 7} → ۳ عدد</li>
-        <li>۳: اعداد بزرگ‌تر سمت راست = {6, 8, 7} → ۳ عدد</li>
-        <li>۶: اعداد بزرگ‌تر سمت راست = {8, 7} → ۲ عدد</li>
-        <li>۸: اعداد بزرگ‌تر سمت راست = {} → ۰ عدد</li>
-        <li>۷: سمت راست ندارد → ۰ عدد</li>
-      </ul>
-      <p><strong>P = 6 + 6 + 4 + 3 + 3 + 2 + 0 + 0 = 24</strong></p>
-      
-      <h4>مرحله ۳: محاسبه ضریب کندال</h4>
-      <p>با n = 8 و P = 24 داریم:</p>
-      <div class="formula">
-        &tau; = ( 4 &times; 24 / ( 8 &times; 7 ) ) - 1<br>
-        = 96 / 56 - 1<br>
-        &approx; 1.71 - 1<br>
-        = 0.71
-      </div>
-      
-      <h4>مرحله ۴: آزمون معنی‌داری</h4>
-      <p>واریانس تقریبی:</p>
-      <div class="formula">
-        Var( &tau; ) = 2 ( 2n + 5 ) / ( 9 n ( n - 1 ) )<br>
-        = 42 / 504 &approx; 0.083
-      </div>
-      <p>آماره Z:</p>
-      <div class="formula">
-        Z = &tau; / &radic;Var( &tau; ) = 0.71 / 0.288 &approx; 2.46
-      </div>
-      <p style="color:green;font-weight:bold">چون Z = 2.46 &gt; 1.96، فرض صفر رد می‌شود و بین نظرات دو معلم همبستگی معنی‌دار وجود دارد.</p>
-      
-      <h3>مثال حل شده ۴: ۱۰ کارگر و دو ارزیاب</h4>
-      <h4>داده‌های مرتب شده</h4>
-      <table>
-        <thead>
-          <tr>
-            <th>کارگر</th>
-            <th>داور ۱</th>
-            <th>داور ۲</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>1</td><td>1</td><td>2</td></tr>
-          <tr><td>2</td><td>2</td><td>3</td></tr>
-          <tr><td>3</td><td>3</td><td>1</td></tr>
-          <tr><td>4</td><td>4</td><td>5</td></tr>
-          <tr><td>5</td><td>5</td><td>4</td></tr>
-          <tr><td>6</td><td>6</td><td>6</td></tr>
-          <tr><td>7</td><td>7</td><td>8</td></tr>
-          <tr><td>8</td><td>8</td><td>7</td></tr>
-          <tr><td>9</td><td>9</td><td>10</td></tr>
-          <tr><td>10</td><td>10</td><td>9</td></tr>
-        </tbody>
-      </table>
-      
-      <h4>محاسبه P از روی ردیف داور ۲</h4>
-      <p>ردیف داور ۲: {2, 3, 1, 5, 4, 6, 8, 7, 10, 9}</p>
-      <ul>
-        <li>۲ → ۸ عدد بزرگ‌تر سمت راست</li>
-        <li>۳ → ۷ عدد بزرگ‌تر سمت راست</li>
-        <li>۱ → ۷ عدد بزرگ‌تر سمت راست</li>
-        <li>۵ → ۵ عدد بزرگ‌تر سمت راست</li>
-        <li>۴ → ۵ عدد بزرگ‌تر سمت راست</li>
-        <li>۶ → ۴ عدد بزرگ‌تر سمت راست</li>
-        <li>۸ → ۲ عدد بزرگ‌تر سمت راست</li>
-        <li>۷ → ۲ عدد بزرگ‌تر سمت راست</li>
-        <li>۱۰ → ۰ عدد</li>
-        <li>۹ → ۰ عدد</li>
-      </ul>
-      <p><strong>P = 8 + 7 + 7 + 5 + 5 + 4 + 2 + 2 + 0 + 0 = 40</strong></p>
-      
-      <h4>محاسبه τ و آزمون معنی‌داری</h4>
-      <p>با n = 10 و P = 40 داریم:</p>
-      <div class="formula">
-        &tau; = ( 4 &times; 40 / ( 10 &times; 9 ) ) - 1<br>
-        = 160 / 90 - 1<br>
-        &approx; 1.78 - 1<br>
-        = 0.78
-      </div>
-      <p>واریانس تقریبی:</p>
-      <div class="formula">
-        Var( &tau; ) = 50 / 810 &approx; 0.062
-      </div>
-      <p>آماره Z:</p>
-      <div class="formula">
-        Z = 0.78 / &radic;0.062 &approx; 0.78 / 0.249 &approx; 3.13
-      </div>
-      <p style="color:green;font-weight:bold">چون Z = 3.13 &gt; 1.96، فرض صفر رد می‌شود و بین دو ارزیاب، همبستگی بسیار معنی‌داری وجود دارد.</p>
-      
-      <hr style="margin: 40px 0; border: 0; border-top: 2px solid #7c3aed;">
-      
-      <h2>نکات کلیدی برای امتحان</h2>
-      
-      <h3>تفسیر مقدار ضریب همبستگی</h3>
-      <ul>
-        <li>نزدیک به +1: همبستگی مثبت قوی</li>
-        <li>نزدیک به 0: نبود رابطه خطی یا یکنوا</li>
-        <li>نزدیک به -1: همبستگی منفی قوی</li>
-      </ul>
-      
-      <h3>تفاوت اسپیرمن و کندال</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>ویژگی</th>
-            <th>اسپیرمن</th>
-            <th>کندال</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>مبنای محاسبه</td>
-            <td>بر اساس فاصله رتبه‌ها (D و D²)</td>
-            <td>بر اساس تعداد زوج‌های هماهنگ و ناهماهنگ (P و N)</td>
-          </tr>
-          <tr>
-            <td>پیچیدگی محاسبات</td>
-            <td>ساده‌تر برای محاسبه دستی</td>
-            <td>زمان‌برتر برای شمارش زوج‌ها</td>
-          </tr>
-          <tr>
-            <td>کارایی در نمونه‌های کوچک</td>
-            <td>خوب، اما حساس‌تر به داده‌های پرت</td>
-            <td>اغلب دقیق‌تر و باثبات‌تر در نمونه‌های کوچک</td>
-          </tr>
-          <tr>
-            <td>حساسیت به گره‌ها</td>
-            <td>کمتر تنظیم‌شده برای گره‌ها</td>
-            <td>نسخه‌های اصلاح‌شده (Tau-b و Tau-c) برای گره‌ها مناسب‌تر هستند</td>
-          </tr>
-        </tbody>
-      </table>
-      
-      <h3>فرض‌های آزمون همبستگی رتبه‌ای</h3>
-      <ul>
-        <li>H<sub>0</sub>: بین دو متغیر رابطه معنی‌داری وجود ندارد (مستقل هستند).</li>
-        <li>H<sub>1</sub>: بین دو متغیر رابطه معنی‌داری وجود دارد.</li>
-      </ul>
-      
-      <div class="note">
-        <h3 style="color:#065f46;margin-top:0">نکته مهم درباره معنی‌داری آماری</h3>
-        <p>اگر آماره Z محاسبه‌شده از مقدار بحرانی (مثلاً 1.96 برای &alpha; = 0.05 در آزمون دوطرفه) کمتر باشد، فرض صفر رد نمی‌شود، حتی اگر مقدار ضریب همبستگی از نظر عددی بزرگ به‌نظر برسد.</p>
+<body class="antialiased font-sans">
+  <nav class="fixed w-full z-50 glass">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center space-x-4 space-x-reverse">
+          <i class="fas fa-chart-line text-2xl text-white"></i>
+          <span class="text-white font-bold text-xl">ضرایب همبستگی رتبه‌ای</span>
+        </div>
       </div>
     </div>
+  </nav>
+
+  <header class="pt-32 pb-20 px-4">
+    <div class="max-w-4xl mx-auto text-center text-white">
+      <h1 class="text-5xl md:text-6xl font-bold mb-6 animate-fadeInUp">ضرایب همبستگی رتبه‌ای</h1>
+      <p class="text-xl md:text-2xl mb-4 opacity-90 animate-fadeInUp">اسپیرمن و کندال</p>
+      <div class="flex justify-center gap-4 mt-8 animate-fadeInUp">
+        <span class="badge badge-blue"><i class="fas fa-book"></i> 2 ضریب</span>
+        <span class="badge badge-green"><i class="fas fa-calculator"></i> 4 مثال</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 pb-20 grid lg:grid-cols-4 gap-8">
+    <aside class="hidden lg:block col-span-1">
+      <div class="sticky top-24">
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="font-bold text-lg mb-4 gradient-text"><i class="fas fa-list"></i> فهرست</h3>
+          <nav class="space-y-2">
+            <a href="#spearman" class="sidebar-link"><i class="fas fa-chart-bar"></i> اسپیرمن</a>
+            <a href="#sp-ex1" class="sidebar-link"><i class="fas fa-code"></i> مثال 1</a>
+            <a href="#sp-ex2" class="sidebar-link"><i class="fas fa-code"></i> مثال 2</a>
+            <a href="#kendall" class="sidebar-link"><i class="fas fa-link"></i> کندال</a>
+            <a href="#kd-ex3" class="sidebar-link"><i class="fas fa-code"></i> مثال 3</a>
+            <a href="#kd-ex4" class="sidebar-link"><i class="fas fa-code"></i> مثال 4</a>
+            <a href="#comp" class="sidebar-link"><i class="fas fa-balance-scale"></i> مقایسه</a>
+          </nav>
+        </div>
+      </div>
+    </aside>
+
+    <div class="col-span-1 lg:col-span-3 space-y-8">
+      <section id="spearman" class="glass-card rounded-2xl p-8 hover-lift">
+        <h2 class="text-3xl font-bold mb-6 gradient-text"><i class="fas fa-chart-bar ml-3"></i>ضریب اسپیرمن</h2>
+        <div class="info-box">
+          <p class="text-gray-700 leading-relaxed">آزمون ناپارامتری برای بررسی رابطه بین دو متغیر بر اساس رتبه‌ها. زمانی استفاده می‌شود که داده‌ها رتبه‌ای، دارای داده پرت، یا توزیع غیرنرمال باشند.</p>
+        </div>
+        <h3 class="text-xl font-bold mt-6 mb-3 text-purple-700">فرمول</h3>
+        <div class="formula-card">R<sub>s</sub> = 1 - ( 6 &Sigma; D<sub>i</sub><sup>2</sup> / ( n ( n<sup>2</sup> - 1 ) ) )</div>
+        <p class="text-gray-700">که در آن: D<sub>i</sub> = R<sub>i</sub> - S<sub>i</sub> (اختلاف رتبه‌ها)، n = تعداد نمونه‌ها</p>
+        <h3 class="text-xl font-bold mt-6 mb-3 text-purple-700">مراحل</h3>
+        <ol class="mr-6 space-y-1 text-gray-700 list-decimal">
+          <li>رتبه‌دهی به هر دو متغیر</li>
+          <li>محاسبه D = R - S</li>
+          <li>محاسبه D² و جمع آن‌ها</li>
+          <li>قراردادن در فرمول</li>
+        </ol>
+      </section>
+
+      <section id="sp-ex1" class="glass-card rounded-2xl p-8 hover-lift">
+        <h2 class="text-2xl font-bold mb-4 gradient-text"><i class="fas fa-code ml-3"></i>مثال 1: نمره زبان و ریاضی</h2>
+        <div class="example-box">
+          <span class="example-title">9 دانشجو - سطح معنی‌داری &alpha; = 0.05</span>
+          <table>
+            <tr><th>دانشجو</th><th>R</th><th>S</th><th>D</th><th>D²</th></tr>
+            <tr><td>1</td><td>5</td><td>4</td><td>1</td><td>1</td></tr>
+            <tr><td>2</td><td>4</td><td>2</td><td>2</td><td>4</td></tr>
+            <tr><td>3</td><td>8</td><td>7</td><td>1</td><td>1</td></tr>
+            <tr><td>4</td><td>9</td><td>9</td><td>0</td><td>0</td></tr>
+            <tr><td>5</td><td>2</td><td>1</td><td>1</td><td>1</td></tr>
+            <tr><td>6</td><td>7</td><td>6</td><td>1</td><td>1</td></tr>
+            <tr><td>7</td><td>5</td><td>3</td><td>2</td><td>4</td></tr>
+            <tr><td>8</td><td>11</td><td>8</td><td>3</td><td>9</td></tr>
+            <tr><td>9</td><td>7</td><td>5</td><td>2</td><td>4</td></tr>
+            <tr style="background:#f3e8ff;font-weight:bold"><td colspan="4">جمع</td><td>28</td></tr>
+          </table>
+          <p class="text-gray-800 mt-3"><strong>محاسبه:</strong></p>
+          <div class="formula-card">R<sub>s</sub> = 1 - (6 &times; 28) / (9 &times; 80) = 1 - 168/720 ≈ 0.767</div>
+          <p class="text-gray-800"><strong>آزمون:</strong> Z = 0.767 &times; √8 ≈ 2.16 > 1.96 → <span style="color:green;font-weight:bold">رابطه معنی‌دار</span></p>
+        </div>
+      </section>
+
+      <section id="sp-ex2" class="glass-card rounded-2xl p-8 hover-lift">
+        <h2 class="text-2xl font-bold mb-4 gradient-text"><i class="fas fa-code ml-3"></i>مثال 2: دو داور</h2>
+        <div class="example-box">
+          <span class="example-title">8 متقاضی</span>
+          <table>
+            <tr><th>متقاضی</th><th>R</th><th>S</th><th>D</th><th>D²</th></tr>
+            <tr><td>1</td><td>5</td><td>7</td><td>-2</td><td>4</td></tr>
+            <tr><td>2</td><td>8</td><td>5</td><td>3</td><td>9</td></tr>
+            <tr><td>3</td><td>4</td><td>4</td><td>0</td><td>0</td></tr>
+            <tr><td>4</td><td>3</td><td>2</td><td>1</td><td>1</td></tr>
+            <tr><td>5</td><td>6</td><td>8</td><td>-2</td><td>4</td></tr>
+            <tr><td>6</td><td>2</td><td>1</td><td>1</td><td>1</td></tr>
+            <tr><td>7</td><td>7</td><td>6</td><td>1</td><td>1</td></tr>
+            <tr><td>8</td><td>1</td><td>3</td><td>-2</td><td>4</td></tr>
+            <tr style="background:#f3e8ff;font-weight:bold"><td colspan="4">جمع</td><td>24</td></tr>
+          </table>
+          <p class="text-gray-800 mt-3">R<sub>s</sub> = 0.714، Z = 1.89 < 1.96 → <span style="color:#b91c1c;font-weight:bold">رابطه معنی‌دار نیست</span></p>
+        </div>
+      </section>
+
+      <section id="kendall" class="glass-card rounded-2xl p-8 hover-lift">
+        <h2 class="text-3xl font-bold mb-6 gradient-text"><i class="fas fa-link ml-3"></i>ضریب کندال</h2>
+        <p class="text-gray-700 leading-relaxed">بر اساس مقایسه زوج‌های مرتب‌شده و میزان توافق (هماهنگ) یا عدم توافق (ناهماهنگ) رتبه‌ها.</p>
+        <h3 class="text-xl font-bold mt-6 mb-3 text-purple-700">فرمول</h3>
+        <div class="formula-card">&tau; = ( 4P / ( n ( n - 1 ) ) ) - 1</div>
+        <p class="text-gray-700">P = تعداد زوج‌های هماهنگ، n = تعداد مشاهدات</p>
+        <h3 class="text-xl font-bold mt-6 mb-3 text-purple-700">روش محاسبه P</h3>
+        <ol class="mr-6 space-y-1 text-gray-700 list-decimal">
+          <li>رتبه‌های یک متغیر را از 1 تا n مرتب کنید</li>
+          <li>ردیف دوم را بر اساس همان ترتیب بنویسید</li>
+          <li>برای هر عدد، تعداد اعداد بزرگ‌تر سمت راست را بشمارید</li>
+          <li>جمع این تعدادها = P</li>
+        </ol>
+      </section>
+
+      <section id="kd-ex3" class="glass-card rounded-2xl p-8 hover-lift">
+        <h2 class="text-2xl font-bold mb-4 gradient-text"><i class="fas fa-code ml-3"></i>مثال 3: دو معلم</h2>
+        <div class="example-box">
+          <span class="example-title">8 دانشجو</span>
+          <table>
+            <tr><th>دانشجو</th><th>a</th><th>b</th></tr>
+            <tr><td>1</td><td>1</td><td>2</td></tr>
+            <tr><td>2</td><td>2</td><td>1</td></tr>
+            <tr><td>3</td><td>3</td><td>4</td></tr>
+            <tr><td>4</td><td>4</td><td>5</td></tr>
+            <tr><td>5</td><td>5</td><td>3</td></tr>
+            <tr><td>6</td><td>6</td><td>6</td></tr>
+            <tr><td>7</td><td>7</td><td>8</td></tr>
+            <tr><td>8</td><td>8</td><td>7</td></tr>
+          </table>
+          <p class="text-gray-800">ردیف b: {2,1,4,5,3,6,8,7}</p>
+          <p class="text-gray-800">P = 6+6+4+3+3+2+0+0 = 24</p>
+          <div class="formula-card">&tau; = (96/56) - 1 ≈ 0.71</div>
+          <p class="text-gray-800">Z = 2.46 > 1.96 → <span style="color:green;font-weight:bold">همبستگی معنی‌دار</span></p>
+        </div>
+      </section>
+
+      <section id="kd-ex4" class="glass-card rounded-2xl p-8 hover-lift">
+        <h2 class="text-2xl font-bold mb-4 gradient-text"><i class="fas fa-code ml-3"></i>مثال 4: 10 کارگر</h2>
+        <div class="example-box">
+          <span class="example-title">دو ارزیاب</span>
+          <table>
+            <tr><th>کارگر</th><th>داور 1</th><th>داور 2</th></tr>
+            <tr><td>1</td><td>1</td><td>2</td></tr>
+            <tr><td>2</td><td>2</td><td>3</td></tr>
+            <tr><td>3</td><td>3</td><td>1</td></tr>
+            <tr><td>4</td><td>4</td><td>5</td></tr>
+            <tr><td>5</td><td>5</td><td>4</td></tr>
+            <tr><td>6</td><td>6</td><td>6</td></tr>
+            <tr><td>7</td><td>7</td><td>8</td></tr>
+            <tr><td>8</td><td>8</td><td>7</td></tr>
+            <tr><td>9</td><td>9</td><td>10</td></tr>
+            <tr><td>10</td><td>10</td><td>9</td></tr>
+          </table>
+          <p class="text-gray-800">ردیف داور 2: {2,3,1,5,4,6,8,7,10,9}</p>
+          <p class="text-gray-800">P = 8+7+7+5+5+4+2+2+0+0 = 40</p>
+          <div class="formula-card">&tau; = (160/90) - 1 ≈ 0.78</div>
+          <p class="text-gray-800">Z = 3.13 > 1.96 → <span style="color:green;font-weight:bold">همبستگی بسیار معنی‌دار</span></p>
+        </div>
+      </section>
+
+      <section id="comp" class="glass-card rounded-2xl p-8 hover-lift">
+        <h2 class="text-3xl font-bold mb-6 gradient-text"><i class="fas fa-balance-scale ml-3"></i>مقایسه</h2>
+        <table>
+          <tr><th>ویژگی</th><th>اسپیرمن</th><th>کندال</th></tr>
+          <tr><td>مبنا</td><td>فاصله رتبه‌ها</td><td>زوج‌های هماهنگ</td></tr>
+          <tr><td>محاسبات</td><td>ساده‌تر</td><td>زمان‌برتر</td></tr>
+          <tr><td>حساسیت پرت</td><td>بیشتر</td><td>کمتر</td></tr>
+          <tr><td>گره‌ها</td><td>کمتر تعدیل‌شده</td><td>Tau-b مناسب‌تر</td></tr>
+        </table>
+        <div class="note">
+          <strong>نکته مهم:</strong> اگر Z < 1.96، فرض صفر رد نمی‌شود حتی اگر ضریب بزرگ باشد.
+        </div>
+      </section>
+    </div>
   </div>
+
+  <button id="back-to-top"><i class="fas fa-arrow-up"></i></button>
+  <footer class="glass-card mx-auto max-w-5xl mb-8 rounded-2xl p-6 text-center">
+    <p class="text-gray-700">© 2026 - آمار غیرپارامتریک</p>
+  </footer>
+
+  <script>
+    const btn=document.getElementById('back-to-top');
+    window.addEventListener('scroll',()=>{
+      btn.classList.toggle('show',window.pageYOffset>300);
+    });
+    btn.addEventListener('click',()=>{
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+    const sections=document.querySelectorAll('section[id]');
+    const links=document.querySelectorAll('.sidebar-link');
+    window.addEventListener('scroll',()=>{
+      let current='';
+      sections.forEach(s=>{
+        if(window.pageYOffset>=(s.offsetTop-200))
+          current=s.getAttribute('id');
+      });
+      links.forEach(l=>{
+        l.classList.remove('active');
+        if(l.getAttribute('href')==='#'+current)
+          l.classList.add('active');
+      });
+    });
+  </script>
 </body>
 </html>
