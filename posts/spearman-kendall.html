@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ضرایب همبستگی رتبه‌ای</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        accent: { light: '#8b5cf6', DEFAULT: '#7c3aed', dark: '#6d28d9' }
+                    },
+                    fontFamily: { sans: ['Vazirmatn', 'system-ui'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
+        * { font-family: Vazirmatn, sans-serif; }
+        body { background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); min-height: 100vh; }
+        .glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); }
+        .gradient-text { background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hover-lift { transition: transform 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-5px); }
+        .sidebar-link { display: block; padding: 10px 16px; border-radius: 8px; transition: all 0.2s; color: #475569; }
+        .sidebar-link:hover { background: #f1f5f9; color: #7c3aed; transform: translateX(-4px); }
+        .sidebar-link.active { background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); color: white; }
+        .formula-card { background: #fef3c7; border-right: 4px solid #f59e0b; padding: 16px; border-radius: 8px; margin: 16px 0; direction: ltr; text-align: center; font-weight: bold; }
+        .example-box { background: #fff7ed; border: 1px solid #fed7aa; border-radius: 8px; padding: 1.5rem; margin-top: 1.5rem; }
+        .example-title { color: #9a3412; font-weight: bold; display: block; margin-bottom: 10px; font-size: 1.1rem; }
+        .highlight-box { background: #fef2f2; border-right: 4px solid #ef4444; padding: 15px; border-radius: 8px; margin: 15px 0; }
+        .note { background: #ecfdf5; color: #065f46; padding: 15px; border-radius: 8px; border: 1px solid #a7f3d0; margin-top: 20px; }
+        .info-box { background: #fafafa; border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin: 16px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #e5e7eb; padding: 12px; text-align: center; }
+        th { background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); color: white; font-weight: 600; }
+        tr:nth-child(even) { background: #f9fafb; }
+        .badge { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+        .badge-blue { background: #dbeafe; color: #1e40af; }
+        .badge-green { background: #d1fae5; color: #065f46; }
+        .badge-yellow { background: #fef3c7; color: #92400e; }
+        #back-to-top { position: fixed; bottom: 20px; left: 20px; width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); color: white; border: none; cursor: pointer; display: none; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); z-index: 1000; }
+        #back-to-top.show { display: flex; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fadeInUp { animation: fadeInUp 0.6s ease-out; }
+    </style>
+</head>
+<body class="antialiased font-sans">
+    <nav class="fixed w-full z-50 glass"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex justify-between items-center h-16"><div class="flex items-center space-x-4 space-x-reverse"><i class="fas fa-chart-line text-2xl text-white"></i><span class="text-white font-bold text-xl">ضرایب همبستگی رتبه‌ای</span></div><div class="hidden md:flex space-x-6 space-x-reverse text-white"><a href="#spearman" class="hover:text-yellow-300 transition">اسپیرمن</a><a href="#kendall" class="hover:text-yellow-300 transition">کندال</a></div></div></div></nav>
+    <header class="pt-32 pb-20 px-4"><div class="max-w-4xl mx-auto text-center text-white"><h1 class="text-5xl md:text-6xl font-bold mb-6 animate-fadeInUp">ضرایب همبستگی رتبه‌ای</h1><p class="text-xl md:text-2xl mb-4 opacity-90 animate-fadeInUp">اسپیرمن و کندال</p><div class="flex justify-center gap-4 mt-8 animate-fadeInUp"><span class="badge badge-blue"><i class="fas fa-book"></i> 2 ضریب</span><span class="badge badge-green"><i class="fas fa-calculator"></i> 4 مثال</span></div></div></header>
+    <div class="max-w-7xl mx-auto px-4 pb-20 grid lg:grid-cols-4 gap-8"><aside class="hidden lg:block col-span-1"><div class="sticky top-24"><div class="glass-card rounded-2xl p-6"><h3 class="font-bold text-lg mb-4 gradient-text"><i class="fas fa-list"></i> فهرست</h3><nav class="space-y-2"><a href="#spearman" class="sidebar-link"><i class="fas fa-chart-bar"></i> اسپیرمن</a><a href="#kendall" class="sidebar-link"><i class="fas fa-link"></i> کندال</a></nav></div></div></aside><div class="col-span-1 lg:col-span-3 space-y-8"><section id="spearman" class="glass-card rounded-2xl p-8 hover-lift"><h2 class="text-3xl font-bold mb-6 gradient-text flex items-center"><i class="fas fa-chart-bar ml-3"></i>ضریب اسپیرمن</h2><div class="info-box"><p class="text-gray-700 leading-relaxed">آزمون ناپارامتری برای بررسی رابطه بین دو متغیر بر اساس رتبه‌ها.</p></div><div class="formula-card">\[ R_s = 1 - \frac{6 \sum D_i^2}{n(n^2 - 1)} \]</div></section><section id="kendall" class="glass-card rounded-2xl p-8 hover-lift"><h2 class="text-3xl font-bold mb-6 gradient-text flex items-center"><i class="fas fa-link ml-3"></i>ضریب کندال</h2><div class="formula-card">\[ \hat{\tau} = \frac{4P}{n(n-1)} - 1 \]</div></section></div></div><button id="back-to-top"><i class="fas fa-arrow-up"></i></button><footer class="glass-card mx-auto max-w-5xl mb-8 rounded-2xl p-6 text-center"><p class="text-gray-700">© 2026</p></footer><script>const btn=document.getElementById('back-to-top');window.addEventListener('scroll',()=>{btn.classList.toggle('show',window.pageYOffset>300);});btn.addEventListener('click',()=>{window.scrollTo({top:0,behavior:'smooth'});});</script>
+</body>
+</html>
