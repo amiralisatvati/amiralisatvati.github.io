@@ -1,149 +1,317 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منابع یادگیری | امیرعلی سطوتی</title>
     
-    <!-- Google Fonts -->
+    <!-- فونت‌ها -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <style>
-        * {
-            font-family: 'Vazirmatn', sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4f46e5',
+                        secondary: '#8b5cf6',
+                    },
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif'],
+                    }
+                }
+            }
         }
-        
+    </script>
+
+    <style>
         body {
-            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            background: linear-gradient(135deg, #4f46e5 0%, #8b5cf6 100%);
             min-height: 100vh;
             color: #1e293b;
-            padding: 2rem;
         }
         
-        .glass-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 3rem;
-            color: white;
-        }
-        
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            font-weight: 800;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .header p {
-            font-size: 1.125rem;
-            opacity: 0.9;
-        }
-        
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: white;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 8px 16px;
-            border-radius: 99px;
-            text-decoration: none;
-            margin-bottom: 2rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-        
-        .back-link:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateX(-5px);
-        }
-        
-        .posts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-        
         .post-card {
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 16px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: #334155;
-            display: block;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .post-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-            background: white;
-            border-color: #a78bfa;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
         }
-        
-        .post-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
+
+        .filter-btn {
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active {
+            background-color: #4f46e5;
             color: white;
-            margin-bottom: 1rem;
-            box-shadow: 0 4px 10px rgba(124, 58, 237, 0.3);
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
         }
-        
-        .post-tags {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-bottom: 0.75rem;
+
+        .filter-btn:not(.active):hover {
+            background-color: #e0e7ff;
+            color: #4338ca;
         }
-        
-        .post-tag {
-            font-size: 0.75rem;
-            background: #f3e8ff;
-            color: #6b21a8;
-            padding: 0.25rem 0.75rem;
-            border-radius: 999px;
-            font-weight: 600;
+
+        /* انیمیشن ورود کارت‌ها */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
-        .post-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #1e293b;
-            margin: 0.5rem 0;
-            line-height: 1.5;
+        .animate-card {
+            animation: fadeIn 0.5s ease-out forwards;
         }
-        
-        .post-card:hover .post-title {\n            color: #7c3aed;\n        }\n        \n        .post-desc {\n            font-size: 0.9rem;\n            color: #64748b;\n            margin: 0.5rem 0;\n            line-height: 1.6;\n        }\n        \n        .post-date {\n            display: flex;\n            align-items: center;\n            gap: 0.5rem;\n            font-size: 0.8rem;\n            color: #94a3b8;\n            margin-top: 1rem;\n            border-top: 1px solid #f1f5f9;\n            padding-top: 0.75rem;\n        }\n\n        .badge-new {\n            position: absolute;\n            top: 10px;\n            left: 10px;\n            background: #ef4444;\n            color: white;\n            font-size: 0.7rem;\n            padding: 2px 8px;\n            border-radius: 4px;\n            font-weight: bold;\n            box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);\n        }\n        \n        @media (max-width: 768px) {\n            body { padding: 1rem; }\n            .header h1 { font-size: 2rem; }\n            .posts-grid { grid-template-columns: 1fr; }\n        }\n    </style>\n</head>\n<body>\n    <div class=\"container\">\n        <a href=\"/\" class=\"back-link\">\n            <i class=\"fas fa-arrow-right\"></i>\n            بازگشت به خانه\n        </a>\n        \n        <div class=\"header\">\n            <h1>📚 منابع یادگیری آماری</h1>\n            <p>مجموعه جزوات آموزشی جدید و منتخب</p>\n        </div>\n        \n        <div class=\"posts-grid\" id=\"posts-container\">\n            <!-- Posts loaded via JS -->\n        </div>\n    </div>\n    \n    <script>\n        const posts = [\n            {\n                title: \"جزوه جامع ماشین بردار پشتیبان (SVM)\",\n                description: \"ویژه شب امتحان. شامل مفاهیم حاشیه (Margin)، بردارهای پشتیبان، Hard/Soft Margin و سوالات امتحانی.\",\n                tags: [\"یادگیری ماشین\", \"SVM\", \"امتحان\"],\n                date: \"جدید\",\n                url: \"/posts/svm-exam-guide.html\",\n                icon: \"fa-project-diagram\",\n                isNew: true\n            },\n            {\n                title: \"آزمون هتلینگ T² و بازه‌های همزمان\",\n                description: \"آمار چندمتغیره، مقایسه بردار میانگین، ناحیه اطمینان بیضی‌گون و استنباط همزمان.\",\n                tags: [\"چندمتغیره\", \"Hotelling\", \"ناحیه اطمینان\"],\n                date: \"جدید\",\n                url: \"/posts/hotelling-t2.html\",\n                icon: \"fa-chart-area\",\n                isNew: true\n            },\n            {\n                title: \"جزوه جامع یادگیری ماشین بدون نظارت و داده‌کاوی\",\n                description: \"راهنمای کامل کاهش بعد (PCA، t-SNE)، قوانین انجمنی (Apriori)، و خوشه‌بندی (K-means، DBSCAN، Hierarchical). شامل فرمول‌ها، مثال‌ها و چت‌بات هوش مصنوعی.\",\n                tags: [\"یادگیری بدون نظارت\", \"داده‌کاوی\", \"خوشه‌بندی\"],\n                date: \"جدید\",\n                url: \"/posts/machine-learning-unsupervised.html\",\n                icon: \"fa-brain\",\n                isNew: true\n            },\n            {\n                title: \"آزمون فریدمن (Friedman)\",\n                description: \"آزمون ناپارامتری برای مقایسه سه یا چند گروه وابسته (تکراری). جایگزین ANOVA با اندازه‌گیری مکرر.\",\n                tags: [\"ناپارامتری\", \"رتبه‌ای\", \"وابسته\"],\n                date: \"جدید\",\n                url: \"/posts/friedman-test.html\",\n                icon: \"fa-layer-group\",\n                isNew: true\n            },\n            {\n                title: \"همبستگی اسپیرمن و کندال\",\n                description: \"بررسی رابطه بین متغیرهای رتبه‌ای یا غیرنرمال. شامل مثال‌های مقایسه‌ای کامل.\",\n                tags: [\"همبستگی\", \"اسپیرمن\", \"کندال\"],\n                date: \"جدید\",\n                url: \"/posts/spearman-kendall-full.html\",\n                icon: \"fa-link\",\n                isNew: true\n            },\n            {\n                title: \"آزمون من-ویتنی و Runs\",\n                description: \"مقایسه دو گروه مستقل (Mann-Whitney) و بررسی تصادفی بودن داده‌ها (Runs Test).\",\n                tags: [\"مستقل\", \"U-Test\", \"تصادفی\"],\n                date: \"جدید\",\n                url: \"/posts/mann-whitney-runs.html\",\n                icon: \"fa-random\",\n                isNew: true\n            },\n            {\n                title: \"آزمون کروسکال-والیس\",\n                description: \"مقایسه سه یا چند گروه مستقل. جایگزین ناپارامتری برای ANOVA یک‌طرفه.\",\n                tags: [\"ناپارامتری\", \"مستقل\", \"H-Test\"],\n                date: \"جدید\",\n                url: \"/posts/kruskal-wallis-test.html\",\n                icon: \"fa-chart-bar\",\n                isNew: true\n            },\n            {\n                title: \"آزمون علامت و ویلکاکسون\",\n                description: \"آزمون‌های تک نمونه‌ای و جفتی برای بررسی میانه جامعه یا تفاوت‌های قبل و بعد.\",\n                tags: [\"تک‌نمونه\", \"جفتی\", \"علامت\"],\n                date: \"جدید\",\n                url: \"/posts/nonparametric-one-sample-sign-wilcoxon.html\",\n                icon: \"fa-balance-scale\",\n                isNew: true\n            }\n        ];\n        \n        document.addEventListener('DOMContentLoaded', function() {\n            const container = document.getElementById('posts-container');\n            \n            posts.forEach(post => {\n                const card = document.createElement('a');\n                card.href = post.url;\n                card.className = 'post-card';\n                \n                let tagsHTML = '<div class=\"post-tags\">';\n                post.tags.forEach(tag => {\n                    tagsHTML += `<span class=\"post-tag\">${tag}</span>`;\n                });\n                tagsHTML += '</div>';\n                \n                let newBadge = post.isNew ? '<span class=\"badge-new\">جدید</span>' : '';\n                \n                card.innerHTML = `\n                    ${newBadge}\n                    <div class=\"post-icon\">\n                        <i class=\"fas ${post.icon}\"></i>\n                    </div>\n                    ${tagsHTML}\n                    <h3 class=\"post-title\">${post.title}</h3>\n                    <p class=\"post-desc\">${post.description}</p>\n                    <div class=\"post-date\">\n                        <i class=\"far fa-calendar-check\"></i>\n                        <span>${post.date}</span>\n                    </div>\n                `;\n                \n                container.appendChild(card);\n            });\n        });\n    </script>\n</body>\n</html>
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <!-- هدر و جستجو -->
+        <header class="text-center text-white mb-12 pt-8">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-md">
+                📚 مرکز منابع یادگیری
+            </h1>
+            <p class="text-lg opacity-90 mb-8">
+                مجموعه جزوات تخصصی آمار، داده‌کاوی و یادگیری ماشین
+            </p>
+
+            <!-- باکس جستجو -->
+            <div class="max-w-xl mx-auto relative group">
+                <input type="text" id="searchInput" placeholder="جستجو در جزوات (مثلاً: SVM، همبستگی...)" 
+                    class="w-full px-6 py-4 rounded-full text-gray-800 focus:outline-none focus:ring-4 focus:ring-white/30 shadow-lg transition-all"
+                    onkeyup="filterPosts()">
+                <i class="fas fa-search absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors"></i>
+            </div>
+        </header>
+
+        <!-- بخش فیلترها (دسته‌بندی هوشمند) -->
+        <div class="flex flex-wrap justify-center gap-3 mb-10" id="filterContainer">
+            <button onclick="setCategory('all')" class="filter-btn active px-6 py-2 rounded-full font-bold bg-white text-gray-600 shadow-sm">
+                همه مطالب
+            </button>
+            <button onclick="setCategory('ml')" class="filter-btn px-6 py-2 rounded-full font-bold bg-white text-gray-600 shadow-sm">
+                🤖 یادگیری ماشین
+            </button>
+            <button onclick="setCategory('multivar')" class="filter-btn px-6 py-2 rounded-full font-bold bg-white text-gray-600 shadow-sm">
+                📊 آمار چندمتغیره
+            </button>
+            <button onclick="setCategory('nonparam')" class="filter-btn px-6 py-2 rounded-full font-bold bg-white text-gray-600 shadow-sm">
+                📉 آمار ناپارامتری
+            </button>
+        </div>
+
+        <!-- گرید پست‌ها -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="postsGrid">
+            <!-- کارت‌ها توسط جاوااسکریپت ساخته می‌شوند -->
+        </div>
+
+        <!-- پیام "موردی یافت نشد" -->
+        <div id="noResults" class="hidden text-center text-white py-12">
+            <i class="fas fa-search-minus text-6xl mb-4 opacity-50"></i>
+            <p class="text-xl">متاسفانه جزوه‌ای با این مشخصات پیدا نشد!</p>
+        </div>
+    </div>
+
+    <!-- دکمه بازگشت به خانه -->
+    <a href="/" class="fixed bottom-6 left-6 bg-white text-primary p-4 rounded-full shadow-xl hover:scale-110 transition-transform z-50 group">
+        <i class="fas fa-home text-xl"></i>
+        <span class="absolute left-full ml-2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">صفحه اصلی</span>
+    </a>
+
+    <script>
+        // داده‌های جزوات
+        const resources = [
+            {
+                title: "جزوه جامع SVM (شب امتحان)",
+                desc: "آموزش ماشین بردار پشتیبان، حاشیه سخت/نرم و سوالات امتحانی.",
+                tags: ["SVM", "Exam"],
+                category: "ml",
+                url: "/posts/svm-exam-guide.html",
+                icon: "fa-project-diagram",
+                color: "text-blue-600",
+                bg: "bg-blue-100",
+                new: true
+            },
+            {
+                title: "یادگیری بدون نظارت و داده‌کاوی",
+                desc: "خوشه‌بندی (K-means, DBSCAN)، کاهش بعد (PCA) و قوانین انجمنی.",
+                tags: ["Clustering", "PCA"],
+                category: "ml",
+                url: "/posts/machine-learning-unsupervised.html",
+                icon: "fa-brain",
+                color: "text-purple-600",
+                bg: "bg-purple-100",
+                new: true
+            },
+            {
+                title: "تحلیل همبستگی خطی",
+                desc: "آزمون‌های همبستگی پیرسون، تبدیل فیشر و همبستگی درون‌طبقه‌ای.",
+                tags: ["Correlation", "Fisher"],
+                category: "multivar",
+                url: "/posts/correlation-analysis.html",
+                icon: "fa-chart-line",
+                color: "text-amber-600",
+                bg: "bg-amber-100",
+                new: true
+            },
+            {
+                title: "آزمون هتلینگ T²",
+                desc: "مقایسه بردار میانگین، بازه‌های اطمینان همزمان و بیضی اطمینان.",
+                tags: ["Hotelling", "T2"],
+                category: "multivar",
+                url: "/posts/hotelling-t2.html",
+                icon: "fa-superscript",
+                color: "text-indigo-600",
+                bg: "bg-indigo-100",
+                new: true
+            },
+            {
+                title: "آزمون فریدمن (Friedman)",
+                desc: "آزمون رتبه‌ای برای مقایسه گروههای وابسته (تکراری).",
+                tags: ["Friedman", "Rank"],
+                category: "nonparam",
+                url: "/posts/friedman-test.html",
+                icon: "fa-layer-group",
+                color: "text-emerald-600",
+                bg: "bg-emerald-100",
+                new: false
+            },
+            {
+                title: "آزمون کروسکال-والیس",
+                desc: "مقایسه چند گروه مستقل (جایگزین ANOVA).",
+                tags: ["Kruskal", "H-Test"],
+                category: "nonparam",
+                url: "/posts/kruskal-wallis-test.html",
+                icon: "fa-chart-bar",
+                color: "text-teal-600",
+                bg: "bg-teal-100",
+                new: false
+            },
+            {
+                title: "آزمون من-ویتنی و Runs",
+                desc: "مقایسه دو گروه مستقل و بررسی تصادفی بودن داده‌ها.",
+                tags: ["Mann-Whitney", "Runs"],
+                category: "nonparam",
+                url: "/posts/mann-whitney-runs.html",
+                icon: "fa-random",
+                color: "text-cyan-600",
+                bg: "bg-cyan-100",
+                new: false
+            },
+            {
+                title: "همبستگی اسپیرمن و کندال",
+                desc: "همبستگی‌های رتبه‌ای برای داده‌های غیرنرمال.",
+                tags: ["Spearman", "Kendall"],
+                category: "nonparam",
+                url: "/posts/spearman-kendall-full.html",
+                icon: "fa-link",
+                color: "text-orange-600",
+                bg: "bg-orange-100",
+                new: false
+            },
+            {
+                title: "آزمون علامت و ویلکاکسون",
+                desc: "آزمون‌های تک نمونه‌ای و جفتی برای میانه.",
+                tags: ["Sign", "Wilcoxon"],
+                category: "nonparam",
+                url: "/posts/nonparametric-one-sample-sign-wilcoxon.html",
+                icon: "fa-balance-scale",
+                color: "text-pink-600",
+                bg: "bg-pink-100",
+                new: false
+            }
+        ];
+
+        let currentCategory = 'all';
+
+        function init() {
+            renderPosts(resources);
+        }
+
+        function setCategory(cat) {
+            currentCategory = cat;
+            
+            // Update buttons styling
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            filterPosts();
+        }
+
+        function filterPosts() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            
+            const filtered = resources.filter(post => {
+                const matchesCategory = currentCategory === 'all' || post.category === currentCategory;
+                const matchesSearch = post.title.toLowerCase().includes(query) || 
+                                      post.desc.toLowerCase().includes(query) ||
+                                      post.tags.some(t => t.toLowerCase().includes(query));
+                return matchesCategory && matchesSearch;
+            });
+
+            renderPosts(filtered);
+        }
+
+        function renderPosts(items) {
+            const grid = document.getElementById('postsGrid');
+            const noResults = document.getElementById('noResults');
+            
+            grid.innerHTML = '';
+            
+            if (items.length === 0) {
+                noResults.classList.remove('hidden');
+                return;
+            }
+            
+            noResults.classList.add('hidden');
+
+            items.forEach((post, index) => {
+                const isNewBadge = post.new ? 
+                    `<span class="absolute top-3 left-3 bg-red-500 text-white text-xs px-2 py-1 rounded-md font-bold shadow-sm z-10 animate-pulse">جدید</span>` : '';
+
+                const tagsHtml = post.tags.map(tag => 
+                    `<span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-md font-medium">#${tag}</span>`
+                ).join('');
+
+                const cardHtml = `
+                    <a href="${post.url}" class="glass-panel rounded-2xl p-6 relative block post-card animate-card" style="animation-delay: ${index * 0.05}s">
+                        ${isNewBadge}
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-12 h-12 ${post.bg} ${post.color} rounded-xl flex items-center justify-center text-2xl shadow-sm">
+                                <i class="fas ${post.icon}"></i>
+                            </div>
+                            <div class="flex gap-1 flex-wrap justify-end max-w-[60%]">
+                                ${tagsHtml}
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2 leading-tight group-hover:text-primary transition-colors">${post.title}</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed mb-4">${post.desc}</p>
+                        <div class="flex items-center text-primary text-sm font-bold mt-auto">
+                            <span>مطالعه جزوه</span>
+                            <i class="fas fa-arrow-left mr-2 transition-transform group-hover:-translate-x-1"></i>
+                        </div>
+                    </a>
+                `;
+                grid.innerHTML += cardHtml;
+            });
+        }
+
+        // Initialize
+        init();
+    </script>
+</body>
+</html>
