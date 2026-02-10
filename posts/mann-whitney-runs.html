@@ -227,6 +227,119 @@
         .animate-fadeInUp {
             animation: fadeInUp 0.6s ease-out;
         }
+
+        /* استایل‌های چت بات */
+        #chat-widget {
+            position: fixed;
+            bottom: 80px;
+            left: 20px;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+
+        #chat-header {
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        #chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background: #f8fafc;
+        }
+
+        #chat-input-area {
+            padding: 15px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 10px;
+            background: white;
+        }
+
+        #chat-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        #chat-send {
+            background: #7c3aed;
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        #chat-send:hover {
+            background: #6d28d9;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border-radius: 12px;
+            max-width: 80%;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .message.user {
+            background: #7c3aed;
+            color: white;
+            margin-right: auto;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message.bot {
+            background: #e2e8f0;
+            color: #1e293b;
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+
+        #chat-toggle {
+            position: fixed;
+            bottom: 20px;
+            left: 80px;
+            background: white;
+            color: #7c3aed;
+            padding: 10px 20px;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 1000;
+            transition: transform 0.2s;
+        }
+
+        #chat-toggle:hover {
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 
@@ -429,7 +542,7 @@
 
                 <h3 class="text-2xl font-bold mt-8 mb-4 text-purple-700">۱. آماره Z برای من-ویتنی (\(m, n > 10\))</h3>
                 <div class="formula-card">
-                    \[ \mu_U = \frac{mn}{2} , \sigma_U = \sqrt{\frac{mn(m+n+1)}{12}} \rightarrow Z = \frac{U - \mu_U}{\sigma_U} \]
+                    \[ \mu_U = \frac{mn}{2} , \sigma_U = \sqrt{\frac{mn(m+n+1)}{12}} \rightarrow Z = \frac{U - \mu_U}{\\sigma_U} \]
                 </div>
 
                 <h3 class="text-2xl font-bold mt-8 mb-4 text-purple-700">۲. آماره Z برای آزمون گشت (\(n_1, n_2 > 20\))</h3>
@@ -525,6 +638,27 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
+    <!-- چت بات هوشمند -->
+    <div id="chat-toggle">
+        <i class="fas fa-robot"></i> دستیار هوشمند
+    </div>
+
+    <div id="chat-widget">
+        <div id="chat-header">
+            <span><i class="fas fa-robot ml-2"></i>دستیار آماری</span>
+            <span style="cursor: pointer;" onclick="toggleChat()"><i class="fas fa-times"></i></span>
+        </div>
+        <div id="chat-messages">
+            <div class="message bot">
+                سلام! من دستیار هوشمند شما هستم. هر سوالی درباره آزمون من-ویتنی یا گشت دارید بپرسید!
+            </div>
+        </div>
+        <div id="chat-input-area">
+            <input type="text" id="chat-input" placeholder="سوال خود را بپرسید...">
+            <button id="chat-send"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="glass-card mx-auto max-w-5xl mb-8 rounded-2xl p-6 text-center">
         <p class="text-gray-700">
@@ -574,6 +708,65 @@
                     link.classList.add('active');
                 }
             });
+        });
+
+        // Chatbot functionality
+        const chatWidget = document.getElementById('chat-widget');
+        const chatToggle = document.getElementById('chat-toggle');
+        const chatInput = document.getElementById('chat-input');
+        const chatSend = document.getElementById('chat-send');
+        const chatMessages = document.getElementById('chat-messages');
+
+        function toggleChat() {
+            if (chatWidget.style.display === 'none' || chatWidget.style.display === '') {
+                chatWidget.style.display = 'flex';
+                chatToggle.style.display = 'none';
+            } else {
+                chatWidget.style.display = 'none';
+                chatToggle.style.display = 'flex';
+            }
+        }
+
+        chatToggle.addEventListener('click', toggleChat);
+
+        function addMessage(text, sender) {
+            const div = document.createElement('div');
+            div.className = `message ${sender}`;
+            div.textContent = text;
+            chatMessages.appendChild(div);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function handleChat() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            addMessage(text, 'user');
+            chatInput.value = '';
+
+            // Simple responses based on keywords
+            setTimeout(() => {
+                let response = "متوجه نشدم، لطفا سوال دقیق‌تری بپرسید.";
+                
+                if (text.includes("من-ویتنی") || text.includes("mann")) {
+                    response = "آزمون من-ویتنی برای مقایسه دو جامعه مستقل استفاده می‌شود و معادل ناپارامتری آزمون t است.";
+                } else if (text.includes("گشت") || text.includes("runs")) {
+                    response = "آزمون گشت (Runs Test) برای بررسی تصادفی بودن دنباله‌ای از داده‌ها استفاده می‌شود.";
+                } else if (text.includes("فرمول")) {
+                    response = "فرمول‌های اصلی در بخش‌های مربوطه با کادر زرد رنگ مشخص شده‌اند.";
+                } else if (text.includes("مثال")) {
+                    response = "مثال‌های حل شده در کادرهای نارنجی رنگ آورده شده‌اند.";
+                } else if (text.includes("سلام")) {
+                    response = "سلام! چطور می‌توانم در یادگیری آزمون‌های ناپارامتری به شما کمک کنم؟";
+                }
+
+                addMessage(response, 'bot');
+            }, 1000);
+        }
+
+        chatSend.addEventListener('click', handleChat);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleChat();
         });
     </script>
 
