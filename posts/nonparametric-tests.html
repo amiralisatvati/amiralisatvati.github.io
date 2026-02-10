@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>آزمون‌های ناپارامتری</title>
+    <title>آزمون علامت (Sign Test)</title>
 
     <!-- فونت‌ها و کتابخانه‌ها -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -79,6 +79,119 @@
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
         }
 
+        /* Sidebar + Chat styles from Friedman page */
+        .chat-widget {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .chat-body {
+            display: none;
+            width: 380px;
+            height: 500px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            flex-direction: column;
+        }
+
+        .chat-body.active {
+            display: flex;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            max-width: 80%;
+        }
+
+        .message.user {
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            color: white;
+            margin-right: auto;
+        }
+
+        .message.ai {
+            background: #f3f4f6;
+            color: #1f2937;
+            margin-left: auto;
+        }
+
+        .sidebar-link {
+            display: block;
+            padding: 10px 16px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            color: #475569;
+        }
+
+        .sidebar-link:hover {
+            background: #f1f5f9;
+            color: #7c3aed;
+            transform: translateX(-4px);
+        }
+
+        .sidebar-link.active {
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            color: white;
+        }
+
+        .formula-card {
+            background: #fef3c7;
+            border-right: 4px solid #f59e0b;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+
+        .success-card {
+            background: #d1fae5;
+            border-right: 4px solid #10b981;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+
+        .info-card {
+            background: #e0f2fe;
+            border-right: 4px solid #0ea5e9;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-blue {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-green {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-yellow {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
         #back-to-top {
             position: fixed;
             bottom: 90px;
@@ -150,16 +263,20 @@
     </style>
 </head>
 <body class="antialiased font-sans">
+
     <!-- نوار ناوبری بالا -->
     <nav class="fixed w-full z-50 glass">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center space-x-4 space-x-reverse">
                     <i class="fas fa-chart-line text-2xl text-white"></i>
-                    <span class="text-white font-bold text-xl">آزمون‌های ناپارامتری</span>
+                    <span class="text-white font-bold text-xl">آزمون علامت</span>
                 </div>
                 <div class="hidden md:flex space-x-6 space-x-reverse text-white">
-                    <a href="/resources.html" class="hover:text-yellow-300 transition">بازگشت</a>
+                    <a href="#intro" class="hover:text-yellow-300 transition">معرفی</a>
+                    <a href="#signtest" class="hover:text-yellow-300 transition">آزمون علامت</a>
+                    <a href="#paired" class="hover:text-yellow-300 transition">داده‌های جفتی</a>
+                    <a href="#advanced" class="hover:text-yellow-300 transition">تقریب نرمال</a>
                 </div>
             </div>
         </div>
@@ -168,75 +285,163 @@
     <!-- هدر اصلی -->
     <header class="pt-32 pb-20 px-4">
         <div class="max-w-4xl mx-auto text-center text-white">
-            <h1 class="text-5xl md:text-6xl font-bold mb-6 animate-fadeInUp">
-                آزمون‌های ناپارامتری
-            </h1>
-            <p class="text-xl md:text-2xl mb-4 opacity-90 animate-fadeInUp">
-                (Nonparametric Tests)
-            </p>
-            <p class="text-lg mb-4 opacity-80 animate-fadeInUp">
-                راهنمای کامل آزمون‌های ناپارامتری با مثال‌های حل شده
-            </p>
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 animate-fadeInUp">آزمون علامت</h1>
+            <p class="text-xl md:text-2xl mb-4 opacity-90 animate-fadeInUp">(Sign Test)</p>
+            <p class="text-lg mb-4 opacity-80 animate-fadeInUp">یکی از آزمون‌های ناپارامتری برای داده‌های رتبه‌ای/غیرنرمال</p>
+            <div class="flex justify-center gap-4 mt-8 animate-fadeInUp">
+                <span class="badge badge-blue"><i class="fas fa-book"></i> 4 بخش</span>
+                <span class="badge badge-green"><i class="fas fa-table"></i> 1 جدول</span>
+                <span class="badge badge-yellow"><i class="fas fa-calculator"></i> فرمول</span>
+            </div>
         </div>
     </header>
 
-    <!-- محتوای اصلی -->
-    <div class="max-w-5xl mx-auto px-4 pb-20">
-        <section class="glass-card rounded-2xl p-8 hover-lift">
-            <div class="content-text">
-                <p>در تحلیلهای آماری سنتی (مانند آزمون t)، فرض بر این است که جامعه آماری از توزیع نرمال پیروی میکند. اما در بسیاری از موارد، این فرض باطل است. دلایل استفاده از روشهای ناپارامتری عبارتند از:</p>
+    <!-- چیدمان اصلی صفحه (مثل فریدمن) -->
+    <div class="max-w-7xl mx-auto px-4 pb-20 grid lg:grid-cols-4 gap-8">
 
-                <p style="margin-top: 1rem;">این آزمون برای مقایسه "مکان" (Location) دو جامعه مستقل به کار میرود. یعنی میخواهیم بدانیم آیا میانگین/میانه دو جامعه با هم تفاوت معنیداری دارند یا خیر.</p>
+        <!-- نوار کناری -->
+        <aside class="hidden lg:block col-span-1">
+            <div class="sticky top-24">
+                <div class="glass-card rounded-2xl p-6">
+                    <h3 class="font-bold text-lg mb-4 gradient-text">
+                        <i class="fas fa-list"></i> فهرست سریع
+                    </h3>
+                    <nav class="space-y-2">
+                        <a href="#intro" class="sidebar-link"><i class="fas fa-star"></i> معرفی</a>
+                        <a href="#signtest" class="sidebar-link"><i class="fas fa-check-circle"></i> آزمون علامت</a>
+                        <a href="#paired" class="sidebar-link"><i class="fas fa-exchange-alt"></i> نمونه‌های وابسته</a>
+                        <a href="#advanced" class="sidebar-link"><i class="fas fa-chart-line"></i> تقریب نرمال</a>
+                    </nav>
 
-                <p style="margin-top: 1rem;">فرض کنید دو گروه \(X\) (با \(m\) عضو) و \(Y\) (با \(n\) عضو) داریم. کل مشاهدات \(N = m + n\).</p>
-
-                <p style="margin-top: 1rem;">این آزمون یکی از قدیمیترین و سادهترین آزمونهای ناپارامتری است که فقط بر اساس جهت اختلاف دادهها نسبت به یک مقدار مرجع (\(\eta_0\)) کار میکند.</p>
-
-                <p style="margin-top: 1rem;">اگر بخواهیم ادعایی را درباره صدک \(p\)-ام (مانند میانه که صدک ۵۰ام است) بسنجیم:</p>
-
-                <p style="margin-top: 1rem;">در آزمون میانه (\(p=0.5\))، آماره \(B\) پیرو توزیع دوجملهای با احتمال موفقیت \(0.5\) است.</p>
-
-                <p style="margin-top: 1rem;">ادعا: میانه عمر باتریها ۶۰ ساعت است. دادهها:</p>
-
-                <p style="margin-top: 0.5rem;"><code>58, 62, 65, 55, 68, 70, 61, 63, 59, 67</code></p>
-
-                <p style="margin-top: 1rem;">این بخش برای مسائلی است که در آن "یک نمونه" در "دو وضعیت متفاوت" (مثل قبل و بعد) سنجیده میشود.</p>
-
-                <p style="margin-top: 1rem;">هدف: بررسی تاثیر دارو بر فشار خون ۸ بیمار.</p>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>بیمار</th>
-                            <th>قبل</th>
-                            <th>بعد</th>
-                            <th>اختلاف (D)</th>
-                            <th>علامت</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>۱</td><td>۱۵۰</td><td>۱۴۰</td><td>۱۰</td><td>+</td></tr>
-                        <tr><td>۲</td><td>۱۶۰</td><td>۱۵۸</td><td>۲</td><td>+</td></tr>
-                        <tr><td>۳</td><td>۱۵۵</td><td>۱۵۰</td><td>۵</td><td>+</td></tr>
-                        <tr><td>۴</td><td>۱۷۰</td><td>۱۶۵</td><td>۵</td><td>+</td></tr>
-                        <tr><td>۵</td><td>۱۴۵</td><td>۱۴۵</td><td>۰</td><td>حذف</td></tr>
-                        <tr><td>۶</td><td>۱۵۲</td><td>۱۴۸</td><td>۴</td><td>+</td></tr>
-                        <tr><td>۷</td><td>۱۴۸</td><td>۱۴۲</td><td>۶</td><td>+</td></tr>
-                        <tr><td>۸</td><td>۱۶۲</td><td>۱۶۰</td><td>۲</td><td>+</td></tr>
-                    </tbody>
-                </table>
-
-                <p>نتیجه: چون هر ۷ نفر کاهش فشار داشتند، احتمال رخ دادن این اتفاق به صورت تصادفی \( (0.5)^7 = 0.0078 \) است که از ۵٪ کمتر است. پس دارو موثر است.</p>
-
-                <p style="margin-top: 1rem;">اگر بخواهیم فقط "تغییر" را بسنجیم (نه لزوماً بهبود)، آزمون دوطرفه میشود. در مثال نمرات دانشجویان، با ۸ داده موثر، احتمال مشاهده ۷ مثبت یا بیشتر (یا ۷ منفی یا بیشتر) بررسی شد و نتیجه این بود که تغییرات در سطح ۵٪ معنیدار نیستند (\(P \approx 0.07\)).</p>
-
-                <p style="margin-top: 1rem;">این آزمون از رتبهبندی اختلافات استفاده میکند. در مثال زمان واکنش ۶ نفر:</p>
-
-                <p style="margin-top: 1rem;">وقتی حجم نمونه بالا میرود (معمولاً \(n, m > 10\))، استفاده از جداول توزیع دوجملهای یا ویلکاکسون سخت میشود. در این حالت از تقریب نرمال با "تصحیح پیوستگی" استفاده میکنیم:</p>
-
-                <p style="margin-top: 1rem;"><strong>قانون ۰.۵ واحد:</strong> اگر آماره مشاهده شده از امید ریاضی بزرگتر بود، از آن ۰.۵ کم میکنیم و اگر کوچکتر بود، به آن ۰.۵ اضافه میکنیم.</p>
+                    <div class="mt-8 p-4 bg-gradient-to-br from-purple-600 to-violet-600 rounded-xl text-white text-center">
+                        <i class="fas fa-robot text-3xl mb-2"></i>
+                        <p class="text-sm mb-3">سوال داری؟ از دستیار هوش مصنوعی بپرس!</p>
+                        <button onclick="toggleChat()" class="bg-white text-purple-600 px-4 py-2 rounded-lg text-sm font-bold hover:bg-gray-100 transition">
+                            <i class="fas fa-comments"></i> شروع چت
+                        </button>
+                    </div>
+                </div>
             </div>
-        </section>
+        </aside>
+
+        <!-- محتوای اصلی -->
+        <div class="col-span-1 lg:col-span-3 space-y-8">
+
+            <section id="intro" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-star ml-3"></i>
+                    ۱. معرفی
+                </h2>
+                <div class="content-text">
+                    <p>در تحلیلهای آماری سنتی (مانند آزمون t)، فرض بر این است که جامعه آماری از توزیع نرمال پیروی میکند. اما در بسیاری از موارد، این فرض باطل است. دلایل استفاده از روشهای ناپارامتری عبارتند از:</p>
+                </div>
+            </section>
+
+            <section id="signtest" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-check-circle ml-3"></i>
+                    ۲. آزمون علامت
+                </h2>
+                <div class="content-text">
+                    <p>این آزمون یکی از قدیمیترین و سادهترین آزمونهای ناپارامتری است که فقط بر اساس جهت اختلاف دادهها نسبت به یک مقدار مرجع (\(\eta_0\)) کار میکند.</p>
+                    <p style="margin-top: 1rem;">اگر بخواهیم ادعایی را درباره صدک \(p\)-ام (مانند میانه که صدک ۵۰ام است) بسنجیم:</p>
+                    <div class="formula-card" dir="ltr" style="text-align:center;">
+                        \(B \sim Bin(n, 1-p)\) و در آزمون میانه \(p=0.5\) داریم \(B \sim Bin(n, 0.5)\).
+                    </div>
+                    <p style="margin-top: 1rem;">ادعا: میانه عمر باتریها ۶۰ ساعت است. دادهها:</p>
+                    <p style="margin-top: 0.5rem;"><code>58, 62, 65, 55, 68, 70, 61, 63, 59, 67</code></p>
+                </div>
+            </section>
+
+            <section id="paired" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-exchange-alt ml-3"></i>
+                    ۳. نمونه‌های وابسته (قبل/بعد)
+                </h2>
+                <div class="content-text">
+                    <p>این بخش برای مسائلی است که در آن "یک نمونه" در "دو وضعیت متفاوت" (مثل قبل و بعد) سنجیده میشود.</p>
+                    <p style="margin-top: 1rem;">هدف: بررسی تاثیر دارو بر فشار خون ۸ بیمار.</p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>بیمار</th>
+                                <th>قبل</th>
+                                <th>بعد</th>
+                                <th>اختلاف (D)</th>
+                                <th>علامت</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>۱</td><td>۱۵۰</td><td>۱۴۰</td><td>۱۰</td><td>+</td></tr>
+                            <tr><td>۲</td><td>۱۶۰</td><td>۱۵۸</td><td>۲</td><td>+</td></tr>
+                            <tr><td>۳</td><td>۱۵۵</td><td>۱۵۰</td><td>۵</td><td>+</td></tr>
+                            <tr><td>۴</td><td>۱۷۰</td><td>۱۶۵</td><td>۵</td><td>+</td></tr>
+                            <tr><td>۵</td><td>۱۴۵</td><td>۱۴۵</td><td>۰</td><td>حذف</td></tr>
+                            <tr><td>۶</td><td>۱۵۲</td><td>۱۴۸</td><td>۴</td><td>+</td></tr>
+                            <tr><td>۷</td><td>۱۴۸</td><td>۱۴۲</td><td>۶</td><td>+</td></tr>
+                            <tr><td>۸</td><td>۱۶۲</td><td>۱۶۰</td><td>۲</td><td>+</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div class="success-card">
+                        <p>نتیجه: چون هر ۷ نفر کاهش فشار داشتند، احتمال رخ دادن این اتفاق به صورت تصادفی \( (0.5)^7 = 0.0078 \) است که از ۵٪ کمتر است. پس دارو موثر است.</p>
+                    </div>
+
+                    <p style="margin-top: 1rem;">اگر بخواهیم فقط "تغییر" را بسنجیم (نه لزوماً بهبود)، آزمون دوطرفه میشود. در مثال نمرات دانشجویان، با ۸ داده موثر، احتمال مشاهده ۷ مثبت یا بیشتر (یا ۷ منفی یا بیشتر) بررسی شد و نتیجه این بود که تغییرات در سطح ۵٪ معنیدار نیستند (\(P \approx 0.07\)).</p>
+                </div>
+            </section>
+
+            <section id="advanced" class="glass-card rounded-2xl p-8 hover-lift">
+                <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+                    <i class="fas fa-chart-line ml-3"></i>
+                    ۴. تقریب نرمال (تصحیح پیوستگی)
+                </h2>
+                <div class="content-text">
+                    <p>وقتی حجم نمونه بالا میرود (معمولاً \(n, m > 10\))، استفاده از جداول توزیع دوجملهای یا ویلکاکسون سخت میشود. در این حالت از تقریب نرمال با "تصحیح پیوستگی" استفاده میکنیم:</p>
+                    <div class="info-card">
+                        <p><strong>قانون ۰.۵ واحد:</strong> اگر آماره مشاهده شده از امید ریاضی بزرگتر بود، از آن ۰.۵ کم میکنیم و اگر کوچکتر بود، به آن ۰.۵ اضافه میکنیم.</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+
+    <!-- چت‌بات هوش مصنوعی -->
+    <div class="chat-widget">
+        <div class="chat-body" id="chatBody">
+            <div class="bg-gradient-to-r from-purple-600 to-violet-600 text-white p-4 rounded-t-2xl flex justify-between items-center">
+                <div class="flex items-center">
+                    <i class="fas fa-robot text-2xl ml-2"></i>
+                    <span class="font-bold">دستیار هوش مصنوعی</span>
+                </div>
+                <button onclick="toggleChat()" class="text-white hover:bg-white hover:bg-opacity-20 rounded-full w-8 h-8 flex items-center justify-center">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message ai">سلام! درباره آزمون علامت چه سوالی دارید؟</div>
+            </div>
+            <div class="p-4 border-t">
+                <div class="flex gap-2">
+                    <input 
+                        type="text" 
+                        id="chatInput" 
+                        placeholder="سوال خود را بنویسید..."
+                        class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        onkeypress="handleKeyPress(event)"
+                    >
+                    <button 
+                        onclick="sendMessage()" 
+                        class="bg-gradient-to-r from-purple-600 to-violet-600 text-white px-4 py-2 rounded-lg hover:opacity-90 transition"
+                    >
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- دکمه بازگشت به بالا -->
@@ -248,15 +453,61 @@
     <footer class="glass-card mx-auto max-w-5xl mb-8 rounded-2xl p-6 text-center">
         <p class="text-gray-700">
             <i class="fas fa-university ml-2"></i>
-            جزوه آموزشی آزمون‌های ناپارامتری
+            جزوه آموزشی آزمون علامت
         </p>
-        <p class="text-sm text-gray-600 mt-2">
-            © 2026 - تهیه شده برای دانشجویان آمار
-        </p>
+        <p class="text-sm text-gray-600 mt-2">© 2026 - تهیه شده برای دانشجویان آمار</p>
     </footer>
 
     <!-- JavaScript -->
     <script>
+        // Mock AI responses (simple)
+        const mockResponses = {
+            'کاربرد': 'آزمون علامت برای بررسی تغییر (قبل/بعد) یا مقایسه با یک مقدار میانه/صدک مرجع استفاده می‌شود، وقتی فرض نرمال بودن قابل اتکا نیست.',
+            'فرض': 'فرض صفر معمولاً این است که میانه اختلاف‌ها صفر است (یا میانه جامعه برابر مقدار مرجع است).',
+            'pvalue': 'برای محاسبه P-value در آزمون علامت، تعداد علامت‌های مثبت/منفی (بدون صفرها) را در توزیع دوجمله‌ای با p=0.5 بررسی می‌کنیم.',
+            'default': 'می‌تونی درباره: کاربرد آزمون، فرض‌ها، P-value، یا تفسیر نتیجه سوال بپرسی.'
+        };
+
+        function toggleChat() {
+            document.getElementById('chatBody').classList.toggle('active');
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') sendMessage();
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            addMessage(message, 'user');
+            input.value = '';
+
+            setTimeout(() => {
+                const response = getResponse(message);
+                addMessage(response, 'ai');
+            }, 400);
+        }
+
+        function getResponse(message) {
+            const msg = message.toLowerCase();
+            if (msg.includes('کاربرد')) return mockResponses['کاربرد'];
+            if (msg.includes('فرض')) return mockResponses['فرض'];
+            if (msg.includes('p') || msg.includes('پی') || msg.includes('value')) return mockResponses['pvalue'];
+            return mockResponses['default'];
+        }
+
+        function addMessage(text, type) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            messageDiv.innerHTML = text.replace(/\n/g, '<br>');
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Scroll scripts
         const backToTopButton = document.getElementById('back-to-top');
         window.addEventListener('scroll', () => {
             backToTopButton.classList.toggle('show', window.pageYOffset > 300);
@@ -265,6 +516,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
+        // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -274,6 +526,25 @@
                 }
             });
         });
+
+        // Sidebar active link on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const sidebarLinks = document.querySelectorAll('.sidebar-link');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                if (window.pageYOffset >= (section.offsetTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            sidebarLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
     </script>
+
 </body>
 </html>
