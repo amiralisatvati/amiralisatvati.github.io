@@ -113,6 +113,7 @@
         .badge-ml { background: rgba(124, 58, 237, 0.2); color: #a78bfa; border: 1px solid rgba(124, 58, 237, 0.3); }
         .badge-stats { background: rgba(37, 99, 235, 0.2); color: #60a5fa; border: 1px solid rgba(37, 99, 235, 0.3); }
         .badge-viz { background: rgba(5, 150, 105, 0.2); color: #34d399; border: 1px solid rgba(5, 150, 105, 0.3); }
+        .badge-code { background: rgba(234, 179, 8, 0.2); color: #facc15; border: 1px solid rgba(234, 179, 8, 0.3); }
 
         .gradient-text {
             background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #34d399 100%);
@@ -389,7 +390,6 @@
             'Data-Analysis-Project',
             'ml-course-maktabkhooneh',
             'university-simulation-project',
-            '-university-codes',
             'quantile-regression-presentation',
             'quantile-regression-presentation-v2',
             '-python-R'
@@ -402,8 +402,43 @@
             'Data-Analysis-Project': 'https://amiralisatvati.github.io/Data-Analysis-Project/'
         };
 
+        async function fetchUniversityCodes() {
+            try {
+                const res = await fetch('https://api.github.com/repos/amiralisatvati/-university-codes/contents/');
+                if (!res.ok) return [];
+                const files = await res.json();
+                
+                return files
+                    .filter(f => !f.name.startsWith('.') && f.name !== 'LICENSE' && f.name !== 'README.md' && f.name !== 'test.csv')
+                    .map(f => ({
+                        name: f.name.replace(/\.(Rmd|R|py|ipynb|pdf)$/i, '').replace(/_/g, ' '),
+                        full_name: f.path, 
+                        description: f.type === 'dir' ? 'Course Project Folder' : 'Academic Code / Assignment',
+                        language: f.name.endsWith('.R') || f.name.endsWith('.Rmd') ? 'R' : (f.name.endsWith('.py') ? 'Python' : 'Code'),
+                        html_url: f.html_url,
+                        pushed_at: null, // Sub-files don't have easy push dates
+                        stargazers_count: 0,
+                        is_subproject: true,
+                        type: f.type,
+                        homepage: null
+                    }));
+            } catch (e) {
+                console.error('Failed to fetch university codes', e);
+                return [];
+            }
+        }
+
         function categoryOf(repo) {
             const text = `${repo.name} ${(repo.description || '')}`.toLowerCase();
+            
+            // Sub-projects from university-codes
+            if (repo.is_subproject) {
+                if (text.includes('mining') || text.includes('ml')) return 'ml';
+                if (text.includes('regression') || text.includes('anova') || text.includes('stat') || text.includes('probability')) return 'stats';
+                if (text.includes('viz') || text.includes('shiny')) return 'viz';
+                return 'stats'; // Default for university codes
+            }
+
             if (text.includes('ml') || text.includes('machine learning') || text.includes('scikit') || text.includes('notebook') || text.includes('classification') || text.includes('regression')) return 'ml';
             if (text.includes('viz') || text.includes('visual') || text.includes('dashboard') || text.includes('plot') || text.includes('tableau') || text.includes('ggplot')) return 'viz';
             if (text.includes('stats') || text.includes('statistics') || text.includes('quantile') || text.includes('anova') || text.includes('manova') || text.includes('simulation')) return 'stats';
@@ -411,19 +446,24 @@
             return 'stats';
         }
 
-        function iconOf(cat) {
+        function iconOf(cat, isSub) {
+            if (isSub) {
+                return { icon: 'fa-file-code', color: 'text-yellow-400', border: 'border-yellow-500/30', bg: 'from-yellow-500/20 to-orange-600/20' };
+            }
             if (cat === 'ml') return { icon: 'fa-brain', color: 'text-blue-400', border: 'border-blue-500/30', bg: 'from-blue-500/20 to-purple-600/20' };
             if (cat === 'viz') return { icon: 'fa-chart-pie', color: 'text-emerald-400', border: 'border-emerald-500/30', bg: 'from-emerald-500/20 to-cyan-600/20' };
             return { icon: 'fa-chart-line', color: 'text-cyan-400', border: 'border-cyan-500/30', bg: 'from-cyan-500/20 to-blue-600/20' };
         }
 
-        function badgeClass(cat) {
+        function badgeClass(cat, isSub) {
+            if (isSub) return 'badge-code';
             if (cat === 'ml') return 'badge-ml';
             if (cat === 'viz') return 'badge-viz';
             return 'badge-stats';
         }
 
-        function categoryLabel(cat) {
+        function categoryLabel(cat, isSub) {
+            if (isSub) return (currentLang === 'fa' ? 'کد درسی' : 'Course Code');
             const map = {
                 en: { ml: 'ML', stats: 'Stats', viz: 'Viz' },
                 fa: { ml: 'یادگیری ماشین', stats: 'آمار', viz: 'تجسم‌سازی' }
@@ -442,6 +482,7 @@
         }
 
         function formatDate(iso) {
+            if (!iso) return '';
             const d = new Date(iso);
             const locale = currentLang === 'fa' ? 'fa-IR' : 'en-US';
             return d.toLocaleDateString(locale, { year: 'numeric', month: 'short' });
@@ -453,10 +494,11 @@
 
         function renderCard(repo) {
             const cat = categoryOf(repo);
-            const meta = iconOf(cat);
+            const isSub = !!repo.is_subproject;
+            const meta = iconOf(cat, isSub);
             const desc = repo.description ? safeText(repo.description) : (currentLang === 'fa' ? 'بدون توضیح.' : 'No description provided.');
             const lang = repo.language ? safeText(repo.language) : (currentLang === 'fa' ? 'نامشخص' : 'N/A');
-            const updated = repo.pushed_at ? formatDate(repo.pushed_at) : '';
+            const updated = repo.pushed_at ? formatDate(repo.pushed_at) : (currentLang === 'fa' ? 'آرشیو' : 'Archived');
             const stars = typeof repo.stargazers_count === 'number' ? repo.stargazers_count : 0;
 
             // Determine Live Demo URL
@@ -470,6 +512,9 @@
             const viewRepoLabel = (translations[currentLang] && translations[currentLang].view_repo) ? translations[currentLang].view_repo : 'Source Code';
             const liveLabel = (translations[currentLang] && translations[currentLang].live_demo) ? translations[currentLang].live_demo : 'View Project';
             const updatedLabel = (translations[currentLang] && translations[currentLang].updated) ? translations[currentLang].updated : 'Updated';
+            
+            // For sub-projects (files), "View Repo" should maybe say "View File"
+            const buttonLabel = isSub ? (currentLang === 'fa' ? 'مشاهده فایل' : 'View File') : viewRepoLabel;
 
             return `
                 <div class="project-card group relative glass rounded-2xl overflow-hidden" data-category="${cat}">
@@ -480,22 +525,22 @@
                                     <i class="fas ${meta.icon} text-2xl ${meta.color}"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-xl font-bold text-slate-100 group-hover:text-blue-400 transition-colors">${safeText(repo.name)}</h3>
+                                    <h3 class="text-xl font-bold text-slate-100 group-hover:text-blue-400 transition-colors line-clamp-1" title="${safeText(repo.name)}">${safeText(repo.name)}</h3>
                                     <div class="text-xs text-slate-400 flex items-center gap-2">
                                         <span class="font-mono">${updatedLabel}: ${updated}</span>
-                                        <span class="text-slate-600">•</span>
-                                        <span class="font-mono"><i class="fas fa-star text-yellow-400/80"></i> ${stars}</span>
+                                        ${!isSub ? `<span class="text-slate-600">•</span><span class="font-mono"><i class="fas fa-star text-yellow-400/80"></i> ${stars}</span>` : ''}
                                     </div>
                                 </div>
                             </div>
-                            <span class="${badgeClass(cat)} px-3 py-1 rounded-full text-xs font-medium">${categoryLabel(cat)}</span>
+                            <span class="${badgeClass(cat, isSub)} px-3 py-1 rounded-full text-xs font-medium">${categoryLabel(cat, isSub)}</span>
                         </div>
                         
-                        <p class="text-slate-400 text-sm mb-4 leading-relaxed">${desc}</p>
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed line-clamp-2">${desc}</p>
                         
                         <div class="flex flex-wrap gap-2 mb-6">
                             <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">${lang}</span>
                             ${repo.license && repo.license.spdx_id ? `<span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">${safeText(repo.license.spdx_id)}</span>` : ''}
+                            ${isSub ? `<span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">${repo.type === 'dir' ? 'Folder' : 'File'}</span>` : ''}
                         </div>
                         
                         <div class="flex justify-between items-center pt-4 border-t border-slate-700/50">
@@ -507,8 +552,8 @@
                                 </a>` : ''}
                                 
                                 <a href="${repo.html_url}" target="_blank" rel="noopener" class="flex-1 inline-flex justify-center items-center gap-2 px-4 py-2 glass hover:bg-white/10 text-slate-300 rounded-lg text-sm font-medium transition-colors border border-slate-600/50">
-                                    <i class="fab fa-github"></i>
-                                    <span>${viewRepoLabel}</span>
+                                    <i class="${isSub ? 'fas fa-file-code' : 'fab fa-github'}"></i>
+                                    <span>${buttonLabel}</span>
                                 </a>
                             </div>
                         </div>
@@ -518,13 +563,16 @@
         }
 
         function updateSnapshot(repos) {
-            const publicRepos = repos.length;
-            const stars = repos.reduce((acc, r) => acc + (r.stargazers_count || 0), 0);
-            const langs = new Set(repos.map(r => r.language).filter(Boolean));
+            // Only count real repos for stats
+            const realRepos = repos.filter(r => !r.is_subproject);
+            
+            const publicRepos = realRepos.length;
+            const stars = realRepos.reduce((acc, r) => acc + (r.stargazers_count || 0), 0);
+            const langs = new Set(realRepos.map(r => r.language).filter(Boolean));
 
             const now = Date.now();
             const days90 = 90 * 24 * 60 * 60 * 1000;
-            const recent = repos.filter(r => r.pushed_at && (now - new Date(r.pushed_at).getTime()) <= days90).length;
+            const recent = realRepos.filter(r => r.pushed_at && (now - new Date(r.pushed_at).getTime()) <= days90).length;
 
             const elRepos = document.getElementById('stat-repos');
             const elStars = document.getElementById('stat-stars');
@@ -547,7 +595,7 @@
             if (!el) return;
 
             const counts = new Map();
-            repos.forEach(r => {
+            repos.filter(r => !r.is_subproject).forEach(r => {
                 if (!r.language) return;
                 counts.set(r.language, (counts.get(r.language) || 0) + 1);
             });
@@ -570,6 +618,7 @@
             const grid = document.getElementById('projects-grid');
 
             try {
+                // Fetch Main Repos
                 const url = `https://api.github.com/users/${GH_USER}/repos?per_page=100&sort=updated`;
                 const res = await fetch(url, { headers: { 'Accept': 'application/vnd.github+json' } });
 
@@ -579,20 +628,32 @@
 
                 let repos = data
                     .filter(r => r && !r.fork && !r.archived)
-                    .filter(r => !EXCLUDE_REPOS.has(r.name))
+                    .filter(r => !EXCLUDE_REPOS.has(r.name) && r.name !== '-university-codes') // Exclude the raw repo
                     .filter(r => (r.size || 0) > 0);
 
+                // Fetch Sub-projects from -university-codes
+                const uniCodes = await fetchUniversityCodes();
+                
+                // Merge
+                let allItems = [...repos, ...uniCodes];
+
+                // Sorting
                 const pinnedOrder = new Map(PINNED.map((name, idx) => [name, idx]));
-                repos = repos.sort((a, b) => {
+                allItems = allItems.sort((a, b) => {
                     const ap = pinnedOrder.has(a.name) ? pinnedOrder.get(a.name) : 9999;
                     const bp = pinnedOrder.has(b.name) ? pinnedOrder.get(b.name) : 9999;
                     if (ap !== bp) return ap - bp;
+                    
+                    // Fallback sort: Recent real repos first, then sub-projects
+                    if (a.is_subproject && !b.is_subproject) return 1;
+                    if (!a.is_subproject && b.is_subproject) return -1;
+
                     return new Date(b.pushed_at || 0) - new Date(a.pushed_at || 0);
                 });
 
                 if (loading) loading.classList.add('hidden');
 
-                if (!repos.length) {
+                if (!allItems.length) {
                     if (empty) empty.classList.remove('hidden');
                     updateSnapshot([]);
                     updateHeroLine(0);
@@ -600,11 +661,11 @@
                 }
 
                 if (grid) {
-                    grid.innerHTML = repos.map(renderCard).join('');
+                    grid.innerHTML = allItems.map(renderCard).join('');
                 }
 
-                updateSnapshot(repos);
-                updateHeroLine(repos.length);
+                updateSnapshot(repos); // Stats only for real repos
+                updateHeroLine(allItems.length);
                 updateLanguageBadges(repos);
 
                 // Initial animation for rendered cards
@@ -620,6 +681,7 @@
                 });
 
             } catch (err) {
+                console.error(err);
                 if (loading) loading.classList.add('hidden');
                 if (empty) {
                     empty.classList.remove('hidden');
