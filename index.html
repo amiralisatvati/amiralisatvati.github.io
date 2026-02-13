@@ -184,6 +184,32 @@
             border-radius: 10px; 
         }
         ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+
+        .code-repo-card {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.8));
+            backdrop-filter: blur(10px);
+        }
+        .code-repo-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(6, 182, 212, 0.2);
+            border-color: rgba(6, 182, 212, 0.6);
+        }
+        .code-repo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.1), transparent);
+            transition: left 0.5s;
+        }
+        .code-repo-card:hover::before {
+            left: 100%;
+        }
     </style>
 </head>
 <body class="antialiased font-sans relative selection:bg-accent/30 selection:text-white">
@@ -205,6 +231,7 @@
                 <div class="hidden md:flex space-x-8 rtl:space-x-reverse items-center">
                     <a href="#about" class="text-sm font-medium text-slate-300 hover:text-accent transition-colors" data-i18n="nav_about">About</a>
                     <a href="#skills" class="text-sm font-medium text-slate-300 hover:text-accent transition-colors" data-i18n="nav_skills">Skills</a>
+                    <a href="#code" class="text-sm font-medium text-slate-300 hover:text-accent transition-colors" data-i18n="nav_code">Code</a>
                     <a href="#projects" class="text-sm font-medium text-slate-300 hover:text-accent transition-colors" data-i18n="nav_projects">Projects</a>
                     <a href="#resources" class="text-sm font-medium text-slate-300 hover:text-accent transition-colors" data-i18n="nav_resources">Resources</a>
                     <a href="#contact" class="px-5 py-2.5 rounded-full bg-gradient-to-r from-accent to-accentSec text-sm font-semibold text-white hover:shadow-lg hover:shadow-accent/50 transition-all" data-i18n="nav_contact">Contact</a>
@@ -225,6 +252,7 @@
             <div class="px-4 pt-2 pb-6 space-y-2">
                 <a href="#about" class="block px-3 py-3 text-base font-medium text-slate-300 hover:text-accent hover:bg-slate-800/50 rounded-md transition-colors" data-i18n="nav_about">About</a>
                 <a href="#skills" class="block px-3 py-3 text-base font-medium text-slate-300 hover:text-accent hover:bg-slate-800/50 rounded-md transition-colors" data-i18n="nav_skills">Skills</a>
+                <a href="#code" class="block px-3 py-3 text-base font-medium text-slate-300 hover:text-accent hover:bg-slate-800/50 rounded-md transition-colors" data-i18n="nav_code">Code</a>
                 <a href="#projects" class="block px-3 py-3 text-base font-medium text-slate-300 hover:text-accent hover:bg-slate-800/50 rounded-md transition-colors" data-i18n="nav_projects">Projects</a>
                 <a href="#resources" class="block px-3 py-3 text-base font-medium text-slate-300 hover:text-accent hover:bg-slate-800/50 rounded-md transition-colors" data-i18n="nav_resources">Resources</a>
                 <a href="#contact" class="block px-3 py-3 text-base font-medium text-accent hover:bg-slate-800/50 rounded-md transition-colors" data-i18n="nav_contact">Contact</a>
@@ -478,6 +506,189 @@
         </div>
     </section>
 
+    <!-- Code & Projects Section (NEW) -->
+    <section id="code" class="py-24 bg-darker/90 border-y border-slate-800/50 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent pointer-events-none"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-accent/20 to-accentSec/20 mb-6 border border-accent/30">
+                    <i class="fab fa-github text-3xl text-accent"></i>
+                </div>
+                <h2 class="text-4xl font-black mb-4 flex items-center justify-center gap-3">
+                    <i class="fas fa-code-branch text-accent"></i>
+                    <span data-i18n="code_title">Open Source Work</span>
+                </h2>
+                <p class="text-slate-400 max-w-2xl mx-auto leading-relaxed" data-i18n="code_subtitle">
+                    Explore my statistical programming projects, R packages, and data analysis repositories
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <!-- Repository Card 1 -->
+                <div class="reveal code-repo-card rounded-2xl border border-slate-700/50 overflow-hidden group">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center">
+                                    <i class="fab fa-r-project text-2xl text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-white group-hover:text-accent transition-colors" data-i18n="repo1_name">Statistical Analysis</h3>
+                                    <p class="text-xs text-slate-500 font-mono">R Language</p>
+                                </div>
+                            </div>
+                            <a href="https://github.com/amiralisatvati" target="_blank" class="text-slate-400 hover:text-accent transition-colors">
+                                <i class="fab fa-github text-xl"></i>
+                            </a>
+                        </div>
+                        
+                        <p class="text-sm text-slate-400 mb-4 leading-relaxed" data-i18n="repo1_desc">
+                            Statistical modeling and hypothesis testing projects using R programming
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                                R
+                            </span>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                                Statistics
+                            </span>
+                        </div>
+                        
+                        <div class="flex items-center gap-4 text-xs text-slate-500">
+                            <span class="flex items-center gap-1">
+                                <i class="fas fa-star text-yellow-500"></i>
+                                <span data-i18n="repo_stars">Stars</span>
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <i class="fas fa-code-branch text-accent"></i>
+                                <span data-i18n="repo_forks">Forks</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Repository Card 2 -->
+                <div class="reveal code-repo-card rounded-2xl border border-slate-700/50 overflow-hidden group">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center">
+                                    <i class="fab fa-python text-2xl text-yellow-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-white group-hover:text-accent transition-colors" data-i18n="repo2_name">Data Mining Projects</h3>
+                                    <p class="text-xs text-slate-500 font-mono">Python</p>
+                                </div>
+                            </div>
+                            <a href="https://github.com/amiralisatvati" target="_blank" class="text-slate-400 hover:text-accent transition-colors">
+                                <i class="fab fa-github text-xl"></i>
+                            </a>
+                        </div>
+                        
+                        <p class="text-sm text-slate-400 mb-4 leading-relaxed" data-i18n="repo2_desc">
+                            Clustering, classification, and pattern recognition algorithms implementation
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">
+                                Python
+                            </span>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/20">
+                                Data Mining
+                            </span>
+                        </div>
+                        
+                        <div class="flex items-center gap-4 text-xs text-slate-500">
+                            <span class="flex items-center gap-1">
+                                <i class="fas fa-star text-yellow-500"></i>
+                                <span data-i18n="repo_stars">Stars</span>
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <i class="fas fa-code-branch text-accent"></i>
+                                <span data-i18n="repo_forks">Forks</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Repository Card 3 -->
+                <div class="reveal code-repo-card rounded-2xl border border-slate-700/50 overflow-hidden group">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-green-500/10 border border-green-500/30 flex items-center justify-center">
+                                    <i class="fas fa-chart-line text-2xl text-green-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-white group-hover:text-accent transition-colors" data-i18n="repo3_name">Data Visualization</h3>
+                                    <p class="text-xs text-slate-500 font-mono">R & Python</p>
+                                </div>
+                            </div>
+                            <a href="https://github.com/amiralisatvati" target="_blank" class="text-slate-400 hover:text-accent transition-colors">
+                                <i class="fab fa-github text-xl"></i>
+                            </a>
+                        </div>
+                        
+                        <p class="text-sm text-slate-400 mb-4 leading-relaxed" data-i18n="repo3_desc">
+                            Creating insightful visualizations using ggplot2, matplotlib, and seaborn
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                                ggplot2
+                            </span>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-green-500/10 text-green-400 border border-green-500/20">
+                                Visualization
+                            </span>
+                        </div>
+                        
+                        <div class="flex items-center gap-4 text-xs text-slate-500">
+                            <span class="flex items-center gap-1">
+                                <i class="fas fa-star text-yellow-500"></i>
+                                <span data-i18n="repo_stars">Stars</span>
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <i class="fas fa-code-branch text-accent"></i>
+                                <span data-i18n="repo_forks">Forks</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GitHub CTA -->
+            <div class="text-center reveal">
+                <a href="https://github.com/amiralisatvati" target="_blank" class="group inline-flex items-center gap-4 px-10 py-5 rounded-2xl bg-gradient-to-r from-slate-800/80 to-slate-900/80 hover:from-accent/20 hover:to-accentSec/20 border-2 border-slate-700 hover:border-accent transition-all transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-accent/30">
+                    <div class="w-14 h-14 rounded-xl bg-accent/10 border border-accent/30 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                        <i class="fab fa-github text-3xl text-accent"></i>
+                    </div>
+                    <div class="text-left rtl:text-right">
+                        <p class="text-xs text-slate-500 font-mono uppercase tracking-wider" data-i18n="github_cta_label">View All Repositories</p>
+                        <p class="text-xl font-bold text-white group-hover:text-accent transition-colors" data-i18n="github_cta_main">Explore More on GitHub</p>
+                    </div>
+                    <i class="fas fa-arrow-right text-2xl text-slate-400 group-hover:text-accent group-hover:translate-x-2 transition-all"></i>
+                </a>
+                
+                <div class="mt-6 flex items-center justify-center gap-6 text-sm text-slate-500">
+                    <span class="flex items-center gap-2">
+                        <i class="fas fa-code text-accent"></i>
+                        <span data-i18n="github_stat1">20+ Repositories</span>
+                    </span>
+                    <span class="flex items-center gap-2">
+                        <i class="fas fa-star text-yellow-500"></i>
+                        <span data-i18n="github_stat2">Open Source</span>
+                    </span>
+                    <span class="flex items-center gap-2">
+                        <i class="fas fa-users text-purple-400"></i>
+                        <span data-i18n="github_stat3">Collaborative</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Projects Section -->
     <section id="projects" class="py-24 bg-darker/70">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -546,14 +757,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="text-center mt-12 reveal">
-                <a href="https://github.com/amiralisatvati" target="_blank" class="inline-flex items-center gap-3 px-8 py-4 rounded-xl border-2 border-accent hover:bg-accent/10 text-accent text-sm font-bold transition-all hover:shadow-xl hover:shadow-accent/30 group">
-                    <i class="fab fa-github text-2xl group-hover:rotate-12 transition-transform"></i> 
-                    <span data-i18n="github_btn">Explore More on GitHub</span>
-                    <i class="fas fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
-                </a>
             </div>
         </div>
     </section>
@@ -870,6 +1073,7 @@
             en: {
                 nav_about: "About",
                 nav_skills: "Skills",
+                nav_code: "Code",
                 nav_projects: "Projects",
                 nav_resources: "Resources",
                 nav_contact: "Contact",
@@ -897,6 +1101,21 @@
                 skills_title: "Technical Skills",
                 skills_subtitle: "Tools and technologies for statistical analysis and data science",
                 skill_dm: "Data Mining",
+                code_title: "Open Source Work",
+                code_subtitle: "Explore my statistical programming projects, R packages, and data analysis repositories",
+                repo1_name: "Statistical Analysis",
+                repo1_desc: "Statistical modeling and hypothesis testing projects using R programming",
+                repo2_name: "Data Mining Projects",
+                repo2_desc: "Clustering, classification, and pattern recognition algorithms implementation",
+                repo3_name: "Data Visualization",
+                repo3_desc: "Creating insightful visualizations using ggplot2, matplotlib, and seaborn",
+                repo_stars: "Stars",
+                repo_forks: "Forks",
+                github_cta_label: "View All Repositories",
+                github_cta_main: "Explore More on GitHub",
+                github_stat1: "20+ Repositories",
+                github_stat2: "Open Source",
+                github_stat3: "Collaborative",
                 projects_title: "Statistical Projects",
                 projects_subtitle: "Real-world applications of statistical methods and data analysis",
                 proj_1_title: "University Statistical Analysis",
@@ -905,7 +1124,6 @@
                 proj_dm_desc: "Applied clustering algorithms (K-Means) to segment customers based on purchasing behavior for targeted marketing.",
                 proj_6_title: "Scientific Posters Design",
                 proj_6_desc: "Designing professional posters and social media assets for Statistics Association workshops.",
-                github_btn: "Explore More on GitHub",
                 resources_title: "Learning Resources",
                 resources_desc: "Curated collection of educational materials, blog posts, and learning resources.",
                 res_card1_title: "Programming Tutorials",
@@ -924,6 +1142,7 @@
             fa: {
                 nav_about: "درباره من",
                 nav_skills: "مهارت‌ها",
+                nav_code: "کدها",
                 nav_projects: "پروژه‌ها",
                 nav_resources: "منابع",
                 nav_contact: "تماس",
@@ -951,6 +1170,21 @@
                 skills_title: "مهارت‌های فنی",
                 skills_subtitle: "ابزارها و فناوری‌های تحلیل آماری و علم داده",
                 skill_dm: "داده‌کاوی",
+                code_title: "پروژه‌های متن‌باز",
+                code_subtitle: "کاوش در پروژه‌های برنامه‌نویسی آماری، پکیج‌های R و مخازن تحلیل داده من",
+                repo1_name: "تحلیل آماری",
+                repo1_desc: "پروژه‌های مدل‌سازی آماری و آزمون فرضیه با استفاده از برنامه‌نویسی R",
+                repo2_name: "پروژه‌های داده‌کاوی",
+                repo2_desc: "پیاده‌سازی الگوریتم‌های خوشه‌بندی، طبقه‌بندی و تشخیص الگو",
+                repo3_name: "تجسم داده",
+                repo3_desc: "ایجاد تصویرسازی‌های بصیرت‌آمیز با استفاده از ggplot2، matplotlib و seaborn",
+                repo_stars: "ستاره",
+                repo_forks: "فورک",
+                github_cta_label: "مشاهده تمام مخازن",
+                github_cta_main: "کاوش بیشتر در گیت‌هاب",
+                github_stat1: "+ ۲۰ مخزن",
+                github_stat2: "متن‌باز",
+                github_stat3: "مشارکتی",
                 projects_title: "پروژه‌های آماری",
                 projects_subtitle: "کاربردهای واقعی روش‌های آماری و تحلیل داده",
                 proj_1_title: "تحلیل آماری دانشگاهی",
@@ -959,7 +1193,6 @@
                 proj_dm_desc: "اعمال الگوریتم‌های خوشه‌بندی (K-Means) برای بخش‌بندی مشتریان بر اساس رفتار خرید جهت بازاریابی هدفمند.",
                 proj_6_title: "طراحی پوسترهای علمی",
                 proj_6_desc: "طراحی پوسترهای حرفه‌ای و محتوای شبکه‌های اجتماعی برای کارگاه‌های انجمن علمی آمار.",
-                github_btn: "کاوش بیشتر در گیت‌هاب",
                 resources_title: "منابع یادگیری",
                 resources_desc: "مجموعه منتخب از مطالب آموزشی، پست‌های بلاگ و منابع یادگیری.",
                 res_card1_title: "آموزش برنامه‌نویسی",
