@@ -217,7 +217,7 @@
         <div class="max-w-7xl mx-auto px-6 text-center relative z-10">
             <div class="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full glass border border-blue-500/30 text-blue-300 text-sm font-mono">
                 <span class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
-                <span>portfolio.projects.length > 0</span>
+                <span id="projects-condition">portfolio.projects.length > 0</span>
             </div>
             
             <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
@@ -226,7 +226,7 @@
             </h1>
             
             <p class="text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed text-lg" data-i18n="hero_desc">
-                A collection of applied projects in statistics, data mining, and evidence-based analysis. Each project combines rigorous mathematics with modern data analysis tools.
+                A living list of GitHub repositories—automatically updated, filterable, and presented as a portfolio.
             </p>
 
             <!-- Filter Buttons -->
@@ -245,7 +245,7 @@
                 </button>
             </div>
 
-            <div class="flex justify-center gap-4 text-sm text-slate-500 font-mono">
+            <div id="lang-badges" class="flex justify-center gap-4 text-sm text-slate-500 font-mono">
                 <span class="flex items-center gap-1"><i class="fas fa-check-circle text-emerald-400"></i> Python</span>
                 <span class="flex items-center gap-1"><i class="fas fa-check-circle text-emerald-400"></i> R</span>
                 <span class="flex items-center gap-1"><i class="fas fa-check-circle text-emerald-400"></i> SQL</span>
@@ -256,237 +256,18 @@
     <!-- Projects Grid -->
     <section class="relative z-10 pb-20 px-6">
         <div class="max-w-6xl mx-auto">
-            <div id="projects-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                
-                <!-- Project 1: House Price Prediction -->
-                <div class="project-card group relative glass rounded-2xl overflow-hidden" data-category="ml">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-600/20 flex items-center justify-center border border-blue-500/30">
-                                    <i class="fas fa-brain text-2xl text-blue-400"></i>
-                                </div>
-                                <div>
-                                    <h3 class="text-xl font-bold text-slate-100 group-hover:text-blue-400 transition-colors" data-i18n="proj1_title">House Price Prediction</h3>
-                                    <span class="text-xs text-slate-400" data-i18n="proj1_date">Dec 2023</span>
-                                </div>
-                            </div>
-                            <span class="badge-ml px-3 py-1 rounded-full text-xs font-medium">ML</span>
-                        </div>
-                        
-                        <p class="text-slate-400 text-sm mb-4 leading-relaxed" data-i18n="proj1_desc">
-                            Using regression algorithms and Random Forest to predict housing prices in Mashhad with 92% accuracy. Includes data preprocessing and feature engineering.
-                        </p>
-                        
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">scikit-learn</span>
-                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">pandas</span>
-                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-emerald-400 font-mono border border-emerald-500/30">R² = 0.92</span>
-                        </div>
-                        
-                        <div class="flex justify-between items-center pt-4 border-t border-slate-700/50">
-                            <div class="flex gap-4">
-                                <a href="https://github.com/amiralisatvati" target="_blank" class="text-slate-400 hover:text-white flex items-center gap-1.5 text-sm transition-colors">
-                                    <i class="fab fa-github"></i>
-                                    <span data-i18n="view_code">View Code</span>
-                                </a>
-                            </div>
-                            <i class="fas fa-arrow-up-right text-slate-600 group-hover:text-blue-400 transition-colors"></i>
-                        </div>
-                    </div>
+            <div id="projects-loading" class="glass rounded-2xl p-8 border border-slate-700/60 text-center text-slate-400">
+                <div class="inline-flex items-center gap-2 font-mono">
+                    <span class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
+                    <span data-i18n="loading">Loading projects from GitHub…</span>
                 </div>
-
-                <!-- Project 2: MANOVA Analysis -->
-                <div class="project-card group relative glass rounded-2xl overflow-hidden" data-category="stats">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500/20 to-cyan-600/20 flex items-center justify-center border border-emerald-500/30">
-                                    <i class="fas fa-chart-bar text-2xl text-emerald-400"></i>
-                                </div>
-                                <div>
-                                    <h3 class="text-xl font-bold text-slate-100 group-hover:text-emerald-400 transition-colors" data-i18n="proj2_title">Multivariate ANOVA</h3>
-                                    <span class="text-xs text-slate-400" data-i18n="proj2_date">Nov 2023</span>
-                                </div>
-                            </div>
-                            <span class="badge-stats px-3 py-1 rounded-full text-xs font-medium">Stats</span>
-                        </div>
-                        
-                        <p class="text-slate-400 text-sm mb-4 leading-relaxed" data-i18n="proj2_desc">
-                            MANOVA analysis on medical data using ggplot2 and stats packages in R. Comparison of three different treatment methods.
-                        </p>
-                        
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">MANOVA</span>
-                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">ggplot2</span>
-                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-emerald-400 font-mono border border-emerald-500/30">p < 0.01</span>
-                        </div>
-                        
-                        <div class="flex justify-between items-center pt-4 border-t border-slate-700/50">
-                            <div class="flex gap-4">
-                                <a href="https://github.com/amiralisatvati" target="_blank" class="text-slate-400 hover:text-white flex items-center gap-1.5 text-sm transition-colors">
-                                    <i class="fab fa-github"></i>
-                                    <span data-i18n="view_code">View Code</span>
-                                </a>
-                            </div>
-                            <i class="fas fa-arrow-up-right text-slate-600 group-hover:text-emerald-400 transition-colors"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 3: Customer Clustering -->
-                <div class="project-card group relative glass rounded-2xl overflow-hidden" data-category="ml">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-600/20 flex items-center justify-center border border-purple-500/30">
-                                    <i class="fas fa-project-diagram text-2xl text-purple-400"></i>
-                                </div>
-                                <div>
-                                    <h3 class="text-xl font-bold text-slate-100 group-hover:text-purple-400 transition-colors" data-i18n="proj3_title">Customer Clustering</h3>
-                                    <span class="text-xs text-slate-400" data-i18n="proj3_date">Oct 2023</span>
-                                </div>
-                            </div>
-                            <span class="badge-ml px-3 py-1 rounded-full text-xs font-medium">ML</span>
-                        </div>
-                        
-                        <p class="text-slate-400 text-sm mb-4 leading-relaxed" data-i18n="proj3_desc">
-                            Implementation of K-Means and DBSCAN algorithms for segmenting customers of an online store. Identification of 4 main segments for marketing targeting.
-                        </p>
-                        
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">K-Means</span>
-                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">DBSCAN</span>
-                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-emerald-400 font-mono border border-emerald-500/30">Silhouette = 0.78</span>
-                        </div>
-                        
-                        <div class="flex justify-between items-center pt-4 border-t border-slate-700/50">
-                            <div class="flex gap-4">
-                                <a href="https://github.com/amiralisatvati" target="_blank" class="text-slate-400 hover:text-white flex items-center gap-1.5 text-sm transition-colors">
-                                    <i class="fab fa-github"></i>
-                                    <span data-i18n="view_code">View Code</span>
-                                </a>
-                            </div>
-                            <i class="fas fa-arrow-up-right text-slate-600 group-hover:text-purple-400 transition-colors"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 4: Sales Dashboard -->
-                <div class="project-card group relative glass rounded-2xl overflow-hidden" data-category="viz">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500/20 to-red-600/20 flex items-center justify-center border border-orange-500/30">
-                                    <i class="fas fa-chart-pie text-2xl text-orange-400"></i>
-                                </div>
-                                <div>
-                                    <h3 class="text-xl font-bold text-slate-100 group-hover:text-orange-400 transition-colors" data-i18n="proj4_title">Sales Analysis Dashboard</h3>
-                                    <span class="text-xs text-slate-400" data-i18n="proj4_date">Sep 2023</span>
-                                </div>
-                            </div>
-                            <span class="badge-viz px-3 py-1 rounded-full text-xs font-medium">Viz</span>
-                        </div>
-                        
-                        <p class="text-slate-400 text-sm mb-4 leading-relaxed" data-i18n="proj4_desc">
-                            Interactive dashboard design for sales trend analysis and key performance indicators (KPIs) with filtering by time, region, and product.
-                        </p>
-                        
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">Tableau</span>
-                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">SQL</span>
-                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-orange-400 font-mono border border-orange-500/30">Interactive</span>
-                        </div>
-                        
-                        <div class="flex justify-between items-center pt-4 border-t border-slate-700/50">
-                            <div class="flex gap-4">
-                                <a href="https://github.com/amiralisatvati" target="_blank" class="text-slate-400 hover:text-white flex items-center gap-1.5 text-sm transition-colors">
-                                    <i class="fab fa-github"></i>
-                                    <span data-i18n="view_code">View Code</span>
-                                </a>
-                            </div>
-                            <i class="fas fa-arrow-up-right text-slate-600 group-hover:text-orange-400 transition-colors"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 5: Time Series -->
-                <div class="project-card group relative glass rounded-2xl overflow-hidden" data-category="stats">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 flex items-center justify-center border border-cyan-500/30">
-                                    <i class="fas fa-chart-line text-2xl text-cyan-400"></i>
-                                </div>
-                                <div>
-                                    <h3 class="text-xl font-bold text-slate-100 group-hover:text-cyan-400 transition-colors" data-i18n="proj5_title">Time Series Forecasting</h3>
-                                    <span class="text-xs text-slate-400" data-i18n="proj5_date">Aug 2023</span>
-                                </div>
-                            </div>
-                            <span class="badge-stats px-3 py-1 rounded-full text-xs font-medium">Stats</span>
-                        </div>
-                        
-                        <p class="text-slate-400 text-sm mb-4 leading-relaxed" data-i18n="proj5_desc">
-                            ARIMA and Prophet modeling for currency rate forecasting and market trend analysis. 96% accuracy in 4-day ahead prediction.
-                        </p>
-                        
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">ARIMA</span>
-                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">Prophet</span>
-                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-emerald-400 font-mono border border-emerald-500/30">MAPE = 4.2%</span>
-                        </div>
-                        
-                        <div class="flex justify-between items-center pt-4 border-t border-slate-700/50">
-                            <div class="flex gap-4">
-                                <a href="https://github.com/amiralisatvati" target="_blank" class="text-slate-400 hover:text-white flex items-center gap-1.5 text-sm transition-colors">
-                                    <i class="fab fa-github"></i>
-                                    <span data-i18n="view_code">View Code</span>
-                                </a>
-                            </div>
-                            <i class="fas fa-arrow-up-right text-slate-600 group-hover:text-cyan-400 transition-colors"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 6: Market Basket Analysis -->
-                <div class="project-card group relative glass rounded-2xl overflow-hidden" data-category="ml">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-pink-500/20 to-rose-600/20 flex items-center justify-center border border-pink-500/30">
-                                    <i class="fas fa-shopping-cart text-2xl text-pink-400"></i>
-                                </div>
-                                <div>
-                                    <h3 class="text-xl font-bold text-slate-100 group-hover:text-pink-400 transition-colors" data-i18n="proj6_title">Market Basket Analysis</h3>
-                                    <span class="text-xs text-slate-400" data-i18n="proj6_date">Jul 2023</span>
-                                </div>
-                            </div>
-                            <span class="badge-ml px-3 py-1 rounded-full text-xs font-medium">ML</span>
-                        </div>
-                        
-                        <p class="text-slate-400 text-sm mb-4 leading-relaxed" data-i18n="proj6_desc">
-                            Discovering association rules in retail chain data using Apriori and FP-Growth algorithms. Identification of co-purchase patterns.
-                        </p>
-                        
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">Apriori</span>
-                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">FP-Growth</span>
-                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-emerald-400 font-mono border border-emerald-500/30">Support > 0.05</span>
-                        </div>
-                        
-                        <div class="flex justify-between items-center pt-4 border-t border-slate-700/50">
-                            <div class="flex gap-4">
-                                <a href="https://github.com/amiralisatvati" target="_blank" class="text-slate-400 hover:text-white flex items-center gap-1.5 text-sm transition-colors">
-                                    <i class="fab fa-github"></i>
-                                    <span data-i18n="view_code">View Code</span>
-                                </a>
-                            </div>
-                            <i class="fas fa-arrow-up-right text-slate-600 group-hover:text-pink-400 transition-colors"></i>
-                        </div>
-                    </div>
-                </div>
-
             </div>
+
+            <div id="projects-empty" class="hidden glass rounded-2xl p-8 border border-slate-700/60 text-center text-slate-400">
+                <p class="font-mono" data-i18n="empty">No public repositories found.</p>
+            </div>
+
+            <div id="projects-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6"></div>
         </div>
     </section>
 
@@ -495,26 +276,26 @@
         <div class="absolute inset-0 bg-gradient-to-r from-blue-900/10 to-purple-900/10"></div>
         <div class="max-w-7xl mx-auto px-6 relative z-10">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold mb-4 text-slate-100" data-i18n="stats_title">Project Statistics</h2>
+                <h2 class="text-3xl font-bold mb-4 text-slate-100" data-i18n="stats_title">GitHub Snapshot</h2>
                 <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
             </div>
             
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div class="glass rounded-2xl p-8 text-center hover:border-blue-500/30 transition-colors border border-transparent">
-                    <div class="text-4xl font-bold text-blue-400 mb-2 font-mono stat-number" data-target="12">0</div>
-                    <div class="text-slate-400 text-sm" data-i18n="stat1">Completed Projects</div>
+                    <div id="stat-repos" class="text-4xl font-bold text-blue-400 mb-2 font-mono">0</div>
+                    <div class="text-slate-400 text-sm" data-i18n="stat1">Public repositories</div>
                 </div>
                 <div class="glass rounded-2xl p-8 text-center hover:border-purple-500/30 transition-colors border border-transparent">
-                    <div class="text-4xl font-bold text-purple-400 mb-2 font-mono stat-number" data-target="25">0</div>
-                    <div class="text-slate-400 text-sm" data-i18n="stat2">Analyzed Datasets</div>
+                    <div id="stat-stars" class="text-4xl font-bold text-purple-400 mb-2 font-mono">0</div>
+                    <div class="text-slate-400 text-sm" data-i18n="stat2">Total stars</div>
                 </div>
                 <div class="glass rounded-2xl p-8 text-center hover:border-cyan-500/30 transition-colors border border-transparent">
-                    <div class="text-4xl font-bold text-cyan-400 mb-2 font-mono stat-number" data-target="18">0</div>
-                    <div class="text-slate-400 text-sm" data-i18n="stat3">Statistical Models</div>
+                    <div id="stat-langs" class="text-4xl font-bold text-cyan-400 mb-2 font-mono">0</div>
+                    <div class="text-slate-400 text-sm" data-i18n="stat3">Primary languages</div>
                 </div>
                 <div class="glass rounded-2xl p-8 text-center hover:border-emerald-500/30 transition-colors border border-transparent">
-                    <div class="text-4xl font-bold text-emerald-400 mb-2 font-mono stat-number" data-target="94" data-suffix="%">0%</div>
-                    <div class="text-slate-400 text-sm" data-i18n="stat4">Average Accuracy</div>
+                    <div id="stat-recent" class="text-4xl font-bold text-emerald-400 mb-2 font-mono">0</div>
+                    <div class="text-slate-400 text-sm" data-i18n="stat4">Updated (last 90 days)</div>
                 </div>
             </div>
         </div>
@@ -590,49 +371,254 @@
                     setTimeout(() => {
                         card.style.opacity = '1';
                         card.style.transform = 'translateY(0)';
-                    }, index * 50);
+                    }, index * 25);
                 } else {
                     card.style.opacity = '0';
                     card.style.transform = 'translateY(20px)';
                     setTimeout(() => {
                         card.style.display = 'none';
-                    }, 300);
+                    }, 250);
                 }
             });
         }
 
-        // Animated Counter
-        const observerOptions = {
-            threshold: 0.5,
-            rootMargin: '0px'
-        };
+        // GitHub-driven Projects
+        const GH_USER = 'amiralisatvati';
+        const EXCLUDE_REPOS = new Set(['amiralisatvati.github.io']);
+        const PINNED = [
+            'Data-Analysis-Project',
+            'ml-course-maktabkhooneh',
+            'university-simulation-project',
+            '-university-codes',
+            'quantile-regression-presentation',
+            'quantile-regression-presentation-v2',
+            '-python-R'
+        ];
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const target = parseInt(entry.target.dataset.target);
-                    const suffix = entry.target.dataset.suffix || '';
-                    animateCounter(entry.target, target, suffix);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        function animateCounter(element, target, suffix) {
-            let current = 0;
-            const increment = target / 50;
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    current = target;
-                    clearInterval(timer);
-                }
-                element.textContent = Math.floor(current) + suffix;
-            }, 30);
+        function categoryOf(repo) {
+            const text = `${repo.name} ${(repo.description || '')}`.toLowerCase();
+            if (text.includes('ml') || text.includes('machine learning') || text.includes('scikit') || text.includes('notebook') || text.includes('classification') || text.includes('regression')) return 'ml';
+            if (text.includes('viz') || text.includes('visual') || text.includes('dashboard') || text.includes('plot') || text.includes('tableau') || text.includes('ggplot')) return 'viz';
+            if (text.includes('stats') || text.includes('statistics') || text.includes('quantile') || text.includes('anova') || text.includes('manova') || text.includes('simulation')) return 'stats';
+            if ((repo.language || '').toLowerCase() === 'r') return 'stats';
+            return 'stats';
         }
 
-        document.querySelectorAll('.stat-number').forEach(stat => {
-            observer.observe(stat);
+        function iconOf(cat) {
+            if (cat === 'ml') return { icon: 'fa-brain', color: 'text-blue-400', border: 'border-blue-500/30', bg: 'from-blue-500/20 to-purple-600/20' };
+            if (cat === 'viz') return { icon: 'fa-chart-pie', color: 'text-emerald-400', border: 'border-emerald-500/30', bg: 'from-emerald-500/20 to-cyan-600/20' };
+            return { icon: 'fa-chart-line', color: 'text-cyan-400', border: 'border-cyan-500/30', bg: 'from-cyan-500/20 to-blue-600/20' };
+        }
+
+        function badgeClass(cat) {
+            if (cat === 'ml') return 'badge-ml';
+            if (cat === 'viz') return 'badge-viz';
+            return 'badge-stats';
+        }
+
+        function categoryLabel(cat) {
+            const map = {
+                en: { ml: 'ML', stats: 'Stats', viz: 'Viz' },
+                fa: { ml: 'یادگیری ماشین', stats: 'آمار', viz: 'تجسم‌سازی' }
+            };
+            return (map[currentLang] && map[currentLang][cat]) ? map[currentLang][cat] : cat;
+        }
+
+        function safeText(str) {
+            if (!str) return '';
+            return String(str)
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#039;');
+        }
+
+        function formatDate(iso) {
+            const d = new Date(iso);
+            const locale = currentLang === 'fa' ? 'fa-IR' : 'en-US';
+            return d.toLocaleDateString(locale, { year: 'numeric', month: 'short' });
+        }
+
+        function isValidUrl(value) {
+            try { new URL(value); return true; } catch (e) { return false; }
+        }
+
+        function renderCard(repo) {
+            const cat = categoryOf(repo);
+            const meta = iconOf(cat);
+            const desc = repo.description ? safeText(repo.description) : (currentLang === 'fa' ? 'بدون توضیح.' : 'No description provided.');
+            const lang = repo.language ? safeText(repo.language) : (currentLang === 'fa' ? 'نامشخص' : 'N/A');
+            const updated = repo.pushed_at ? formatDate(repo.pushed_at) : '';
+            const stars = typeof repo.stargazers_count === 'number' ? repo.stargazers_count : 0;
+
+            const homepage = repo.homepage && isValidUrl(repo.homepage) ? repo.homepage : '';
+
+            const viewRepoLabel = (translations[currentLang] && translations[currentLang].view_repo) ? translations[currentLang].view_repo : 'View Repo';
+            const liveLabel = (translations[currentLang] && translations[currentLang].live_demo) ? translations[currentLang].live_demo : 'Live';
+            const updatedLabel = (translations[currentLang] && translations[currentLang].updated) ? translations[currentLang].updated : 'Updated';
+
+            return `
+                <div class="project-card group relative glass rounded-2xl overflow-hidden" data-category="${cat}">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-gradient-to-br ${meta.bg} flex items-center justify-center border ${meta.border}">
+                                    <i class="fas ${meta.icon} text-2xl ${meta.color}"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-slate-100 group-hover:text-blue-400 transition-colors">${safeText(repo.name)}</h3>
+                                    <div class="text-xs text-slate-400 flex items-center gap-2">
+                                        <span class="font-mono">${updatedLabel}: ${updated}</span>
+                                        <span class="text-slate-600">•</span>
+                                        <span class="font-mono"><i class="fas fa-star text-yellow-400/80"></i> ${stars}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="${badgeClass(cat)} px-3 py-1 rounded-full text-xs font-medium">${categoryLabel(cat)}</span>
+                        </div>
+                        
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed">${desc}</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">${lang}</span>
+                            ${repo.license && repo.license.spdx_id ? `<span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">${safeText(repo.license.spdx_id)}</span>` : ''}
+                        </div>
+                        
+                        <div class="flex justify-between items-center pt-4 border-t border-slate-700/50">
+                            <div class="flex gap-4 flex-wrap">
+                                <a href="${repo.html_url}" target="_blank" rel="noopener" class="text-slate-400 hover:text-white flex items-center gap-1.5 text-sm transition-colors">
+                                    <i class="fab fa-github"></i>
+                                    <span>${viewRepoLabel}</span>
+                                </a>
+                                ${homepage ? `
+                                <a href="${homepage}" target="_blank" rel="noopener" class="text-slate-400 hover:text-white flex items-center gap-1.5 text-sm transition-colors">
+                                    <i class="fas fa-arrow-up-right-from-square"></i>
+                                    <span>${liveLabel}</span>
+                                </a>` : ''}
+                            </div>
+                            <i class="fas fa-arrow-up-right text-slate-600 group-hover:text-blue-400 transition-colors"></i>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateSnapshot(repos) {
+            const publicRepos = repos.length;
+            const stars = repos.reduce((acc, r) => acc + (r.stargazers_count || 0), 0);
+            const langs = new Set(repos.map(r => r.language).filter(Boolean));
+
+            const now = Date.now();
+            const days90 = 90 * 24 * 60 * 60 * 1000;
+            const recent = repos.filter(r => r.pushed_at && (now - new Date(r.pushed_at).getTime()) <= days90).length;
+
+            const elRepos = document.getElementById('stat-repos');
+            const elStars = document.getElementById('stat-stars');
+            const elLangs = document.getElementById('stat-langs');
+            const elRecent = document.getElementById('stat-recent');
+
+            if (elRepos) elRepos.textContent = publicRepos;
+            if (elStars) elStars.textContent = stars;
+            if (elLangs) elLangs.textContent = langs.size;
+            if (elRecent) elRecent.textContent = recent;
+        }
+
+        function updateHeroLine(count) {
+            const el = document.getElementById('projects-condition');
+            if (el) el.textContent = `portfolio.projects.length = ${count}`;
+        }
+
+        function updateLanguageBadges(repos) {
+            const el = document.getElementById('lang-badges');
+            if (!el) return;
+
+            const counts = new Map();
+            repos.forEach(r => {
+                if (!r.language) return;
+                counts.set(r.language, (counts.get(r.language) || 0) + 1);
+            });
+
+            const top = Array.from(counts.entries())
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 3)
+                .map(([lang]) => lang);
+
+            if (top.length === 0) return;
+
+            el.innerHTML = top.map(lang => `
+                <span class="flex items-center gap-1"><i class="fas fa-check-circle text-emerald-400"></i> ${safeText(lang)}</span>
+            `).join('');
+        }
+
+        async function loadRepos() {
+            const loading = document.getElementById('projects-loading');
+            const empty = document.getElementById('projects-empty');
+            const grid = document.getElementById('projects-grid');
+
+            try {
+                const url = `https://api.github.com/users/${GH_USER}/repos?per_page=100&sort=updated`;
+                const res = await fetch(url, { headers: { 'Accept': 'application/vnd.github+json' } });
+
+                if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
+
+                const data = await res.json();
+
+                let repos = data
+                    .filter(r => r && !r.fork && !r.archived)
+                    .filter(r => !EXCLUDE_REPOS.has(r.name))
+                    .filter(r => (r.size || 0) > 0);
+
+                const pinnedOrder = new Map(PINNED.map((name, idx) => [name, idx]));
+                repos = repos.sort((a, b) => {
+                    const ap = pinnedOrder.has(a.name) ? pinnedOrder.get(a.name) : 9999;
+                    const bp = pinnedOrder.has(b.name) ? pinnedOrder.get(b.name) : 9999;
+                    if (ap !== bp) return ap - bp;
+                    return new Date(b.pushed_at || 0) - new Date(a.pushed_at || 0);
+                });
+
+                if (loading) loading.classList.add('hidden');
+
+                if (!repos.length) {
+                    if (empty) empty.classList.remove('hidden');
+                    updateSnapshot([]);
+                    updateHeroLine(0);
+                    return;
+                }
+
+                if (grid) {
+                    grid.innerHTML = repos.map(renderCard).join('');
+                }
+
+                updateSnapshot(repos);
+                updateHeroLine(repos.length);
+                updateLanguageBadges(repos);
+
+                // Initial animation for rendered cards
+                const cards = document.querySelectorAll('.project-card');
+                cards.forEach((card, index) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        card.classList.add('fade-in-up');
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, index * 60);
+                });
+
+            } catch (err) {
+                if (loading) loading.classList.add('hidden');
+                if (empty) {
+                    empty.classList.remove('hidden');
+                    empty.querySelector('p').textContent = (currentLang === 'fa')
+                        ? 'مشکل در دریافت پروژه‌ها از GitHub.'
+                        : 'Failed to load repositories from GitHub.';
+                }
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadRepos();
         });
 
         // Particle System
@@ -714,20 +700,6 @@
         initParticles();
         animateParticles();
 
-        // Fade-in animation on load
-        window.addEventListener('load', () => {
-            const cards = document.querySelectorAll('.project-card');
-            cards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                setTimeout(() => {
-                    card.classList.add('fade-in-up');
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, index * 100);
-            });
-        });
-
         // Language Toggle
         const translations = {
             en: {
@@ -738,35 +710,21 @@
                 nav_contact: "Contact",
                 hero_title1: "Statistical & Data Analysis",
                 hero_title2: "Projects",
-                hero_desc: "A collection of applied projects in statistics, data mining, and evidence-based analysis. Each project combines rigorous mathematics with modern data analysis tools.",
+                hero_desc: "A living list of GitHub repositories—automatically updated, filterable, and presented as a portfolio.",
                 filter_all: "All Projects",
                 filter_ml: "🤖 Machine Learning",
                 filter_stats: "📊 Statistics",
                 filter_viz: "📈 Visualization",
-                proj1_title: "House Price Prediction",
-                proj1_date: "Dec 2023",
-                proj1_desc: "Using regression algorithms and Random Forest to predict housing prices in Mashhad with 92% accuracy. Includes data preprocessing and feature engineering.",
-                proj2_title: "Multivariate ANOVA",
-                proj2_date: "Nov 2023",
-                proj2_desc: "MANOVA analysis on medical data using ggplot2 and stats packages in R. Comparison of three different treatment methods.",
-                proj3_title: "Customer Clustering",
-                proj3_date: "Oct 2023",
-                proj3_desc: "Implementation of K-Means and DBSCAN algorithms for segmenting customers of an online store. Identification of 4 main segments for marketing targeting.",
-                proj4_title: "Sales Analysis Dashboard",
-                proj4_date: "Sep 2023",
-                proj4_desc: "Interactive dashboard design for sales trend analysis and key performance indicators (KPIs) with filtering by time, region, and product.",
-                proj5_title: "Time Series Forecasting",
-                proj5_date: "Aug 2023",
-                proj5_desc: "ARIMA and Prophet modeling for currency rate forecasting and market trend analysis. 96% accuracy in 4-day ahead prediction.",
-                proj6_title: "Market Basket Analysis",
-                proj6_date: "Jul 2023",
-                proj6_desc: "Discovering association rules in retail chain data using Apriori and FP-Growth algorithms. Identification of co-purchase patterns.",
-                view_code: "View Code",
-                stats_title: "Project Statistics",
-                stat1: "Completed Projects",
-                stat2: "Analyzed Datasets",
-                stat3: "Statistical Models",
-                stat4: "Average Accuracy",
+                loading: "Loading projects from GitHub…",
+                empty: "No public repositories found.",
+                view_repo: "View Repo",
+                live_demo: "Live",
+                updated: "Updated",
+                stats_title: "GitHub Snapshot",
+                stat1: "Public repositories",
+                stat2: "Total stars",
+                stat3: "Primary languages",
+                stat4: "Updated (last 90 days)",
                 cta_title: "Have a Project in Mind?",
                 cta_desc: "Ready to collaborate on data analysis projects, statistical consulting, and academic campaign design.",
                 cta_email: "Send Email",
@@ -782,35 +740,21 @@
                 nav_contact: "تماس",
                 hero_title1: "پروژه‌های",
                 hero_title2: "آماری و تحلیل داده",
-                hero_desc: "مجموعه‌ای از پروژه‌های کاربردی در زمینه آمار، داده‌کاوی و تحلیل‌های مبتنی بر شواهد. هر پروژه ترکیبی از ریاضیات دقیق و ابزارهای مدرن تحلیل داده است.",
+                hero_desc: "فهرست زنده از ریپازیتوری‌های GitHub؛ به‌صورت خودکار آپدیت می‌شود و قابلیت فیلتر دارد.",
                 filter_all: "همه پروژه‌ها",
                 filter_ml: "🤖 یادگیری ماشین",
-                filter_stats: "📊 آمار کلاسیک",
+                filter_stats: "📊 آمار",
                 filter_viz: "📈 تجسم‌سازی",
-                proj1_title: "پیش‌بینی قیمت مسکن",
-                proj1_date: "دی ۱۴۰۲",
-                proj1_desc: "استفاده از الگوریتم‌های رگرسیون و Random Forest برای پیش‌بینی قیمت مسکن در شهر مشهد با دقت ۹۲٪. شامل پیش‌پردازش داده و مهندسی ویژگی.",
-                proj2_title: "آنالیز واریانس چندمتغیره",
-                proj2_date: "آبان ۱۴۰۲",
-                proj2_desc: "تحلیل MANOVA بر روی داده‌های پزشکی با استفاده از بسته‌های ggplot2 و stats در R. مقایسه اثر سه روش درمانی مختلف.",
-                proj3_title: "خوشه‌بندی مشتریان",
-                proj3_date: "مهر ۱۴۰۲",
-                proj3_desc: "پیاده‌سازی الگوریتم K-Means و DBSCAN برای بخش‌بندی مشتریان یک فروشگاه آنلاین. شناسایی ۴ سگمنت اصلی برای هدف‌گذاری بازاریابی.",
-                proj4_title: "داشبورد تحلیل فروش",
-                proj4_date: "شهریور ۱۴۰۲",
-                proj4_desc: "طراحی داشبورد تعاملی برای تحلیل روند فروش و شاخص‌های کلیدی عملکرد (KPI) با قابلیت فیلتر بر اساس زمان، منطقه و محصول.",
-                proj5_title: "پیش‌بینی سری‌های زمانی",
-                proj5_date: "مرداد ۱۴۰۲",
-                proj5_desc: "مدل‌سازی ARIMA و Prophet برای پیش‌بینی نرخ ارز و تحلیل روند‌های بازار. دقت ۹۶٪ در پیش‌بینی ۴ روز آینده.",
-                proj6_title: "تحلیل سبد خرید",
-                proj6_date: "تیر ۱۴۰۲",
-                proj6_desc: "کشف قوانین انجمنی در داده‌های فروشگاه زنجیره‌ای با الگوریتم Apriori و FP-Growth. شناسایی الگوهای خرید همراه.",
-                view_code: "مشاهده کد",
-                stats_title: "آمارهای پروژه",
-                stat1: "پروژه تکمیل شده",
-                stat2: "دیتاست تحلیل شده",
-                stat3: "مدل آماری",
-                stat4: "دقت متوسط",
+                loading: "در حال دریافت پروژه‌ها از GitHub…",
+                empty: "هیچ ریپازیتوری عمومی پیدا نشد.",
+                view_repo: "مشاهده Repo",
+                live_demo: "دمو",
+                updated: "آخرین آپدیت",
+                stats_title: "نمای کلی GitHub",
+                stat1: "ریپازیتوری‌های عمومی",
+                stat2: "مجموع ستاره‌ها",
+                stat3: "زبان‌های اصلی",
+                stat4: "آپدیت‌شده (۹۰ روز اخیر)",
                 cta_title: "پروژه‌ای در ذهن دارید؟",
                 cta_desc: "آماده همکاری در پروژه‌های تحلیل داده، مشاوره آماری و طراحی کمپین‌های آکادمیک هستم.",
                 cta_email: "ارسال ایمیل",
@@ -836,6 +780,9 @@
                     el.textContent = translations[currentLang][key];
                 }
             });
+
+            // Re-render dynamic repo cards in new language
+            loadRepos();
         }
     </script>
 </body>
