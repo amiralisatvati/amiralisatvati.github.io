@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" dir="ltr" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Projects | Amir Ali Satvati</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Statistical and data analysis projects by Amir Ali Satvati. Machine Learning, Statistical Modeling, and Data Visualization.">
+    <meta name="keywords" content="Amir Ali Satvati, Data Science, Machine Learning, Statistical Analysis, R Programming, Python">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Vazirmatn:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0a0e27',
+                        darker: '#050714',
+                        accent: '#06b6d4',
+                        accentSec: '#8b5cf6',
+                        accentTer: '#10b981',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Vazirmatn', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #0a0e27 0%, #050714 100%);
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        [dir="rtl"] {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        
+        .glass-strong {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .animate-gradient {
+            background-size: 200% 200%;
+            animation: gradient-shift 15s ease infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.05; }
+            50% { transform: translateY(-15px) rotate(3deg); opacity: 0.15; }
+        }
+        
+        .math-float {
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .math-float-delayed {
+            animation: float 10s ease-in-out infinite 3s;
+        }
+
+        .project-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 20px 40px -15px rgba(59, 130, 246, 0.2);
+        }
+
+        .filter-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border-color: transparent;
+            box-shadow: 0 4px 15px -3px rgba(59, 130, 246, 0.4);
+        }
+
+        .badge-ml { background: rgba(124, 58, 237, 0.2); color: #a78bfa; border: 1px solid rgba(124, 58, 237, 0.3); }
+        .badge-stats { background: rgba(37, 99, 235, 0.2); color: #60a5fa; border: 1px solid rgba(37, 99, 235, 0.3); }
+        .badge-viz { background: rgba(5, 150, 105, 0.2); color: #34d399; border: 1px solid rgba(5, 150, 105, 0.3); }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #34d399 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #0a0e27; }
+        ::-webkit-scrollbar-thumb { 
+            background: linear-gradient(180deg, #06b6d4, #8b5cf6); 
+            border-radius: 10px; 
+        }
+        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body class="antialiased font-sans relative selection:bg-accent/30 selection:text-white">
+
+    <!-- Particle Background -->
+    <canvas id="particles"></canvas>
+
+    <!-- Background Math Symbols -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0 select-none">
+        <div class="absolute top-20 left-10 text-6xl text-blue-500/10 math-float font-mono">Σ</div>
+        <div class="absolute top-40 right-20 text-5xl text-purple-500/10 math-float-delayed font-mono">σ²</div>
+        <div class="absolute bottom-32 left-1/4 text-7xl text-cyan-500/10 math-float font-mono">∫</div>
+        <div class="absolute top-1/3 right-10 text-4xl text-pink-500/10 math-float-delayed font-mono">μ</div>
+        <div class="absolute bottom-20 right-1/3 text-6xl text-emerald-500/10 math-float font-mono">π</div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-strong">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="/" class="flex items-center gap-3 group cursor-pointer">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-xl font-bold text-white shadow-lg group-hover:shadow-blue-500/30 transition-shadow">
+                        A
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-lg font-bold text-slate-100">Amir Ali Satvati</span>
+                        <span class="text-xs text-slate-400 font-mono" data-i18n="nav_subtitle">Data Scientist</span>
+                    </div>
+                </a>
+                
+                <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+                    <a href="/#about" class="text-slate-300 hover:text-blue-400 transition-colors" data-i18n="nav_about">About</a>
+                    <a href="/#skills" class="text-slate-300 hover:text-blue-400 transition-colors" data-i18n="nav_skills">Skills</a>
+                    <a href="/projects.html" class="text-blue-400" data-i18n="nav_projects">Projects</a>
+                    <a href="/#contact" class="text-slate-300 hover:text-blue-400 transition-colors" data-i18n="nav_contact">Contact</a>
+                    <button onclick="toggleLanguage()" class="flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-700 hover:border-accent text-xs font-bold text-slate-300 transition-all hover:bg-accent/10">
+                        <i class="fas fa-globe"></i> <span id="lang-text">FA</span>
+                    </button>
+                </div>
+
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2 hover:bg-white/10 rounded-lg transition-colors">
+                    <i class="fas fa-bars text-slate-300 text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass border-t border-white/10">
+            <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-4">
+                <a href="/#about" class="text-slate-300 hover:text-blue-400 py-2" data-i18n="nav_about">About</a>
+                <a href="/#skills" class="text-slate-300 hover:text-blue-400 py-2" data-i18n="nav_skills">Skills</a>
+                <a href="/projects.html" class="text-blue-400 py-2" data-i18n="nav_projects">Projects</a>
+                <a href="/#contact" class="text-slate-300 hover:text-blue-400 py-2" data-i18n="nav_contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-[70vh] flex items-center justify-center pt-24 pb-12 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-slate-900 animate-gradient"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 text-center relative z-10">
+            <div class="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full glass border border-blue-500/30 text-blue-300 text-sm font-mono">
+                <span class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
+                <span>portfolio.projects.length > 0</span>
+            </div>
+            
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+                <span class="block text-slate-100 mb-2" data-i18n="hero_title1">Statistical & Data Analysis</span>
+                <span class="gradient-text" data-i18n="hero_title2">Projects</span>
+            </h1>
+            
+            <p class="text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed text-lg" data-i18n="hero_desc">
+                A collection of applied projects in statistics, data mining, and evidence-based analysis. Each project combines rigorous mathematics with modern data analysis tools.
+            </p>
+
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-3 mb-8">
+                <button onclick="filterProjects('all')" class="filter-btn active px-6 py-2.5 rounded-full border border-slate-600 text-sm font-medium hover:border-slate-400" data-filter="all" data-i18n="filter_all">
+                    All Projects
+                </button>
+                <button onclick="filterProjects('ml')" class="filter-btn px-6 py-2.5 rounded-full border border-slate-600 text-sm font-medium hover:border-slate-400" data-filter="ml" data-i18n="filter_ml">
+                    🤖 Machine Learning
+                </button>
+                <button onclick="filterProjects('stats')" class="filter-btn px-6 py-2.5 rounded-full border border-slate-600 text-sm font-medium hover:border-slate-400" data-filter="stats" data-i18n="filter_stats">
+                    📊 Statistics
+                </button>
+                <button onclick="filterProjects('viz')" class="filter-btn px-6 py-2.5 rounded-full border border-slate-600 text-sm font-medium hover:border-slate-400" data-filter="viz" data-i18n="filter_viz">
+                    📈 Visualization
+                </button>
+            </div>
+
+            <div class="flex justify-center gap-4 text-sm text-slate-500 font-mono">
+                <span class="flex items-center gap-1"><i class="fas fa-check-circle text-emerald-400"></i> Python</span>
+                <span class="flex items-center gap-1"><i class="fas fa-check-circle text-emerald-400"></i> R</span>
+                <span class="flex items-center gap-1"><i class="fas fa-check-circle text-emerald-400"></i> SQL</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Grid -->
+    <section class="relative z-10 pb-20 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div id="projects-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                
+                <!-- Project 1: House Price Prediction -->
+                <div class="project-card group relative glass rounded-2xl overflow-hidden" data-category="ml">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-600/20 flex items-center justify-center border border-blue-500/30">
+                                    <i class="fas fa-brain text-2xl text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-slate-100 group-hover:text-blue-400 transition-colors" data-i18n="proj1_title">House Price Prediction</h3>
+                                    <span class="text-xs text-slate-400" data-i18n="proj1_date">Dec 2023</span>
+                                </div>
+                            </div>
+                            <span class="badge-ml px-3 py-1 rounded-full text-xs font-medium">ML</span>
+                        </div>
+                        
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed" data-i18n="proj1_desc">
+                            Using regression algorithms and Random Forest to predict housing prices in Mashhad with 92% accuracy. Includes data preprocessing and feature engineering.
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">scikit-learn</span>
+                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">pandas</span>
+                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-emerald-400 font-mono border border-emerald-500/30">R² = 0.92</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center pt-4 border-t border-slate-700/50">
+                            <div class="flex gap-4">
+                                <a href="https://github.com/amiralisatvati" target="_blank" class="text-slate-400 hover:text-white flex items-center gap-1.5 text-sm transition-colors">
+                                    <i class="fab fa-github"></i>
+                                    <span data-i18n="view_code">View Code</span>
+                                </a>
+                            </div>
+                            <i class="fas fa-arrow-up-right text-slate-600 group-hover:text-blue-400 transition-colors"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: MANOVA Analysis -->
+                <div class="project-card group relative glass rounded-2xl overflow-hidden" data-category="stats">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500/20 to-cyan-600/20 flex items-center justify-center border border-emerald-500/30">
+                                    <i class="fas fa-chart-bar text-2xl text-emerald-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-slate-100 group-hover:text-emerald-400 transition-colors" data-i18n="proj2_title">Multivariate ANOVA</h3>
+                                    <span class="text-xs text-slate-400" data-i18n="proj2_date">Nov 2023</span>
+                                </div>
+                            </div>
+                            <span class="badge-stats px-3 py-1 rounded-full text-xs font-medium">Stats</span>
+                        </div>
+                        
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed" data-i18n="proj2_desc">
+                            MANOVA analysis on medical data using ggplot2 and stats packages in R. Comparison of three different treatment methods.
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">MANOVA</span>
+                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">ggplot2</span>
+                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-emerald-400 font-mono border border-emerald-500/30">p < 0.01</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center pt-4 border-t border-slate-700/50">
+                            <div class="flex gap-4">
+                                <a href="https://github.com/amiralisatvati" target="_blank" class="text-slate-400 hover:text-white flex items-center gap-1.5 text-sm transition-colors">
+                                    <i class="fab fa-github"></i>
+                                    <span data-i18n="view_code">View Code</span>
+                                </a>
+                            </div>
+                            <i class="fas fa-arrow-up-right text-slate-600 group-hover:text-emerald-400 transition-colors"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: Customer Clustering -->
+                <div class="project-card group relative glass rounded-2xl overflow-hidden" data-category="ml">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-600/20 flex items-center justify-center border border-purple-500/30">
+                                    <i class="fas fa-project-diagram text-2xl text-purple-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-slate-100 group-hover:text-purple-400 transition-colors" data-i18n="proj3_title">Customer Clustering</h3>
+                                    <span class="text-xs text-slate-400" data-i18n="proj3_date">Oct 2023</span>
+                                </div>
+                            </div>
+                            <span class="badge-ml px-3 py-1 rounded-full text-xs font-medium">ML</span>
+                        </div>
+                        
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed" data-i18n="proj3_desc">
+                            Implementation of K-Means and DBSCAN algorithms for segmenting customers of an online store. Identification of 4 main segments for marketing targeting.
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">K-Means</span>
+                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">DBSCAN</span>
+                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-emerald-400 font-mono border border-emerald-500/30">Silhouette = 0.78</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center pt-4 border-t border-slate-700/50">
+                            <div class="flex gap-4">
+                                <a href="https://github.com/amiralisatvati" target="_blank" class="text-slate-400 hover:text-white flex items-center gap-1.5 text-sm transition-colors">
+                                    <i class="fab fa-github"></i>
+                                    <span data-i18n="view_code">View Code</span>
+                                </a>
+                            </div>
+                            <i class="fas fa-arrow-up-right text-slate-600 group-hover:text-purple-400 transition-colors"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4: Sales Dashboard -->
+                <div class="project-card group relative glass rounded-2xl overflow-hidden" data-category="viz">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500/20 to-red-600/20 flex items-center justify-center border border-orange-500/30">
+                                    <i class="fas fa-chart-pie text-2xl text-orange-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-slate-100 group-hover:text-orange-400 transition-colors" data-i18n="proj4_title">Sales Analysis Dashboard</h3>
+                                    <span class="text-xs text-slate-400" data-i18n="proj4_date">Sep 2023</span>
+                                </div>
+                            </div>
+                            <span class="badge-viz px-3 py-1 rounded-full text-xs font-medium">Viz</span>
+                        </div>
+                        
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed" data-i18n="proj4_desc">
+                            Interactive dashboard design for sales trend analysis and key performance indicators (KPIs) with filtering by time, region, and product.
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">Tableau</span>
+                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">SQL</span>
+                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-orange-400 font-mono border border-orange-500/30">Interactive</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center pt-4 border-t border-slate-700/50">
+                            <div class="flex gap-4">
+                                <a href="https://github.com/amiralisatvati" target="_blank" class="text-slate-400 hover:text-white flex items-center gap-1.5 text-sm transition-colors">
+                                    <i class="fab fa-github"></i>
+                                    <span data-i18n="view_code">View Code</span>
+                                </a>
+                            </div>
+                            <i class="fas fa-arrow-up-right text-slate-600 group-hover:text-orange-400 transition-colors"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5: Time Series -->
+                <div class="project-card group relative glass rounded-2xl overflow-hidden" data-category="stats">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 flex items-center justify-center border border-cyan-500/30">
+                                    <i class="fas fa-chart-line text-2xl text-cyan-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-slate-100 group-hover:text-cyan-400 transition-colors" data-i18n="proj5_title">Time Series Forecasting</h3>
+                                    <span class="text-xs text-slate-400" data-i18n="proj5_date">Aug 2023</span>
+                                </div>
+                            </div>
+                            <span class="badge-stats px-3 py-1 rounded-full text-xs font-medium">Stats</span>
+                        </div>
+                        
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed" data-i18n="proj5_desc">
+                            ARIMA and Prophet modeling for currency rate forecasting and market trend analysis. 96% accuracy in 4-day ahead prediction.
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">ARIMA</span>
+                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">Prophet</span>
+                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-emerald-400 font-mono border border-emerald-500/30">MAPE = 4.2%</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center pt-4 border-t border-slate-700/50">
+                            <div class="flex gap-4">
+                                <a href="https://github.com/amiralisatvati" target="_blank" class="text-slate-400 hover:text-white flex items-center gap-1.5 text-sm transition-colors">
+                                    <i class="fab fa-github"></i>
+                                    <span data-i18n="view_code">View Code</span>
+                                </a>
+                            </div>
+                            <i class="fas fa-arrow-up-right text-slate-600 group-hover:text-cyan-400 transition-colors"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6: Market Basket Analysis -->
+                <div class="project-card group relative glass rounded-2xl overflow-hidden" data-category="ml">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-pink-500/20 to-rose-600/20 flex items-center justify-center border border-pink-500/30">
+                                    <i class="fas fa-shopping-cart text-2xl text-pink-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-slate-100 group-hover:text-pink-400 transition-colors" data-i18n="proj6_title">Market Basket Analysis</h3>
+                                    <span class="text-xs text-slate-400" data-i18n="proj6_date">Jul 2023</span>
+                                </div>
+                            </div>
+                            <span class="badge-ml px-3 py-1 rounded-full text-xs font-medium">ML</span>
+                        </div>
+                        
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed" data-i18n="proj6_desc">
+                            Discovering association rules in retail chain data using Apriori and FP-Growth algorithms. Identification of co-purchase patterns.
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">Apriori</span>
+                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 font-mono border border-slate-700">FP-Growth</span>
+                            <span class="text-xs px-2.5 py-1 bg-slate-800 rounded-md text-emerald-400 font-mono border border-emerald-500/30">Support > 0.05</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center pt-4 border-t border-slate-700/50">
+                            <div class="flex gap-4">
+                                <a href="https://github.com/amiralisatvati" target="_blank" class="text-slate-400 hover:text-white flex items-center gap-1.5 text-sm transition-colors">
+                                    <i class="fab fa-github"></i>
+                                    <span data-i18n="view_code">View Code</span>
+                                </a>
+                            </div>
+                            <i class="fas fa-arrow-up-right text-slate-600 group-hover:text-pink-400 transition-colors"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-20 border-t border-slate-800 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-900/10 to-purple-900/10"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4 text-slate-100" data-i18n="stats_title">Project Statistics</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="glass rounded-2xl p-8 text-center hover:border-blue-500/30 transition-colors border border-transparent">
+                    <div class="text-4xl font-bold text-blue-400 mb-2 font-mono stat-number" data-target="12">0</div>
+                    <div class="text-slate-400 text-sm" data-i18n="stat1">Completed Projects</div>
+                </div>
+                <div class="glass rounded-2xl p-8 text-center hover:border-purple-500/30 transition-colors border border-transparent">
+                    <div class="text-4xl font-bold text-purple-400 mb-2 font-mono stat-number" data-target="25">0</div>
+                    <div class="text-slate-400 text-sm" data-i18n="stat2">Analyzed Datasets</div>
+                </div>
+                <div class="glass rounded-2xl p-8 text-center hover:border-cyan-500/30 transition-colors border border-transparent">
+                    <div class="text-4xl font-bold text-cyan-400 mb-2 font-mono stat-number" data-target="18">0</div>
+                    <div class="text-slate-400 text-sm" data-i18n="stat3">Statistical Models</div>
+                </div>
+                <div class="glass rounded-2xl p-8 text-center hover:border-emerald-500/30 transition-colors border border-transparent">
+                    <div class="text-4xl font-bold text-emerald-400 mb-2 font-mono stat-number" data-target="94" data-suffix="%">0%</div>
+                    <div class="text-slate-400 text-sm" data-i18n="stat4">Average Accuracy</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-20 px-6 relative">
+        <div class="max-w-4xl mx-auto">
+            <div class="glass rounded-3xl p-12 border border-slate-700 relative overflow-hidden text-center">
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10"></div>
+                <div class="relative z-10">
+                    <h2 class="text-3xl font-bold mb-4 text-slate-100" data-i18n="cta_title">Have a Project in Mind?</h2>
+                    <p class="text-slate-400 mb-8 max-w-lg mx-auto" data-i18n="cta_desc">
+                        Ready to collaborate on data analysis projects, statistical consulting, and academic campaign design.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="mailto:amirali.satvati@gmail.com" class="inline-flex items-center justify-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full font-bold hover:shadow-lg hover:shadow-blue-500/25 transition-all hover:scale-105 text-white">
+                            <i class="fas fa-envelope"></i>
+                            <span data-i18n="cta_email">Send Email</span>
+                        </a>
+                        <a href="https://github.com/amiralisatvati" target="_blank" class="inline-flex items-center justify-center gap-2 px-8 py-3 glass rounded-full font-bold hover:bg-white/10 transition-all border border-slate-600 text-slate-300">
+                            <i class="fab fa-github"></i>
+                            <span data-i18n="cta_github">GitHub</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-8 text-center text-slate-500 text-sm relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <p class="font-mono mb-2 text-slate-400">
+                <span class="text-blue-400">while</span> (alive) { learn(); analyze(); improve(); }
+            </p>
+            <p>
+                <span data-i18n="footer_copy">© 2024 - Amir Ali Satvati | Built with</span> 
+                <span class="text-red-400">❤</span> 
+                <span data-i18n="footer_stats">and statistics</span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Filter Projects
+        function filterProjects(category) {
+            const cards = document.querySelectorAll('.project-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            buttons.forEach(btn => {
+                if (btn.dataset.filter === category) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            cards.forEach((card, index) => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, index * 50);
+                } else {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 300);
+                }
+            });
+        }
+
+        // Animated Counter
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = parseInt(entry.target.dataset.target);
+                    const suffix = entry.target.dataset.suffix || '';
+                    animateCounter(entry.target, target, suffix);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        function animateCounter(element, target, suffix) {
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current) + suffix;
+            }, 30);
+        }
+
+        document.querySelectorAll('.stat-number').forEach(stat => {
+            observer.observe(stat);
+        });
+
+        // Particle System
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+                this.opacity = Math.random() * 0.5 + 0.1;
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            
+            draw() {
+                ctx.fillStyle = `rgba(59, 130, 246, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        function initParticles() {
+            particles = [];
+            const particleCount = Math.min(window.innerWidth / 10, 100);
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+        
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            
+            particles.forEach((a, index) => {
+                particles.slice(index + 1).forEach(b => {
+                    const dx = a.x - b.x;
+                    const dy = a.y - b.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 100) {
+                        ctx.strokeStyle = `rgba(59, 130, 246, ${0.1 * (1 - distance/100)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(a.x, a.y);
+                        ctx.lineTo(b.x, b.y);
+                        ctx.stroke();
+                    }
+                });
+            });
+            
+            requestAnimationFrame(animateParticles);
+        }
+        
+        initParticles();
+        animateParticles();
+
+        // Fade-in animation on load
+        window.addEventListener('load', () => {
+            const cards = document.querySelectorAll('.project-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.classList.add('fade-in-up');
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+
+        // Language Toggle
+        const translations = {
+            en: {
+                nav_subtitle: "Data Scientist",
+                nav_about: "About",
+                nav_skills: "Skills",
+                nav_projects: "Projects",
+                nav_contact: "Contact",
+                hero_title1: "Statistical & Data Analysis",
+                hero_title2: "Projects",
+                hero_desc: "A collection of applied projects in statistics, data mining, and evidence-based analysis. Each project combines rigorous mathematics with modern data analysis tools.",
+                filter_all: "All Projects",
+                filter_ml: "🤖 Machine Learning",
+                filter_stats: "📊 Statistics",
+                filter_viz: "📈 Visualization",
+                proj1_title: "House Price Prediction",
+                proj1_date: "Dec 2023",
+                proj1_desc: "Using regression algorithms and Random Forest to predict housing prices in Mashhad with 92% accuracy. Includes data preprocessing and feature engineering.",
+                proj2_title: "Multivariate ANOVA",
+                proj2_date: "Nov 2023",
+                proj2_desc: "MANOVA analysis on medical data using ggplot2 and stats packages in R. Comparison of three different treatment methods.",
+                proj3_title: "Customer Clustering",
+                proj3_date: "Oct 2023",
+                proj3_desc: "Implementation of K-Means and DBSCAN algorithms for segmenting customers of an online store. Identification of 4 main segments for marketing targeting.",
+                proj4_title: "Sales Analysis Dashboard",
+                proj4_date: "Sep 2023",
+                proj4_desc: "Interactive dashboard design for sales trend analysis and key performance indicators (KPIs) with filtering by time, region, and product.",
+                proj5_title: "Time Series Forecasting",
+                proj5_date: "Aug 2023",
+                proj5_desc: "ARIMA and Prophet modeling for currency rate forecasting and market trend analysis. 96% accuracy in 4-day ahead prediction.",
+                proj6_title: "Market Basket Analysis",
+                proj6_date: "Jul 2023",
+                proj6_desc: "Discovering association rules in retail chain data using Apriori and FP-Growth algorithms. Identification of co-purchase patterns.",
+                view_code: "View Code",
+                stats_title: "Project Statistics",
+                stat1: "Completed Projects",
+                stat2: "Analyzed Datasets",
+                stat3: "Statistical Models",
+                stat4: "Average Accuracy",
+                cta_title: "Have a Project in Mind?",
+                cta_desc: "Ready to collaborate on data analysis projects, statistical consulting, and academic campaign design.",
+                cta_email: "Send Email",
+                cta_github: "GitHub",
+                footer_copy: "© 2024 - Amir Ali Satvati | Built with",
+                footer_stats: "and statistics"
+            },
+            fa: {
+                nav_subtitle: "دانشمند داده",
+                nav_about: "درباره من",
+                nav_skills: "مهارت‌ها",
+                nav_projects: "پروژه‌ها",
+                nav_contact: "تماس",
+                hero_title1: "پروژه‌های",
+                hero_title2: "آماری و تحلیل داده",
+                hero_desc: "مجموعه‌ای از پروژه‌های کاربردی در زمینه آمار، داده‌کاوی و تحلیل‌های مبتنی بر شواهد. هر پروژه ترکیبی از ریاضیات دقیق و ابزارهای مدرن تحلیل داده است.",
+                filter_all: "همه پروژه‌ها",
+                filter_ml: "🤖 یادگیری ماشین",
+                filter_stats: "📊 آمار کلاسیک",
+                filter_viz: "📈 تجسم‌سازی",
+                proj1_title: "پیش‌بینی قیمت مسکن",
+                proj1_date: "دی ۱۴۰۲",
+                proj1_desc: "استفاده از الگوریتم‌های رگرسیون و Random Forest برای پیش‌بینی قیمت مسکن در شهر مشهد با دقت ۹۲٪. شامل پیش‌پردازش داده و مهندسی ویژگی.",
+                proj2_title: "آنالیز واریانس چندمتغیره",
+                proj2_date: "آبان ۱۴۰۲",
+                proj2_desc: "تحلیل MANOVA بر روی داده‌های پزشکی با استفاده از بسته‌های ggplot2 و stats در R. مقایسه اثر سه روش درمانی مختلف.",
+                proj3_title: "خوشه‌بندی مشتریان",
+                proj3_date: "مهر ۱۴۰۲",
+                proj3_desc: "پیاده‌سازی الگوریتم K-Means و DBSCAN برای بخش‌بندی مشتریان یک فروشگاه آنلاین. شناسایی ۴ سگمنت اصلی برای هدف‌گذاری بازاریابی.",
+                proj4_title: "داشبورد تحلیل فروش",
+                proj4_date: "شهریور ۱۴۰۲",
+                proj4_desc: "طراحی داشبورد تعاملی برای تحلیل روند فروش و شاخص‌های کلیدی عملکرد (KPI) با قابلیت فیلتر بر اساس زمان، منطقه و محصول.",
+                proj5_title: "پیش‌بینی سری‌های زمانی",
+                proj5_date: "مرداد ۱۴۰۲",
+                proj5_desc: "مدل‌سازی ARIMA و Prophet برای پیش‌بینی نرخ ارز و تحلیل روند‌های بازار. دقت ۹۶٪ در پیش‌بینی ۴ روز آینده.",
+                proj6_title: "تحلیل سبد خرید",
+                proj6_date: "تیر ۱۴۰۲",
+                proj6_desc: "کشف قوانین انجمنی در داده‌های فروشگاه زنجیره‌ای با الگوریتم Apriori و FP-Growth. شناسایی الگوهای خرید همراه.",
+                view_code: "مشاهده کد",
+                stats_title: "آمارهای پروژه",
+                stat1: "پروژه تکمیل شده",
+                stat2: "دیتاست تحلیل شده",
+                stat3: "مدل آماری",
+                stat4: "دقت متوسط",
+                cta_title: "پروژه‌ای در ذهن دارید؟",
+                cta_desc: "آماده همکاری در پروژه‌های تحلیل داده، مشاوره آماری و طراحی کمپین‌های آکادمیک هستم.",
+                cta_email: "ارسال ایمیل",
+                cta_github: "گیت‌هاب",
+                footer_copy: "© ۱۴۰۳ - امیرعلی ستواتی | ساخته شده با",
+                footer_stats: "و آمار"
+            }
+        };
+
+        let currentLang = 'en';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'fa' : 'en';
+            const htmlRoot = document.getElementById('html-root');
+            htmlRoot.lang = currentLang === 'fa' ? 'fa' : 'en';
+            htmlRoot.dir = currentLang === 'fa' ? 'rtl' : 'ltr';
+            
+            document.getElementById('lang-text').textContent = currentLang === 'en' ? 'FA' : 'EN';
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    el.textContent = translations[currentLang][key];
+                }
+            });
+        }
+    </script>
+</body>
+</html>
