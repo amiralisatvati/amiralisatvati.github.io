@@ -395,6 +395,13 @@
             '-python-R'
         ];
 
+        // Specific LIVE URLs for known projects
+        const LIVE_URLS = {
+            'quantile-regression-presentation': 'https://amiralisatvati.github.io/quantile-regression-presentation/',
+            'quantile-regression-presentation-v2': 'https://amiralisatvati.github.io/quantile-regression-presentation-v2/',
+            'Data-Analysis-Project': 'https://amiralisatvati.github.io/Data-Analysis-Project/'
+        };
+
         function categoryOf(repo) {
             const text = `${repo.name} ${(repo.description || '')}`.toLowerCase();
             if (text.includes('ml') || text.includes('machine learning') || text.includes('scikit') || text.includes('notebook') || text.includes('classification') || text.includes('regression')) return 'ml';
@@ -452,10 +459,16 @@
             const updated = repo.pushed_at ? formatDate(repo.pushed_at) : '';
             const stars = typeof repo.stargazers_count === 'number' ? repo.stargazers_count : 0;
 
-            const homepage = repo.homepage && isValidUrl(repo.homepage) ? repo.homepage : '';
+            // Determine Live Demo URL
+            let liveUrl = repo.homepage;
+            if (!liveUrl || !isValidUrl(liveUrl)) {
+                if (LIVE_URLS[repo.name]) {
+                    liveUrl = LIVE_URLS[repo.name];
+                }
+            }
 
-            const viewRepoLabel = (translations[currentLang] && translations[currentLang].view_repo) ? translations[currentLang].view_repo : 'View Repo';
-            const liveLabel = (translations[currentLang] && translations[currentLang].live_demo) ? translations[currentLang].live_demo : 'Live';
+            const viewRepoLabel = (translations[currentLang] && translations[currentLang].view_repo) ? translations[currentLang].view_repo : 'Source Code';
+            const liveLabel = (translations[currentLang] && translations[currentLang].live_demo) ? translations[currentLang].live_demo : 'View Project';
             const updatedLabel = (translations[currentLang] && translations[currentLang].updated) ? translations[currentLang].updated : 'Updated';
 
             return `
@@ -486,18 +499,18 @@
                         </div>
                         
                         <div class="flex justify-between items-center pt-4 border-t border-slate-700/50">
-                            <div class="flex gap-4 flex-wrap">
-                                <a href="${repo.html_url}" target="_blank" rel="noopener" class="text-slate-400 hover:text-white flex items-center gap-1.5 text-sm transition-colors">
+                            <div class="flex gap-4 flex-wrap w-full">
+                                ${liveUrl ? `
+                                <a href="${liveUrl}" target="_blank" rel="noopener" class="flex-1 inline-flex justify-center items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm font-medium transition-colors">
+                                    <i class="fas fa-play-circle"></i>
+                                    <span>${liveLabel}</span>
+                                </a>` : ''}
+                                
+                                <a href="${repo.html_url}" target="_blank" rel="noopener" class="flex-1 inline-flex justify-center items-center gap-2 px-4 py-2 glass hover:bg-white/10 text-slate-300 rounded-lg text-sm font-medium transition-colors border border-slate-600/50">
                                     <i class="fab fa-github"></i>
                                     <span>${viewRepoLabel}</span>
                                 </a>
-                                ${homepage ? `
-                                <a href="${homepage}" target="_blank" rel="noopener" class="text-slate-400 hover:text-white flex items-center gap-1.5 text-sm transition-colors">
-                                    <i class="fas fa-arrow-up-right-from-square"></i>
-                                    <span>${liveLabel}</span>
-                                </a>` : ''}
                             </div>
-                            <i class="fas fa-arrow-up-right text-slate-600 group-hover:text-blue-400 transition-colors"></i>
                         </div>
                     </div>
                 </div>
@@ -717,8 +730,8 @@
                 filter_viz: "📈 Visualization",
                 loading: "Loading projects from GitHub…",
                 empty: "No public repositories found.",
-                view_repo: "View Repo",
-                live_demo: "Live",
+                view_repo: "Source Code",
+                live_demo: "View Project",
                 updated: "Updated",
                 stats_title: "GitHub Snapshot",
                 stat1: "Public repositories",
@@ -747,8 +760,8 @@
                 filter_viz: "📈 تجسم‌سازی",
                 loading: "در حال دریافت پروژه‌ها از GitHub…",
                 empty: "هیچ ریپازیتوری عمومی پیدا نشد.",
-                view_repo: "مشاهده Repo",
-                live_demo: "دمو",
+                view_repo: "مشاهده کد",
+                live_demo: "مشاهده پروژه",
                 updated: "آخرین آپدیت",
                 stats_title: "نمای کلی GitHub",
                 stat1: "ریپازیتوری‌های عمومی",
