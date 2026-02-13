@@ -546,20 +546,25 @@
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-slate-800 py-8 text-center text-slate-500 text-sm relative z-10">
-        <div class="max-w-7xl mx-auto px-6">
-            <p class="font-mono mb-2 text-slate-400">
-                <span class="text-blue-400">while</span> (alive) { learn(); analyze(); improve(); }
+    <footer class="py-10 border-t border-slate-800/50 bg-darker/95 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex items-center justify-center gap-2 mb-4">
+                <i class="fas fa-chart-line text-accent"></i>
+                <span class="font-mono font-bold text-lg">&lt;AmirAli/&gt;</span>
+            </div>
+            <p class="text-slate-500 text-sm">
+                &copy; <span id="year"></span> Amir Ali Satvati. <span data-i18n="footer_rights">All rights reserved.</span>
             </p>
-            <p>
-                <span data-i18n="footer_copy">© 2024 - Amir Ali Satvati | Built with</span> 
-                <span class="text-red-400">❤</span> 
-                <span data-i18n="footer_stats">and statistics</span>
+            <p class="text-slate-600 text-xs mt-2">
+                <span data-i18n="footer_tagline">Built with data-driven precision 📊</span>
             </p>
         </div>
     </footer>
 
     <script>
+        // Set current year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
         // Mobile Menu Toggle
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
@@ -766,8 +771,8 @@
                 cta_desc: "Ready to collaborate on data analysis projects, statistical consulting, and academic campaign design.",
                 cta_email: "Send Email",
                 cta_github: "GitHub",
-                footer_copy: "© 2024 - Amir Ali Satvati | Built with",
-                footer_stats: "and statistics"
+                footer_rights: "All rights reserved.",
+                footer_tagline: "Built with data-driven precision 📊"
             },
             fa: {
                 nav_subtitle: "دانشمند داده",
@@ -810,8 +815,8 @@
                 cta_desc: "آماده همکاری در پروژه‌های تحلیل داده، مشاوره آماری و طراحی کمپین‌های آکادمیک هستم.",
                 cta_email: "ارسال ایمیل",
                 cta_github: "گیت‌هاب",
-                footer_copy: "© ۱۴۰۳ - امیرعلی ستواتی | ساخته شده با",
-                footer_stats: "و آمار"
+                footer_rights: "تمامی حقوق محفوظ است.",
+                footer_tagline: "ساخته شده با دقت داده‌محور 📊"
             }
         };
 
