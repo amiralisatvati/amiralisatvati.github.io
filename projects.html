@@ -503,10 +503,20 @@
 
             // Determine Live Demo URL
             let liveUrl = repo.homepage;
-            if (!liveUrl || !isValidUrl(liveUrl)) {
-                if (LIVE_URLS[repo.name]) {
-                    liveUrl = LIVE_URLS[repo.name];
-                }
+
+            // 1. Auto-detect if GitHub Pages is active but no homepage set
+            if ((!liveUrl || !isValidUrl(liveUrl)) && repo.has_pages) {
+                liveUrl = `https://${GH_USER}.github.io/${repo.name}/`;
+            }
+
+            // 2. Override with hardcoded list if present
+            if (LIVE_URLS[repo.name]) {
+                liveUrl = LIVE_URLS[repo.name];
+            }
+
+            // 3. Fallback check validity again
+            if (liveUrl && !isValidUrl(liveUrl)) {
+                liveUrl = null;
             }
 
             const viewRepoLabel = (translations[currentLang] && translations[currentLang].view_repo) ? translations[currentLang].view_repo : 'Source Code';
