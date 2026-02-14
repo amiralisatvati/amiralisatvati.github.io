@@ -399,29 +399,46 @@
         const LIVE_URLS = {
             'quantile-regression-presentation': 'https://amiralisatvati.github.io/quantile-regression-presentation/',
             'quantile-regression-presentation-v2': 'https://amiralisatvati.github.io/quantile-regression-presentation-v2/',
-            'Data-Analysis-Project': 'https://amiralisatvati.github.io/Data-Analysis-Project/'
+            'Data-Analysis-Project': 'https://amiralisatvati.github.io/Data-Analysis-Project/Data%20Analysis%20Project.html'
         };
 
         async function fetchUniversityCodes() {
             try {
-                const res = await fetch('https://api.github.com/repos/amiralisatvati/-university-codes/contents/');
+                // Use Recursive Tree API to find nested HTML files
+                const res = await fetch('https://api.github.com/repos/amiralisatvati/-university-codes/git/trees/main?recursive=1');
                 if (!res.ok) return [];
-                const files = await res.json();
+                const data = await res.json();
                 
-                return files
-                    .filter(f => !f.name.startsWith('.') && f.name !== 'LICENSE' && f.name !== 'README.md' && f.name !== 'test.csv')
-                    .map(f => ({
-                        name: f.name.replace(/\.(Rmd|R|py|ipynb|pdf)$/i, '').replace(/_/g, ' '),
+                // Filter for HTML files in specific folders or generally
+                // We specifically want to show: Regression_Analysis, Exam_and_Labs, Probability_Process, Data_Mining_Projects
+                const files = data.tree.filter(f => 
+                    f.path.endsWith('.html') && 
+                    !f.path.includes('index.html') && // avoid index files if any
+                    (f.path.includes('Regression_Analysis') || 
+                     f.path.includes('Exam_and_Labs') || 
+                     f.path.includes('Probability_Process') || 
+                     f.path.includes('Data_Mining_Projects'))
+                );
+
+                return files.map(f => {
+                    // Create readable name from path
+                    const nameParts = f.path.split('/');
+                    const fileName = nameParts[nameParts.length - 1].replace('.html', '').replace(/_/g, ' ');
+                    const folderName = nameParts.length > 1 ? nameParts[0].replace(/_/g, ' ') : 'University Code';
+
+                    return {
+                        name: fileName,
                         full_name: f.path, 
-                        description: f.type === 'dir' ? 'Course Project Folder' : 'Academic Code / Assignment',
-                        language: f.name.endsWith('.R') || f.name.endsWith('.Rmd') ? 'R' : (f.name.endsWith('.py') ? 'Python' : 'Code'),
-                        html_url: f.html_url,
-                        pushed_at: null, // Sub-files don't have easy push dates
+                        description: `${folderName} - Interactive Output`,
+                        language: 'HTML',
+                        html_url: `https://github.com/amiralisatvati/-university-codes/blob/main/${f.path}`,
+                        pushed_at: null, 
                         stargazers_count: 0,
                         is_subproject: true,
-                        type: f.type,
-                        homepage: null
-                    }));
+                        homepage: `https://amiralisatvati.github.io/-university-codes/${f.path}`, // Construct Pages URL
+                        type: 'file'
+                    };
+                });
             } catch (e) {
                 console.error('Failed to fetch university codes', e);
                 return [];
@@ -433,8 +450,8 @@
             
             // Sub-projects from university-codes
             if (repo.is_subproject) {
-                if (text.includes('mining') || text.includes('ml')) return 'ml';
-                if (text.includes('regression') || text.includes('anova') || text.includes('stat') || text.includes('probability')) return 'stats';
+                if (text.includes('mining') || text.includes('ml') || text.includes('classification')) return 'ml';
+                if (text.includes('regression') || text.includes('anova') || text.includes('stat') || text.includes('probability') || text.includes('process')) return 'stats';
                 if (text.includes('viz') || text.includes('shiny')) return 'viz';
                 return 'stats'; // Default for university codes
             }
