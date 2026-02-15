@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- SEO Meta Tags -->
     <title id="page-title">Amir Ali Satvati | Data Analyst & Graphic Designer</title>
     <meta name="description" content="Portfolio of Amir Ali Satvati, Statistics Student at Ferdowsi University. Specializing in Data Analysis, Data Mining, and Graphic Design.">
     <meta name="keywords" content="Amir Ali Satvati, Statistics, Data Analyst, Graphic Design, R, Python, Data Mining, Ferdowsi University, Mashhad">
     <meta name="author" content="Amir Ali Satvati">
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://amiralisatvati.github.io/">
@@ -24,6 +24,7 @@
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:title" content="Amir Ali Satvati | Portfolio">
     <meta property="twitter:description" content="Statistics Student and Data Analyst showcasing projects and skills.">
+    <meta property="twitter:image" content="https://amiralisatvati.github.io/assets/og-image.jpg">
     <meta property="twitter:image" content="https://amiralisatvati.github.io/assets/og-image.jpg">
     
     <!-- Google Fonts -->
@@ -327,7 +328,7 @@
                         <div class="absolute inset-8 rounded-full border border-accentSec/60 animate-[spin_20s_linear_infinite_reverse]"></div>
                         
                         <div class="absolute inset-12 rounded-full bg-slate-900 border-4 border-slate-800 flex items-center justify-center overflow-hidden shadow-2xl shadow-accent/20 z-10">
-                            <img src="/assets/profile.jpg" 
+                            <img src="https://ui-avatars.com/api/?name=Amir+Ali&background=0a0e27&color=06b6d4&size=512&font-size=0.33" 
                                  alt="Amir Ali Satvati" 
                                  class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
                         </div>
@@ -509,7 +510,746 @@
         </div>
     </section>
 
-<!-- [rest of HTML continues exactly the same as before - I'm cutting it short due to length limit but the complete file would continue with all sections intact] -->
-<script src="/pwa-setup.js"></script>
+    <!-- Code & Projects Section (NEW) -->
+    <section id="code" class="py-24 bg-darker/90 border-y border-slate-800/50 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent pointer-events-none"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-accent/20 to-accentSec/20 mb-6 border border-accent/30">
+                    <i class="fab fa-github text-3xl text-accent"></i>
+                </div>
+                <h2 class="text-4xl font-black mb-4 flex items-center justify-center gap-3">
+                    <i class="fas fa-code-branch text-accent"></i>
+                    <span data-i18n="code_title">Open Source Work</span>
+                </h2>
+                <p class="text-slate-400 max-w-2xl mx-auto leading-relaxed" data-i18n="code_subtitle">
+                    Explore my statistical programming projects, R packages, and data analysis repositories
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <!-- Repository Card 1 -->
+                <div class="reveal code-repo-card rounded-2xl border border-slate-700/50 overflow-hidden group">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center">
+                                    <i class="fab fa-r-project text-2xl text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-white group-hover:text-accent transition-colors" data-i18n="repo1_name">Statistical Analysis</h3>
+                                    <p class="text-xs text-slate-500 font-mono">R Language</p>
+                                </div>
+                            </div>
+                            <a href="https://github.com/amiralisatvati" target="_blank" class="text-slate-400 hover:text-accent transition-colors">
+                                <i class="fab fa-github text-xl"></i>
+                            </a>
+                        </div>
+                        
+                        <p class="text-sm text-slate-400 mb-4 leading-relaxed" data-i18n="repo1_desc">
+                            Statistical modeling and hypothesis testing projects using R programming
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                                R
+                            </span>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                                Statistics
+                            </span>
+                        </div>
+                        
+                        <div class="flex items-center gap-4 text-xs text-slate-500">
+                            <span class="flex items-center gap-1">
+                                <i class="fas fa-star text-yellow-500"></i>
+                                <span data-i18n="repo_stars">Stars</span>
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <i class="fas fa-code-branch text-accent"></i>
+                                <span data-i18n="repo_forks">Forks</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Repository Card 2 -->
+                <div class="reveal code-repo-card rounded-2xl border border-slate-700/50 overflow-hidden group">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center">
+                                    <i class="fab fa-python text-2xl text-yellow-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-white group-hover:text-accent transition-colors" data-i18n="repo2_name">Data Mining Projects</h3>
+                                    <p class="text-xs text-slate-500 font-mono">Python</p>
+                                </div>
+                            </div>
+                            <a href="https://github.com/amiralisatvati" target="_blank" class="text-slate-400 hover:text-accent transition-colors">
+                                <i class="fab fa-github text-xl"></i>
+                            </a>
+                        </div>
+                        
+                        <p class="text-sm text-slate-400 mb-4 leading-relaxed" data-i18n="repo2_desc">
+                            Clustering, classification, and pattern recognition algorithms implementation
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">
+                                Python
+                            </span>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/20">
+                                Data Mining
+                            </span>
+                        </div>
+                        
+                        <div class="flex items-center gap-4 text-xs text-slate-500">
+                            <span class="flex items-center gap-1">
+                                <i class="fas fa-star text-yellow-500"></i>
+                                <span data-i18n="repo_stars">Stars</span>
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <i class="fas fa-code-branch text-accent"></i>
+                                <span data-i18n="repo_forks">Forks</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Repository Card 3 -->
+                <div class="reveal code-repo-card rounded-2xl border border-slate-700/50 overflow-hidden group">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-green-500/10 border border-green-500/30 flex items-center justify-center">
+                                    <i class="fas fa-chart-line text-2xl text-green-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-white group-hover:text-accent transition-colors" data-i18n="repo3_name">Data Visualization</h3>
+                                    <p class="text-xs text-slate-500 font-mono">R & Python</p>
+                                </div>
+                            </div>
+                            <a href="https://github.com/amiralisatvati" target="_blank" class="text-slate-400 hover:text-accent transition-colors">
+                                <i class="fab fa-github text-xl"></i>
+                            </a>
+                        </div>
+                        
+                        <p class="text-sm text-slate-400 mb-4 leading-relaxed" data-i18n="repo3_desc">
+                            Creating insightful visualizations using ggplot2, matplotlib, and seaborn
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                                ggplot2
+                            </span>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-green-500/10 text-green-400 border border-green-500/20">
+                                Visualization
+                            </span>
+                        </div>
+                        
+                        <div class="flex items-center gap-4 text-xs text-slate-500">
+                            <span class="flex items-center gap-1">
+                                <i class="fas fa-star text-yellow-500"></i>
+                                <span data-i18n="repo_stars">Stars</span>
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <i class="fas fa-code-branch text-accent"></i>
+                                <span data-i18n="repo_forks">Forks</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GitHub CTA -->
+            <div class="text-center reveal">
+                <a href="https://github.com/amiralisatvati" target="_blank" class="group inline-flex items-center gap-4 px-10 py-5 rounded-2xl bg-gradient-to-r from-slate-800/80 to-slate-900/80 hover:from-accent/20 hover:to-accentSec/20 border-2 border-slate-700 hover:border-accent transition-all transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-accent/30">
+                    <div class="w-14 h-14 rounded-xl bg-accent/10 border border-accent/30 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                        <i class="fab fa-github text-3xl text-accent"></i>
+                    </div>
+                    <div class="text-left rtl:text-right">
+                        <p class="text-xs text-slate-500 font-mono uppercase tracking-wider" data-i18n="github_cta_label">View All Repositories</p>
+                        <p class="text-xl font-bold text-white group-hover:text-accent transition-colors" data-i18n="github_cta_main">Explore More on GitHub</p>
+                    </div>
+                    <i class="fas fa-arrow-right text-2xl text-slate-400 group-hover:text-accent group-hover:translate-x-2 transition-all"></i>
+                </a>
+                
+                <div class="mt-6 flex items-center justify-center gap-6 text-sm text-slate-500">
+                    <span class="flex items-center gap-2">
+                        <i class="fas fa-code text-accent"></i>
+                        <span data-i18n="github_stat1">20+ Repositories</span>
+                    </span>
+                    <span class="flex items-center gap-2">
+                        <i class="fas fa-star text-yellow-500"></i>
+                        <span data-i18n="github_stat2">Open Source</span>
+                    </span>
+                    <span class="flex items-center gap-2">
+                        <i class="fas fa-users text-purple-400"></i>
+                        <span data-i18n="github_stat3">Collaborative</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 bg-darker/70">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl font-black mb-4 flex items-center justify-center gap-3">
+                    <i class="fas fa-folder-open text-accent"></i>
+                    <span data-i18n="projects_title">Statistical Projects</span>
+                </h2>
+                <p class="text-slate-400" data-i18n="projects_subtitle">Real-world applications of statistical methods and data analysis</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <div class="reveal project-card rounded-2xl overflow-hidden border border-slate-700/50 group">
+                    <div class="h-48 w-full bg-gradient-to-br from-blue-900/20 to-blue-600/20 relative overflow-hidden flex items-center justify-center border-b border-slate-700">
+                        <i class="fab fa-r-project text-6xl text-blue-400 group-hover:scale-125 transition-transform duration-500"></i>
+                        <div class="absolute top-3 right-3 px-3 py-1 bg-blue-500/20 backdrop-blur-sm rounded-full text-xs font-mono text-blue-300 border border-blue-500/30">
+                            R Studio
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-accent transition-colors" data-i18n="proj_1_title">University Statistical Analysis</h3>
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed" data-i18n="proj_1_desc">
+                            Analyzing dataset for final course project using R, focusing on hypothesis testing and data visualization.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs font-mono text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">Hypothesis Test</span>
+                            <span class="text-xs font-mono text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/20">Regression</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal project-card rounded-2xl overflow-hidden border border-slate-700/50 group">
+                    <div class="h-48 w-full bg-gradient-to-br from-orange-900/20 to-orange-600/20 relative overflow-hidden flex items-center justify-center border-b border-slate-700">
+                        <i class="fas fa-project-diagram text-6xl text-orange-400 group-hover:scale-125 transition-transform duration-500"></i>
+                        <div class="absolute top-3 right-3 px-3 py-1 bg-orange-500/20 backdrop-blur-sm rounded-full text-xs font-mono text-orange-300 border border-orange-500/30">
+                            Data Mining
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-orange-400 transition-colors" data-i18n="proj_dm_title">Customer Segmentation</h3>
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed" data-i18n="proj_dm_desc">
+                            Applied clustering algorithms (K-Means) to segment customers based on purchasing behavior for targeted marketing.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs font-mono text-orange-400 bg-orange-500/10 px-3 py-1 rounded-full border border-orange-500/20">Clustering</span>
+                            <span class="text-xs font-mono text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">Python/R</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal project-card rounded-2xl overflow-hidden border border-slate-700/50 group">
+                    <div class="h-48 w-full bg-gradient-to-br from-pink-900/20 to-pink-600/20 relative overflow-hidden flex items-center justify-center border-b border-slate-700">
+                        <i class="fas fa-palette text-6xl text-pink-400 group-hover:scale-125 transition-transform duration-500"></i>
+                        <div class="absolute top-3 right-3 px-3 py-1 bg-pink-500/20 backdrop-blur-sm rounded-full text-xs font-mono text-pink-300 border border-pink-500/30">
+                            Design
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-pink-400 transition-colors" data-i18n="proj_6_title">Scientific Posters Design</h3>
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed" data-i18n="proj_6_desc">
+                            Designing professional posters and social media assets for Statistics Association workshops.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs font-mono text-pink-400 bg-pink-500/10 px-3 py-1 rounded-full border border-pink-500/20">Photoshop</span>
+                            <span class="text-xs font-mono text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/20">Branding</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View All Projects Button -->
+            <div class="text-center reveal">
+                <a href="/projects.html" class="group inline-flex items-center gap-3 px-10 py-5 rounded-2xl bg-gradient-to-r from-accent to-accentSec hover:shadow-2xl hover:shadow-accent/40 text-white text-lg font-bold transition-all transform hover:-translate-y-1">
+                    <i class="fas fa-th-large text-2xl group-hover:rotate-12 transition-transform"></i>
+                    <span data-i18n="view_all_projects">View All Code Projects</span>
+                    <i class="fas fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
+                </a>
+                <p class="text-slate-500 text-sm mt-4">
+                    <i class="fas fa-code text-accent"></i> 
+                    <span data-i18n="view_all_projects_desc">Explore detailed showcase of my data analysis and ML projects</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section id="resources" class="py-24 bg-darker/90 border-y border-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="reveal text-center">
+                <h2 class="text-4xl font-black mb-4 flex items-center justify-center gap-3">
+                    <i class="fas fa-book text-accent"></i>
+                    <span data-i18n="resources_title">Learning Resources</span>
+                </h2>
+                <p class="text-slate-400 mb-8 max-w-2xl mx-auto" data-i18n="resources_desc">
+                    Curated collection of educational materials, blog posts, and learning resources.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal mb-12 max-w-5xl mx-auto">
+                <div class="group p-8 bg-gradient-to-br from-slate-900/80 to-slate-800/80 rounded-2xl border border-slate-700/50 hover:border-accent/50 transition-all hover:shadow-xl hover:shadow-accent/10 text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center border border-blue-500/30 group-hover:scale-110 transition-transform">
+                        <i class="fab fa-python text-3xl text-blue-400"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2" data-i18n="res_card1_title">Programming Tutorials</h3>
+                    <p class="text-sm text-slate-400" data-i18n="res_card1_desc">R, Python guides and code examples</p>
+                </div>
+
+                <div class="group p-8 bg-gradient-to-br from-slate-900/80 to-slate-800/80 rounded-2xl border border-slate-700/50 hover:border-purple-500/50 transition-all hover:shadow-xl hover:shadow-purple-500/10 text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center border border-purple-500/30 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-chart-line text-3xl text-purple-400"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2" data-i18n="res_card2_title">Statistical Methods</h3>
+                    <p class="text-sm text-slate-400" data-i18n="res_card2_desc">Articles on data analysis techniques</p>
+                </div>
+
+                <div class="group p-8 bg-gradient-to-br from-slate-900/80 to-slate-800/80 rounded-2xl border border-slate-700/50 hover:border-green-500/50 transition-all hover:shadow-xl hover:shadow-green-500/10 text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center border border-green-500/30 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-book-open text-3xl text-green-400"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2" data-i18n="res_card3_title">Learning Materials</h3>
+                    <p class="text-sm text-slate-400" data-i18n="res_card3_desc">Curated resources and references</p>
+                </div>
+            </div>
+
+            <div class="text-center reveal">
+                <a href="/resources" class="group inline-flex items-center gap-3 px-10 py-5 rounded-2xl bg-gradient-to-r from-accent to-accentSec hover:shadow-2xl hover:shadow-accent/40 text-white text-lg font-bold transition-all transform hover:-translate-y-1">
+                    <i class="fas fa-graduation-cap text-2xl group-hover:rotate-12 transition-transform"></i>
+                    <span data-i18n="res_btn">Explore All Resources</span>
+                    <i class="fas fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
+                </a>
+                <p class="text-slate-500 text-sm mt-4">
+                    <i class="fas fa-file-alt text-accent"></i> 
+                    <span data-i18n="res_btn_desc">Browse through blog posts, tutorials, and educational content</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 relative overflow-hidden bg-darker">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center reveal">
+            <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-accent/20 to-accentSec/20 mb-6 border border-accent/30">
+                <i class="fas fa-paper-plane text-3xl text-accent"></i>
+            </div>
+            
+            <h2 class="text-4xl font-black mb-4" data-i18n="contact_title">Let's Collaborate</h2>
+            <p class="text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed" data-i18n="contact_text">
+                Interested in statistical consulting, data analysis projects, or need a designer for your academic event? Let's connect and create something impactful together.
+            </p>
+            
+            <div class="flex flex-col md:flex-row justify-center gap-4 mb-12">
+                <a href="mailto:amirali.satvati@gmail.com" class="group flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-accent/10 to-accentSec/10 hover:from-accent/20 hover:to-accentSec/20 border border-accent/30 hover:border-accent/50 transition-all">
+                    <i class="fas fa-envelope text-2xl text-accent group-hover:scale-110 transition-transform"></i>
+                    <div class="text-left rtl:text-right">
+                        <div class="text-xs text-slate-500">Email</div>
+                        <div class="text-white font-semibold">amirali.satvati@gmail.com</div>
+                    </div>
+                </a>
+                
+                <a href="https://t.me/amiralisatvati" target="_blank" class="group flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-blue-500/10 to-cyan-500/10 hover:from-blue-500/20 hover:to-cyan-500/20 border border-blue-500/30 hover:border-blue-500/50 transition-all">
+                    <i class="fab fa-telegram text-2xl text-blue-400 group-hover:scale-110 transition-transform"></i>
+                    <div class="text-left rtl:text-right">
+                        <div class="text-xs text-slate-500">Telegram</div>
+                        <div class="text-white font-semibold">@amiralisatvati</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="flex justify-center gap-6">
+                <a href="https://linkedin.com/in/amirali-satvati" target="_blank" class="group w-14 h-14 rounded-full bg-slate-800/50 border border-slate-700 hover:border-blue-500 flex items-center justify-center transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/30">
+                    <i class="fab fa-linkedin text-xl text-slate-400 group-hover:text-blue-400 transition-colors"></i>
+                </a>
+                <a href="https://github.com/amiralisatvati" target="_blank" class="group w-14 h-14 rounded-full bg-slate-800/50 border border-slate-700 hover:border-purple-500 flex items-center justify-center transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/30">
+                    <i class="fab fa-github text-xl text-slate-400 group-hover:text-purple-400 transition-colors"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-10 border-t border-slate-800/50 bg-darker/95">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex items-center justify-center gap-2 mb-4">
+                <i class="fas fa-chart-line text-accent"></i>
+                <span class="font-mono font-bold text-lg">&lt;AmirAli/&gt;</span>
+            </div>
+            <p class="text-slate-500 text-sm">
+                &copy; <span id="year"></span> Amir Ali Satvati. <span data-i18n="footer_rights">All rights reserved.</span>
+            </p>
+            <p class="text-slate-600 text-xs mt-2">
+                <span data-i18n="footer_tagline">Built with data-driven precision 📊</span>
+            </p>
+        </div>
+    </footer>
+
+    <button id="scroll-to-top" class="fixed bottom-8 right-8 rtl:left-8 rtl:right-auto z-50 p-3 rounded-full bg-accent hover:bg-cyan-400 text-slate-900 shadow-lg shadow-cyan-500/50 transition-all transform hover:-translate-y-1" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up text-xl"></i>
+    </button>
+
+    <script>
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        function reveal() {
+            const reveals = document.querySelectorAll(".reveal");
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                const elementVisible = 120;
+                if (elementTop < windowHeight - elementVisible) {
+                    el.classList.add("active");
+                }
+            });
+        }
+        window.addEventListener("scroll", reveal);
+        reveal();
+
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            const scrollBtn = document.getElementById('scroll-to-top');
+            
+            navbar.classList.toggle('shadow-2xl', window.scrollY > 50);
+            
+            if (window.scrollY > 500) {
+                scrollBtn.classList.add('visible');
+            } else {
+                scrollBtn.classList.remove('visible');
+            }
+        });
+
+        document.getElementById('scroll-to-top').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelectorAll('.progress-fill').forEach(bar => {
+                    const progress = bar.getAttribute('data-progress');
+                    bar.style.width = progress + '%';
+                });
+            }, 500);
+        });
+
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const duration = 2000;
+                const increment = target / (duration / 16);
+                let current = 0;
+                
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.textContent = Math.floor(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target;
+                    }
+                };
+                updateCounter();
+            });
+        }
+        setTimeout(animateCounters, 300);
+
+        const roles = ["Statistics Student", "Data Analyst", "Graphic Designer"];
+        const rolesFa = ["دانشجوی آمار", "تحلیلگر داده", "طراح گرافیک"];
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typeSpeed = 100;
+        const deleteSpeed = 50;
+        const pauseTime = 2000;
+        const typeElement = document.getElementById('typewriter');
+
+        function typeWriter() {
+            const currentRoles = document.documentElement.dir === 'rtl' ? rolesFa : roles;
+            const currentRole = currentRoles[roleIndex];
+            
+            if (isDeleting) {
+                typeElement.textContent = currentRole.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typeElement.textContent = currentRole.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeDelay = isDeleting ? deleteSpeed : typeSpeed;
+
+            if (!isDeleting && charIndex === currentRole.length) {
+                typeDelay = pauseTime;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                roleIndex = (roleIndex + 1) % currentRoles.length;
+            }
+
+            setTimeout(typeWriter, typeDelay);
+        }
+        setTimeout(typeWriter, 1000);
+
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray;
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        });
+
+        const mouse = { x: null, y: null, radius: 150 };
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() * 1.5 - 0.75);
+                this.speedY = (Math.random() * 1.5 - 0.75);
+                this.color = '#06b6d4';
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
+                if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
+
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx*dx + dy*dy);
+                if (distance < mouse.radius) {
+                    if (mouse.x < this.x && this.x < canvas.width - 10) this.x += 2;
+                    if (mouse.x > this.x && this.x > 10) this.x -= 2;
+                    if (mouse.y < this.y && this.y < canvas.height - 10) this.y += 2;
+                    if (mouse.y > this.y && this.y > 10) this.y -= 2;
+                }
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.width * canvas.height) / 15000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+                
+                for (let j = i; j < particlesArray.length; j++) {
+                    const dx = particlesArray[i].x - particlesArray[j].x;
+                    const dy = particlesArray[i].y - particlesArray[j].y;
+                    const distance = Math.sqrt(dx*dx + dy*dy);
+                    
+                    if (distance < 120) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(6, 182, 212, ${1 - distance/120})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+                        ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
+
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const translations = {
+            en: {
+                nav_about: "About",
+                nav_skills: "Skills",
+                nav_code: "Code",
+                nav_projects: "Projects",
+                nav_resources: "Resources",
+                nav_contact: "Contact",
+                hero_status: "Open to Collaboration",
+                hero_greeting: "Hello, I'm",
+                hero_name: "Amir Ali Satvati",
+                hero_desc: "Statistics Student & Data Analyst specializing in statistical modeling, data mining, and evidence-based insights.",
+                hero_btn_work: "View Projects",
+                quick_years: "Years",
+                quick_projects: "Projects",
+                quick_certs: "Certs",
+                about_title: "About Me",
+                about_text: "I am a passionate Statistics student at Ferdowsi University of Mashhad, specializing in statistical modeling, Data Mining, and data-driven decision making. I combine rigorous mathematical foundations with modern analytical tools to extract meaningful insights from complex datasets.",
+                about_edu_label: "Education:",
+                about_edu_val: "B.Sc. Statistics, Ferdowsi Univ",
+                about_role_label: "Role:",
+                about_role_val: "Data Analyst & Designer",
+                about_loc_label: "Location:",
+                about_loc_val: "Mashhad, Iran",
+                expertise_title: "Statistical Expertise",
+                stat_inference: "Data Mining",
+                graphic_design: "Graphic Design",
+                data_viz: "Machine Learning",
+                learning_badge: "Learning Path",
+                skills_title: "Technical Skills",
+                skills_subtitle: "Tools and technologies for statistical analysis and data science",
+                skill_dm: "Data Mining",
+                code_title: "Open Source Work",
+                code_subtitle: "Explore my statistical programming projects, R packages, and data analysis repositories",
+                repo1_name: "Statistical Analysis",
+                repo1_desc: "Statistical modeling and hypothesis testing projects using R programming",
+                repo2_name: "Data Mining Projects",
+                repo2_desc: "Clustering, classification, and pattern recognition algorithms implementation",
+                repo3_name: "Data Visualization",
+                repo3_desc: "Creating insightful visualizations using ggplot2, matplotlib, and seaborn",
+                repo_stars: "Stars",
+                repo_forks: "Forks",
+                github_cta_label: "View All Repositories",
+                github_cta_main: "Explore More on GitHub",
+                github_stat1: "20+ Repositories",
+                github_stat2: "Open Source",
+                github_stat3: "Collaborative",
+                projects_title: "Statistical Projects",
+                projects_subtitle: "Real-world applications of statistical methods and data analysis",
+                proj_1_title: "University Statistical Analysis",
+                proj_1_desc: "Analyzing dataset for final course project using R, focusing on hypothesis testing and data visualization.",
+                proj_dm_title: "Customer Segmentation",
+                proj_dm_desc: "Applied clustering algorithms (K-Means) to segment customers based on purchasing behavior for targeted marketing.",
+                proj_6_title: "Scientific Posters Design",
+                proj_6_desc: "Designing professional posters and social media assets for Statistics Association workshops.",
+                view_all_projects: "View All Code Projects",
+                view_all_projects_desc: "Explore detailed showcase of my data analysis and ML projects",
+                resources_title: "Learning Resources",
+                resources_desc: "Curated collection of educational materials, blog posts, and learning resources.",
+                res_card1_title: "Programming Tutorials",
+                res_card1_desc: "R, Python guides and code examples",
+                res_card2_title: "Statistical Methods",
+                res_card2_desc: "Articles on data analysis techniques",
+                res_card3_title: "Learning Materials",
+                res_card3_desc: "Curated resources and references",
+                res_btn: "Explore All Resources",
+                res_btn_desc: "Browse through blog posts, tutorials, and educational content",
+                contact_title: "Let's Collaborate",
+                contact_text: "Interested in statistical consulting, data analysis projects, or need a designer for your academic event? Let's connect and create something impactful together.",
+                footer_rights: "All rights reserved.",
+                footer_tagline: "Built with data-driven precision 📊"
+            },
+            fa: {
+                nav_about: "درباره من",
+                nav_skills: "مهارت‌ها",
+                nav_code: "کدها",
+                nav_projects: "پروژه‌ها",
+                nav_resources: "منابع",
+                nav_contact: "تماس",
+                hero_status: "آماده همکاری",
+                hero_greeting: "سلام، من",
+                hero_name: "امیرعلی سطوتی",
+                hero_desc: "دانشجوی آمار و تحلیلگر داده با تخصص در مدل‌سازی آماری، داده‌کاوی و بینش‌های مبتنی بر شواهد.",
+                hero_btn_work: "مشاهده پروژه‌ها",
+                quick_years: "سال",
+                quick_projects: "پروژه",
+                quick_certs: "گواهی",
+                about_title: "درباره من",
+                about_text: "من دانشجوی آمار در دانشگاه فردوسی مشهد هستم که به مدل‌سازی آماری، داده‌کاوی و تصمیم‌گیری مبتنی بر داده علاقه‌مندم. من پایه‌های ریاضی دقیق را با ابزارهای تحلیلی مدرن ترکیب می‌کنم تا بینش‌های معنادار از مجموعه داده‌های پیچیده استخراج کنم.",
+                about_edu_label: "تحصیلات:",
+                about_edu_val: "کارشناسی آمار، دانشگاه فردوسی",
+                about_role_label: "نقش:",
+                about_role_val: "تحلیلگر داده و طراح",
+                about_loc_label: "موقعیت:",
+                about_loc_val: "مشهد، ایران",
+                expertise_title: "تخصص آماری",
+                stat_inference: "داده‌کاوی",
+                graphic_design: "طراحی گرافیک",
+                data_viz: "یادگیری ماشین",
+                learning_badge: "درحال یادگیری",
+                skills_title: "مهارت‌های فنی",
+                skills_subtitle: "ابزارها و فناوری‌های تحلیل آماری و علم داده",
+                skill_dm: "داده‌کاوی",
+                code_title: "پروژه‌های متن‌باز",
+                code_subtitle: "کاوش در پروژه‌های برنامه‌نویسی آماری، پکیج‌های R و مخازن تحلیل داده من",
+                repo1_name: "تحلیل آماری",
+                repo1_desc: "پروژه‌های مدل‌سازی آماری و آزمون فرضیه با استفاده از برنامه‌نویسی R",
+                repo2_name: "پروژه‌های داده‌کاوی",
+                repo2_desc: "پیاده‌سازی الگوریتم‌های خوشه‌بندی، طبقه‌بندی و تشخیص الگو",
+                repo3_name: "تجسم داده",
+                repo3_desc: "ایجاد تصویرسازی‌های بصیرت‌آمیز با استفاده از ggplot2، matplotlib و seaborn",
+                repo_stars: "ستاره",
+                repo_forks: "فورک",
+                github_cta_label: "مشاهده تمام مخازن",
+                github_cta_main: "کاوش بیشتر در گیت‌هاب",
+                github_stat1: "+ ۲۰ مخزن",
+                github_stat2: "متن‌باز",
+                github_stat3: "مشارکتی",
+                projects_title: "پروژه‌های آماری",
+                projects_subtitle: "کاربردهای واقعی روش‌های آماری و تحلیل داده",
+                proj_1_title: "تحلیل آماری دانشگاهی",
+                proj_1_desc: "تحلیل مجموعه داده برای پروژه پایانی درس با استفاده از R، با تمرکز بر آزمون فرضیه و تجسم داده.",
+                proj_dm_title: "خوشه‌بندی مشتریان",
+                proj_dm_desc: "اعمال الگوریتم‌های خوشه‌بندی (K-Means) برای بخش‌بندی مشتریان بر اساس رفتار خرید جهت بازاریابی هدفمند.",
+                proj_6_title: "طراحی پوسترهای علمی",
+                proj_6_desc: "طراحی پوسترهای حرفه‌ای و محتوای شبکه‌های اجتماعی برای کارگاه‌های انجمن علمی آمار.",
+                view_all_projects: "مشاهده همه پروژه‌های کدنویسی",
+                view_all_projects_desc: "نمایش جامع پروژه‌های تحلیل داده و یادگیری ماشین من",
+                resources_title: "منابع یادگیری",
+                resources_desc: "مجموعه منتخب از مطالب آموزشی، پست‌های بلاگ و منابع یادگیری.",
+                res_card1_title: "آموزش برنامه‌نویسی",
+                res_card1_desc: "راهنماهای R، Python و مثال‌های کد",
+                res_card2_title: "روش‌های آماری",
+                res_card2_desc: "مقالات درباره تکنیک‌های تحلیل داده",
+                res_card3_title: "مواد آموزشی",
+                res_card3_desc: "منابع و مراجع منتخب",
+                res_btn: "مشاهده همه منابع",
+                res_btn_desc: "مرور پست‌های بلاگ، آموزش‌ها و محتوای آموزشی",
+                contact_title: "بیایید همکاری کنیم",
+                contact_text: "به مشاوره آماری، پروژه‌های تحلیل داده یا طراح برای رویداد دانشگاهی‌تان نیاز دارید؟ بیایید ارتباط برقرار کنیم و چیزی تاثیرگذار بسازیم.",
+                footer_rights: "تمامی حقوق محفوظ است.",
+                footer_tagline: "ساخته شده با دقت داده‌محور 📊"
+            }
+        };
+
+        let currentLang = 'en';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'fa' : 'en';
+            const htmlRoot = document.getElementById('html-root');
+            htmlRoot.lang = currentLang === 'fa' ? 'fa' : 'en';
+            htmlRoot.dir = currentLang === 'fa' ? 'rtl' : 'ltr';
+            
+            document.getElementById('lang-text-desktop').textContent = currentLang === 'en' ? 'FA' : 'EN';
+            document.getElementById('lang-text-mobile').textContent = currentLang === 'en' ? 'FA' : 'EN';
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    el.textContent = translations[currentLang][key];
+                }
+            });
+        }
+    </script>
+    <script src="/pwa-setup.js"></script>
 </body>
 </html>
