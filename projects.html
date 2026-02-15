@@ -405,6 +405,47 @@
             '-python-R'
         ];
 
+        // HTML ranking (for "All HTML Files" section)
+        // Put your best HTML outputs here first (repoName + path inside repo)
+        const HTML_PINNED_FILES = [
+            { repo: '-university-codes', path: 'index.html' },
+            { repo: 'Data-Analysis-Project', path: 'index.html' },
+            { repo: 'quantile-regression-presentation-v2', path: 'index.html' },
+            { repo: 'quantile-regression-presentation', path: 'index.html' }
+        ];
+
+        function pinnedRepoIndex(repoName) {
+            const i = PINNED.indexOf(repoName);
+            return i === -1 ? 9999 : i;
+        }
+
+        function pinnedHtmlFileIndex(repoName, filePath) {
+            const key = `${repoName}/${filePath}`.toLowerCase();
+            for (let i = 0; i < HTML_PINNED_FILES.length; i++) {
+                const item = HTML_PINNED_FILES[i];
+                const k2 = `${item.repo}/${item.path}`.toLowerCase();
+                if (k2 === key) return i;
+            }
+            return 9999;
+        }
+
+        function htmlFileScore(repoName, filePath) {
+            const p = (filePath || '').toLowerCase();
+            const pinnedIdx = pinnedHtmlFileIndex(repoName, filePath);
+            if (pinnedIdx !== 9999) return 100000 - pinnedIdx;
+
+            let score = 0;
+            if (p === 'index.html' || p.endsWith('/index.html')) score += 1000;
+            if (p.includes('presentation') || p.includes('slide')) score += 250;
+            if (p.includes('analysis')) score += 200;
+            if (p.includes('regression')) score += 150;
+            if (p.includes('medical')) score += 140;
+            if (p.includes('simulation')) score += 120;
+            if (p.includes('exercise') || p.includes('lab')) score += 100;
+            if (p.includes('discrete')) score += 80;
+            return score;
+        }
+
         // Specific LIVE URLs for known projects
         const LIVE_URLS = {
             'quantile-regression-presentation': 'https://amiralisatvati.github.io/quantile-regression-presentation/',
@@ -718,12 +759,13 @@
             projectsContainer.innerHTML = '<div style="text-align: center; color: #94a3b8; font-size: 1.1em; padding: 50px;">در حال بارگذاری تمام فایل‌های HTML... ⏳</div>';
 
             try {
-                const response = await fetch(`https://api.github.com/users/${GH_USER}/repos?per_page=100`);
+                const response = await fetch(`https://api.github.com/users/${GH_USER}/repos?per_page=100&sort=updated`);
                 const repos = await response.json();
                 
                 let allHtmlFiles = [];
                 
                 for (const repo of repos) {
+                    // Skip website repositories (ending with .github.io)
                     if (repo.name.endsWith('.github.io')) continue;
                     if (repo.fork || repo.archived) continue;
                     
@@ -733,7 +775,9 @@
                             repoName: repo.name,
                             repoUrl: repo.html_url,
                             files: htmlFiles,
-                            description: repo.description || 'بدون توضیحات'
+                            description: repo.description || 'بدون توضیحات',
+                            stars: repo.stargazers_count || 0,
+                            pushed_at: repo.pushed_at || null
                         });
                     }
                 }
@@ -758,7 +802,8 @@
                         name: item.path,
                         url: `https://${GH_USER}.github.io/${repoName}/${item.path}`,
                         githubUrl: `https://github.com/${GH_USER}/${repoName}/blob/${branch}/${item.path}`,
-                        rmdUrl: item.path.replace('.html', '.Rmd')
+                        rmdUrl: item.path.replace('.html', '.Rmd'),
+                        branch
                     }));
             } catch (error) {
                 console.error(`Error fetching ${repoName}:`, error);
@@ -773,6 +818,25 @@
                 projectsContainer.innerHTML = '<div style="text-align: center; color: #94a3b8; padding: 50px;">هیچ فایل HTML پیدا نشد</div>';
                 return;
             }
+
+            // Rank repositories (best repos first)
+            projects = [...projects].sort((a, b) => {
+                const ap = pinnedRepoIndex(a.repoName);
+                const bp = pinnedRepoIndex(b.repoName);
+                if (ap !== bp) return ap - bp;
+
+                const as = a.stars || 0;
+                const bs = b.stars || 0;
+                if (as !== bs) return bs - as;
+
+                const ad = new Date(a.pushed_at || 0).getTime();
+                const bd = new Date(b.pushed_at || 0).getTime();
+                if (ad !== bd) return bd - ad;
+
+                if ((a.files || []).length !== (b.files || []).length) return (b.files || []).length - (a.files || []).length;
+
+                return (a.repoName || '').localeCompare(b.repoName || '');
+            });
             
             let totalFiles = projects.reduce((sum, p) => sum + p.files.length, 0);
             
@@ -786,6 +850,13 @@
             `;
             
             projects.forEach(project => {
+                const filesSorted = [...project.files].sort((fa, fb) => {
+                    const sa = htmlFileScore(project.repoName, fa.name);
+                    const sb = htmlFileScore(project.repoName, fb.name);
+                    if (sa !== sb) return sb - sa;
+                    return (fa.name || '').localeCompare(fb.name || '');
+                });
+
                 html += `
                     <div class="glass rounded-2xl p-6 mb-6 border border-slate-700/60 hover:border-slate-600 transition-all">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
@@ -795,15 +866,16 @@
                                 </a>
                             </h2>
                             <span class="badge-stats" style="padding: 6px 16px; border-radius: 20px; font-size: 0.9em;">
-                                ${project.files.length} فایل
+                                ${filesSorted.length} فایل
                             </span>
                         </div>
                         <p style="color: #94a3b8; margin-bottom: 20px; font-size: 0.95rem;">${safeText(project.description)}</p>
                         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px;">
                 `;
                 
-                project.files.forEach(file => {
+                filesSorted.forEach(file => {
                     const fileName = file.name.split('/').pop().replace('.html', '');
+                    const branch = file.branch || 'main';
                     html += `
                         <div class="glass rounded-xl p-4 border border-slate-700/40 hover:border-blue-500/40 transition-all" style="cursor: pointer;">
                             <div style="font-weight: 600; color: #f1f5f9; margin-bottom: 12px; font-size: 0.95em;">
@@ -822,7 +894,7 @@
                                    onmouseout="this.style.background='rgba(30, 41, 59, 0.7)'">
                                     📄 HTML
                                 </a>
-                                <a href="https://github.com/${GH_USER}/${project.repoName}/blob/main/${file.rmdUrl}" target="_blank" 
+                                <a href="https://github.com/${GH_USER}/${project.repoName}/blob/${branch}/${file.rmdUrl}" target="_blank" 
                                    style="background: rgba(30, 41, 59, 0.7); color: #cbd5e1; padding: 7px 14px; border-radius: 6px; text-decoration: none; font-size: 0.85em; transition: all 0.3s; border: 1px solid rgba(255, 255, 255, 0.1); display: inline-flex; align-items: center; gap: 5px;"
                                    onmouseover="this.style.background='rgba(51, 65, 85, 0.8)'" 
                                    onmouseout="this.style.background='rgba(30, 41, 59, 0.7)'">
