@@ -393,12 +393,15 @@
         // GitHub-driven Projects
         const GH_USER = 'amiralisatvati';
         const EXCLUDE_REPOS = new Set(['amiralisatvati.github.io']);
+        
+        // BEST PROJECTS FIRST - Updated order!
         const PINNED = [
-            'Data-Analysis-Project',
-            'ml-course-maktabkhooneh',
-            'university-simulation-project',
-            'quantile-regression-presentation',
+            '-university-codes',
             'quantile-regression-presentation-v2',
+            'quantile-regression-presentation',
+            'ml-course-maktabkhooneh',
+            'Data-Analysis-Project',
+            'university-simulation-project',
             '-python-R'
         ];
 
@@ -406,7 +409,8 @@
         const LIVE_URLS = {
             'quantile-regression-presentation': 'https://amiralisatvati.github.io/quantile-regression-presentation/',
             'quantile-regression-presentation-v2': 'https://amiralisatvati.github.io/quantile-regression-presentation-v2/',
-            'Data-Analysis-Project': 'https://amiralisatvati.github.io/Data-Analysis-Project/'
+            'Data-Analysis-Project': 'https://amiralisatvati.github.io/Data-Analysis-Project/',
+            '-university-codes': 'https://amiralisatvati.github.io/-university-codes/'
         };
 
         async function fetchUniversityCodes() {
@@ -650,7 +654,7 @@
 
                 let repos = data
                     .filter(r => r && !r.fork && !r.archived)
-                    .filter(r => !EXCLUDE_REPOS.has(r.name) && r.name !== '-university-codes')
+                    .filter(r => !EXCLUDE_REPOS.has(r.name))
                     .filter(r => (r.size || 0) > 0);
 
                 const uniCodes = await fetchUniversityCodes();
@@ -720,7 +724,6 @@
                 let allHtmlFiles = [];
                 
                 for (const repo of repos) {
-                    // Skip website repositories (ending with .github.io)
                     if (repo.name.endsWith('.github.io')) continue;
                     if (repo.fork || repo.archived) continue;
                     
