@@ -411,16 +411,13 @@
 
         async function fetchUniversityCodes() {
             try {
-                // Use Recursive Tree API to find nested HTML files
                 const res = await fetch('https://api.github.com/repos/amiralisatvati/-university-codes/git/trees/main?recursive=1');
                 if (!res.ok) return [];
                 const data = await res.json();
                 
-                // Filter for HTML files in specific folders or generally
-                // We specifically want to show: Regression_Analysis, Exam_and_Labs, Probability_Process, Data_Mining_Projects
                 const files = data.tree.filter(f => 
                     f.path.endsWith('.html') && 
-                    !f.path.includes('index.html') && // avoid index files if any
+                    !f.path.includes('index.html') && 
                     (f.path.includes('Regression_Analysis') || 
                      f.path.includes('Exam_and_Labs') || 
                      f.path.includes('Probability_Process') || 
@@ -428,7 +425,6 @@
                 );
 
                 return files.map(f => {
-                    // Create readable name from path
                     const nameParts = f.path.split('/');
                     const fileName = nameParts[nameParts.length - 1].replace('.html', '').replace(/_/g, ' ');
                     const folderName = nameParts.length > 1 ? nameParts[0].replace(/_/g, ' ') : 'University Code';
@@ -442,7 +438,7 @@
                         pushed_at: null, 
                         stargazers_count: 0,
                         is_subproject: true,
-                        homepage: `https://amiralisatvati.github.io/-university-codes/${f.path}`, // Construct Pages URL
+                        homepage: `https://amiralisatvati.github.io/-university-codes/${f.path}`,
                         type: 'file'
                     };
                 });
@@ -455,12 +451,11 @@
         function categoryOf(repo) {
             const text = `${repo.name} ${(repo.description || '')}`.toLowerCase();
             
-            // Sub-projects from university-codes
             if (repo.is_subproject) {
                 if (text.includes('mining') || text.includes('ml') || text.includes('classification')) return 'ml';
                 if (text.includes('regression') || text.includes('anova') || text.includes('stat') || text.includes('probability') || text.includes('process')) return 'stats';
                 if (text.includes('viz') || text.includes('shiny')) return 'viz';
-                return 'stats'; // Default for university codes
+                return 'stats';
             }
 
             if (text.includes('ml') || text.includes('machine learning') || text.includes('scikit') || text.includes('notebook') || text.includes('classification') || text.includes('regression')) return 'ml';
@@ -525,20 +520,16 @@
             const updated = repo.pushed_at ? formatDate(repo.pushed_at) : (currentLang === 'fa' ? 'آرشیو' : 'Archived');
             const stars = typeof repo.stargazers_count === 'number' ? repo.stargazers_count : 0;
 
-            // Determine Live Demo URL
             let liveUrl = repo.homepage;
 
-            // 1. Auto-detect if GitHub Pages is active but no homepage set
             if ((!liveUrl || !isValidUrl(liveUrl)) && repo.has_pages) {
                 liveUrl = `https://${GH_USER}.github.io/${repo.name}/`;
             }
 
-            // 2. Override with hardcoded list if present
             if (LIVE_URLS[repo.name]) {
                 liveUrl = LIVE_URLS[repo.name];
             }
 
-            // 3. Fallback check validity again
             if (liveUrl && !isValidUrl(liveUrl)) {
                 liveUrl = null;
             }
@@ -547,7 +538,6 @@
             const liveLabel = (translations[currentLang] && translations[currentLang].live_demo) ? translations[currentLang].live_demo : 'View Project';
             const updatedLabel = (translations[currentLang] && translations[currentLang].updated) ? translations[currentLang].updated : 'Updated';
             
-            // For sub-projects (files), "View Repo" should maybe say "View File"
             const buttonLabel = isSub ? (currentLang === 'fa' ? 'مشاهده فایل' : 'View File') : viewRepoLabel;
 
             return `
@@ -597,7 +587,6 @@
         }
 
         function updateSnapshot(repos) {
-            // Only count real repos for stats
             const realRepos = repos.filter(r => !r.is_subproject);
             
             const publicRepos = realRepos.length;
@@ -652,7 +641,6 @@
             const grid = document.getElementById('projects-grid');
 
             try {
-                // Fetch Main Repos
                 const url = `https://api.github.com/users/${GH_USER}/repos?per_page=100&sort=updated`;
                 const res = await fetch(url, { headers: { 'Accept': 'application/vnd.github+json' } });
 
@@ -662,23 +650,19 @@
 
                 let repos = data
                     .filter(r => r && !r.fork && !r.archived)
-                    .filter(r => !EXCLUDE_REPOS.has(r.name) && r.name !== '-university-codes') // Exclude the raw repo
+                    .filter(r => !EXCLUDE_REPOS.has(r.name) && r.name !== '-university-codes')
                     .filter(r => (r.size || 0) > 0);
 
-                // Fetch Sub-projects from -university-codes
                 const uniCodes = await fetchUniversityCodes();
                 
-                // Merge
                 let allItems = [...repos, ...uniCodes];
 
-                // Sorting
                 const pinnedOrder = new Map(PINNED.map((name, idx) => [name, idx]));
                 allItems = allItems.sort((a, b) => {
                     const ap = pinnedOrder.has(a.name) ? pinnedOrder.get(a.name) : 9999;
                     const bp = pinnedOrder.has(b.name) ? pinnedOrder.get(b.name) : 9999;
                     if (ap !== bp) return ap - bp;
                     
-                    // Fallback sort: Recent real repos first, then sub-projects
                     if (a.is_subproject && !b.is_subproject) return 1;
                     if (!a.is_subproject && b.is_subproject) return -1;
 
@@ -698,11 +682,10 @@
                     grid.innerHTML = allItems.map(renderCard).join('');
                 }
 
-                updateSnapshot(repos); // Stats only for real repos
+                updateSnapshot(repos);
                 updateHeroLine(allItems.length);
                 updateLanguageBadges(repos);
 
-                // Initial animation for rendered cards
                 const cards = document.querySelectorAll('.project-card');
                 cards.forEach((card, index) => {
                     card.style.opacity = '0';
@@ -726,7 +709,6 @@
             }
         }
 
-        // Load All HTML Files from All Repositories
         async function fetchAllHtmlFiles() {
             const projectsContainer = document.getElementById('all-projects-container');
             projectsContainer.innerHTML = '<div style="text-align: center; color: #94a3b8; font-size: 1.1em; padding: 50px;">در حال بارگذاری تمام فایل‌های HTML... ⏳</div>';
@@ -738,7 +720,10 @@
                 let allHtmlFiles = [];
                 
                 for (const repo of repos) {
+                    // Skip website repositories (ending with .github.io)
+                    if (repo.name.endsWith('.github.io')) continue;
                     if (repo.fork || repo.archived) continue;
+                    
                     const htmlFiles = await fetchHtmlFilesFromRepo(repo.name, repo.default_branch);
                     if (htmlFiles.length > 0) {
                         allHtmlFiles.push({
@@ -859,7 +844,6 @@
             fetchAllHtmlFiles();
         });
 
-        // Particle System
         const canvas = document.getElementById('particles');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -938,7 +922,6 @@
         initParticles();
         animateParticles();
 
-        // Language Toggle
         const translations = {
             en: {
                 nav_subtitle: "Data Scientist",
@@ -1019,7 +1002,6 @@
                 }
             });
 
-            // Re-render dynamic repo cards in new language
             loadRepos();
         }
     </script>
