@@ -225,6 +225,74 @@
         .code-repo-card:hover::before {
             left: 100%;
         }
+
+        /* --- Responsive optimizations for mobile and TV --- */
+        @media (max-width: 640px) {
+            /* Hide heavy animations on mobile */
+            #particles-canvas { display: none; }
+            .formula-bg { display: none; }
+            
+            /* Improve readability */
+            h1 { font-size: 2.5rem !important; line-height: 1.15; }
+            .cursor { display: none; }
+            
+            /* Better touch targets */
+            .hero-buttons a { 
+                padding: 0.95rem 1.5rem !important; 
+                font-size: 0.95rem;
+            }
+            
+            /* Adjust scroll-to-top button position */
+            #scroll-to-top { 
+                bottom: 1.5rem !important; 
+                right: 1.5rem !important; 
+            }
+            
+            /* Simplify mobile menu */
+            #mobile-menu a {
+                font-size: 1rem;
+                padding-top: 0.875rem;
+                padding-bottom: 0.875rem;
+            }
+        }
+
+        @media (min-width: 1600px) {
+            /* Large screens (TV / 4K monitors) */
+            html, body { font-size: 18px; }
+            
+            h1 { font-size: 5rem; }
+            h2 { font-size: 3rem; }
+            
+            section { 
+                padding-top: 7rem; 
+                padding-bottom: 7rem; 
+            }
+            
+            .max-w-7xl { max-width: 90rem; }
+            
+            nav .text-sm { font-size: 1rem; }
+        }
+
+        @media (hover: none) {
+            /* Touch devices: disable hover-only effects */
+            .project-card:hover,
+            .code-repo-card:hover {
+                transform: none;
+                box-shadow: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            /* Accessibility: reduce motion for users who prefer it */
+            html { scroll-behavior: auto !important; }
+            * { 
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            #particles-canvas { display: none; }
+            .formula-bg { display: none; }
+        }
     </style>
 </head>
 <body class="antialiased font-sans relative selection:bg-accent/30 selection:text-white">
@@ -307,7 +375,7 @@
                         Statistics Student & Data Analyst specializing in statistical modeling, data mining, and evidence-based insights.
                     </p>
                     
-                    <div class="flex flex-wrap gap-4 pt-4 justify-center lg:justify-start rtl:lg:justify-end">
+                    <div class="flex flex-wrap gap-4 pt-4 justify-center lg:justify-start rtl:lg:justify-end hero-buttons">
                         <a href="/projects.html" class="group px-8 py-4 rounded-xl bg-gradient-to-r from-accent to-accentSec hover:shadow-2xl hover:shadow-accent/40 text-white font-bold transition-all transform hover:-translate-y-1 flex items-center gap-2">
                             <i class="fas fa-folder-open group-hover:rotate-12 transition-transform"></i>
                             <span data-i18n="hero_btn_work">View Projects</span>
@@ -1007,6 +1075,11 @@
         }
         setTimeout(typeWriter, 1000);
 
+        // Check if particles should be enabled
+        const particlesEnabled =
+          !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
+          !window.matchMedia('(max-width: 640px)').matches;
+
         const canvas = document.getElementById('particles-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
@@ -1017,7 +1090,7 @@
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            initParticles();
+            if (particlesEnabled) initParticles();
         });
 
         const mouse = { x: null, y: null, radius: 150 };
@@ -1092,8 +1165,12 @@
             requestAnimationFrame(animateParticles);
         }
 
-        initParticles();
-        animateParticles();
+        if (particlesEnabled) {
+            initParticles();
+            animateParticles();
+        } else {
+            if (canvas) canvas.style.display = 'none';
+        }
 
         document.getElementById('year').textContent = new Date().getFullYear();
 
