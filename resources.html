@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منابع یادگیری | امیرعلی سطوتی</title>
-    
+
     <!-- فونت‌ها -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -32,7 +32,7 @@
             min-height: 100vh;
             color: #1e293b;
         }
-        
+
         .glass-panel {
             background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(12px);
@@ -43,7 +43,7 @@
         .post-card {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+
         .post-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
@@ -65,74 +65,100 @@
             color: #4338ca;
         }
 
-        /* انیمیشن ورود کارت‌ها */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
+
         .animate-card {
             animation: fadeIn 0.5s ease-out forwards;
         }
     </style>
 </head>
-<body class="p-4 md:p-8">
 
+<body class="p-4 md:p-8">
     <div class="max-w-7xl mx-auto">
-        <!-- هدر و جستجو -->
         <header class="text-center text-white mb-12 pt-8">
             <h1 class="text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-md">
                 📚 مرکز منابع یادگیری
             </h1>
+
             <p class="text-lg opacity-90 mb-8">
                 مجموعه جزوات تخصصی آمار، داده‌کاوی و یادگیری ماشین
             </p>
 
-            <!-- باکس جستجو -->
             <div class="max-w-xl mx-auto relative group">
-                <input type="text" id="searchInput" placeholder="جستجو در جزوات (مثلاً: SVM، همبستگی...)" 
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="جستجو در جزوات (مثلاً: SVM، همبستگی...)"
                     class="w-full px-6 py-4 rounded-full text-gray-800 focus:outline-none focus:ring-4 focus:ring-white/30 shadow-lg transition-all"
-                    onkeyup="filterPosts()">
+                    onkeyup="filterPosts()"
+                >
+
                 <i class="fas fa-search absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors"></i>
             </div>
         </header>
 
-        <!-- بخش فیلترها (دسته‌بندی هوشمند) -->
         <div class="flex flex-wrap justify-center gap-3 mb-10" id="filterContainer">
-            <button onclick="setCategory('all')" class="filter-btn active px-6 py-2 rounded-full font-bold bg-white text-gray-600 shadow-sm">
+            <button onclick="setCategory('all', this)" class="filter-btn active px-6 py-2 rounded-full font-bold bg-white text-gray-600 shadow-sm">
                 همه مطالب
             </button>
-            <button onclick="setCategory('ml')" class="filter-btn px-6 py-2 rounded-full font-bold bg-white text-gray-600 shadow-sm">
+
+            <button onclick="setCategory('ml', this)" class="filter-btn px-6 py-2 rounded-full font-bold bg-white text-gray-600 shadow-sm">
                 🤖 یادگیری ماشین
             </button>
-            <button onclick="setCategory('multivar')" class="filter-btn px-6 py-2 rounded-full font-bold bg-white text-gray-600 shadow-sm">
+
+            <button onclick="setCategory('multivar', this)" class="filter-btn px-6 py-2 rounded-full font-bold bg-white text-gray-600 shadow-sm">
                 📊 آمار چندمتغیره
             </button>
-            <button onclick="setCategory('nonparam')" class="filter-btn px-6 py-2 rounded-full font-bold bg-white text-gray-600 shadow-sm">
+
+            <button onclick="setCategory('nonparam', this)" class="filter-btn px-6 py-2 rounded-full font-bold bg-white text-gray-600 shadow-sm">
                 📉 آمار ناپارامتری
             </button>
         </div>
 
-        <!-- گرید پست‌ها -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="postsGrid">
-            <!-- کارت‌ها توسط جاوااسکریپت ساخته می‌شوند -->
-        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="postsGrid"></div>
 
-        <!-- پیام "موردی یافت نشد" -->
         <div id="noResults" class="hidden text-center text-white py-12">
             <i class="fas fa-search-minus text-6xl mb-4 opacity-50"></i>
             <p class="text-xl">متاسفانه جزوه‌ای با این مشخصات پیدا نشد!</p>
         </div>
     </div>
 
-    <!-- دکمه بازگشت به خانه -->
-    <a href="/" class="fixed bottom-6 left-6 bg-white text-primary p-4 rounded-full shadow-xl hover:scale-110 transition-transform z-50 group">
+    <a
+        href="/"
+        class="fixed bottom-6 left-6 bg-white text-primary p-4 rounded-full shadow-xl hover:scale-110 transition-transform z-50 group"
+        aria-label="بازگشت به صفحه اصلی"
+        title="صفحه اصلی"
+    >
         <i class="fas fa-home text-xl"></i>
-        <span class="absolute left-full ml-2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">صفحه اصلی</span>
+
+        <span class="absolute left-full ml-2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+            صفحه اصلی
+        </span>
     </a>
 
     <script>
-        // داده‌های جزوات
         const resources = [
+            {
+                title: "بخش‌بندی فضای ویژگی و خوشه‌بندی",
+                desc: "آموزش Feature Space، Clustering، DBSCAN، تشخیص نقاط پرت و غنی‌سازی ویژگی.",
+                tags: ["Clustering", "DBSCAN", "Outlier"],
+                category: "ml",
+                url: "/posts/feature-space-clustering.html",
+                icon: "fa-circle-nodes",
+                color: "text-violet-600",
+                bg: "bg-violet-100",
+                new: true
+            },
             {
                 title: "جزوه جامع SVM (شب امتحان)",
                 desc: "آموزش ماشین بردار پشتیبان، حاشیه سخت/نرم و سوالات امتحانی.",
@@ -179,7 +205,7 @@
             },
             {
                 title: "آزمون فریدمن (Friedman)",
-                desc: "آزمون رتبه‌ای برای مقایسه گروههای وابسته (تکراری).",
+                desc: "آزمون رتبه‌ای برای مقایسه گروه‌های وابسته (تکراری).",
                 tags: ["Friedman", "Rank"],
                 category: "nonparam",
                 url: "/posts/friedman-test.html",
@@ -223,7 +249,7 @@
             },
             {
                 title: "آزمون علامت و ویلکاکسون",
-                desc: "آزمون‌های تک نمونه‌ای و جفتی برای میانه.",
+                desc: "آزمون‌های تک‌نمونه‌ای و جفتی برای میانه.",
                 tags: ["Sign", "Wilcoxon"],
                 category: "nonparam",
                 url: "/posts/nonparametric-one-sample-sign-wilcoxon.html",
@@ -234,83 +260,109 @@
             }
         ];
 
-        let currentCategory = 'all';
+        let currentCategory = "all";
 
         function init() {
             renderPosts(resources);
         }
 
-        function setCategory(cat) {
-            currentCategory = cat;
-            
-            // Update buttons styling
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active');
+        function setCategory(category, button) {
+            currentCategory = category;
+
+            document.querySelectorAll(".filter-btn").forEach((item) => {
+                item.classList.remove("active");
             });
-            event.target.classList.add('active');
-            
+
+            button.classList.add("active");
             filterPosts();
         }
 
         function filterPosts() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            
-            const filtered = resources.filter(post => {
-                const matchesCategory = currentCategory === 'all' || post.category === currentCategory;
-                const matchesSearch = post.title.toLowerCase().includes(query) || 
-                                      post.desc.toLowerCase().includes(query) ||
-                                      post.tags.some(t => t.toLowerCase().includes(query));
-                return matchesCategory && matchesSearch;
+            const query = document.getElementById("searchInput").value.trim().toLowerCase();
+
+            const filteredResources = resources.filter((post) => {
+                const matchesCategory =
+                    currentCategory === "all" || post.category === currentCategory;
+
+                const searchableText = [
+                    post.title,
+                    post.desc,
+                    ...post.tags
+                ].join(" ").toLowerCase();
+
+                return matchesCategory && searchableText.includes(query);
             });
 
-            renderPosts(filtered);
+            renderPosts(filteredResources);
         }
 
         function renderPosts(items) {
-            const grid = document.getElementById('postsGrid');
-            const noResults = document.getElementById('noResults');
-            
-            grid.innerHTML = '';
-            
+            const grid = document.getElementById("postsGrid");
+            const noResults = document.getElementById("noResults");
+
+            grid.innerHTML = "";
+
             if (items.length === 0) {
-                noResults.classList.remove('hidden');
+                noResults.classList.remove("hidden");
                 return;
             }
-            
-            noResults.classList.add('hidden');
+
+            noResults.classList.add("hidden");
 
             items.forEach((post, index) => {
-                const isNewBadge = post.new ? 
-                    `<span class="absolute top-3 left-3 bg-red-500 text-white text-xs px-2 py-1 rounded-md font-bold shadow-sm z-10 animate-pulse">جدید</span>` : '';
+                const newBadge = post.new
+                    ? `
+                        <span class="absolute top-3 left-3 bg-red-500 text-white text-xs px-2 py-1 rounded-md font-bold shadow-sm z-10 animate-pulse">
+                            جدید
+                        </span>
+                    `
+                    : "";
 
-                const tagsHtml = post.tags.map(tag => 
-                    `<span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-md font-medium">#${tag}</span>`
-                ).join('');
+                const tags = post.tags.map((tag) => {
+                    return `
+                        <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-md font-medium">
+                            #${tag}
+                        </span>
+                    `;
+                }).join("");
 
-                const cardHtml = `
-                    <a href="${post.url}" class="glass-panel rounded-2xl p-6 relative block post-card animate-card" style="animation-delay: ${index * 0.05}s">
-                        ${isNewBadge}
+                const card = `
+                    <a
+                        href="${post.url}"
+                        class="glass-panel rounded-2xl p-6 relative block post-card animate-card group"
+                        style="animation-delay: ${index * 0.05}s"
+                    >
+                        ${newBadge}
+
                         <div class="flex items-start justify-between mb-4">
                             <div class="w-12 h-12 ${post.bg} ${post.color} rounded-xl flex items-center justify-center text-2xl shadow-sm">
                                 <i class="fas ${post.icon}"></i>
                             </div>
+
                             <div class="flex gap-1 flex-wrap justify-end max-w-[60%]">
-                                ${tagsHtml}
+                                ${tags}
                             </div>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2 leading-tight group-hover:text-primary transition-colors">${post.title}</h3>
-                        <p class="text-gray-600 text-sm leading-relaxed mb-4">${post.desc}</p>
+
+                        <h3 class="text-xl font-bold text-gray-800 mb-2 leading-tight group-hover:text-primary transition-colors">
+                            ${post.title}
+                        </h3>
+
+                        <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                            ${post.desc}
+                        </p>
+
                         <div class="flex items-center text-primary text-sm font-bold mt-auto">
                             <span>مطالعه جزوه</span>
                             <i class="fas fa-arrow-left mr-2 transition-transform group-hover:-translate-x-1"></i>
                         </div>
                     </a>
                 `;
-                grid.innerHTML += cardHtml;
+
+                grid.innerHTML += card;
             });
         }
 
-        // Initialize
         init();
     </script>
 </body>
